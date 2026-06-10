@@ -21,6 +21,9 @@ import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/
 
 // learning features
 import { IntroExperiment } from './features/learning_features/intro-experiment/intro-experiment';
+import { HarmonischeSchwingungEinfuehrung } from './features/learning_features/harmonische-schwingung-einfuehrung/harmonische-schwingung-einfuehrung';
+import { TheorieStrang } from './features/learning_features/theorie-strang/theorie-strang';
+import { Test } from './features/learning_features/test/test';
 
 // test features
 import { TestDampedOscillations } from './features/test_features/damped-oscillations/damped-oscillations';
@@ -84,4 +87,8 @@ export const routes: Routes = [
     { path: 'simulation/experiment-damped',               		canActivate: [sim('Simulation_12_Vertiefung_damped_rot.html')],                 component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung v2' },
     { path: 'simulation/experiment-damped-driven',     			canActivate: [sim('Simulation_13_Einleitung_damped_driven_rot_202511072.html')], component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Einleitung)' },
     { path: 'simulation/experiment-damped-driven-advanced',  	canActivate: [sim('Simulation_14_Vertiefung_damped_driven_rot.html')],          component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Vertiefung)' },
+
+    { path: 'learning/theorie-strang', component: TheorieStrang, title: 'Theorie-Strang' },
+    { path: 'learning/harmonische-schwingung-einfuehrung', component: HarmonischeSchwingungEinfuehrung, title: 'Allgemeine Einführung ungedämpfte harmonische Schwingungen' },
+    { path: 'learning/test', component: Test, title: 'Allgemeine Einführung Schwingungen' },
 ];

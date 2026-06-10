@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+﻿import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
@@ -225,7 +225,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 				this.question1.questionId,
                 result.isCorrect,
                 result.userAnswer,
-                [],
+                this.question1.statements.filter(s => s.isCorrect).map(s => s.id),
                 result.pointsAwarded,
                 this.question1.maxPoints
             );
@@ -273,7 +273,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
                 this.question4.questionId,
                 result.isCorrect,
                 result.userAnswer,
-                [],
+                this.question4.statements.filter(s => s.isCorrect).map(s => s.id),
                 result.pointsAwarded,
                 this.question4.maxPoints
             );

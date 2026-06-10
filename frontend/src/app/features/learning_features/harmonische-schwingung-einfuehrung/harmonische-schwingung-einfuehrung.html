@@ -1,0 +1,151 @@
+<section class="learning-page">
+  <h1>Allgemeine Einführung ungedämpfte, harmonische Schwingungen</h1>
+
+  <aside class="notice-box notice-blue">
+    <div class="notice-icon speech-icon" aria-hidden="true"></div>
+
+    <p>
+      <strong>Beachten Sie:</strong>
+      In diesem Versuch beschäftigen Sie sich nur mit eindimensionalen Bewegungen.
+      Auch der theoretische Überblick beschränkt sich daher auf diese Betrachtung.
+      Wenn Sie sich für die Weiterführung in mehreren Dimensionen interessieren,
+      dann folgen Sie an gegebener Stelle den Hinweisen.
+    </p>
+  </aside>
+
+  <div class="content-row">
+    <div class="text-column">
+      <p>
+        Wenn ein Körper aus seiner Ruhelage ausgelenkt wird und durch eine Kraft
+        \( \vec&#123;F&#125; \), die linear mit dem Abstand von der Ruhelage zunimmt,
+        in Bewegung versetzt wird, dann sprechen wir von einer harmonischen Schwingung.
+      </p>
+
+      <p>
+        Die Bewegung des Körpers kann mit der Differentialgleichung
+        \( m \frac&#123;d^&#123;2&#125;x&#125;&#123;dt^&#123;2&#125;&#125; = -Dx \)
+        beschrieben werden, wobei \( D \) als
+        <a href="#glossary-spring-constant" class="glossary-link">Federkonstante</a>
+        bezeichnet wird und die Stärke der rücktreibenden Kraft angibt.
+      </p>
+
+      <p>
+        Üblicherweise ersetzt man hierbei
+        \( \omega_&#123;0&#125;^&#123;2&#125; = \frac&#123;D&#125;&#123;m&#125; \)
+        und erhält dadurch die klassische Schwingungsgleichung für einen
+        harmonischen Oszillator:
+      </p>
+    </div>
+
+    <figure class="spring-figure" aria-label="Federpendel mit Ruhelage und rücktreibender Kraft">
+      <svg viewBox="0 0 260 440" role="img">
+        <line x1="55" y1="22" x2="235" y2="22" class="support-line" />
+
+        <path
+          d="M145 22
+             C110 58, 110 74, 145 84
+             C190 96, 190 112, 145 124
+             C100 136, 100 152, 145 164
+             C190 176, 190 192, 145 204
+             C100 216, 100 232, 145 244
+             C190 256, 190 272, 145 284
+             C100 296, 100 312, 145 324"
+          class="spring-line"
+        />
+
+        <line x1="145" y1="324" x2="145" y2="365" class="connector-line" />
+
+        <line x1="35" y1="324" x2="240" y2="324" class="rest-line" />
+        <text x="2" y="315" class="rest-label">Ruhelage x₀</text>
+
+        <circle cx="145" cy="375" r="42" class="mass" />
+
+        <line x1="145" y1="375" x2="145" y2="270" class="force-line" />
+        <polygon points="145,270 132,294 158,294" class="force-arrow" />
+        <text x="161" y="305" class="force-label">F</text>
+
+        <line x1="55" y1="324" x2="55" y2="420" class="axis-line" />
+        <polygon points="55,420 46,404 64,404" class="axis-arrow" />
+        <text x="31" y="414" class="axis-label">x</text>
+      </svg>
+    </figure>
+  </div>
+
+  <aside class="notice-box formula-box">
+    <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+
+    <div class="formula">
+      \( \frac&#123;d^&#123;2&#125;x&#125;&#123;dt^&#123;2&#125;&#125; + \omega_&#123;0&#125;^&#123;2&#125;x = 0. \)
+    </div>
+  </aside>
+
+  <p>
+    \( \omega_&#123;0&#125; \) gibt die
+    <a href="#glossary-angular-frequency" class="glossary-link">Kreisfrequenz</a>
+    der Schwingung an und somit, wie häufig der Körper die Ruhelage durchschreitet.
+    Sie hängt mit der
+    <a href="#glossary-period" class="glossary-link">Schwingungsdauer</a>
+    über \( T = \frac&#123;2\pi&#125;&#123;\omega_&#123;0&#125;&#125; \) zusammen.
+  </p>
+<section class="multiple-choice-task">
+  <div class="task-card">
+    <h2>
+      Welche der folgenden Gleichungen sind allgemeine Lösungen der Differentialgleichung des harmonischen Oszillators?
+    </h2>
+
+    <p class="task-hint">
+      Beachte, dass alle Variablen als konstant angenommen werden sollen.
+    </p>
+
+    <div class="answer-list">
+      <label
+        class="answer-option"
+        *ngFor="let option of multipleChoiceOptions"
+        [class.correct-option]="answerChecked && option.correct"
+        [class.wrong-selected-option]="answerChecked && option.selected && !option.correct"
+      >
+        <input
+          type="checkbox"
+          [checked]="option.selected"
+          (change)="toggleOption(option, $event)"
+        />
+
+        <span class="formula-option" [innerHTML]="option.formula"></span>
+      </label>
+    </div>
+
+    <div
+      class="feedback-box"
+      *ngIf="answerChecked"
+      [class.success-feedback]="isAnswerCorrect()"
+      [class.error-feedback]="!isAnswerCorrect()"
+    >
+      <div class="feedback-icon" aria-hidden="true">
+        <span *ngIf="isAnswerCorrect()">✓</span>
+        <span *ngIf="!isAnswerCorrect()">!</span>
+      </div>
+
+      <div class="feedback-text" *ngIf="isAnswerCorrect()">
+        <strong>Richtig.</strong><br />
+        Die zweite und die vierte Gleichung sind allgemeine Lösungen.
+      </div>
+
+      <div class="feedback-text" *ngIf="!isAnswerCorrect()">
+        <strong *ngIf="remainingAttempts === 0">Sie haben keine Versuche mehr.</strong>
+        <strong *ngIf="remainingAttempts > 0">Das stimmt so noch nicht ganz.</strong>
+        <br />
+        <span *ngIf="remainingAttempts === 0">Richtige Lösung siehe oben.</span>
+        <span *ngIf="remainingAttempts > 0">
+          Prüfen Sie noch einmal, welche Gleichungen zwei unabhängige Konstanten enthalten.
+        </span>
+        <br />
+        Auf den nächsten Seiten erfahren Sie mehr zum Lösen der Differentialgleichungen.
+      </div>
+    </div>
+
+    <button class="evaluate-button" type="button" (click)="checkAnswer()">
+      Auswerten
+    </button>
+  </div>
+</section>
+</section>

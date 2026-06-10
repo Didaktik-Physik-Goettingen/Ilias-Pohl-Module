@@ -1,0 +1,458 @@
+<section class="learning-page">
+  <h1>Freie Schwingung</h1>
+
+  <section class="chapter-section">
+    <h2>DGL des ungedämpften harmonischen Oszillators</h2>
+
+    <aside class="notice-box notice-blue">
+      <div class="notice-icon speech-icon" aria-hidden="true"></div>
+
+      <p>
+        <strong>Beachten Sie:</strong>
+        In diesem Kapitel geht es um die freie und ungedämpfte harmonische Schwingung.
+        Es wird also keine Dämpfung und keine äußere Anregung betrachtet.
+      </p>
+    </aside>
+
+    <p>
+      Die Differentialgleichung des ungedämpften harmonischen Oszillators lautet:
+    </p>
+
+    <div class="formula-line" [innerHTML]="formulas.mainDgl"></div>
+
+    <p>
+      Mit der Abkürzung <span [innerHTML]="formulas.omegaDefinition"></span>
+      für die Masse <span class="inline-variable">m</span> und die Federkonstante
+      <span class="inline-variable">D</span> nennt man die Gleichung:
+    </p>
+
+    <ul class="definition-list">
+      <li>
+        <strong>ungedämpft</strong>, weil keinerlei Dämpfung betrachtet wird,
+      </li>
+      <li>
+        <strong>frei</strong>, weil keinerlei äußere Anregung existiert.
+        Die rechte Seite der DGL ist null. Deshalb heißt sie auch homogene DGL,
+      </li>
+      <li>
+        <strong>harmonisch</strong>, weil die Lösung durch Sinus- und Kosinusfunktionen beschrieben werden kann.
+      </li>
+    </ul>
+
+    <p>
+      Die DGL kann auch in der Überpunkt- oder Newtonschen Notation für zeitliche Ableitungen geschrieben werden:
+    </p>
+
+    <div class="formula-line" [innerHTML]="formulas.newtonNotation"></div>
+  </section>
+
+  <section class="chapter-section">
+    <h2>Lösung mit dem Exponentialansatz</h2>
+
+    <p>
+      Die DGL kann mit folgendem Ansatz gelöst werden:
+    </p>
+
+    <div class="formula-line" [innerHTML]="formulas.exponentialAnsatz"></div>
+
+    <p>
+      Dazu bestimmen wir zunächst die erste und zweite Ableitung:
+    </p>
+
+    <div class="formula-stack">
+      <div [innerHTML]="formulas.firstDerivative"></div>
+      <div [innerHTML]="formulas.secondDerivative"></div>
+    </div>
+
+    <p>
+      Nun setzen wir den Ansatz und die zweite Ableitung in die Differentialgleichung ein:
+    </p>
+
+    <div class="formula-line wide-formula" [innerHTML]="formulas.substitution"></div>
+
+    <p>
+      Da der Faktor vor der Klammer nicht für alle Zeiten null wird, muss die Klammer selbst null sein.
+      Dadurch ergibt sich die Bestimmungsgleichung:
+    </p>
+
+    <div class="formula-stack">
+      <div [innerHTML]="formulas.characteristicEquation"></div>
+      <div [innerHTML]="formulas.lambdaSquared"></div>
+      <div [innerHTML]="formulas.lambdaSolutions"></div>
+    </div>
+
+    <p>
+      Es gibt also zwei komplexe Lösungen:
+    </p>
+
+    <div class="formula-stack">
+      <div [innerHTML]="formulas.solutionOne"></div>
+      <div [innerHTML]="formulas.solutionTwo"></div>
+    </div>
+
+    <p>
+      Die allgemeine Lösung ist die Linearkombination dieser beiden Lösungen:
+    </p>
+
+    <aside class="notice-box formula-box">
+      <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+      <div class="formula" [innerHTML]="formulas.complexGeneralSolution"></div>
+    </aside>
+
+    <p>
+      Aus physikalischer Sicht muss die Auslenkung reell sein.
+      Deshalb kann die Lösung auch in der folgenden reellen Form geschrieben werden:
+    </p>
+
+    <div class="formula-line" [innerHTML]="formulas.realGeneralSolution"></div>
+  </section>
+
+  <section class="task-section">
+    <div class="task-card">
+      <h2>
+        Welche der folgenden Gleichungen sind allgemeine Lösungen der Differentialgleichung des harmonischen Oszillators?
+      </h2>
+
+      <p class="task-hint">
+        Beachten Sie, dass alle Variablen als konstant angenommen werden sollen.
+      </p>
+
+      <div class="answer-list">
+        <label
+          class="answer-option"
+          *ngFor="let option of firstTask.options"
+          [class.correct-option]="firstTask.checked && option.correct"
+          [class.wrong-selected-option]="firstTask.checked && option.selected && !option.correct"
+        >
+          <input
+            type="checkbox"
+            [checked]="option.selected"
+            (change)="toggleChoiceOption(firstTask, option, $event)"
+          />
+
+          <span class="formula-option" [innerHTML]="option.label"></span>
+        </label>
+      </div>
+
+      <div
+        class="feedback-box"
+        *ngIf="firstTask.checked"
+        [class.success-feedback]="isChoiceTaskCorrect(firstTask)"
+        [class.error-feedback]="!isChoiceTaskCorrect(firstTask)"
+      >
+        <div class="feedback-icon" aria-hidden="true">
+          <span *ngIf="isChoiceTaskCorrect(firstTask)">✓</span>
+          <span *ngIf="!isChoiceTaskCorrect(firstTask)">!</span>
+        </div>
+
+        <div class="feedback-text" *ngIf="isChoiceTaskCorrect(firstTask)">
+          <strong>Richtig.</strong><br />
+          Die komplexe Linearkombination und die Kosinuslösung mit Phase sind allgemeine Lösungen.
+        </div>
+
+        <div class="feedback-text" *ngIf="!isChoiceTaskCorrect(firstTask)">
+          <strong *ngIf="firstTask.remainingAttempts === 0">Sie haben keine Versuche mehr.</strong>
+          <strong *ngIf="firstTask.remainingAttempts > 0">Das stimmt so noch nicht ganz.</strong>
+          <br />
+          <span *ngIf="firstTask.remainingAttempts === 0">Richtige Lösung siehe oben.</span>
+          <span *ngIf="firstTask.remainingAttempts > 0">
+            Prüfen Sie, ob die Gleichung genügend freie Konstanten enthält.
+          </span>
+        </div>
+      </div>
+
+      <button class="evaluate-button" type="button" (click)="checkChoiceTask(firstTask)">
+        Auswerten
+      </button>
+    </div>
+  </section>
+
+  <section class="chapter-section">
+    <h2>Exkurs: Bestimmung der Konstanten</h2>
+
+    <p>
+      Da die Funktion physikalisch reell sein muss, gilt:
+    </p>
+
+    <div class="formula-line" [innerHTML]="formulas.realityCondition"></div>
+
+    <p>
+      Für die komplexe Lösung ergibt das:
+    </p>
+
+    <div class="formula-stack">
+      <div [innerHTML]="formulas.complexGeneralSolution"></div>
+      <div [innerHTML]="formulas.conjugatedSolution"></div>
+    </div>
+
+    <p>
+      Vergleicht man die Koeffizienten der Exponentialterme, erhält man:
+    </p>
+
+    <div class="formula-stack">
+      <div [innerHTML]="formulas.coefficientConditionOne"></div>
+      <div [innerHTML]="formulas.coefficientConditionTwo"></div>
+      <div [innerHTML]="formulas.conjugatedConstants"></div>
+    </div>
+
+    <p>
+      Die beiden komplexen Konstanten dürfen also nicht beliebig gewählt werden.
+      Sie müssen komplex konjugiert zueinander sein.
+    </p>
+
+    <div class="formula-stack">
+      <div [innerHTML]="formulas.complexC"></div>
+      <div [innerHTML]="formulas.complexRealSolution"></div>
+    </div>
+
+    <p>
+      Für eine Anfangsbedingung mit Auslenkung null und Anfangsgeschwindigkeit
+      <span class="inline-variable">v₀</span> gilt:
+    </p>
+
+    <div class="formula-stack">
+      <div [innerHTML]="formulas.boundaryCondition"></div>
+      <div [innerHTML]="formulas.exampleResult"></div>
+    </div>
+  </section>
+
+  <section class="task-section">
+    <div class="task-card">
+      <h2>
+        Betrachten Sie den Zusammenhang zwischen den Konstanten und der Reellheitsbedingung der Lösung.
+        Welche Aussagen sind richtig?
+      </h2>
+
+      <div class="true-false-table">
+        <div class="true-false-header">
+          <span></span>
+          <span>richtig</span>
+          <span>falsch</span>
+        </div>
+
+        <div
+          class="true-false-row"
+          *ngFor="let statement of trueFalseStatements"
+          [class.correct-row]="trueFalseChecked && statement.selected === statement.correct"
+          [class.wrong-row]="trueFalseChecked && statement.selected !== null && statement.selected !== statement.correct"
+        >
+          <div class="statement-text" [innerHTML]="statement.text"></div>
+
+          <label class="radio-cell">
+            <input
+              type="radio"
+              [name]="'statement-' + statement.id"
+              [checked]="statement.selected === true"
+              (change)="selectTrueFalse(statement, true)"
+            />
+          </label>
+
+          <label class="radio-cell">
+            <input
+              type="radio"
+              [name]="'statement-' + statement.id"
+              [checked]="statement.selected === false"
+              (change)="selectTrueFalse(statement, false)"
+            />
+          </label>
+        </div>
+      </div>
+
+      <div
+        class="feedback-box"
+        *ngIf="trueFalseChecked"
+        [class.success-feedback]="isTrueFalseTaskCorrect()"
+        [class.error-feedback]="!isTrueFalseTaskCorrect()"
+      >
+        <div class="feedback-icon" aria-hidden="true">
+          <span *ngIf="isTrueFalseTaskCorrect()">✓</span>
+          <span *ngIf="!isTrueFalseTaskCorrect()">!</span>
+        </div>
+
+        <div class="feedback-text" *ngIf="isTrueFalseTaskCorrect()">
+          <strong>Richtig.</strong><br />
+          Die Reellheitsbedingung erzwingt, dass die Konstanten komplex konjugiert zueinander sind.
+        </div>
+
+        <div class="feedback-text" *ngIf="!isTrueFalseTaskCorrect()">
+          <strong *ngIf="trueFalseRemainingAttempts === 0">Sie haben keine Versuche mehr.</strong>
+          <strong *ngIf="trueFalseRemainingAttempts > 0">Das stimmt so noch nicht ganz.</strong>
+          <br />
+          Denken Sie daran: Eine reelle Lösung muss mit ihrer komplex konjugierten Lösung übereinstimmen.
+        </div>
+      </div>
+
+      <button class="evaluate-button" type="button" (click)="checkTrueFalseTask()">
+        Auswerten
+      </button>
+    </div>
+  </section>
+
+  <section class="chapter-section">
+    <h2>Exkurs: Komplexe Lösungen bei reellen Gleichungen</h2>
+
+    <p>
+      Bei reellen Differentialgleichungen treten komplexe Lösungen des charakteristischen Polynoms paarweise auf.
+      Ein komplex konjugiertes Paar hat allgemein die Form
+      <span class="inline-variable">λ = α ± iβ</span>.
+    </p>
+
+    <p>
+      Im ungedämpften Fall ist der Realteil null. Deshalb entstehen reine Sinus- und Kosinuslösungen.
+      Bei gedämpften Schwingungen kommt zusätzlich ein Exponentialfaktor hinzu.
+    </p>
+  </section>
+
+  <section class="task-section">
+    <div class="task-card">
+      <h2>Ordnen Sie zu:</h2>
+
+      <button class="reset-button" type="button" (click)="resetMatchingTask()">
+        Anordnung zurücksetzen
+      </button>
+
+      <p class="task-hint">Ziehen Sie die Begriffe auf die passenden Felder.</p>
+
+      <div class="matching-drag-layout">
+        <div class="matching-slots">
+          <div class="matching-slot-row"
+               *ngFor="let item of matchingItems"
+               [class.correct-row]="matchingChecked && item.selectedRightId === item.correctRightId"
+               [class.wrong-row]="matchingChecked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId">
+            <div class="matching-prompt-label">{{ item.prompt }}</div>
+            <div class="matching-dropzone"
+                 [class.dropzone-has-item]="item.selectedRightId !== ''"
+                 [class.dropzone-correct]="matchingChecked && item.selectedRightId === item.correctRightId"
+                 [class.dropzone-wrong]="matchingChecked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId"
+                 (dragover)="onDragOver($event)"
+                 (drop)="onDropMatchingOption(item, $event)">
+              <ng-container *ngIf="item.selectedRightId !== ''; else emptySlot">
+                <div class="matching-placed-chip"
+                     draggable="true"
+                     (dragstart)="onDragStart($event, item.selectedRightId)"
+                     (dragend)="onDragEnd()">
+                  <span>{{ getMatchingOptionLabel(item.selectedRightId) }}</span>
+                  <button *ngIf="!matchingChecked" class="chip-remove-btn" type="button" (click)="clearMatchingItem(item)">×</button>
+                </div>
+              </ng-container>
+              <ng-template #emptySlot>
+                <span class="dropzone-placeholder">Hierher ziehen</span>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div class="matching-options-pool">
+          <div class="matching-option-chip"
+               *ngFor="let option of getAvailableMatchingOptions()"
+               draggable="true"
+               (dragstart)="onDragStart($event, option.id)"
+               (dragend)="onDragEnd()">
+            {{ option.label }}
+          </div>
+          <p *ngIf="getAvailableMatchingOptions().length === 0" class="pool-all-placed">Alle Begriffe wurden zugeordnet.</p>
+        </div>
+      </div>
+
+      <div
+        class="feedback-box"
+        *ngIf="matchingChecked"
+        [class.success-feedback]="isMatchingTaskCorrect()"
+        [class.error-feedback]="!isMatchingTaskCorrect()"
+      >
+        <div class="feedback-icon" aria-hidden="true">
+          <span *ngIf="isMatchingTaskCorrect()">✓</span>
+          <span *ngIf="!isMatchingTaskCorrect()">!</span>
+        </div>
+
+        <div class="feedback-text" *ngIf="isMatchingTaskCorrect()">
+          <strong>Richtig.</strong><br />
+          Die Zuordnungen passen zu ungedämpften und gedämpften Schwingungen.
+        </div>
+
+        <div class="feedback-text" *ngIf="!isMatchingTaskCorrect()">
+          <strong *ngIf="matchingRemainingAttempts === 0">Sie haben keine Versuche mehr.</strong>
+          <strong *ngIf="matchingRemainingAttempts > 0">Das stimmt so noch nicht ganz.</strong>
+          <br />
+          Prüfen Sie besonders den Unterschied zwischen Realteil null und Realteil ungleich null.
+        </div>
+      </div>
+
+      <button class="evaluate-button" type="button" (click)="checkMatchingTask()">
+        Auswerten
+      </button>
+    </div>
+  </section>
+
+  <section class="task-section">
+    <div class="task-card">
+      <h2>Welche der folgenden Aussagen zum ungedämpften harmonischen Oszillator sind korrekt?</h2>
+
+      <div class="answer-list">
+        <label
+          class="answer-option text-option"
+          *ngFor="let option of finalTask.options"
+          [class.correct-option]="finalTask.checked && option.correct"
+          [class.wrong-selected-option]="finalTask.checked && option.selected && !option.correct"
+        >
+          <input
+            type="checkbox"
+            [checked]="option.selected"
+            (change)="toggleChoiceOption(finalTask, option, $event)"
+          />
+
+          <span [innerHTML]="option.label"></span>
+        </label>
+      </div>
+
+      <div
+        class="feedback-box"
+        *ngIf="finalTask.checked"
+        [class.success-feedback]="isChoiceTaskCorrect(finalTask)"
+        [class.error-feedback]="!isChoiceTaskCorrect(finalTask)"
+      >
+        <div class="feedback-icon" aria-hidden="true">
+          <span *ngIf="isChoiceTaskCorrect(finalTask)">✓</span>
+          <span *ngIf="!isChoiceTaskCorrect(finalTask)">!</span>
+        </div>
+
+        <div class="feedback-text" *ngIf="isChoiceTaskCorrect(finalTask)">
+          <strong>Richtig.</strong><br />
+          Damit sind die wichtigsten Eigenschaften der freien ungedämpften Schwingung zusammengefasst.
+        </div>
+
+        <div class="feedback-text" *ngIf="!isChoiceTaskCorrect(finalTask)">
+          <strong *ngIf="finalTask.remainingAttempts === 0">Sie haben keine Versuche mehr.</strong>
+          <strong *ngIf="finalTask.remainingAttempts > 0">Das stimmt so noch nicht ganz.</strong>
+          <br />
+          Denken Sie an die Begriffe homogen, frei, ungedämpft und an
+          <span [innerHTML]="formulas.omegaDefinition"></span>.
+        </div>
+      </div>
+
+      <button class="evaluate-button" type="button" (click)="checkChoiceTask(finalTask)">
+        Auswerten
+      </button>
+    </div>
+  </section>
+
+  <section class="chapter-section glossary-section">
+    <h2>Anhang A: Glossar</h2>
+
+    <article class="glossary-card">
+      <h3>Federkonstante</h3>
+
+      <p>
+        Die Federkonstante ist eine materialabhängige Konstante, die umgangssprachlich auch Steifigkeit genannt wird.
+        Sie gibt das Verhältnis von wirkender Kraft und daraus resultierender Dehnung oder Verbiegung einer Feder an.
+      </p>
+
+      <p>
+        Beim Pohlschen Resonator wird statt der Federkonstante die Winkelrichtgröße genutzt.
+        Sie bestimmt das rücktreibende Drehmoment:
+      </p>
+
+      <div class="formula-line" [innerHTML]="formulas.glossaryMoment"></div>
+    </article>
+  </section>
+</section>

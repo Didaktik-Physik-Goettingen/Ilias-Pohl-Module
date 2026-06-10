@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestTracking } from '../../../core/services/test-tracking';
 
@@ -23,7 +23,7 @@ export class TestTrueFalse implements OnInit{
   @Input() pointsPerCorrectClick: number = 5;
   @Output() onSubmit = new EventEmitter<{
     isCorrect: boolean;
-    userAnswer: { statementId: string; selected: 'true' | 'false'}[];
+    userAnswer: { statementId: string; selected: 'true' | 'false' }[];
     pointsAwarded: number;
     pointsBreakdown: string;
   }>();

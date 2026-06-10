@@ -1,0 +1,2053 @@
+<section class="learning-page">
+  @switch (currentStep) {
+    @case (0) {
+      <article class="topic-card">
+        <h1>Freie Schwingung</h1>
+
+        <h2>Allgemeine Einführung ungedämpfte, harmonische Schwingungen</h2>
+
+        <aside class="notice-box notice-blue">
+          <div class="notice-icon speech-icon" aria-hidden="true"></div>
+
+          <p>
+            <strong>Beachten Sie:</strong>
+            In diesem Versuch beschäftigen Sie sich nur mit eindimensionalen Bewegungen.
+            Auch der theoretische Überblick beschränkt sich daher auf diese Betrachtung.
+            Wenn Sie sich für die Weiterführung in mehreren Dimensionen interessieren,
+            dann folgen Sie an gegebener Stelle den Hinweisen.
+          </p>
+        </aside>
+
+        <div class="content-row">
+          <div class="text-column">
+            <p>
+              Wenn ein Körper aus seiner Ruhelage ausgelenkt wird und durch eine Kraft
+              \( \vec&#123;F&#125; \), die linear mit dem Abstand von der Ruhelage zunimmt,
+              in Bewegung versetzt wird, dann sprechen wir von einer harmonischen Schwingung.
+            </p>
+
+            <p>
+              Die Bewegung des Körpers kann mit der Differentialgleichung
+              \( m\frac&#123;d^2x&#125;&#123;dt^2&#125; = -Dx \)
+              beschrieben werden. Dabei wird <span class="inline-variable">D</span> als Federkonstante bezeichnet
+              und gibt die Stärke der rücktreibenden Kraft an.
+            </p>
+
+            <p>
+              Üblicherweise ersetzt man hierbei
+              \( \omega_0^2 = \frac&#123;D&#125;&#123;m&#125; \)
+              und erhält dadurch die klassische Schwingungsgleichung:
+            </p>
+          </div>
+
+          <figure class="spring-figure" aria-label="Federpendel mit rücktreibender Kraft">
+            <svg viewBox="0 0 260 440" role="img">
+              <line x1="55" y1="22" x2="235" y2="22" class="support-line" />
+
+              <path
+                d="M145 22
+                   C110 58, 110 74, 145 84
+                   C190 96, 190 112, 145 124
+                   C100 136, 100 152, 145 164
+                   C190 176, 190 192, 145 204
+                   C100 216, 100 232, 145 244
+                   C190 256, 190 272, 145 284
+                   C100 296, 100 312, 145 324"
+                class="spring-line"
+              />
+
+              <line x1="145" y1="324" x2="145" y2="365" class="connector-line" />
+              <line x1="35" y1="324" x2="240" y2="324" class="rest-line" />
+              <text x="2" y="315" class="rest-label">Ruhelage x₀</text>
+              <circle cx="145" cy="375" r="42" class="mass" />
+              <line x1="145" y1="375" x2="145" y2="270" class="force-line" />
+              <polygon points="145,270 132,294 158,294" class="force-arrow" />
+              <text x="161" y="305" class="force-label">F</text>
+              <line x1="55" y1="324" x2="55" y2="420" class="axis-line" />
+              <polygon points="55,420 46,404 64,404" class="axis-arrow" />
+              <text x="31" y="414" class="axis-label">x</text>
+            </svg>
+          </figure>
+        </div>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula">\( \frac&#123;d^2x&#125;&#123;dt^2&#125; + \omega_0^2 x = 0 \)</div>
+        </aside>
+
+        <p>
+          \( \omega_0 \) gibt die Kreisfrequenz der Schwingung an.
+          Sie beschreibt, wie häufig der Körper die Ruhelage durchschreitet.
+          Sie hängt mit der Schwingungsdauer über
+          \( T = \frac&#123;2\pi&#125;&#123;\omega_0&#125; \)
+          zusammen.
+        </p>
+
+        <section class="task-card">
+          <h2>
+            Welche der folgenden Gleichungen sind allgemeine Lösungen der Differentialgleichung des harmonischen Oszillators?
+          </h2>
+
+          <p class="task-hint">
+            Beachten Sie, dass alle Variablen als konstant angenommen werden sollen.
+          </p>
+
+          <div class="answer-list">
+            @for (option of firstTask.options; track option.id) {
+              <label
+                class="answer-option"
+                [class.correct-option]="firstTask.checked && option.correct"
+                [class.wrong-selected-option]="firstTask.checked && option.selected && !option.correct"
+              >
+                <input
+                  type="checkbox"
+                  [checked]="option.selected"
+                  (change)="toggleChoiceOption(firstTask, option, $event)"
+                />
+
+                <span class="formula-option" [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+
+          @if (firstTask.checked) {
+            <div
+              class="feedback-box"
+              [class.success-feedback]="isChoiceTaskCorrect(firstTask)"
+              [class.error-feedback]="!isChoiceTaskCorrect(firstTask)"
+            >
+              <div class="feedback-icon" aria-hidden="true">
+                @if (isChoiceTaskCorrect(firstTask)) {
+                  <span>✓</span>
+                } @else {
+                  <span>!</span>
+                }
+              </div>
+
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(firstTask)) {
+                  <strong>Richtig.</strong><br />
+                  Die komplexe Linearkombination und die Kosinuslösung mit Phase sind allgemeine Lösungen.
+                } @else {
+                  @if (firstTask.remainingAttempts === 0) {
+                    <strong>Sie haben keine Versuche mehr.</strong>
+                    <br />
+                    Richtige Lösung siehe oben.
+                  } @else {
+                    <strong>Das stimmt so noch nicht ganz.</strong>
+                    <br />
+                    Prüfen Sie, ob die Gleichung genügend freie Konstanten enthält.
+                  }
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(firstTask)">
+            Auswerten
+          </button>
+        </section>
+
+        <section class="graph-card">
+          <h2>Beispielhafte Schwingung</h2>
+
+          <p>
+            Der folgende Graph zeigt die Schwingung eines Körpers bei einer Anfangsauslenkung
+            und mit der Anfangsgeschwindigkeit <span class="inline-variable">v₀ = 0</span>.
+          </p>
+
+          <svg class="oscillation-graph" viewBox="0 0 760 260" role="img" aria-label="Kosinusförmige freie Schwingung">
+            <line x1="40" y1="130" x2="730" y2="130" class="graph-axis" />
+            <line x1="70" y1="30" x2="70" y2="230" class="graph-axis" />
+            <text x="715" y="118" class="graph-label">t</text>
+            <text x="52" y="42" class="graph-label">x</text>
+
+            <path
+              d="M70 55
+                 C130 55, 130 205, 190 205
+                 C250 205, 250 55, 310 55
+                 C370 55, 370 205, 430 205
+                 C490 205, 490 55, 550 55
+                 C610 55, 610 205, 670 205
+                 C700 205, 705 170, 725 130"
+              class="oscillation-line"
+            />
+
+            <line x1="70" y1="55" x2="70" y2="130" class="helper-line" />
+            <text x="82" y="63" class="graph-note">x₀</text>
+          </svg>
+        </section>
+      </article>
+    }
+
+    @case (1) {
+      <article class="topic-card">
+        <h1>DGL des ungedämpften harmonischen Oszillators</h1>
+
+        <p>
+          Die Differentialgleichung des ungedämpften harmonischen Oszillators lautet:
+        </p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.mainDgl"></div>
+        </aside>
+
+        <p>
+          Mit der Abkürzung <span [innerHTML]="formulas.omegaDefinition"></span>
+          für die Masse <span class="inline-variable">m</span> und die Federkonstante
+          <span class="inline-variable">D</span> nennt man diese Gleichung:
+        </p>
+
+        <ul class="definition-list">
+          <li>
+            <strong>ungedämpft</strong>, weil keinerlei Dämpfung betrachtet wird,
+          </li>
+          <li>
+            <strong>frei</strong>, weil keinerlei äußere Anregung existiert.
+            Die rechte Seite der DGL ist null. Deshalb heißt die Gleichung auch homogene DGL,
+          </li>
+          <li>
+            <strong>harmonisch</strong>, weil die akustische Überlagerung von den entstehenden "reinen" Sinustönen als harmonisch empfunden wird.
+          </li>
+        </ul>
+
+        <p>
+          Die DGL kann auch in der Überpunkt- oder Newtonschen Notation geschrieben werden:
+        </p>
+
+        <div class="formula-line" [innerHTML]="formulas.newtonNotation"></div>
+
+        <h2>Lösung mit dem Exponentialansatz</h2>
+
+        <p>
+          Die DGL kann mit folgendem Ansatz gelöst werden:
+        </p>
+
+        <div class="formula-line" [innerHTML]="formulas.exponentialAnsatz"></div>
+
+        <p>
+          Dazu bestimmen wir die zeitlichen Ableitungen:
+        </p>
+
+        <div class="formula-stack">
+          <div [innerHTML]="formulas.firstDerivative"></div>
+          <div [innerHTML]="formulas.secondDerivative"></div>
+        </div>
+
+        <p>
+          Nun setzen wir den Ansatz und die zweite Ableitung in die Differentialgleichung ein:
+        </p>
+
+        <div class="formula-line wide-formula" [innerHTML]="formulas.substitution"></div>
+
+        <p>
+          Da der Faktor vor der Klammer nicht für alle Zeiten null wird,
+          muss die Klammer selbst null werden. Dadurch ergibt sich die Bestimmungsgleichung:
+        </p>
+
+        <div class="formula-stack">
+          <div [innerHTML]="formulas.characteristicEquation"></div>
+          <div [innerHTML]="formulas.lambdaSquared"></div>
+          <div [innerHTML]="formulas.lambdaSolutions"></div>
+        </div>
+
+        <p>
+          Es gibt also zwei komplexe Lösungen:
+        </p>
+
+        <div class="formula-stack">
+          <div [innerHTML]="formulas.solutionOne"></div>
+          <div [innerHTML]="formulas.solutionTwo"></div>
+        </div>
+
+        <p>
+          Die allgemeine Lösung ist die Linearkombination dieser beiden Lösungen:
+        </p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.complexGeneralSolution"></div>
+        </aside>
+
+        <p>
+          Aus physikalischen Gründen muss die Lösung reell sein.
+          Daher kann sie auch in folgender Form geschrieben werden:
+        </p>
+
+        <div class="formula-line" [innerHTML]="formulas.realGeneralSolution"></div>
+
+        <details class="exkurs-accordion" (toggle)="onAccordionToggle()">
+          <summary class="exkurs-summary">Exkurs: Bestimmung der Konstanten</summary>
+          <div class="exkurs-content">
+            <p>
+              Da die Auslenkung physikalisch reell sein muss, muss die Funktion mit ihrer komplex konjugierten Funktion übereinstimmen:
+            </p>
+
+            <div class="formula-line" [innerHTML]="formulas.realityCondition"></div>
+
+            <p>
+              Für die komplexe Lösung ergibt sich:
+            </p>
+
+            <div class="formula-stack">
+              <div [innerHTML]="formulas.complexGeneralSolution"></div>
+              <div [innerHTML]="formulas.conjugatedSolution"></div>
+            </div>
+
+            <p>
+              Vergleicht man die Koeffizienten der Exponentialterme, erhält man:
+            </p>
+
+            <div class="formula-stack">
+              <div [innerHTML]="formulas.coefficientConditionOne"></div>
+              <div [innerHTML]="formulas.coefficientConditionTwo"></div>
+              <div [innerHTML]="formulas.conjugatedConstants"></div>
+            </div>
+
+            <p>
+              Das heißt: Die beiden komplexen Konstanten dürfen nicht unabhängig voneinander gewählt werden.
+              Sie müssen komplex konjugiert zueinander sein.
+            </p>
+
+            <div class="formula-stack">
+              <div [innerHTML]="formulas.complexC"></div>
+              <div [innerHTML]="formulas.complexRealSolution"></div>
+            </div>
+
+            <p>
+              Beispielsweise können die Randbedingungen durch die Geschwindigkeit beim Nulldurchgang gegeben sein:
+            </p>
+
+            <div class="formula-stack">
+              <div [innerHTML]="formulas.boundaryCondition"></div>
+              <div [innerHTML]="formulas.exampleResult"></div>
+            </div>
+
+            <section class="task-card">
+              <h2>
+                Betrachten Sie den Zusammenhang zwischen den Konstanten und der Reellheitsbedingung der Lösung.
+                Welche Aussagen sind richtig?
+              </h2>
+
+              <p class="task-hint">
+                Für jede Aussage muss entschieden werden: richtig oder falsch.
+              </p>
+
+              <div class="true-false-table">
+                <div class="true-false-header">
+                  <span></span>
+                  <span>richtig</span>
+                  <span>falsch</span>
+                </div>
+
+                @for (statement of realityTask.statements; track statement.id) {
+                  <div
+                    class="true-false-row"
+                    [class.correct-row]="realityTask.checked && statement.selected === statement.correct"
+                    [class.wrong-row]="realityTask.checked && statement.selected !== null && statement.selected !== statement.correct"
+                  >
+                    <div class="statement-text" [innerHTML]="statement.text"></div>
+
+                    <label class="radio-cell">
+                      <input
+                        type="radio"
+                        [name]="'reality-' + statement.id"
+                        [checked]="statement.selected === true"
+                        (change)="selectTrueFalse(realityTask, statement, true)"
+                      />
+                    </label>
+
+                    <label class="radio-cell">
+                      <input
+                        type="radio"
+                        [name]="'reality-' + statement.id"
+                        [checked]="statement.selected === false"
+                        (change)="selectTrueFalse(realityTask, statement, false)"
+                      />
+                    </label>
+                  </div>
+                }
+              </div>
+
+              @if (realityTask.checked) {
+                <div
+                  class="feedback-box"
+                  [class.success-feedback]="isTrueFalseTaskCorrect(realityTask)"
+                  [class.error-feedback]="!isTrueFalseTaskCorrect(realityTask)"
+                >
+                  <div class="feedback-icon" aria-hidden="true">
+                    @if (isTrueFalseTaskCorrect(realityTask)) {
+                      <span>✓</span>
+                    } @else {
+                      <span>!</span>
+                    }
+                  </div>
+
+                  <div class="feedback-text">
+                    @if (isTrueFalseTaskCorrect(realityTask)) {
+                      <strong>Richtig.</strong><br />
+                      Die Reellheitsbedingung erzwingt, dass die Konstanten komplex konjugiert zueinander sind.
+                    } @else {
+                      @if (realityTask.remainingAttempts === 0) {
+                        <strong>Sie haben keine Versuche mehr.</strong>
+                      } @else {
+                        <strong>Das stimmt so noch nicht ganz.</strong>
+                      }
+                      <br />
+                      Denken Sie daran, dass die Lösung mit ihrer komplex konjugierten Lösung übereinstimmen muss.
+                    }
+                  </div>
+                </div>
+              }
+
+              <button class="evaluate-button" type="button" (click)="checkTrueFalseTask(realityTask)">
+                Auswerten
+              </button>
+            </section>
+          </div>
+        </details>
+
+        <details class="exkurs-accordion" (toggle)="onAccordionToggle()">
+          <summary class="exkurs-summary">Exkurs: Komplexe Lösungen bei reellen Gleichungen</summary>
+          <div class="exkurs-content">
+            <p>
+              Man kann allgemeiner zeigen, dass komplexe Lösungen des charakteristischen Polynoms bei einer reellen Ausgangsgleichung paarweise auftreten.
+              In unserem Fall ist die Ausgangsgleichung die DGL des harmonischen Oszillators.
+            </p>
+
+            <p>
+              Ein komplex konjugiertes Paar besitzt die Form
+              <span [innerHTML]="formulas.complexPair"></span>.
+              Im ungedämpften Fall ist der Realteil null:
+              <span [innerHTML]="formulas.undampedAlpha"></span>.
+            </p>
+
+            <p>
+              Bei einer gedämpften harmonischen Schwingung treten zusätzlich Exponentialfaktoren auf:
+            </p>
+
+            <div class="formula-line" [innerHTML]="formulas.dampedFunctions"></div>
+
+            <section class="task-card">
+              <h2>Ordnen Sie zu:</h2>
+
+              <p class="task-hint">Ziehen Sie die Begriffe auf die passenden Felder.</p>
+
+              <button class="reset-button" type="button" (click)="resetDglMatchingTask()">
+                Zurücksetzen
+              </button>
+
+              <div class="matching-drag-layout">
+                <div class="matching-slots">
+                  @for (item of dglMatchingTask.items; track item.id) {
+                    <div class="matching-slot-row"
+                         [class.correct-row]="dglMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                         [class.wrong-row]="dglMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId">
+                      <div class="matching-prompt-label">{{ item.prompt }}</div>
+                      <div class="matching-dropzone"
+                           [class.dropzone-has-item]="item.selectedRightId !== ''"
+                           [class.dropzone-correct]="dglMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                           [class.dropzone-wrong]="dglMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId"
+                           (dragover)="onDragOver($event)"
+                           (drop)="onDropOption(dglMatchingTask, item, $event)">
+                        @if (item.selectedRightId !== '') {
+                          <div class="matching-placed-chip"
+                               draggable="true"
+                               (dragstart)="onDragStart($event, item.selectedRightId)"
+                               (dragend)="onDragEnd()">
+                            <span>{{ getOptionLabel(dglMatchingOptions, item.selectedRightId) }}</span>
+                            @if (!dglMatchingTask.checked) {
+                              <button class="chip-remove-btn" type="button" (click)="clearMatchingItem(dglMatchingTask, item)">×</button>
+                            }
+                          </div>
+                        } @else {
+                          <span class="dropzone-placeholder">Hierher ziehen</span>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+
+                <div class="matching-options-pool">
+                  @for (option of getAvailableOptions(dglMatchingTask, dglMatchingOptions); track option.id) {
+                    <div class="matching-option-chip"
+                         draggable="true"
+                         (dragstart)="onDragStart($event, option.id)"
+                         (dragend)="onDragEnd()">
+                      {{ option.label }}
+                    </div>
+                  }
+                  @if (getAvailableOptions(dglMatchingTask, dglMatchingOptions).length === 0) {
+                    <p class="pool-all-placed">Alle Begriffe wurden zugeordnet.</p>
+                  }
+                </div>
+              </div>
+
+              @if (dglMatchingTask.checked) {
+                <div
+                  class="feedback-box"
+                  [class.success-feedback]="isMatchingTaskCorrect(dglMatchingTask)"
+                  [class.error-feedback]="!isMatchingTaskCorrect(dglMatchingTask)"
+                >
+                  <div class="feedback-icon" aria-hidden="true">
+                    @if (isMatchingTaskCorrect(dglMatchingTask)) {
+                      <span>✓</span>
+                    } @else {
+                      <span>!</span>
+                    }
+                  </div>
+
+                  <div class="feedback-text">
+                    @if (isMatchingTaskCorrect(dglMatchingTask)) {
+                      <strong>Richtig.</strong><br />
+                      Die Zuordnungen passen zum ungedämpften und gedämpften Fall.
+                    } @else {
+                      <strong>Das stimmt so noch nicht ganz.</strong><br />
+                      Achten Sie darauf, ob der Realteil null ist oder als Dämpfungsfaktor erhalten bleibt.
+                    }
+                  </div>
+                </div>
+              }
+
+              <button class="evaluate-button" type="button" (click)="checkDglMatchingTask()">
+                Auswerten
+              </button>
+            </section>
+          </div>
+        </details>
+
+        <section class="task-card">
+          <h2>Welche der folgenden Aussagen zum ungedämpften harmonischen Oszillator sind korrekt?</h2>
+
+          <div class="answer-list">
+            @for (option of oscillatorTask.options; track option.id) {
+              <label
+                class="answer-option text-option"
+                [class.correct-option]="oscillatorTask.checked && option.correct"
+                [class.wrong-selected-option]="oscillatorTask.checked && option.selected && !option.correct"
+              >
+                <input
+                  type="checkbox"
+                  [checked]="option.selected"
+                  (change)="toggleChoiceOption(oscillatorTask, option, $event)"
+                />
+
+                <span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+
+          @if (oscillatorTask.checked) {
+            <div
+              class="feedback-box"
+              [class.success-feedback]="isChoiceTaskCorrect(oscillatorTask)"
+              [class.error-feedback]="!isChoiceTaskCorrect(oscillatorTask)"
+            >
+              <div class="feedback-icon" aria-hidden="true">
+                @if (isChoiceTaskCorrect(oscillatorTask)) {
+                  <span>✓</span>
+                } @else {
+                  <span>!</span>
+                }
+              </div>
+
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(oscillatorTask)) {
+                  <strong>Richtig.</strong><br />
+                  Damit sind die wichtigsten Eigenschaften des ungedämpften harmonischen Oszillators erfasst.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />
+                  Denken Sie an die Begriffe frei, homogen und ungedämpft.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(oscillatorTask)">
+            Auswerten
+          </button>
+        </section>
+      </article>
+    }
+
+    @case (2) {
+      <article class="topic-card">
+        <h1>Phasenraum</h1>
+
+        <p>
+          Der sogenannte Phasenraum beschreibt die Menge aller möglichen Zustände eines dynamischen Systems.
+          Ausgehend von einer Bewegungsgleichung wie der ungedämpften harmonischen Schwingung werden alle möglichen Kombinationen von
+          <span [innerHTML]="formulas.phaseState"></span>
+          in einem Phasenraumdiagramm aufgetragen.
+        </p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.phaseDgl"></div>
+        </aside>
+
+        <p>
+          Für den ungedämpften harmonischen Oszillator mit der Rückstellkraft
+          <span [innerHTML]="formulas.restoringForce"></span>
+          gilt für die Energie:
+        </p>
+
+        <div class="formula-line" [innerHTML]="formulas.energyEquation"></div>
+
+        <p>
+          Mit
+          <span [innerHTML]="formulas.omegaPhase"></span>
+          ergibt sich durch Umstellen eine Kreisgleichung:
+        </p>
+
+        <div class="formula-line" [innerHTML]="formulas.phaseCircle"></div>
+
+        <div class="phase-visuals">
+          <figure class="phase-figure">
+            <svg viewBox="0 0 360 250" role="img" aria-label="Zeitverlauf von Ort und Geschwindigkeit">
+              <line x1="34" y1="125" x2="336" y2="125" class="graph-axis" />
+              <line x1="44" y1="28" x2="44" y2="220" class="graph-axis" />
+              <text x="322" y="113" class="graph-label">t</text>
+              <text x="23" y="37" class="graph-label">x, ẋ</text>
+
+              <path
+                d="M44 55
+                   C72 55, 72 195, 100 195
+                   C128 195, 128 55, 156 55
+                   C184 55, 184 195, 212 195
+                   C240 195, 240 55, 268 55
+                   C296 55, 296 195, 324 195"
+                class="position-line"
+              />
+
+              <path
+                d="M44 125
+                   C72 195, 72 195, 100 125
+                   C128 55, 128 55, 156 125
+                   C184 195, 184 195, 212 125
+                   C240 55, 240 55, 268 125
+                   C296 195, 296 195, 324 125"
+                class="velocity-line"
+              />
+
+              <text x="240" y="50" class="position-label">Position</text>
+              <text x="240" y="214" class="velocity-label">Geschwindigkeit</text>
+            </svg>
+          </figure>
+
+          <figure class="phase-figure">
+            <svg viewBox="0 0 280 280" role="img" aria-label="Kreisförmige Phasenraumtrajektorie">
+              <line x1="30" y1="140" x2="250" y2="140" class="graph-axis" />
+              <line x1="140" y1="250" x2="140" y2="30" class="graph-axis" />
+              <text x="235" y="128" class="graph-label">x</text>
+              <text x="148" y="45" class="graph-label">ẋ/ω₀</text>
+
+              <circle cx="140" cy="140" r="82" class="phase-circle" />
+              <path d="M140 58 A82 82 0 0 1 222 140" class="phase-arrow-path" />
+              <polygon points="222,140 209,134 213,151" class="phase-arrow" />
+              <line x1="140" y1="140" x2="200" y2="84" class="radius-line" />
+              <text x="173" y="100" class="graph-label">R</text>
+            </svg>
+          </figure>
+        </div>
+
+        <section class="task-card">
+          <h2>Beurteilen Sie die folgenden Aussagen zum Phasenraum des ungedämpften harmonischen Oszillators:</h2>
+
+          <p class="task-hint">
+            Für jede Aussage muss entschieden werden: richtig oder falsch.
+          </p>
+
+          <div class="true-false-table">
+            <div class="true-false-header">
+              <span></span>
+              <span>richtig</span>
+              <span>falsch</span>
+            </div>
+
+            @for (statement of phaseTask.statements; track statement.id) {
+              <div
+                class="true-false-row"
+                [class.correct-row]="phaseTask.checked && statement.selected === statement.correct"
+                [class.wrong-row]="phaseTask.checked && statement.selected !== null && statement.selected !== statement.correct"
+              >
+                <div class="statement-text" [innerHTML]="statement.text"></div>
+
+                <label class="radio-cell">
+                  <input
+                    type="radio"
+                    [name]="'phase-' + statement.id"
+                    [checked]="statement.selected === true"
+                    (change)="selectTrueFalse(phaseTask, statement, true)"
+                  />
+                </label>
+
+                <label class="radio-cell">
+                  <input
+                    type="radio"
+                    [name]="'phase-' + statement.id"
+                    [checked]="statement.selected === false"
+                    (change)="selectTrueFalse(phaseTask, statement, false)"
+                  />
+                </label>
+              </div>
+            }
+          </div>
+
+          @if (phaseTask.checked) {
+            <div
+              class="feedback-box"
+              [class.success-feedback]="isTrueFalseTaskCorrect(phaseTask)"
+              [class.error-feedback]="!isTrueFalseTaskCorrect(phaseTask)"
+            >
+              <div class="feedback-icon" aria-hidden="true">
+                @if (isTrueFalseTaskCorrect(phaseTask)) {
+                  <span>✓</span>
+                } @else {
+                  <span>!</span>
+                }
+              </div>
+
+              <div class="feedback-text">
+                @if (isTrueFalseTaskCorrect(phaseTask)) {
+                  <strong>Richtig.</strong><br />
+                  Ort und Geschwindigkeit bilden den Zustand. Die Kreisform folgt aus Energieerhaltung.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />
+                  Eine Kreisbahn bedeutet nicht, dass die Geschwindigkeit konstant bleibt.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkTrueFalseTask(phaseTask)">
+            Auswerten
+          </button>
+        </section>
+
+        <section class="task-card">
+          <h2>Ordnen Sie die folgenden Begriffe den passenden Beschreibungen zu:</h2>
+
+          <button class="reset-button" type="button" (click)="resetMatchingTask(phaseMatchingTask)">
+            Anordnung zurücksetzen
+          </button>
+
+          <p class="task-hint">Ziehen Sie die Begriffe auf die passenden Felder.</p>
+
+          <div class="matching-drag-layout">
+            <div class="matching-slots">
+              @for (item of phaseMatchingTask.items; track item.id) {
+                <div class="matching-slot-row"
+                     [class.correct-row]="phaseMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                     [class.wrong-row]="phaseMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId">
+                  <div class="matching-prompt-label">{{ item.prompt }}</div>
+                  <div class="matching-dropzone"
+                       [class.dropzone-has-item]="item.selectedRightId !== ''"
+                       [class.dropzone-correct]="phaseMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                       [class.dropzone-wrong]="phaseMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId"
+                       (dragover)="onDragOver($event)"
+                       (drop)="onDropOption(phaseMatchingTask, item, $event)">
+                    @if (item.selectedRightId !== '') {
+                      <div class="matching-placed-chip"
+                           draggable="true"
+                           (dragstart)="onDragStart($event, item.selectedRightId)"
+                           (dragend)="onDragEnd()">
+                        <span>{{ getOptionLabel(phaseMatchingOptions, item.selectedRightId) }}</span>
+                        @if (!phaseMatchingTask.checked) {
+                          <button class="chip-remove-btn" type="button" (click)="clearMatchingItem(phaseMatchingTask, item)">×</button>
+                        }
+                      </div>
+                    } @else {
+                      <span class="dropzone-placeholder">Hierher ziehen</span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="matching-options-pool">
+              @for (option of getAvailableOptions(phaseMatchingTask, phaseMatchingOptions); track option.id) {
+                <div class="matching-option-chip"
+                     draggable="true"
+                     (dragstart)="onDragStart($event, option.id)"
+                     (dragend)="onDragEnd()">
+                  {{ option.label }}
+                </div>
+              }
+              @if (getAvailableOptions(phaseMatchingTask, phaseMatchingOptions).length === 0) {
+                <p class="pool-all-placed">Alle Begriffe wurden zugeordnet.</p>
+              }
+            </div>
+          </div>
+
+          @if (phaseMatchingTask.checked) {
+            <div
+              class="feedback-box"
+              [class.success-feedback]="isMatchingTaskCorrect(phaseMatchingTask)"
+              [class.error-feedback]="!isMatchingTaskCorrect(phaseMatchingTask)"
+            >
+              <div class="feedback-icon" aria-hidden="true">
+                @if (isMatchingTaskCorrect(phaseMatchingTask)) {
+                  <span>✓</span>
+                } @else {
+                  <span>!</span>
+                }
+              </div>
+
+              <div class="feedback-text">
+                @if (isMatchingTaskCorrect(phaseMatchingTask)) {
+                  <strong>Richtig.</strong><br />
+                  Die Begriffe sind passend zugeordnet.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />
+                  Unterscheiden Sie Zustand, Trajektorie, Energiegleichung und Kreisgleichung.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkMatchingTask(phaseMatchingTask)">
+            Auswerten
+          </button>
+        </section>
+
+        <details class="exkurs-accordion" (toggle)="onAccordionToggle()">
+          <summary class="exkurs-summary">Exkurs: Definition des Phasenraums</summary>
+          <div class="exkurs-content">
+            <p>
+              Eine besonders anschauliche Darstellung des Schwingungsverhaltens ist im Phasenraum möglich.
+              Für ein punktförmiges Teilchen im dreidimensionalen Ortsraum ist der Phasenraum als Menge aller Sechsertupel aus den drei Orts- und Impulskoordinaten definiert.
+            </p>
+
+            <p>
+              Beim Pohlschen Pendel sind sowohl die Orts- als auch die Impulskoordinate eindimensionale Größen.
+              Der Phasenraum reduziert sich dadurch auf zwei Dimensionen.
+              Man trägt die Geschwindigkeit gegen den Ort beziehungsweise die Winkelgeschwindigkeit gegen den Auslenkwinkel auf.
+            </p>
+
+            <p>
+              Für einen ungedämpften Oszillator erhält man als Trajektorie einen Kreis.
+              Sein Radius hängt mit der Energie des Systems und der Federkonstante zusammen:
+              <span [innerHTML]="formulas.phaseRadius"></span>.
+              Für einen schwach gedämpften Oszillator erhält man hingegen eine Spirale zum Nullpunkt des Koordinatensystems.
+            </p>
+          </div>
+        </details>
+
+        <section class="task-card">
+          <h2>Warum ist der Phasenraum des Pohlschen Pendels zweidimensional darstellbar?</h2>
+
+          <div class="answer-list">
+            @for (option of pohlTask.options; track option.id) {
+              <label
+                class="answer-option text-option"
+                [class.correct-option]="pohlTask.checked && option.correct"
+                [class.wrong-selected-option]="pohlTask.checked && option.selected && !option.correct"
+              >
+                <input
+                  type="checkbox"
+                  [checked]="option.selected"
+                  (change)="toggleChoiceOption(pohlTask, option, $event)"
+                />
+
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+
+          @if (pohlTask.checked) {
+            <div
+              class="feedback-box"
+              [class.success-feedback]="isChoiceTaskCorrect(pohlTask)"
+              [class.error-feedback]="!isChoiceTaskCorrect(pohlTask)"
+            >
+              <div class="feedback-icon" aria-hidden="true">
+                @if (isChoiceTaskCorrect(pohlTask)) {
+                  <span>✓</span>
+                } @else {
+                  <span>!</span>
+                }
+              </div>
+
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(pohlTask)) {
+                  <strong>Richtig.</strong><br />
+                  Der Phasenraum ist zweidimensional darstellbar, weil Ort und Impuls jeweils eindimensional sind.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />
+                  Achten Sie auf die Dimension der Orts- und Impulskoordinaten.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(pohlTask)">
+            Auswerten
+          </button>
+        </section>
+      </article>
+    }
+
+    @case (3) {
+      <article class="topic-card">
+        <h1>Entscheidung</h1>
+
+        <p>
+          Am Ende dieses Kapitels gibt es drei mögliche Wege.
+          In der ursprünglichen ILIAS-Version führen diese Auswahlmöglichkeiten zu weiterführenden Inhalten.
+        </p>
+
+        <div class="decision-list">
+          <article class="decision-card">
+            <h2>Simulation anschauen</h2>
+            <p>
+              Ich möchte jetzt eine Simulation der freien Schwingung anschauen und den Einfluss verschiedener Parameter ausprobieren.
+            </p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+
+          <article class="decision-card">
+            <h2>Theorie vertiefen</h2>
+            <p>
+              Ich möchte vorher lieber noch mehr über die theoretischen und physikalischen Zusammenhänge zu gedämpften Schwingungen erfahren.
+            </p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+
+          <article class="decision-card">
+            <h2>Direkt zum Test</h2>
+            <p>
+              Ich fühle mich sicher im Thema und möchte direkt weiter zum Test zu den gedämpften Schwingungen.
+            </p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+        </div>
+      </article>
+    }
+
+    @case (4) {
+      <article class="topic-card">
+        <h1>Exponentialansatz für den gedämpften Oszillator</h1>
+
+        <p>Die DGL des gedämpften, freien harmonischen Oszillators lautet:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.dampedDglLong"></div>
+
+        <p>In kompakterer Schreibweise (Newtonsche Notation):</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.dampedDglShort"></div>
+        </aside>
+
+        <p>Mit der Abkürzung <span [innerHTML]="formulas.omegaDefinition"></span> nennt man diese Gleichung:</p>
+
+        <ul class="definition-list">
+          <li><strong>gedämpft</strong>, weil Dämpfung durch eine zur Geschwindigkeit proportionale Reibungskraft <span [innerHTML]="formulas.dampingForce"></span> mit <span [innerHTML]="formulas.dampingRelation"></span> betrachtet wird,</li>
+          <li><strong>frei</strong>, weil keinerlei äußere Anregung existiert (homogene DGL), und</li>
+          <li><strong>harmonisch</strong>, weil die entstehenden Sinustöne als harmonisch empfunden werden.</li>
+        </ul>
+
+        <details class="exkurs-accordion" (toggle)="onAccordionToggle()">
+          <summary class="exkurs-summary">Vertiefung: Herleitung der Bestimmungsgleichung</summary>
+          <div class="exkurs-content">
+            <p>Die DGL wird mit dem Ansatz <span [innerHTML]="formulas.exponentialAnsatz"></span> gelöst. Einsetzen und Ableiten ergibt:</p>
+            <div class="formula-stack">
+              <div [innerHTML]="formulas.firstDerivative"></div>
+              <div [innerHTML]="formulas.secondDerivative"></div>
+            </div>
+            <p>Kürzen des nie null werdenden Faktors <span [innerHTML]="formulas.exponentialAnsatz"></span> liefert die Bestimmungsgleichung:</p>
+            <div class="formula-line" [innerHTML]="formulas.dampedCharEq"></div>
+          </div>
+        </details>
+
+        <p>Die Bestimmungsgleichung in <span class="inline-variable">λ</span> lautet:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.dampedCharEq"></div>
+
+        <p>Die beiden Lösungen ergeben sich über die pq-Formel:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.dampedLambda"></div>
+        </aside>
+
+        <p>Je nach Verhältnis von Dämpfung und Eigenfrequenz unterscheidet man drei Fälle:</p>
+
+        <ul class="definition-list">
+          <li><strong>Schwingfall</strong> (schwache Dämpfung, <span class="inline-variable">γ &lt; ω₀</span>): λ komplex</li>
+          <li><strong>Kriechfall</strong> (starke Dämpfung, <span class="inline-variable">γ &gt; ω₀</span>): λ reell</li>
+          <li><strong>Aperiodischer Grenzfall</strong> (kritische Dämpfung, <span class="inline-variable">γ = ω₀</span>): entartet</li>
+        </ul>
+
+        <p>Die allgemeine Lösung mit <span [innerHTML]="formulas.eigenfrequency"></span> lautet:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.dampedGenSolution"></div>
+        </aside>
+
+        <section class="task-card">
+          <h2>Warum kann man die DGL des gedämpften Oszillators mit dem Ansatz <span [innerHTML]="formulas.exponentialAnsatz"></span> lösen?</h2>
+
+          <div class="answer-list">
+            @for (option of expAnsatzTask.options; track option.id) {
+              <label class="answer-option text-option"
+                [class.correct-option]="expAnsatzTask.checked && option.correct"
+                [class.wrong-selected-option]="expAnsatzTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(expAnsatzTask, option, $event)" />
+                <span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+
+          @if (expAnsatzTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(expAnsatzTask)" [class.error-feedback]="!isChoiceTaskCorrect(expAnsatzTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(expAnsatzTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(expAnsatzTask)) {
+                  <strong>Richtig.</strong><br />Exponentialfunktionen reproduzieren sich beim Ableiten – das ermöglicht das Kürzen in der DGL.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Überlegen Sie, was beim Ableiten von e^(λt) passiert.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(expAnsatzTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Was lässt sich über die allgemeine Lösung <span [innerHTML]="formulas.dampedGenSolution"></span> aussagen?</h2>
+
+          <div class="answer-list">
+            @for (option of generalSolutionTask.options; track option.id) {
+              <label class="answer-option text-option"
+                [class.correct-option]="generalSolutionTask.checked && option.correct"
+                [class.wrong-selected-option]="generalSolutionTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(generalSolutionTask, option, $event)" />
+                <span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+
+          @if (generalSolutionTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(generalSolutionTask)" [class.error-feedback]="!isChoiceTaskCorrect(generalSolutionTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(generalSolutionTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(generalSolutionTask)) {
+                  <strong>Richtig.</strong><br />Frequenz, Anfangsbedingungen und exponentieller Abfall sind korrekt erkannt.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Beachten Sie, dass ωₑ von γ abhängt und der Schwinganteil fallabhängig ist.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(generalSolutionTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (5) {
+      <article class="topic-card">
+        <h1>Schwingfall</h1>
+
+        <p>Unter dem <strong>Schwingfall</strong> oder schwacher Dämpfung (<span class="inline-variable">γ &lt; ω₀</span>) fallen die periodisch schwingenden Lösungen. Die Lösungen der Bestimmungsgleichung sind komplex:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.schwingfallLambda"></div>
+
+        <p>Die allgemeine Lösung ergibt sich zu:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.dampedGenSolution"></div>
+        </aside>
+
+        <p>Je nach Anfangsbedingungen vereinfacht sich die Lösung zu:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.dampedSpecialSolution"></div>
+
+        <p>Dies ist eine gedämpfte Schwingung mit exponentiell abnehmender Amplitude:</p>
+
+        <svg class="comparison-graph" viewBox="0 0 760 260" role="img" aria-label="Gedämpfte freie Schwingung">
+          <line x1="40" y1="130" x2="730" y2="130" class="graph-axis" />
+          <line x1="70" y1="20" x2="70" y2="240" class="graph-axis" />
+          <text x="714" y="118" class="graph-label">t</text>
+          <text x="52" y="32" class="graph-label">x</text>
+          <path d="M70 45 C100 45, 155 215, 185 215 C215 215, 272 80, 302 80 C332 80, 386 178, 412 178 C438 178, 476 105, 498 105 C520 105, 548 155, 566 155 C584 155, 600 122, 618 122" class="oscillation-line" />
+          <path d="M70 45 C200 58, 430 102, 650 130" class="envelope-line" />
+          <path d="M185 215 C300 200, 460 168, 650 130" class="envelope-line" />
+          <text x="390" y="68" class="graph-note">∝ e⁻ᵞᵗ</text>
+          <text x="320" y="148" class="graph-note">∝ cos(ωₑt)</text>
+          <text x="690" y="122" class="graph-label">t</text>
+        </svg>
+
+        <p>Zwei aufeinanderfolgende Maxima haben das Verhältnis <span [innerHTML]="formulas.maxRatio"></span>. Das <strong>logarithmische Dekrement</strong> ist definiert als:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.logDekrement"></div>
+
+        <section class="task-card">
+          <h2>Wann spricht man beim harmonischen Oszillator vom schwach gedämpften Schwingfall?</h2>
+          <div class="answer-list">
+            @for (option of schwingfallConditionTask.options; track option.id) {
+              <label class="answer-option text-option"
+                [class.correct-option]="schwingfallConditionTask.checked && option.correct"
+                [class.wrong-selected-option]="schwingfallConditionTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(schwingfallConditionTask, option, $event)" />
+                <span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (schwingfallConditionTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(schwingfallConditionTask)" [class.error-feedback]="!isChoiceTaskCorrect(schwingfallConditionTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(schwingfallConditionTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(schwingfallConditionTask)) {
+                  <strong>Richtig.</strong><br />Wenn γ &lt; ω₀ sind die Lösungen komplex und das System schwingt periodisch.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Beachten Sie das Verhältnis von Dämpfung und Eigenfrequenz.
+                }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(schwingfallConditionTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Ordnen Sie die Ausdrücke den jeweiligen physikalischen Bedeutungen zu:</h2>
+          <button class="reset-button" type="button" (click)="resetMatchingTask(schwingfallMatchingTask)">Anordnung zurücksetzen</button>
+          <p class="task-hint">Ziehen Sie die Begriffe auf die passenden Felder.</p>
+
+          <div class="matching-drag-layout">
+            <div class="matching-slots">
+              @for (item of schwingfallMatchingTask.items; track item.id) {
+                <div class="matching-slot-row"
+                     [class.correct-row]="schwingfallMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                     [class.wrong-row]="schwingfallMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId">
+                  <div class="matching-prompt-label">{{ item.prompt }}</div>
+                  <div class="matching-dropzone"
+                       [class.dropzone-has-item]="item.selectedRightId !== ''"
+                       [class.dropzone-correct]="schwingfallMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                       [class.dropzone-wrong]="schwingfallMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId"
+                       (dragover)="onDragOver($event)"
+                       (drop)="onDropOption(schwingfallMatchingTask, item, $event)">
+                    @if (item.selectedRightId !== '') {
+                      <div class="matching-placed-chip"
+                           draggable="true"
+                           (dragstart)="onDragStart($event, item.selectedRightId)"
+                           (dragend)="onDragEnd()">
+                        <span>{{ getOptionLabel(schwingfallMatchingOptions, item.selectedRightId) }}</span>
+                        @if (!schwingfallMatchingTask.checked) {
+                          <button class="chip-remove-btn" type="button" (click)="clearMatchingItem(schwingfallMatchingTask, item)">×</button>
+                        }
+                      </div>
+                    } @else {
+                      <span class="dropzone-placeholder">Hierher ziehen</span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="matching-options-pool">
+              @for (option of getAvailableOptions(schwingfallMatchingTask, schwingfallMatchingOptions); track option.id) {
+                <div class="matching-option-chip"
+                     draggable="true"
+                     (dragstart)="onDragStart($event, option.id)"
+                     (dragend)="onDragEnd()">
+                  {{ option.label }}
+                </div>
+              }
+              @if (getAvailableOptions(schwingfallMatchingTask, schwingfallMatchingOptions).length === 0) {
+                <p class="pool-all-placed">Alle Begriffe wurden zugeordnet.</p>
+              }
+            </div>
+          </div>
+          @if (schwingfallMatchingTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isMatchingTaskCorrect(schwingfallMatchingTask)" [class.error-feedback]="!isMatchingTaskCorrect(schwingfallMatchingTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isMatchingTaskCorrect(schwingfallMatchingTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isMatchingTaskCorrect(schwingfallMatchingTask)) {
+                  <strong>Richtig.</strong><br />Die Terme sind korrekt zugeordnet.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Überlegen Sie, welcher Term die Amplitude beschreibt.
+                }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkMatchingTask(schwingfallMatchingTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Was beschreibt der Faktor <span [innerHTML]="formulas.maxRatio"></span> in der Lösung des gedämpften Oszillators?</h2>
+          <div class="answer-list">
+            @for (option of expFactorTask.options; track option.id) {
+              <label class="answer-option text-option"
+                [class.correct-option]="expFactorTask.checked && option.correct"
+                [class.wrong-selected-option]="expFactorTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(expFactorTask, option, $event)" />
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+          @if (expFactorTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(expFactorTask)" [class.error-feedback]="!isChoiceTaskCorrect(expFactorTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(expFactorTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(expFactorTask)) {
+                  <strong>Richtig.</strong><br />e^(−γt) beschreibt den exponentiellen Amplitudenabfall.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Betrachten Sie, wie sich e^(−γt) mit der Zeit verhält.
+                }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(expFactorTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Wie verändert sich der Quotient <span [innerHTML]="formulas.maxRatio"></span>, wenn die Dämpfung γ größer wird?</h2>
+          <div class="answer-list">
+            @for (option of amplitudeRatioTask.options; track option.id) {
+              <label class="answer-option text-option"
+                [class.correct-option]="amplitudeRatioTask.checked && option.correct"
+                [class.wrong-selected-option]="amplitudeRatioTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(amplitudeRatioTask, option, $event)" />
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+          @if (amplitudeRatioTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(amplitudeRatioTask)" [class.error-feedback]="!isChoiceTaskCorrect(amplitudeRatioTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(amplitudeRatioTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(amplitudeRatioTask)) {
+                  <strong>Richtig.</strong><br />Größeres γ → stärkerer Abfall → e^(−γT) wird kleiner.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Denken Sie daran: e^(−γT) nimmt mit größerem γ ab.
+                }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(amplitudeRatioTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Das logarithmische Dekrement ist definiert als <span [innerHTML]="formulas.logDekrement"></span>. Welche der folgenden Aussagen treffen zu?</h2>
+          <div class="answer-list">
+            @for (option of logDekrementTask.options; track option.id) {
+              <label class="answer-option text-option"
+                [class.correct-option]="logDekrementTask.checked && option.correct"
+                [class.wrong-selected-option]="logDekrementTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(logDekrementTask, option, $event)" />
+                <span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (logDekrementTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(logDekrementTask)" [class.error-feedback]="!isChoiceTaskCorrect(logDekrementTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(logDekrementTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(logDekrementTask)) {
+                  <strong>Richtig.</strong><br />Alle vier Aussagen treffen zu.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Bedenken Sie: größere Dämpfung → kleineres ω → größeres T.
+                }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(logDekrementTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (6) {
+      <article class="topic-card">
+        <h1>Kriechfall</h1>
+
+        <p>Unter dem <strong>Kriechfall</strong> oder starker Dämpfung (<span class="inline-variable">γ &gt; ω₀</span>) fallen Schwingungen, die nicht periodisch schwingen. Die einmalige Auslenkung kriecht langsam gegen Null.</p>
+
+        <p>Die Lösungen der Bestimmungsgleichung sind immer reell:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.kriechfallLambda"></div>
+
+        <p>mit der Abkürzung <span [innerHTML]="formulas.kriechfallAlpha"></span>. Die allgemeine Lösung ergibt sich zu:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.kriechfallGenSolution"></div>
+        </aside>
+
+        <p>Der Term e^(−γt) strebt schneller gegen Null als e^(αt) wächst, da <span class="inline-variable">γ &gt; α</span>. Für verschiedene Anfangsbedingungen erhält man:</p>
+
+        <div class="formula-stack">
+          <div [innerHTML]="formulas.kriechfallSpec1"></div>
+          <div [innerHTML]="formulas.kriechfallSpec2"></div>
+        </div>
+
+        <svg class="comparison-graph" viewBox="0 0 660 260" role="img" aria-label="Kriechfall: monotoner Abfall">
+          <line x1="40" y1="200" x2="630" y2="200" class="graph-axis" />
+          <line x1="70" y1="20" x2="70" y2="240" class="graph-axis" />
+          <text x="614" y="188" class="graph-label">t</text>
+          <text x="52" y="32" class="graph-label">x</text>
+          <path d="M70 40 C120 40, 220 130, 340 175 C440 194, 540 199, 640 200" class="oscillation-line" />
+          <line x1="60" y1="40" x2="80" y2="40" class="rest-line" />
+          <text x="84" y="44" class="graph-note">A</text>
+          <text x="160" y="60" class="graph-note">Zeit [a.u.]</text>
+        </svg>
+
+        <p><strong>Kriechfall</strong> für Anfangsbedingung <span [innerHTML]="formulas.boundaryCondition"></span></p>
+      </article>
+    }
+
+    @case (7) {
+      <article class="topic-card">
+        <h1>Aperiodischer Grenzfall</h1>
+
+        <p>Im Fall <span class="inline-variable">γ = ω₀</span> sind die Lösungen entartet:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.aperDegen"></div>
+
+        <p>Da die allgemeine Lösung zwei freie Integrationskonstanten enthalten muss, erweitert man den Ansatz mit einem zeitabhängigen Vorfaktor. Das führt auf die allgemeine Lösung:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.aperGenSolution"></div>
+        </aside>
+
+        <p>Für verschiedene Anfangsbedingungen ergibt sich:</p>
+
+        <div class="formula-stack">
+          <div [innerHTML]="formulas.aperSpec1"></div>
+          <div [innerHTML]="formulas.aperSpec2"></div>
+        </div>
+
+        <svg class="comparison-graph" viewBox="0 0 580 280" role="img" aria-label="Vergleich aperiodischer Grenzfall und Kriechfall">
+          <line x1="40" y1="240" x2="555" y2="240" class="graph-axis" />
+          <line x1="70" y1="20" x2="70" y2="255" class="graph-axis" />
+          <text x="538" y="228" class="graph-label">t</text>
+          <text x="52" y="32" class="graph-label">x</text>
+          <path d="M70 240 C100 170, 135 105, 162 92 C190 80, 270 180, 490 235" class="critical-line" />
+          <path d="M70 240 C135 200, 240 152, 320 145 C400 140, 470 190, 545 235" class="kriech-line" />
+          <text x="172" y="76" class="graph-note" style="fill:#b00000">kritische Dämpfung</text>
+          <text x="330" y="135" class="graph-note" style="fill:#c47a00">starke Dämpfung (Kriechfall)</text>
+          <text x="76" y="234" class="graph-note">x₀ = 0, v₀ &gt; 0</text>
+        </svg>
+
+        <p>Das System kehrt beim aperiodischen Grenzfall schneller zur Ruhelage zurück als im Kriechfall, ohne dabei zu überschwingen. Ein schnelles Zurückkehren zu Null ist z. B. bei Messvorgängen (Multimeter) erwünscht.</p>
+
+        <section class="task-card">
+          <h2>Beurteilen Sie die Aussagen zum aperiodischen Grenzfall:</h2>
+
+          <p class="task-hint">Für jede Aussage muss entschieden werden: richtig oder falsch.</p>
+
+          <div class="true-false-table">
+            <div class="true-false-header">
+              <span></span><span>richtig</span><span>falsch</span>
+            </div>
+            @for (statement of aperGrenzfallTask.statements; track statement.id) {
+              <div class="true-false-row"
+                [class.correct-row]="aperGrenzfallTask.checked && statement.selected === statement.correct"
+                [class.wrong-row]="aperGrenzfallTask.checked && statement.selected !== null && statement.selected !== statement.correct">
+                <div class="statement-text" [innerHTML]="statement.text"></div>
+                <label class="radio-cell">
+                  <input type="radio" [name]="'aper-' + statement.id" [checked]="statement.selected === true" (change)="selectTrueFalse(aperGrenzfallTask, statement, true)" />
+                </label>
+                <label class="radio-cell">
+                  <input type="radio" [name]="'aper-' + statement.id" [checked]="statement.selected === false" (change)="selectTrueFalse(aperGrenzfallTask, statement, false)" />
+                </label>
+              </div>
+            }
+          </div>
+
+          @if (aperGrenzfallTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isTrueFalseTaskCorrect(aperGrenzfallTask)" [class.error-feedback]="!isTrueFalseTaskCorrect(aperGrenzfallTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isTrueFalseTaskCorrect(aperGrenzfallTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isTrueFalseTaskCorrect(aperGrenzfallTask)) {
+                  <strong>Richtig.</strong><br />Der aperiodische Grenzfall ist schneller als der Kriechfall und hat entartete (gleiche) Lösungen.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Beachten Sie: λ₁ = λ₂ = −γ bedeutet entartet, nicht verschieden.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkTrueFalseTask(aperGrenzfallTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (8) {
+      <article class="topic-card">
+        <h1>Zusammenfassung</h1>
+
+        <p>Abschließend betrachten wir die drei Fälle gemeinsam:</p>
+
+        <svg class="comparison-graph" viewBox="0 0 760 280" role="img" aria-label="Vergleich aller drei Dämpfungsfälle">
+          <line x1="40" y1="140" x2="730" y2="140" class="graph-axis" />
+          <line x1="70" y1="20" x2="70" y2="255" class="graph-axis" />
+          <text x="714" y="128" class="graph-label">t</text>
+          <text x="52" y="32" class="graph-label">x</text>
+          <path d="M70 45 C100 45, 155 235, 185 235 C215 235, 272 65, 302 65 C332 65, 386 195, 412 195 C438 195, 476 110, 498 110 C520 110, 548 162, 566 162 C584 162, 602 128, 626 128" class="oscillation-line" />
+          <path d="M70 45 C130 45, 280 118, 420 134 C530 139, 640 140, 730 140" class="kriech-line" />
+          <path d="M70 45 C120 45, 230 108, 350 132 C450 139, 580 140, 730 140" class="aper-line" />
+          <path d="M70 45 C200 58, 440 102, 660 138" class="envelope-line" />
+          <path d="M185 235 C290 218, 460 175, 660 142" class="envelope-line" />
+          <text x="635" y="95" class="graph-note" style="fill:#40577a">Schwingfall</text>
+          <text x="570" y="125" class="graph-note" style="fill:#c47a00">Kriechfall</text>
+          <text x="500" y="112" class="graph-note" style="fill:#2e7d32">Grenzfall</text>
+        </svg>
+
+        <p>
+          Im <strong>Schwingfall</strong> sind viele Schwingungen zu beobachten.
+          <strong>Kriechfall</strong> und <strong>aperiodischer Grenzfall</strong> zeigen jeweils eine einzelne Auslenkung, die monoton gegen Null geht.
+          Der Kriechfall kriecht dabei langsamer gegen 0 als der aperiodische Grenzfall.
+        </p>
+
+        <section class="task-card">
+          <h2>Ordnen Sie zu:</h2>
+
+          <button class="reset-button" type="button" (click)="resetMatchingTask(summaryMatchingTask)">Anordnung zurücksetzen</button>
+
+          <p class="task-hint">Ziehen Sie die Begriffe auf die passenden Felder.</p>
+
+          <div class="matching-drag-layout">
+            <div class="matching-slots">
+              @for (item of summaryMatchingTask.items; track item.id) {
+                <div class="matching-slot-row"
+                     [class.correct-row]="summaryMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                     [class.wrong-row]="summaryMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId">
+                  <div class="matching-prompt-label">{{ item.prompt }}</div>
+                  <div class="matching-dropzone"
+                       [class.dropzone-has-item]="item.selectedRightId !== ''"
+                       [class.dropzone-correct]="summaryMatchingTask.checked && item.selectedRightId === item.correctRightId"
+                       [class.dropzone-wrong]="summaryMatchingTask.checked && item.selectedRightId !== '' && item.selectedRightId !== item.correctRightId"
+                       (dragover)="onDragOver($event)"
+                       (drop)="onDropOption(summaryMatchingTask, item, $event)">
+                    @if (item.selectedRightId !== '') {
+                      <div class="matching-placed-chip"
+                           draggable="true"
+                           (dragstart)="onDragStart($event, item.selectedRightId)"
+                           (dragend)="onDragEnd()">
+                        <span>{{ getOptionLabel(summaryMatchingOptions, item.selectedRightId) }}</span>
+                        @if (!summaryMatchingTask.checked) {
+                          <button class="chip-remove-btn" type="button" (click)="clearMatchingItem(summaryMatchingTask, item)">×</button>
+                        }
+                      </div>
+                    } @else {
+                      <span class="dropzone-placeholder">Hierher ziehen</span>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+
+            <div class="matching-options-pool">
+              @for (option of getAvailableOptions(summaryMatchingTask, summaryMatchingOptions); track option.id) {
+                <div class="matching-option-chip"
+                     draggable="true"
+                     (dragstart)="onDragStart($event, option.id)"
+                     (dragend)="onDragEnd()">
+                  {{ option.label }}
+                </div>
+              }
+              @if (getAvailableOptions(summaryMatchingTask, summaryMatchingOptions).length === 0) {
+                <p class="pool-all-placed">Alle Begriffe wurden zugeordnet.</p>
+              }
+            </div>
+          </div>
+
+          @if (summaryMatchingTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isMatchingTaskCorrect(summaryMatchingTask)" [class.error-feedback]="!isMatchingTaskCorrect(summaryMatchingTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isMatchingTaskCorrect(summaryMatchingTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isMatchingTaskCorrect(summaryMatchingTask)) {
+                  <strong>Richtig.</strong><br />Die drei Fälle sind korrekt ihren Kennzeichen zugeordnet.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />γ = ω₀ ist der Grenzfall, γ &gt; ω₀ der Kriechfall.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkMatchingTask(summaryMatchingTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <p>Hohe Gebäude werden bei Wind oder Erdbeben zu Schwingungen angeregt. Ein gutes Schwingungsverhalten sollte dafür sorgen, dass Personen möglichst wenig von länger anhaltenden Schwingungen belastet werden, die Konstruktion nicht unnötig vielen Lastwechseln ausgesetzt wird und das Gebäude dennoch nicht „steif wie Beton" reagiert.</p>
+
+          <h2>Welcher der drei Schwingungsfälle wäre für ein hohes Gebäude aus Komfort- und Sicherheitsgründen am besten geeignet?</h2>
+
+          <div class="answer-list">
+            @for (option of gebaudeTask.options; track option.id) {
+              <label class="answer-option text-option"
+                [class.correct-option]="gebaudeTask.checked && option.correct"
+                [class.wrong-selected-option]="gebaudeTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(gebaudeTask, option, $event)" />
+                <span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+
+          @if (gebaudeTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(gebaudeTask)" [class.error-feedback]="!isChoiceTaskCorrect(gebaudeTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(gebaudeTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(gebaudeTask)) {
+                  <strong>Richtig.</strong><br />Der aperiodische Grenzfall kehrt schnellstmöglich ohne Nachschwingen zur Ruhe zurück – ideal für Gebäude.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Schwingfall schwingt zu lange nach, Kriechfall ist zu langsam.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(gebaudeTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (9) {
+      <article class="topic-card">
+        <h1>Entscheidung</h1>
+
+        <p>Am Ende dieses Kapitels gibt es vier mögliche Wege:</p>
+
+        <div class="decision-list">
+          <article class="decision-card">
+            <h2>Theorie: Angetriebene Schwingungen</h2>
+            <p>Ich möchte mir jetzt die Theorie zu angetriebenen Schwingungen anschauen und mich mit dem Einfluss eines externen Antriebs beschäftigen.</p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+
+          <article class="decision-card">
+            <h2>Simulation: Angetriebene Schwingungen</h2>
+            <p>Ich möchte mir jetzt eine Simulation zu angetriebenen Schwingungen anschauen und den Einfluss eines externen Antriebs selbst ausprobieren.</p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+
+          <article class="decision-card">
+            <h2>Direkt zum Test</h2>
+            <p>Die Theorie zu getriebenen Schwingungen ist mir vertraut. Ich möchte mein Wissen testen. Der Test öffnet sich in einem neuen Tab.</p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+
+          <article class="decision-card">
+            <h2>Simulation: Gedämpfte Schwingungen</h2>
+            <p>Ich möchte mir gerne noch eine Simulation zu gedämpften Schwingungen anschauen und den Einfluss der Dämpfung selbst ausprobieren.</p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+        </div>
+      </article>
+    }
+
+    @case (10) {
+      <article class="topic-card">
+        <h1>Getriebener harmonischer Oszillator</h1>
+
+        <p>Wird ein harmonischer Oszillator nicht nur durch Dämpfung beeinflusst, sondern zusätzlich durch eine periodische äußere Kraft angetrieben, spricht man von einem <strong>getriebenen</strong> harmonischen Oszillator. Die Anregungskraft hat die Form <span [innerHTML]="formulas.dampingForce"></span> – hier also:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.drivenDglLinear"></div>
+
+        <p>Mit den Abkürzungen <span [innerHTML]="formulas.omegaDefinition"></span>, <span [innerHTML]="formulas.drivenAbbrevGamma"></span>, <span [innerHTML]="formulas.drivenAbbrevK"></span> ergibt sich die <strong>Normalform</strong>:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.drivenDglNormal"></div>
+        </aside>
+
+        <p>Diese DGL nennt man:</p>
+
+        <ul class="definition-list">
+          <li><strong>gedämpft</strong>, weil eine zur Geschwindigkeit proportionale Reibungskraft betrachtet wird,</li>
+          <li><strong>getrieben</strong>, weil eine äußere, periodische Anregung im System wirkt, und</li>
+          <li><strong>harmonisch</strong>, weil die entstehenden Sinustöne als harmonisch empfunden werden.</li>
+        </ul>
+
+        <p>Es handelt sich nun um eine <strong>inhomogene</strong> DGL, da der äußere Antriebsterm nicht von der Auslenkung oder ihrer Ableitung abhängt.</p>
+
+        <section class="task-card">
+          <h2>Beurteilen Sie die folgenden Aussagen über den gedämpften, getriebenen harmonischen Oszillator:</h2>
+          <p class="task-hint">Für jede Aussage muss entschieden werden: richtig oder falsch.</p>
+
+          <div class="true-false-table">
+            <div class="true-false-header"><span></span><span>richtig</span><span>falsch</span></div>
+            @for (statement of drivenOscillatorTask.statements; track statement.id) {
+              <div class="true-false-row"
+                [class.correct-row]="drivenOscillatorTask.checked && statement.selected === statement.correct"
+                [class.wrong-row]="drivenOscillatorTask.checked && statement.selected !== null && statement.selected !== statement.correct">
+                <div class="statement-text" [innerHTML]="statement.text"></div>
+                <label class="radio-cell"><input type="radio" [name]="'driven-' + statement.id" [checked]="statement.selected === true" (change)="selectTrueFalse(drivenOscillatorTask, statement, true)" /></label>
+                <label class="radio-cell"><input type="radio" [name]="'driven-' + statement.id" [checked]="statement.selected === false" (change)="selectTrueFalse(drivenOscillatorTask, statement, false)" /></label>
+              </div>
+            }
+          </div>
+
+          @if (drivenOscillatorTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isTrueFalseTaskCorrect(drivenOscillatorTask)" [class.error-feedback]="!isTrueFalseTaskCorrect(drivenOscillatorTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isTrueFalseTaskCorrect(drivenOscillatorTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isTrueFalseTaskCorrect(drivenOscillatorTask)) {
+                  <strong>Richtig.</strong><br />Die äußere Kraft hängt nur von der Zeit ab – das macht die DGL inhomogen.
+                } @else {
+                  <strong>Das stimmt so noch nicht ganz.</strong><br />Beachten Sie: „getrieben" bedeutet äußere Kraft, nicht Resonanz. „Inhomogen" bedeutet, der Anregungsterm hängt nicht von x oder ẋ ab.
+                }
+              </div>
+            </div>
+          }
+
+          <button class="evaluate-button" type="button" (click)="checkTrueFalseTask(drivenOscillatorTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (11) {
+      <article class="topic-card">
+        <h1>DGL des Pohlschen Rads</h1>
+
+        <p>Beim Pohlschen Rad betrachten wir keine lineare Auslenkung, sondern eine <strong>Rotationsbewegung</strong>. Die DGL ist strukturell identisch zum allgemeinen Fall – wir ersetzen lediglich <span class="inline-variable">x → φ</span> und verwenden <span class="inline-variable">β</span> für die Dämpfungskonstante und <span class="inline-variable">N</span> für die Stärke der äußeren Anregung.</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.pohlDgl"></div>
+        </aside>
+
+        <p>Die Terme der Gleichung haben folgende Bedeutung:</p>
+
+        <details class="exkurs-accordion" (toggle)="onAccordionToggle()">
+          <summary class="exkurs-summary">Erläuterung der Terme</summary>
+          <div class="exkurs-content">
+            <ul class="definition-list">
+              <li><span [innerHTML]="formulas.pohlBeta"></span>: Proportionalitätsfaktor zwischen Reibungskraft und Winkelgeschwindigkeit. Beschreibt die Stärke der Dämpfung.</li>
+              <li><span [innerHTML]="formulas.pohlOmega0sq"></span>: entspricht der Eigenfrequenz des ungedämpften, ungetriebenen Systems.</li>
+              <li><span [innerHTML]="formulas.pohlNdef"></span>: äußeres periodisches Anregungsmoment – Stärke <span class="inline-variable">N</span> und Frequenz <span class="inline-variable">ω</span>.</li>
+            </ul>
+          </div>
+        </details>
+
+        <p>Der Grundgedanke beim Lösen dieser inhomogenen DGL ist die Zerlegung der Gesamtlösung in einen homogenen und einen partikulären Anteil:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.totalSolutionPohl"></div>
+
+        <section class="task-card">
+          <h2>Was beschreibt der Term <span [innerHTML]="formulas.pohlBeta"></span> in der DGL des Pohlschen Rads?</h2>
+          <div class="answer-list">
+            @for (option of pohlTermTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="pohlTermTask.checked && option.correct" [class.wrong-selected-option]="pohlTermTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(pohlTermTask, option, $event)" /><span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+          @if (pohlTermTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(pohlTermTask)" [class.error-feedback]="!isChoiceTaskCorrect(pohlTermTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(pohlTermTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(pohlTermTask)) { <strong>Richtig.</strong><br />2βφ̇ ist proportional zur Winkelgeschwindigkeit – das ist der Dämpfungsterm.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Beachten Sie: 2β := ρ/Θ ist der Reibungskoeffizient bezogen aufs Trägheitsmoment. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(pohlTermTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Bei der Lösung der DGL des Pohlschen Rads wird die Gesamtbewegung als <span [innerHTML]="formulas.totalSolutionPohl"></span> dargestellt. Welche Aussagen treffen zu?</h2>
+          <div class="answer-list">
+            @for (option of gesamtlosungTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="gesamtlosungTask.checked && option.correct" [class.wrong-selected-option]="gesamtlosungTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(gesamtlosungTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (gesamtlosungTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(gesamtlosungTask)" [class.error-feedback]="!isChoiceTaskCorrect(gesamtlosungTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(gesamtlosungTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(gesamtlosungTask)) { <strong>Richtig.</strong><br />φ_h ist die freie Schwingung, φ_p die partikuläre Lösung. Addition ergibt die Gesamtbewegung.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />φ_h enthält keine äußeren Drehmomente – es ist die Lösung der homogenen DGL ohne Antrieb. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(gesamtlosungTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (12) {
+      <article class="topic-card">
+        <h1>Komplexe Erweiterung der DGL</h1>
+
+        <p>Es gibt verschiedene Wege, die inhomogene DGL zu lösen. Ein eleganter Ansatz ist die <strong>komplexe Erweiterung</strong>: Statt mit dem reellen Antrieb <span class="inline-variable">N cos(ωt)</span> zu rechnen, betrachten wir den komplexen Antrieb <span class="inline-variable">Ne<sup>iωt</sup></span>.</p>
+
+        <p>Den Zusammenhang, den wir ausnutzen, lautet:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.complexDrivingForce"></div>
+        </aside>
+
+        <p>Gleichzeitig lassen wir zu, dass die Lösungsfunktion φ komplex sein darf: <span class="inline-variable">φ → φ̃</span>. Die reelle physikalische Lösung ergibt sich am Ende als Realteil von φ̃.</p>
+
+        <p>Die <strong>komplexe DGL</strong> lautet damit:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.complexDrivenDgl"></div>
+        </aside>
+
+        <p>Der Vorteil: Die komplexe Exponentialfunktion <span class="inline-variable">e<sup>iωt</sup></span> verhält sich unter Ableitung besonders einfach – es entstehen nur konstante Vorfaktoren, keine Wechsel zwischen Sinus und Kosinus.</p>
+      </article>
+    }
+
+    @case (13) {
+      <article class="topic-card">
+        <h1>Partikuläre Lösung</h1>
+
+        <p>Die homogene Lösung kennen wir bereits. Zur vollständigen Lösung der inhomogenen DGL fehlt noch eine <strong>partikuläre Lösung</strong>.</p>
+
+        <p>Für die partikuläre Lösung wählen wir den Ansatz <span [innerHTML]="formulas.particularAnsatz"></span> mit komplexer Amplitude <span class="inline-variable">A ∈ ℂ</span>, da die Inhomogenität dieselbe Struktur einer komplexen Exponentialfunktion besitzt.</p>
+
+        <details class="exkurs-accordion" (toggle)="onAccordionToggle()">
+          <summary class="exkurs-summary">Detaillierte Herleitung</summary>
+          <div class="exkurs-content">
+            <p>Einsetzen des Ansatzes und Kürzen von <span [innerHTML]="formulas.particularAnsatz"></span> liefert:</p>
+            <div class="formula-line" [innerHTML]="formulas.complexAmplitudeMod"></div>
+            <p>Damit ergibt sich für Betrag und Phase der komplexen Amplitude:</p>
+            <div class="formula-stack">
+              <div [innerHTML]="formulas.complexAmplitudeMod"></div>
+              <div [innerHTML]="formulas.phaseShiftDef"></div>
+            </div>
+          </div>
+        </details>
+
+        <p>Die reelle partikuläre Lösung ergibt sich als Realteil der komplexen Lösung:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.particularRealSolution"></div>
+        </aside>
+
+        <p>mit der Phasenverschiebung <span [innerHTML]="formulas.phaseShiftDef"></span>.</p>
+
+        <section class="task-card">
+          <h2>Warum wird für die partikuläre Lösung der Ansatz <span [innerHTML]="formulas.particularAnsatz"></span> verwendet?</h2>
+          <div class="answer-list">
+            @for (option of partikularAnsatzTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="partikularAnsatzTask.checked && option.correct" [class.wrong-selected-option]="partikularAnsatzTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(partikularAnsatzTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (partikularAnsatzTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(partikularAnsatzTask)" [class.error-feedback]="!isChoiceTaskCorrect(partikularAnsatzTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(partikularAnsatzTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(partikularAnsatzTask)) { <strong>Richtig.</strong><br />Der Ansatz spiegelt die Struktur der Inhomogenität wider – Exponentialfunktionen gehen bei Ableitung in sich selbst über.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Überlegen Sie: die Inhomogenität ist eine komplexe e-Funktion. Der Ansatz muss dieselbe Struktur haben. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(partikularAnsatzTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Die reelle partikuläre Lösung lautet <span [innerHTML]="formulas.particularRealSolution"></span>. Welche Aussagen folgen allein aus dieser Darstellung?</h2>
+          <div class="answer-list">
+            @for (option of partikularLosungTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="partikularLosungTask.checked && option.correct" [class.wrong-selected-option]="partikularLosungTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(partikularLosungTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (partikularLosungTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(partikularLosungTask)" [class.error-feedback]="!isChoiceTaskCorrect(partikularLosungTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(partikularLosungTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(partikularLosungTask)) { <strong>Richtig.</strong><br />Die partikuläre Lösung schwingt mit der aufgezwungenen Frequenz ω, und Φ beschreibt die Phasenverschiebung.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Beachten Sie den Cosinus-Term – seine Frequenz ist ω, nicht ω₀. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(partikularLosungTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (14) {
+      <article class="topic-card">
+        <h1>Homogene Lösung</h1>
+
+        <p>Die homogene Lösung des Pohlschen Rads – die Lösung <strong>ohne äußere Anregung</strong> – hängt vom Verhältnis zwischen Dämpfung <span class="inline-variable">β</span> und Eigenfrequenz <span class="inline-variable">ω₀</span> ab. Es gibt drei Fälle:</p>
+
+        <p>Im <strong>Schwingfall</strong> (<span class="inline-variable">β &lt; ω₀</span>), der im realen Experiment typischerweise vorliegt, gilt:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.homogenousWeakDamping"></div>
+        </aside>
+
+        <p>mit der gedämpften Eigenfrequenz <span [innerHTML]="formulas.dampedNaturalFreq"></span>.</p>
+
+        <details class="exkurs-accordion" (toggle)="onAccordionToggle()">
+          <summary class="exkurs-summary">Alle drei Dämpfungsfälle im Überblick</summary>
+          <div class="exkurs-content">
+            <p><strong>Schwache Dämpfung</strong> (<span class="inline-variable">β &lt; ω₀</span>) – Schwingfall:</p>
+            <div class="formula-line" [innerHTML]="formulas.homogenousWeakDamping"></div>
+            <div class="formula-line" [innerHTML]="formulas.dampedNaturalFreq"></div>
+
+            <p><strong>Kritische Dämpfung</strong> (<span class="inline-variable">β = ω₀</span>) – Aperiodischer Grenzfall:</p>
+            <div class="formula-line" [innerHTML]="formulas.pohlHomogeneCritical"></div>
+
+            <p><strong>Starke Dämpfung</strong> (<span class="inline-variable">β &gt; ω₀</span>) – Kriechfall:</p>
+            <div class="formula-line" [innerHTML]="formulas.pohlHomogeneStrong"></div>
+            <div class="formula-line" [innerHTML]="formulas.pohlLambdaStrong"></div>
+          </div>
+        </details>
+
+        <aside class="notice-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <p>Die Konstanten <span class="inline-variable">C₁, C₂</span> ergeben sich in allen Fällen aus den Anfangsbedingungen. Im stationären Zustand klingt die homogene Lösung vollständig ab – übrig bleibt nur die partikuläre Lösung.</p>
+        </aside>
+      </article>
+    }
+
+    @case (15) {
+      <article class="topic-card">
+        <h1>Vollständige Lösung und Einschwingvorgang</h1>
+
+        <p>Die vollständige Lösung setzt sich aus der homogenen und der partikulären Lösung zusammen:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.totalSolutionPohl"></div>
+
+        <p>Die vollständige Lösung im Schwingfall (<span class="inline-variable">β &lt; ω₀</span>) ist:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.einschwingvorgangFull"></div>
+        </aside>
+
+        <p>Physikalisch überlagern sich zwei Schwingungen: die freie Schwingung des Systems (<span class="inline-variable">φ_h</span>) und die erzwungene (<span class="inline-variable">φ_p</span>). Die freie Schwingung klingt durch den Faktor <span class="inline-variable">e<sup>−βt</sup></span> mit der <strong>Einschwingzeit</strong> ab. Danach schwingt das System quasi nur noch mit der aufgezwungenen Frequenz ω – dem <strong>stationären Zustand</strong>.</p>
+
+        <p>Nur <strong>Amplitude</strong> und <strong>Phasenversatz</strong> des stationären Zustands hängen von den Systemparametern ω₀ und β ab – die Anfangsbedingungen spielen keine Rolle mehr.</p>
+
+        <p>Im Phasenraumdiagramm ist das Ende des Einschwingvorgangs gut erkennbar: Die Trajektorie wird zu einer geschlossenen, stabilen Ellipse.</p>
+
+        <section class="task-card">
+          <h2>Wann kann der Einschwingvorgang als abgeschlossen angesehen werden?</h2>
+          <div class="answer-list">
+            @for (option of einschwingTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="einschwingTask.checked && option.correct" [class.wrong-selected-option]="einschwingTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(einschwingTask, option, $event)" /><span>{{ option.label }}</span>
+              </label>
+            }
+          </div>
+          @if (einschwingTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(einschwingTask)" [class.error-feedback]="!isChoiceTaskCorrect(einschwingTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(einschwingTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(einschwingTask)) { <strong>Richtig.</strong><br />Eine geschlossene Trajektorie im Phasenraum zeigt, dass das System periodisch und stabil schwingt.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Im Phasenraumdiagramm erkennt man das Ende des Einschwingvorgangs an der stabilen, geschlossenen Kurve. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(einschwingTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (16) {
+      <article class="topic-card">
+        <h1>Amplitude der stationären Schwingung</h1>
+
+        <p>Im stationären Zustand (nach Abklingen des Einschwingvorgangs) schwingt das System mit der Amplitude:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.stationaryAmplitude"></div>
+        </aside>
+
+        <p>Die <strong>Resonanzfrequenz</strong> – die Frequenz maximaler Amplitude – liegt bei:</p>
+
+        <div class="formula-line" [innerHTML]="formulas.resonanceFreqDriven"></div>
+
+        <svg class="comparison-graph" viewBox="0 0 560 240" role="img" aria-label="Resonanzkurve: normierte Amplitude vs. Anregungsfrequenz">
+          <line x1="40" y1="210" x2="530" y2="210" class="graph-axis" />
+          <line x1="70" y1="20" x2="70" y2="220" class="graph-axis" />
+          <text x="512" y="198" class="graph-label">ω/ω₀</text>
+          <text x="74" y="32" class="graph-label">φ₀</text>
+          <text x="260" y="225" class="graph-note">1.0</text>
+          <line x1="280" y1="208" x2="280" y2="213" class="graph-axis" />
+          <path d="M70 205 C120 205, 200 202, 240 192 C255 186, 265 160, 270 100 C273 65, 276 38, 280 28 C284 38, 287 65, 290 100 C295 160, 305 186, 320 192 C360 202, 440 205, 530 205" class="oscillation-line" />
+          <path d="M70 205 C130 205, 210 203, 250 196 C262 192, 270 178, 280 165 C290 178, 298 192, 310 196 C350 203, 430 205, 530 205" class="aper-line" />
+          <text x="268" y="22" class="graph-note" style="fill:#40577a">β/ω₀ klein</text>
+          <text x="310" y="162" class="graph-note" style="fill:#2e7d32">β/ω₀ groß</text>
+        </svg>
+
+        <section class="task-card">
+          <h2>Welche Parameter des Systems beeinflussen die maximale Amplitude des stationär schwingenden Systems?</h2>
+          <div class="answer-list">
+            @for (option of amplitudeParamsTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="amplitudeParamsTask.checked && option.correct" [class.wrong-selected-option]="amplitudeParamsTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(amplitudeParamsTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (amplitudeParamsTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(amplitudeParamsTask)" [class.error-feedback]="!isChoiceTaskCorrect(amplitudeParamsTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(amplitudeParamsTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(amplitudeParamsTask)) { <strong>Richtig.</strong><br />ω₀, β, ρ und Θ gehen in die Amplitudenformel ein. Anfangsbedingungen spielen im stationären Zustand keine Rolle.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Im stationären Zustand verschwinden die Anfangsbedingungen – nur Systemparameter zählen. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(amplitudeParamsTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Je stärker die Dämpfung, desto…</h2>
+          <div class="answer-list">
+            @for (option of dampingAmplitudeTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="dampingAmplitudeTask.checked && option.correct" [class.wrong-selected-option]="dampingAmplitudeTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(dampingAmplitudeTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (dampingAmplitudeTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(dampingAmplitudeTask)" [class.error-feedback]="!isChoiceTaskCorrect(dampingAmplitudeTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(dampingAmplitudeTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(dampingAmplitudeTask)) { <strong>Richtig.</strong><br />ωr = √(ω₀²−2β²) verschiebt sich mit steigendem β stärker von ω₀ weg.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Stärkere Dämpfung senkt die Resonanzfrequenz und damit auch die maximale Amplitude. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(dampingAmplitudeTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <h2>Überlegen Sie, welche Konsequenzen stärkere Dämpfung für die Versuchsdurchführung hat. Je stärker die Dämpfung, desto…</h2>
+          <div class="answer-list">
+            @for (option of versuchTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="versuchTask.checked && option.correct" [class.wrong-selected-option]="versuchTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(versuchTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (versuchTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(versuchTask)" [class.error-feedback]="!isChoiceTaskCorrect(versuchTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(versuchTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(versuchTask)) { <strong>Richtig.</strong><br />Stärkere Dämpfung verbreitert den Resonanzpeak – gleichmäßige Frequenzschritte sind ausreichend.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Je schärfer der Resonanzpeak (geringe Dämpfung), desto kleiner müssen die Frequenzschritte sein. Stärkere Dämpfung macht den Peak breiter und flacher. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(versuchTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (17) {
+      <article class="topic-card">
+        <h1>Phasenverschiebung</h1>
+
+        <p>Im stationären Zustand hinkt das System dem Antrieb hinterher. Die Phasenverschiebung zwischen Antrieb und Schwungrad beträgt:</p>
+
+        <aside class="notice-box formula-box">
+          <img src="assets/icons/light_bulb.svg" class="notice-icon lightbulb-icon" aria-hidden="true" alt="">
+          <div class="formula" [innerHTML]="formulas.phaseFreqFormula"></div>
+        </aside>
+
+        <p>Besonders charakteristisch: Wenn die Anregungsfrequenz genau der <strong>Eigenfrequenz</strong> entspricht, gilt stets <span [innerHTML]="formulas.phaseAtOmega0"></span> – unabhängig von der Dämpfung.</p>
+
+        <section class="task-card">
+          <h2>Entspricht die Anregungsfrequenz gerade der <strong>Resonanzfrequenz</strong> <span [innerHTML]="formulas.resonanceFreqDriven"></span>, so…</h2>
+          <div class="answer-list">
+            @for (option of resonanzPhaseTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="resonanzPhaseTask.checked && option.correct" [class.wrong-selected-option]="resonanzPhaseTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(resonanzPhaseTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (resonanzPhaseTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(resonanzPhaseTask)" [class.error-feedback]="!isChoiceTaskCorrect(resonanzPhaseTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(resonanzPhaseTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(resonanzPhaseTask)) { <strong>Richtig.</strong><br />Die Resonanzfrequenz ωr &lt; ω₀, und da Φ bei ω₀ genau π/2 ist, gilt Φ(ωr) &lt; π/2.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Φ = π/2 gilt nur bei ω = ω₀ (Eigenfrequenz), nicht bei ω = ωr (Resonanzfrequenz). }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(resonanzPhaseTask)">Auswerten</button>
+        </section>
+
+        <section class="task-card">
+          <p>
+            Sie vermessen ein gedämpftes Schwungrad bei zwei Frequenzen: <strong>ω₁ = 200 mHz</strong> und <strong>ω₂ = 400 mHz</strong>.
+            Bei ω₁ beträgt der zeitliche Abstand zwischen den Nulldurchgängen von Antrieb und Rad <strong>Δt₁ = 0,25 s</strong>,
+            bei ω₂ ist er <strong>Δt₂ = 1,4 s</strong>.
+          </p>
+          <h2>Was können Sie über die Resonanzfrequenz des Systems aussagen?</h2>
+          <div class="answer-list">
+            @for (option of messungTask.options; track option.id) {
+              <label class="answer-option text-option" [class.correct-option]="messungTask.checked && option.correct" [class.wrong-selected-option]="messungTask.checked && option.selected && !option.correct">
+                <input type="checkbox" [checked]="option.selected" (change)="toggleChoiceOption(messungTask, option, $event)" /><span [innerHTML]="option.label"></span>
+              </label>
+            }
+          </div>
+          @if (messungTask.checked) {
+            <div class="feedback-box" [class.success-feedback]="isChoiceTaskCorrect(messungTask)" [class.error-feedback]="!isChoiceTaskCorrect(messungTask)">
+              <div class="feedback-icon" aria-hidden="true">@if (isChoiceTaskCorrect(messungTask)) { <span>✓</span> } @else { <span>!</span> }</div>
+              <div class="feedback-text">
+                @if (isChoiceTaskCorrect(messungTask)) { <strong>Richtig.</strong><br />Bei ω₁ ist die Phasenverschiebung Φ₁ &lt; π/2 (Antrieb unter Eigenfrequenz), bei ω₂ ist Φ₂ &gt; π/2 (über Eigenfrequenz) – die Resonanz liegt dazwischen.
+                } @else { <strong>Das stimmt so noch nicht ganz.</strong><br />Berechnen Sie Φ = ω × Δt. Liegt Φ &lt; π/2, ist ω &lt; ω₀; liegt Φ &gt; π/2, ist ω &gt; ω₀. }
+              </div>
+            </div>
+          }
+          <button class="evaluate-button" type="button" (click)="checkChoiceTask(messungTask)">Auswerten</button>
+        </section>
+      </article>
+    }
+
+    @case (18) {
+      <article class="topic-card">
+        <h1>Entscheidung</h1>
+
+        <p>Sie haben die Theorie zur angetriebenen Schwingung abgeschlossen. Was möchten Sie als nächstes tun?</p>
+
+        <div class="decision-list">
+          <article class="decision-card">
+            <h2>Simulation: Angetriebene Schwingung</h2>
+            <p>Ich möchte jetzt eine Simulation der getriebenen Schwingung anschauen und den Einfluss verschiedener Parameter selbst ausprobieren.</p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+
+          <article class="decision-card">
+            <h2>Weiter zum Versuchsaufbau</h2>
+            <p>Ich fühle mich sicher im Thema und möchte direkt weiter zum Versuchsaufbau des Pohlschen Resonators.</p>
+            <span class="placeholder-link">LINK</span>
+          </article>
+        </div>
+      </article>
+    }
+  }
+
+  <div class="linear-navigation">
+    <button
+      class="next-button"
+      type="button"
+      (click)="goNext()"
+      [disabled]="isLastStep"
+    >
+      @if (isLastStep) {
+        Kapitel beendet
+      } @else {
+        Weiter
+      }
+    </button>
+  </div>
+</section>
