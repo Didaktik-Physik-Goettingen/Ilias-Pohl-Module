@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { TestOrderImages } from '../../../shared/test/order-images/order-images';
@@ -19,13 +19,19 @@ declare global {
 }
 
 @Component({
-  selector: 'app-e-driven-oscillation',
+  selector: 'app-test-e-driven-oscillation',
   imports: [TestTrueFalse, TestImageChoice, EndPage, RouterLink],
-  templateUrl: './e-driven-oscillation.html',
-  styleUrl: './e-driven-oscillation.css',
+  templateUrl: './test-e-driven-oscillation.html',
+  styleUrl: './test-e-driven-oscillation.css',
 })
-
-export class EDrivenOscillation implements OnInit, OnDestroy {
+export class TestEDrivenOscillation implements OnInit, OnDestroy {
+    constructor(
+		private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
+        private router: Router,
+        private testTracking: TestTracking,
+    ) {}
 
     // Custom thresholds for this test
     performanceThresholds = [
@@ -181,17 +187,16 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
         }
         return '';
     }
-
-	
-    constructor(
-		private sanitizer: DomSanitizer,
-        @Inject(PLATFORM_ID) private platformId: Object,
-        private router: Router,
-        private testTracking: TestTracking,
-    ) {}
 	
 	
     ngOnInit() {
+        // restore subpage from URL query param
+        const page = this.route.snapshot.queryParamMap.get('page');
+        if (page && ['1','2','3','4','5'].includes(page)) {
+            this.currentView = `driven_osc${page}`;
+        }
+
+
 		// start tracking this test
         this.testTracking.startTest('e-driven-oscillations', 4, 80); // 4 questions, 80 total points
         
@@ -298,6 +303,16 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 	
 	
 	// +++ in-page navigation +++
+
+    private updateUrl() {
+        const page = this.currentView.replace('driven_osc', '');
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page },
+            queryParamsHandling: 'merge',
+            replaceUrl: true
+        });
+    }
 	
     // navigation helpers
 	currentView: string = 'driven_osc1';
@@ -349,17 +364,15 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';
-            this.renderMath();
         } else if (this.currentView === 'driven_osc3') {
             this.currentView = 'driven_osc2';
-            this.renderMath();
         } else if (this.currentView === 'driven_osc4') {
             this.currentView = 'driven_osc3';
-            this.renderMath();
         } else if (this.currentView === 'driven_osc5') {
             this.currentView = 'driven_osc4';
-            this.renderMath();
         }
+        this.updateUrl();
+        this.renderMath();
     }
 
 
@@ -376,7 +389,9 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 				this.currentView = 'driven_osc5';
 			} else if (this.currentView === 'driven_osc5') {
                 this.router.navigate([this.continueLink]);
+                return;
 			}
+            this.updateUrl();
             this.renderMath();
         }
     }

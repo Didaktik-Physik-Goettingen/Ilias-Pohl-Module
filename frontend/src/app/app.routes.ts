@@ -22,11 +22,15 @@ import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/
 // learning features
 import { IntroExperiment } from './features/learning_features/intro-experiment/intro-experiment';
 
+// decision features
+import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
+
+
 // test features
-import { TestDampedOscillations } from './features/test_features/damped-oscillations/damped-oscillations';
-import { TDampedOscillation } from './features/test_features/t-damped-oscillation/t-damped-oscillation';
-import { TDrivenOscillation } from './features/test_features/t-driven-oscillation/t-driven-oscillation';
-import { EDrivenOscillation } from './features/test_features/e-driven-osc/e-driven-oscillation';
+import { TestEDampedOscillations } from './features/test_features/test-e-damped-oscillations/test-e-damped-oscillations';
+import { TestTDampedOscillation } from './features/test_features/test-t-damped-oscillation/test-t-damped-oscillation';
+import { TestTDrivenOscillation } from './features/test_features/test-t-driven-oscillation/test-t-driven-oscillation';
+import { TestEDrivenOscillation } from './features/test_features/test-e-driven-osc/test-e-driven-oscillation';
 
 // simulation features
 import { SimDampedOscillationsExperiment } from './features/simulation_features/damped-oscillations-experiment/damped-oscillations-experiment';
@@ -66,13 +70,15 @@ export const routes: Routes = [
 
     { path: 'learning/intro-experiment', component: IntroExperiment, title: 'Einstieg Versuchsaufbau' },
 
-    { path: 'test/damped-oscillations', component: TestDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
-    { path: 'test/t-damped-oscillations', component: TDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'decision/e-damped-oscillations', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
 
-    { path:  'test/driven-oscillations-t', component: TDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
-    { path:  'test/driven-oscillations-e', component: EDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
+    { path: 'test/e-damped-oscillations', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'test/t-damped-oscillations', component: TestTDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
 
-    { path: 'simulation/damped-oscillations-experiment', component: SimDampedOscillationsExperiment, title: 'Simulation: Gedämpfte Schwingungen' },
+    { path:  'test/t-driven-oscillations', component: TestTDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
+    { path:  'test/e-driven-oscillations', component: TestEDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
+
+    { path: 'simulation/e-damped-oscillations', component: SimDampedOscillationsExperiment, title: 'Simulation: Gedämpfte Schwingungen' },
 
     // Standalone HTML simulations — redirect to static files in public/simulations/
     { path: 'simulation/theory-undamped',             			canActivate: [sim('Simulation_01_Einstieg_undamped_linear.html')],              component: SimulationRedirect, title: 'Simulation: Ungedämpfte Schwingung' },

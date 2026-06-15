@@ -19,13 +19,13 @@ declare global {
 }
 
 @Component({
-  selector: 'app-t-driven-oscillation',
+  selector: 'app-test-t-driven-oscillation',
   imports: [TestTrueFalse, TestImageChoice, EndPage, RouterLink],
-  templateUrl: './t-driven-oscillation.html',
-  styleUrl: './t-driven-oscillation.css',
+  templateUrl: './test-t-driven-oscillation.html',
+  styleUrl: './test-t-driven-oscillation.css',
 })
 
-export class TDrivenOscillation implements OnInit, OnDestroy {
+export class TestTDrivenOscillation implements OnInit, OnDestroy {
 
     // Custom thresholds for this test
     performanceThresholds = [

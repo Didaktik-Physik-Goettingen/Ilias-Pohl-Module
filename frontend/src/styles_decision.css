@@ -1,0 +1,107 @@
+/* Decision pages - choice between test, learning module, and simulation */
+
+.decision-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.decision-option {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #f5f9ff 0%, #e3f2fd 100%);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.decision-option h3 {
+    color: var(--uni-blau-1);
+}
+
+.decision-option p {
+    flex: 1;
+    font-size: 0.8rem;
+    color: var(--uni-blau-1);
+    font-weight: 500;
+    margin-bottom: 0;
+}
+
+/* Each card is highlighted with the colour of the option it leads to */
+.decision-option-learning:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    border-color: var(--uni-blau-1);
+}
+
+.decision-option-test:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    border-color: var(--physik-gelb);
+}
+
+.decision-option-simulation:hover {
+    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    border-color: var(--forst-gruen);
+}
+
+/* Decision buttons - colour-coded per option type */
+.decision-btn {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    text-decoration: none;
+    padding: 0.6rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
+}
+
+/* Learning module - same style as the evaluation button (.eval-btn) on learning pages */
+.decision-btn-learning {
+    background: var(--uni-blau-1);
+    color: white;
+    border: 2px solid var(--uni-blau-1);
+}
+
+.decision-btn-learning:hover {
+    background: white;
+    color: var(--uni-blau-1);
+    border-color: var(--uni-blau-1);
+}
+
+/* Test - physik-gelb, matching .test-btn */
+.decision-btn-test {
+    background: var(--physik-gelb);
+    color: white;
+    border: 2px solid var(--physik-gelb);
+}
+
+.decision-btn-test:hover {
+    background: white;
+    color: var(--physik-gelb);
+    border-color: var(--physik-gelb);
+}
+
+/* Simulation - forst-gruen */
+.decision-btn-simulation {
+    background: var(--forst-gruen);
+    color: white;
+    border: 2px solid var(--forst-gruen);
+}
+
+.decision-btn-simulation:hover {
+    background: white;
+    color: var(--forst-gruen);
+    border-color: var(--forst-gruen);
+}
+
+/* Stack the options on narrow screens */
+@media (max-width: 768px) {
+    .decision-options {
+        grid-template-columns: 1fr;
+    }
+}

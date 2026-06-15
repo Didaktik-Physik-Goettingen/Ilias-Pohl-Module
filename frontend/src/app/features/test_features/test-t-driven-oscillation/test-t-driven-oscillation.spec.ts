@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DampedOscillations } from './damped-oscillations';
+import { TestTDrivenOscillation } from './test-t-driven-oscillation';
 
-describe('DampedOscillations', () => {
-  let component: DampedOscillations;
-  let fixture: ComponentFixture<DampedOscillations>;
+describe('TestTDrivenOscillation', () => {
+  let component: TestTDrivenOscillation;
+  let fixture: ComponentFixture<TestTDrivenOscillation>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DampedOscillations]
+      imports: [TestTDrivenOscillation]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DampedOscillations);
+    fixture = TestBed.createComponent(TestTDrivenOscillation);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

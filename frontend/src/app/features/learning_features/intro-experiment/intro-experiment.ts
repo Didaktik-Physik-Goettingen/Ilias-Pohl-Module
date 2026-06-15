@@ -446,7 +446,7 @@ export class IntroExperiment implements OnInit, OnDestroy {
             } else if (this.currentView === 'intro_exp3') {
                 this.currentView = 'intro_exp4';
             } else if (this.currentView === 'intro_exp4') {
-                this.router.navigate(['/test/driven-oscillations-e']);
+                this.router.navigate(['/decision/e-damped-oscillations']);
                 return;
             }
             this.updateUrl();

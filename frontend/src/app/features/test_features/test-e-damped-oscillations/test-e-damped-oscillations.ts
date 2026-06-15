@@ -21,13 +21,13 @@ declare global {
 
 
 @Component({
-    selector: 'app-damped-oscillations',
+    selector: 'app-test-e-damped-oscillations',
     standalone: true,
     imports: [CommonModule, RouterLink, TestOrderImages, TestSingleChoice, TestMultipleChoice, TestDragDrop, EndPage],
-    templateUrl: './damped-oscillations.html',
-    styleUrl: './damped-oscillations.css'
+    templateUrl: './test-e-damped-oscillations.html',
+    styleUrl: './test-e-damped-oscillations.css'
 })
-export class TestDampedOscillations implements OnInit, OnDestroy {
+export class TestEDampedOscillations implements OnInit, OnDestroy {
 
     // Custom thresholds for this test
     performanceThresholds = [
