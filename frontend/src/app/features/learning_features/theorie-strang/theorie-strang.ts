@@ -1,4 +1,5 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -7,6 +8,7 @@ interface ChoiceOption {
   label: string;
   selected: boolean;
   correct: boolean;
+  imageUrl?: string;
 }
 
 interface ChoiceTask {
@@ -58,7 +60,11 @@ export class TheorieStrang implements OnInit, OnDestroy {
   private mathNeedsUpdate = true;
   private queryParamSub?: Subscription;
 
-  constructor(private route: ActivatedRoute, private router: Router) {}
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: object
+  ) {}
 
   ngOnInit(): void {
     this.queryParamSub = this.route.queryParamMap.subscribe(params => {
@@ -130,6 +136,10 @@ export class TheorieStrang implements OnInit, OnDestroy {
     dampedSpecialSolution: '\\( x(t) = Ae^{-\\gamma t}\\cos(\\omega_e t) \\)',
     maxRatio: '\\( \\frac{x(t+T)}{x(t)} = e^{-\\gamma T} \\)',
     logDekrement: '\\( \\Lambda = \\ln\\frac{x(t)}{x(t+T)} = \\frac{2\\pi\\gamma}{\\sqrt{\\omega_0^2 - \\gamma^2}} = \\gamma \\cdot T \\)',
+    phasenraumTrajectory: '\\( \\dfrac{d}{dt}\\!\\left(x^2 + \\left(\\dfrac{\\dot{x}}{\\omega_0}\\right)^{\\!2}\\right) = -4\\gamma\\!\\left(\\dfrac{\\dot{x}}{\\omega_0}\\right)^{\\!2} \\)',
+    xDotOverOmega: '\\( \\tfrac{\\dot{x}}{\\omega_0} \\)',
+    periodFormulaSchwingfall: '\\( T = \\dfrac{2\\pi}{\\omega_e} \\)',
+    expDecayBeta: '\\( e^{-\\beta T} \\)',
     kriechfallAlpha: '\\( \\alpha := \\sqrt{\\gamma^2 - \\omega_0^2} \\)',
     kriechfallLambda: '\\( \\lambda_{1,2} = -\\gamma \\pm \\alpha, \\quad \\lambda_{1,2} \\in \\mathbb{R} \\)',
     kriechfallGenSolution: '\\( x(t) = e^{-\\gamma t}\\left(c_1 e^{\\alpha t} - c_2 e^{-\\alpha t}\\right) \\)',
@@ -166,7 +176,8 @@ export class TheorieStrang implements OnInit, OnDestroy {
     phaseFreqFormula: '\\( \\Phi(\\omega) = \\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right) \\)',
     pohlHomogeneCritical: '\\( \\varphi_h(t) = (C_1 + C_2 t)\\,e^{-\\beta t} \\)',
     pohlHomogeneStrong: '\\( \\varphi_h(t) = C_1 e^{\\lambda_1 t} + C_2 e^{\\lambda_2 t} \\)',
-    pohlLambdaStrong: '\\( \\lambda_{1,2} = -\\beta \\pm \\sqrt{\\beta^2 - \\omega_0^2} \\in \\mathbb{R} \\)'
+    pohlLambdaStrong: '\\( \\lambda_{1,2} = -\\beta \\pm \\sqrt{\\beta^2 - \\omega_0^2} \\in \\mathbb{R} \\)',
+    externalDrivePohl: '\\( \\varphi_{\\text{ext}}(t) = N\\cos(\\omega t) \\)'
   };
 
   firstTask: ChoiceTask = {
@@ -650,6 +661,10 @@ export class TheorieStrang implements OnInit, OnDestroy {
 
     task.checked = false;
     task.remainingAttempts = 2;
+    if (this.tapSelectedTask === task) {
+      this.tapSelectedOptionId = '';
+      this.tapSelectedTask = null;
+    }
     this.queueMathUpdate();
   }
 
@@ -657,6 +672,8 @@ export class TheorieStrang implements OnInit, OnDestroy {
 
   onDragStart(event: DragEvent, optionId: string): void {
     this.draggingOptionId = optionId;
+    this.tapSelectedOptionId = '';
+    this.tapSelectedTask = null;
     event.dataTransfer?.setData('text/plain', optionId);
   }
 
@@ -677,6 +694,35 @@ export class TheorieStrang implements OnInit, OnDestroy {
 
   onDragEnd(): void {
     this.draggingOptionId = '';
+  }
+
+  tapSelectedOptionId = '';
+  tapSelectedTask: MatchingTask | null = null;
+
+  onChipTap(event: Event, optionId: string, task: MatchingTask): void {
+    if ((event.target as HTMLElement).closest('.chip-remove-btn')) return;
+    event.stopPropagation();
+    if (this.tapSelectedOptionId === optionId && this.tapSelectedTask === task) {
+      this.tapSelectedOptionId = '';
+      this.tapSelectedTask = null;
+      return;
+    }
+    task.items.forEach(i => { if (i.selectedRightId === optionId) i.selectedRightId = ''; });
+    task.checked = false;
+    this.tapSelectedOptionId = optionId;
+    this.tapSelectedTask = task;
+    this.queueMathUpdate();
+  }
+
+  onDropzoneTap(event: Event, task: MatchingTask, item: MatchingItem): void {
+    event.stopPropagation();
+    if (!this.tapSelectedOptionId || this.tapSelectedTask !== task) return;
+    task.items.forEach(i => { if (i.selectedRightId === this.tapSelectedOptionId) i.selectedRightId = ''; });
+    item.selectedRightId = this.tapSelectedOptionId;
+    task.checked = false;
+    this.tapSelectedOptionId = '';
+    this.tapSelectedTask = null;
+    this.queueMathUpdate();
   }
 
   clearMatchingItem(task: MatchingTask, item: MatchingItem): void {
@@ -750,10 +796,10 @@ export class TheorieStrang implements OnInit, OnDestroy {
   einschwingTask: ChoiceTask = {
     checked: false, remainingAttempts: 2,
     options: [
-      { id: 1, label: 'Wenn die Phase des Systems und des Antriebs identisch sind.', selected: false, correct: false },
-      { id: 2, label: 'Wenn die Trajektorie im Phasenraumdiagramm geschlossen und stabil ist.', selected: false, correct: true },
-      { id: 3, label: 'Wenn die Amplitude des Systems ihr Maximum erreicht hat.', selected: false, correct: false },
-      { id: 4, label: 'Wenn die homogene Lösung größer als die partikuläre Lösung ist.', selected: false, correct: false }
+      { id: 1, label: 'Abbildung a)', selected: false, correct: false, imageUrl: 'assets/images/theorie-strang/abbildungen/17_phasenraumdiagramme_und_stationaere_schwingung_1.svg' },
+      { id: 2, label: 'Abbildung b)', selected: false, correct: false, imageUrl: 'assets/images/theorie-strang/abbildungen/18_phasenraumdiagramme_und_stationaere_schwingung_2.svg' },
+      { id: 3, label: 'Abbildung c)', selected: false, correct: false, imageUrl: 'assets/images/theorie-strang/abbildungen/19_phasenraumdiagramme_und_stationaere_schwingung_3.svg' },
+      { id: 4, label: 'Abbildung d)', selected: false, correct: true, imageUrl: 'assets/images/theorie-strang/abbildungen/20_phasenraumdiagramme_und_stationaere_schwingung_4.svg' }
     ]
   };
 
@@ -824,6 +870,7 @@ export class TheorieStrang implements OnInit, OnDestroy {
   }
 
   private typesetMath(): void {
+    if (!isPlatformBrowser(this.platformId)) return;
     setTimeout(() => {
       const mathJax = (window as any).MathJax;
 

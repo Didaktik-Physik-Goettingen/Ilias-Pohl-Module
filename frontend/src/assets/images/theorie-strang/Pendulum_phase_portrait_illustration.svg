@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="590" height="200" viewBox="-180 -65 410 135">
+<title>Pendulum phase portrait</title>
+<desc>
+Illustration of how a phase portrait would be constructed for the motion of a simple pendulum.
+</desc>
+<defs>
+	<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" orient="auto" markerWidth="8" markerHeight="8">
+		<path d="M0,0L10,5L0,10A2,5 0 0,0 0,0" fill="black"/>
+	</marker>
+	<clipPath id="window">
+		<rect x="-90" y="-50" width="180" height="100"/>
+	</clipPath>
+	<circle id="rc" r="2" fill="red"/>
+	<circle id="gc" r="2" fill="green"/>
+	<circle id="oc" r="2" fill="orange"/>
+	<circle id="bc" r="2" fill="blue"/>
+</defs>
+<g fill="none" stroke="black">
+	<g id="pend" transform="rotate(10,-150,-50)">
+		<path d="M-150,-50 v90"/><circle cx="-150" cy="50" r="10" fill="#ccaaff"/>
+	</g>
+	<use xlink:href="#pend" transform="rotate(-20,-150,-50)"/>
+	<path d="M-150,-50v130 M-45,-50v100 M0,-50v100 M45,-50v100 M90,-50v100" stroke-dasharray="4,2" stroke-width=".5"/>
+	<path d="M-90,50v-100 M-90,0h190 M110,0h95 M155,50v-100" stroke-width=".75"/>
+	<g clip-path="url(#window)">
+		<path d="M-90,0 Q-45,-80 0,0 T90,0" stroke="purple"/>
+		<path d="M-135,0 Q-90,80 -45,0 T45,0 T135,0" stroke="brown"/>
+	</g>
+	<path d="M155,-40 a40,40 0 0,1 28.3,11.7 A40,40 0 0,1 195,0   M195,0 a40,40 0 0,1 -11.7,28.3 A40,40 0 0,1 155,40   M155,40 a40,40 0 0,1 -28.3,-11.7 A40,40 0 0,1 115,0   M115,0 a40,40 0 0,1 11.7,-28.3 A40,40 0 0,1 155,-40" marker-mid="url(#arrow)"/>
+</g>
+<use xlink:href="#rc" x="-150" y="65" transform="rotate(10,-150,-50)"/>
+<use xlink:href="#oc" x="-150" y="65" transform="rotate(-10,-150,-50)"/>
+<use xlink:href="#gc" x="-150" y="61"/><use xlink:href="#bc" x="-150" y="69"/>
+<use xlink:href="#rc" x="-90"/><use xlink:href="#rc" x="-90" y="40"/>
+<use xlink:href="#gc" x="-45" y="-40"/><use xlink:href="#gc" x="-45"/>
+<use xlink:href="#oc" y="-40"/><use xlink:href="#oc"/>
+<use xlink:href="#bc" x="45" y="40"/><use xlink:href="#bc" x="45"/>
+<use xlink:href="#rc" x="90"/><use xlink:href="#rc" x="90" y="40"/>
+<use xlink:href="#rc" x="115"/><use xlink:href="#oc" x="195"/>
+<use xlink:href="#gc" x="155" y="-40"/><use xlink:href="#bc" x="155" y="40"/>
+<g text-anchor="middle" fill="black" font-family="New Century Schoolbook">
+<text font-size="10" y="-55">
+	<tspan>Time series</tspan><tspan x="-150">System</tspan><tspan x="155">Phase portrait</tspan>
+</text>
+<g font-size="8"><text y="-5"><tspan x="75">Time</tspan><tspan x="215" fill="brown">Position</tspan></text>
+<text x="-70" y="48" fill="brown">Position</text>
+<text x="-70" y="-40" fill="purple">Velocity</text>
+<text x="155" y="60" fill="purple">Velocity</text>
+<text x="-95" transform="rotate(-90,-95,-0)">Magnitude</text></g>
+</g>
+</svg>
