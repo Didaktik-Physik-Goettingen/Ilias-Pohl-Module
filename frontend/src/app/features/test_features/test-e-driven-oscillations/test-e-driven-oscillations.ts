@@ -19,12 +19,12 @@ declare global {
 }
 
 @Component({
-  selector: 'app-test-e-driven-oscillation',
+  selector: 'app-test-e-driven-oscillations',
   imports: [TestTrueFalse, TestImageChoice, EndPage, RouterLink],
-  templateUrl: './test-e-driven-oscillation.html',
-  styleUrl: './test-e-driven-oscillation.css',
+  templateUrl: './test-e-driven-oscillations.html',
+  styleUrl: './test-e-driven-oscillations.css',
 })
-export class TestEDrivenOscillation implements OnInit, OnDestroy {
+export class TestEDrivenOscillations implements OnInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -360,7 +360,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     // going back shows the previous subpage / home page
     goBack() {
 		if (this.currentView === 'driven_osc1') {
-            this.router.navigate(['/learning/intro-experiment'], { queryParams: { page: 4 } });
+            this.router.navigate(['/learning/e-intro-experiment'], { queryParams: { page: 4 } });
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';

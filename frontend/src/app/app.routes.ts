@@ -20,7 +20,7 @@ import { AngularFrequency } from './features/glossary_features/angular-frequency
 import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/moment-of-inertia';
 
 // learning features
-import { IntroExperiment } from './features/learning_features/intro-experiment/intro-experiment';
+import { EIntroExperiment } from './features/learning_features/e-intro-experiment/e-intro-experiment';
 
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
@@ -30,10 +30,10 @@ import { DecEDampedOscillations } from './features/decision_features/dec-e-dampe
 import { TestEDampedOscillations } from './features/test_features/test-e-damped-oscillations/test-e-damped-oscillations';
 import { TestTDampedOscillation } from './features/test_features/test-t-damped-oscillation/test-t-damped-oscillation';
 import { TestTDrivenOscillation } from './features/test_features/test-t-driven-oscillation/test-t-driven-oscillation';
-import { TestEDrivenOscillation } from './features/test_features/test-e-driven-osc/test-e-driven-oscillation';
+import { TestEDrivenOscillations } from './features/test_features/test-e-driven-oscillations/test-e-driven-oscillations';
 
 // simulation features
-import { SimDampedOscillationsExperiment } from './features/simulation_features/damped-oscillations-experiment/damped-oscillations-experiment';
+import { SimEDampedOscillations } from './features/simulation_features/sim-e-damped-oscillations/sim-e-damped-oscillations';
 
 // ── Standalone HTML simulations ───────────────────────────────────────────────
 // Plain HTML pages served as static files from public/simulations/.
@@ -56,6 +56,7 @@ export const routes: Routes = [
     { path: '', component: Home, title: 'Pohlsches Rad' },
     { path: 'glossary', component: Glossary, title: 'Pohlsches Rad - Begriffe' },
 
+    // glossary pages
     { path: 'glossary/amplitude',           component: Amplitude,           title: 'Amplitude' },
     { path: 'glossary/critical-damping',    component: CriticalDamping,     title: 'Aperiodischer Grenzfall' },
     { path: 'glossary/damping-coefficient', component: DampingCoefficient,  title: 'Dämpungskoeffizient' },
@@ -68,17 +69,20 @@ export const routes: Routes = [
     { path: 'glossary/angular-frequency',   component: AngularFrequency,    title: 'Kreisfrequenz' },
     { path: 'glossary/moment-of-inertia',   component: MomentOfInertia,     title: 'Trägheitsmoment' },
 
-    { path: 'learning/intro-experiment', component: IntroExperiment, title: 'Einstieg Versuchsaufbau' },
+    // conventional learning module pages
+    { path: 'learning/e-intro-experiment', component: EIntroExperiment, title: 'Einstieg Versuchsaufbau' },
 
+    // decision pages
     { path: 'decision/e-damped-oscillations', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
 
-    { path: 'test/e-damped-oscillations', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
-    { path: 'test/t-damped-oscillations', component: TestTDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
+    // test pages
+    { path: 'test/e-damped-osc', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'test/t-damped-osc', component: TestTDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'test/t-driven-osc', component: TestTDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
+    { path: 'test/e-driven-osc', component: TestEDrivenOscillations, title: 'Test: Getriebene Schwingungen'},
 
-    { path:  'test/t-driven-oscillations', component: TestTDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
-    { path:  'test/e-driven-oscillations', component: TestEDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
-
-    { path: 'simulation/e-damped-oscillations', component: SimDampedOscillationsExperiment, title: 'Simulation: Gedämpfte Schwingungen' },
+    // simulation pages
+    { path: 'simulation/sim-e-damped-osc', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
 
     // Standalone HTML simulations — redirect to static files in public/simulations/
     { path: 'simulation/theory-undamped',             			canActivate: [sim('Simulation_01_Einstieg_undamped_linear.html')],              component: SimulationRedirect, title: 'Simulation: Ungedämpfte Schwingung' },
@@ -87,7 +91,7 @@ export const routes: Routes = [
     { path: 'simulation/theory-damped-driven-davanced', 		canActivate: [sim('Simulation_04_Vertiefung_damped_driven_rot.html')],          component: SimulationRedirect, title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
     // { path: 'simulation/experiment-damped',               		canActivate: [sim('Simulation_11_Einstieg_damped_rot_20251107.html')],          component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung' },
     // { path: 'simulation/damped-rot-advanced',         canActivate: [sim('Simulation_12_Vertiefung_damped_rot_20251107.html')],        component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung (Vertiefung)' },
-    { path: 'simulation/experiment-damped',               		canActivate: [sim('Simulation_12_Vertiefung_damped_rot.html')],                 component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung v2' },
+    // 'simulation/experiment-damped' replaced by the sim-e-damped-oscillations component (see 'simulation/sim-e-damped-osc' above)
     { path: 'simulation/experiment-damped-driven',     			canActivate: [sim('Simulation_13_Einleitung_damped_driven_rot_202511072.html')], component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Einleitung)' },
     { path: 'simulation/experiment-damped-driven-advanced',  	canActivate: [sim('Simulation_14_Vertiefung_damped_driven_rot.html')],          component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Vertiefung)' },
 ];

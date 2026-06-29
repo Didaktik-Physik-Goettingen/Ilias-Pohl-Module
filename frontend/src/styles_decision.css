@@ -88,15 +88,21 @@
 
 /* Simulation - forst-gruen */
 .decision-btn-simulation {
-    background: var(--forst-gruen);
+    /* background: var(--forst-gruen);
     color: white;
-    border: 2px solid var(--forst-gruen);
+    border: 2px solid var(--forst-gruen); */
+    background: var(--uni-blau-1);
+    color: white;
+    border: 2px solid var(--uni-blau-1);
 }
 
 .decision-btn-simulation:hover {
-    background: white;
+    /* background: white;
     color: var(--forst-gruen);
-    border-color: var(--forst-gruen);
+    border-color: var(--forst-gruen); */
+    background: white;
+    color: var(--uni-blau-1);
+    border-color: var(--uni-blau-1);
 }
 
 /* Stack the options on narrow screens */

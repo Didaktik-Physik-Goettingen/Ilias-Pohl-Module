@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntroExperiment } from './intro-experiment';
+import { SimEDampedOscillations } from './sim-e-damped-oscillations';
 
-describe('IntroExperiment', () => {
-  let component: IntroExperiment;
-  let fixture: ComponentFixture<IntroExperiment>;
+describe('SimEDampedOscillations', () => {
+  let component: SimEDampedOscillations;
+  let fixture: ComponentFixture<SimEDampedOscillations>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [IntroExperiment]
+      imports: [SimEDampedOscillations]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(IntroExperiment);
+    fixture = TestBed.createComponent(SimEDampedOscillations);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
