@@ -243,6 +243,59 @@ nav a {
     border-bottom: 2px solid transparent;
 }
 
+/* Expandable "spoiler" - optional/deep-dive content the reader can fold away */
+.spoiler {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--grau-80);
+    border-radius: 12px;
+    background: var(--altweiss);
+    box-shadow: 0 8px 16px rgba(33, 150, 243, 0.2);
+    overflow: hidden;
+}
+
+.spoiler-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.25rem 2rem;
+    font-weight: 600;
+    color: var(--uni-blau-1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s ease;
+}
+
+.spoiler-summary::-webkit-details-marker {
+    display: none;
+}
+
+.spoiler-summary::after {
+    content: '▾';
+    font-size: 1.2rem;
+    color: var(--uni-blau-2);
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.spoiler-summary:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.spoiler[open] > .spoiler-summary::after {
+    transform: rotate(180deg);
+}
+
+.spoiler[open] > .spoiler-summary {
+    border-bottom: 1px solid var(--grau-20);
+}
+
+.spoiler-content {
+    padding: 1.5rem 2rem 2rem;
+    color: var(--uni-blau-1);
+    line-height: 1.7;
+}
+
 nav a:hover {
     border-bottom: 2px solid var(--sky-blue);
 }

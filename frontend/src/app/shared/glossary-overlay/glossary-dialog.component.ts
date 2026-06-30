@@ -8,6 +8,7 @@ import { AngularFrequency }    from '../../features/glossary_features/angular-fr
 import { AngularMomentum }     from '../../features/glossary_features/angular-momentum/angular-momentum';
 import { CriticalDamping }     from '../../features/glossary_features/critical-damping/critical-damping';
 import { DampingCoefficient }  from '../../features/glossary_features/damping-coefficient/damping-coefficient';
+import { DirectiveMoment }     from '../../features/glossary_features/directive-moment/directive-moment';
 import { ExponentialAnsatz }   from '../../features/glossary_features/exponential-ansatz/exponential-ansatz';
 import { HomDgl }              from '../../features/glossary_features/hom-dgl/hom-dgl';
 import { InhomDgl }            from '../../features/glossary_features/inhom-dgl/inhom-dgl';
@@ -21,6 +22,7 @@ const TERM_MAP: Record<string, Type<any>> = {
     'angular-momentum':    AngularMomentum,
     'critical-damping':    CriticalDamping,
     'damping-coefficient': DampingCoefficient,
+    'directive-moment':    DirectiveMoment,
     'exponential-ansatz':  ExponentialAnsatz,
     'hom-dgl':             HomDgl,
     'inhom-dgl':           InhomDgl,

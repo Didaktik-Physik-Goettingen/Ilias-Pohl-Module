@@ -18,9 +18,10 @@ import { HomDgl } from './features/glossary_features/hom-dgl/hom-dgl';
 import { InhomDgl } from './features/glossary_features/inhom-dgl/inhom-dgl';
 import { AngularFrequency } from './features/glossary_features/angular-frequency/angular-frequency';
 import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/moment-of-inertia';
+import { DirectiveMoment } from './features/glossary_features/directive-moment/directive-moment';
 
 // learning features
-import { EIntroExperiment } from './features/learning_features/e-intro-experiment/e-intro-experiment';
+import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
 
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
@@ -34,6 +35,7 @@ import { TestEDrivenOscillations } from './features/test_features/test-e-driven-
 
 // simulation features
 import { SimEDampedOscillations } from './features/simulation_features/sim-e-damped-oscillations/sim-e-damped-oscillations';
+import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
 
 // ── Standalone HTML simulations ───────────────────────────────────────────────
 // Plain HTML pages served as static files from public/simulations/.
@@ -68,9 +70,11 @@ export const routes: Routes = [
     { path: 'glossary/inhom-dgl',           component: InhomDgl,            title: 'Inhomogene DGL' },
     { path: 'glossary/angular-frequency',   component: AngularFrequency,    title: 'Kreisfrequenz' },
     { path: 'glossary/moment-of-inertia',   component: MomentOfInertia,     title: 'Trägheitsmoment' },
+    { path: 'glossary/directive-moment',    component: DirectiveMoment,     title: 'Richtmoment' },
 
     // conventional learning module pages
-    { path: 'learning/e-intro-experiment', component: EIntroExperiment, title: 'Einstieg Versuchsaufbau' },
+    { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg Versuchsaufbau' },
+    { path: 'learning/e2-damped-oscillations', component: E2DampedOscillation, title: 'Experiment: Gedämpfte Schwingungen' },
 
     // decision pages
     { path: 'decision/e-damped-oscillations', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },

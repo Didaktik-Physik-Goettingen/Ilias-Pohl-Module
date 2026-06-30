@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EIntroExperiment } from './e-intro-experiment';
+import { E2DampedOscillation } from './e2-damped-oscillation';
 
-describe('EIntroExperiment', () => {
-  let component: EIntroExperiment;
-  let fixture: ComponentFixture<EIntroExperiment>;
+describe('E2DampedOscillation', () => {
+  let component: E2DampedOscillation;
+  let fixture: ComponentFixture<E2DampedOscillation>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EIntroExperiment]
+      imports: [E2DampedOscillation]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EIntroExperiment);
+    fixture = TestBed.createComponent(E2DampedOscillation);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

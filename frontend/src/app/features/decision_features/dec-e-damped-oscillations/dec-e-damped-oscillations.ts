@@ -11,13 +11,13 @@ import { Router, RouterLink } from '@angular/router';
 })
 export class DecEDampedOscillations {
     // TODO: point to the dedicated experimental-line learning page for damped oscillations once it exists
-    learningModuleLink = '/learning/e-intro-experiment';
+    learningModuleLink = '/learning/e2-damped-oscillations';
     testLink = '/test/e-damped-osc';
     simulationLink = '/simulation/sim-e-damped-osc';
 
     constructor(private router: Router) {}
 
     goBack() {
-        this.router.navigate(['/learning/e-intro-experiment'], { queryParams: { page: 4 } });
+        this.router.navigate(['/learning/e1-intro-experiment'], { queryParams: { page: 4 } });
     }
 }

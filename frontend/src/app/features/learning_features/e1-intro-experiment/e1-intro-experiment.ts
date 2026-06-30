@@ -20,13 +20,13 @@ declare global {
 
 
 @Component({
-	selector: 'app-e-intro-experiment',
+	selector: 'app-e1-intro-experiment',
     standalone: true,
     imports: [CommonModule, RouterLink, MultipleChoiceImage, MultipleChoice, ImageChoice],
-    templateUrl: './e-intro-experiment.html',
-    styleUrl: './e-intro-experiment.css',
+    templateUrl: './e1-intro-experiment.html',
+    styleUrl: './e1-intro-experiment.css',
 })
-export class EIntroExperiment implements OnInit, OnDestroy {
+export class E1IntroExperiment implements OnInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -264,32 +264,26 @@ export class EIntroExperiment implements OnInit, OnDestroy {
 	// actions upon aswering questions
     onQuestion1Answered(isCorrect: boolean) {
 		this.isCorrect1 = isCorrect;
-		this.updatePage2Completion();
     }
 	
     onQuestion2Answered(isCorrect: boolean) {
 		this.isCorrect2 = isCorrect;
-		this.updatePage2Completion();
     }
 	
     onQuestion3Answered(isCorrect: boolean) {
 		this.isCorrect3 = isCorrect;
-		this.updatePage2Completion();
     }
 	
     onQuestion4Answered(isCorrect: boolean) {
 		this.isCorrect4 = isCorrect;
-		this.updatePage3Completion();
     }
 	
     onQuestion5Answered(isCorrect: boolean) {
 		this.isCorrect5 = isCorrect;
-		this.updatePage3Completion();
     }
 
     onQuestion6Answered(isCorrect: boolean) {
 		this.isCorrect6 = isCorrect;
-		this.updatePage4Completion();
     }
 	
 
@@ -349,11 +343,6 @@ export class EIntroExperiment implements OnInit, OnDestroy {
         this.isCorrect4 = this.trackingService.isQuestionCompleted(this.question4.questionId);
         this.isCorrect5 = this.trackingService.isQuestionCompleted(this.question5.questionId);
         this.isCorrect6 = this.trackingService.isQuestionCompleted(this.question6.questionId);
-        
-        // update page completion
-        this.updatePage2Completion();
-		this.updatePage3Completion();
-		this.updatePage4Completion();
     }
 
 
@@ -394,29 +383,6 @@ export class EIntroExperiment implements OnInit, OnDestroy {
         return this.currentView === 'intro_exp4';
     }
 
-	// page completion tracking
-	page1Complete = true;
-	page2Complete = false;
-	page3Complete = false;
-	page4Complete = false;
-
-
-    // ability to proceed in the module: depending on the Q+A performance (all questions have to be answered)
-    get canProceed(): boolean {
-        // if (this.currentView === 'intro_exp1') return this.page1Complete;
-        // if (this.currentView === 'intro_exp2') return this.page2Complete;
-        // if (this.currentView === 'intro_exp3') return this.page3Complete;
-		// if (this.currentView === 'intro_exp4') return this.page4Complete;
-        // return false;
-        return true;
-    }
-
-
-    // going back always enabled (for now at least)
-    get canGoBack(): boolean {
-		// if (this.currentView === 'intro_exp1') return false;
-        return true;
-    }
 
 
     // going back shows the previous subpage / home page
@@ -438,33 +404,17 @@ export class EIntroExperiment implements OnInit, OnDestroy {
 
     // go forward shows next subpage / page
     goForward() {
-        if (this.canProceed) {
-            if (this.currentView === 'intro_exp1') {
-                this.currentView = 'intro_exp2';
-            } else if (this.currentView === 'intro_exp2') {
-                this.currentView = 'intro_exp3';
-            } else if (this.currentView === 'intro_exp3') {
-                this.currentView = 'intro_exp4';
-            } else if (this.currentView === 'intro_exp4') {
-                this.router.navigate(['/decision/e-damped-oscillations']);
-                return;
-            }
-            this.updateUrl();
-            this.renderMath();
+        if (this.currentView === 'intro_exp1') {
+            this.currentView = 'intro_exp2';
+        } else if (this.currentView === 'intro_exp2') {
+            this.currentView = 'intro_exp3';
+        } else if (this.currentView === 'intro_exp3') {
+            this.currentView = 'intro_exp4';
+        } else if (this.currentView === 'intro_exp4') {
+            this.router.navigate(['/decision/e-damped-oscillations']);
+            return;
         }
-    }
-
-
-    // check if page is complete (all questions correct)
-    updatePage2Completion() {
-        this.page2Complete = this.isCorrect1 && this.isCorrect2 && this.isCorrect3;
-    }
-
-    updatePage3Completion() {
-        this.page3Complete = this.isCorrect4 && this.isCorrect5;
-    }
-
-    updatePage4Completion() {
-        this.page4Complete = this.isCorrect6;
+        this.updateUrl();
+        this.renderMath();
     }
 }

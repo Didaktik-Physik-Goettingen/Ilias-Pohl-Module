@@ -166,15 +166,15 @@
         <!-- navigation buttons -->
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/" class="btn" [disabled]="!canGoBack">← Zurück zur Startseite</button>
+                <button routerLink="/" class="btn">← Zurück zur Startseite</button>
             } @else {
-                <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
+                <button class="btn" (click)="goBack()">← Zurück</button>
             }
 
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter zu gedämpften Schwingungen →</button>
+                <button class="btn" (click)="goForward()">Weiter zu gedämpften Schwingungen →</button>
             } @else {
-                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter →</button>
+                <button class="btn" (click)="goForward()">Weiter →</button>
             }
         </div>
     </div>
