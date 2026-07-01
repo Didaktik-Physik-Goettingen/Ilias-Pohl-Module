@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="card">
+        <h1>Getriebene Schwingungen: Wie möchten Sie fortfahren?</h1>
+
+        <p>
+            Sie haben nun unterschiedliche Optionen innerhalb dieser Lerneinheit weiterzugehen:
+        </p>
+
+        <div class="decision-options">
+            <div class="decision-option decision-option-learning">
+                <h3>Lernmodul</h3>
+                <p>Zuerst mit den mathematischen Beschreibungen zu getriebenen, gedämpften Schwingungen fortfahren.</p>
+                <img src="assets/decision/learn.png" alt="Lernmodul" class="decision-option-img">
+                <button (click)="router.navigate([learningModuleLink])" class="decision-btn decision-btn-learning">Zum Lernmodul →</button>
+            </div>
+
+            <div class="decision-option decision-option-simulation">
+                <h3>Simulation</h3>
+                <p>Zunächst anhand einer Simulation die Einflüsse unterschiedlicher Parameter auf die Bewegung des Schwungrades ausprobieren, bevor sie sich mit den mathematischen Grundlagen im Lernmodul beschäftigen.</p>
+                <img src="assets/decision/simulation.png" alt="Simulation" class="decision-option-img">
+                <button (click)="router.navigate([simulationLink])" class="decision-btn decision-btn-simulation">Zur Simulation →</button>
+            </div>
+
+            <div class="decision-option decision-option-test">
+                <h3>Test</h3>
+                <p>Testen Sie direkt Ihr Wissen zu getriebenen, gedämpften Schwingungen.</p>
+                <img src="assets/decision/test.png" alt="Test" class="decision-option-img">
+                <button (click)="router.navigate([testLink])" class="decision-btn decision-btn-test">Zum Test →</button>
+            </div>
+        </div>
+
+        <!-- <div class="button-container">
+            <button class="btn" (click)="goBack()">← Zurück</button>
+        </div> -->
+    </div>
+</div>

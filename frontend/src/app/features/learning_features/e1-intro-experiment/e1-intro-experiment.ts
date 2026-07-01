@@ -52,7 +52,7 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
     // question 1 data
     question1 = {
 		questionId: 'intro-exp-1-schwungrad',
-        imageSrc: 'assets/images/intro_experiment/schwungrad_2.png',
+        imageSrc: 'assets/images/e1_intro_experiment/schwungrad_2.png',
         imageAlt: 'Schwungrad',
         question: 'Welche der Aussagen in Bezug auf das Schwungrad sind richtig?',
         options: [
@@ -87,7 +87,7 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
 	// question 2 data
     question2 = {
 		questionId: 'intro-exp-2-feder',
-        imageSrc: 'assets/images/intro_experiment/feder_2.png',
+        imageSrc: 'assets/images/e1_intro_experiment/feder_2.png',
         imageAlt: 'Feder',
         question: 'Welche Aussage über die Feder ist korrekt?',
         options: [
@@ -110,7 +110,7 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
 	// question 3 data
     question3 = {
 		questionId: 'intro-exp-3-wirbelstrombremse',
-        imageSrc: 'assets/images/intro_experiment/wirbelstrombremse_2.png',
+        imageSrc: 'assets/images/e1_intro_experiment/wirbelstrombremse_2.png',
         imageAlt: 'Wirbelstrombremse',
         question: `Zur Dämpfung wird in diesem Versuchsaufbau ein Magnet verwendet, 
 			der so verschoben werden kann, dass er das Rad (mit Abstand, also nicht wie eine Scheibenbremse) umschließt.
@@ -170,17 +170,17 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
 		options: [
 			{ 
 				value: 'answer1', 
-				imageSrc: 'assets/images/intro_experiment/angle_over_moment_option1_3.png',
+				imageSrc: 'assets/images/e1_intro_experiment/angle_over_moment_option1_3.png',
 				// label: 'Plot 1'
 			},
 			{ 
 				value: 'answer2', 
-				imageSrc: 'assets/images/intro_experiment/angle_over_moment_option2_3.png',
+				imageSrc: 'assets/images/e1_intro_experiment/angle_over_moment_option2_3.png',
 				// label: 'Plot 2'
 			},
 			{ 
 				value: 'answer3', 
-				imageSrc: 'assets/images/intro_experiment/angle_over_moment_option3_3.png',
+				imageSrc: 'assets/images/e1_intro_experiment/angle_over_moment_option3_3.png',
 				// label: 'Plot3'
 			},
 		],
@@ -206,27 +206,27 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
 		options: [
 			{ 
 				value: 'answer1', 
-				imageSrc: 'assets/images/intro_experiment/phi_over_t_option1_4.png',
+				imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option1_4.png',
 			},
 			{ 
 				value: 'answer2', 
-				imageSrc: 'assets/images/intro_experiment/phi_over_t_option2_4.png',
+				imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option2_4.png',
 			},
 			{ 
 				value: 'answer3', 
-				imageSrc: 'assets/images/intro_experiment/phi_over_t_option3_4.png',
+				imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option3_4.png',
 			},
 			{ 
 				value: 'answer4', 
-				imageSrc: 'assets/images/intro_experiment/phi_over_t_option4_4.png',
+				imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option4_4.png',
 			},
 			{ 
 				value: 'answer5', 
-				imageSrc: 'assets/images/intro_experiment/phi_over_t_option5_4.png',
+				imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option5_4.png',
 			},
 			{ 
 				value: 'answer6', 
-				imageSrc: 'assets/images/intro_experiment/phi_over_t_option6_4.png',
+				imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option6_4.png',
 			},
 		],
 		correctAnswers: ['answer3', 'answer4', 'answer6'],

@@ -1,9 +1,9 @@
 <div class="container">
     <div class="card">
         <h1>
-            @if (currentView === 'damped_osc1') { <span>Mathematische Grundlagen gedämpfter Schwingungen (1/3)</span> }
-            @else if (currentView === 'damped_osc2') { <span>Mathematische Grundlagen gedämpfter Schwingungen (2/3)</span> }
-            @else { <span>Mathematische Grundlagen gedämpfter Schwingungen (3/3)</span> }
+            @if (currentView === 'damped_osc1') { <span>Gedämpfte Schwingungen (1/3)</span> }
+            @else if (currentView === 'damped_osc2') { <span>Gedämpfte Schwingungen (2/3)</span> }
+            @else { <span>Gedämpfte Schwingungen (3/3)</span> }
         </h1>
 
 
@@ -63,9 +63,20 @@
             }
 
             @if (currentView === 'damped_osc3') {
-                <div>
-                    
+                <!-- horizontal layout: text + image -->
+                <div class="text-image-container">
+                    <div class="image-content">
+                        <img src="assets/images/e2_damped_oscillations/vergleich_daempfungen2.png" alt="Schwungrad mit Massestück">
+                    </div>
+                    <div class="text-content">
+                        <p [innerHTML]="dampedOscText3a"></p>
+                    </div>
+
                 </div>
+                <details class="spoiler">
+                    <summary class="spoiler-summary">Erläuterung der Rechnung zum logarithmischen Dekrement</summary>
+                    <div class="spoiler-content" [innerHTML]="dampedOscText3b"></div>
+                </details>
             }
 
         </div>
@@ -79,7 +90,9 @@
             }
 
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()">Weiter zu gedämpften Schwingungen →</button>
+                <button class="btn" (click)="goForward()">
+                    {{ navigationFlow === 'learning-first' ? 'Weiter mit der Simulation →' : 'Weiter zu getriebenen Schwingungen →' }}
+                </button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>
             }

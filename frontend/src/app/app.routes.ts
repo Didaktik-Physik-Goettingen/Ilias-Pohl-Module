@@ -25,6 +25,7 @@ import { E1IntroExperiment } from './features/learning_features/e1-intro-experim
 
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
+import { DecEDrivenOscillations } from './features/decision_features/dec-e-driven-oscillations/dec-e-driven-oscillations';
 
 
 // test features
@@ -36,6 +37,7 @@ import { TestEDrivenOscillations } from './features/test_features/test-e-driven-
 // simulation features
 import { SimEDampedOscillations } from './features/simulation_features/sim-e-damped-oscillations/sim-e-damped-oscillations';
 import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
+import { E3DrivenOscillations } from './features/learning_features/e3-driven-oscillations/e3-driven-oscillations';
 
 // ── Standalone HTML simulations ───────────────────────────────────────────────
 // Plain HTML pages served as static files from public/simulations/.
@@ -75,9 +77,12 @@ export const routes: Routes = [
     // conventional learning module pages
     { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg Versuchsaufbau' },
     { path: 'learning/e2-damped-oscillations', component: E2DampedOscillation, title: 'Experiment: Gedämpfte Schwingungen' },
+    { path: 'learning/e3-driven-oscillations', component: E3DrivenOscillations, title: 'Experiment: Getriebene Schwingungen' },
+
 
     // decision pages
     { path: 'decision/e-damped-oscillations', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
+    { path: 'decision/e-driven-oscillations', component: DecEDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
 
     // test pages
     { path: 'test/e-damped-osc', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },

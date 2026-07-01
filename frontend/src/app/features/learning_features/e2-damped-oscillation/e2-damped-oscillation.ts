@@ -10,10 +10,10 @@ import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overl
 
 
 @Component({
-  selector: 'app-e2-damped-oscillation',
-  imports: [CommonModule, RouterLink, MultipleChoice],
-  templateUrl: './e2-damped-oscillation.html',
-  styleUrl: './e2-damped-oscillation.css',
+	selector: 'app-e2-damped-oscillation',
+	imports: [CommonModule, RouterLink, MultipleChoice],
+	templateUrl: './e2-damped-oscillation.html',
+	styleUrl: './e2-damped-oscillation.css',
 })
 export class E2DampedOscillation {
     constructor(
@@ -41,7 +41,7 @@ export class E2DampedOscillation {
 	// question 1 data
     question1 = {
 		questionId: 'damped_osc-1-schwungrad',
-        question: 'Welche der folgenden Aussagen trifft auf das schwingfende Rad zu',
+        question: 'Welche der folgenden Aussagen trifft auf das schwingfende Rad zu?',
         options: [
             { value: 'answer1', label: ' Je größer der Überlapp zwischen Magnet und Schwungrad, desto größer ist die Periodenlänge der Schwingung.' },
             { value: 'answer2', label: ' Die Größe des Überlapps zwischen Magnet und Schwungrad hat keinen Einfluss auf die Bewegung des Schwungrads.' },
@@ -86,6 +86,9 @@ export class E2DampedOscillation {
 	dampedOscText2d!: SafeHtml;
 	dampedOscText2e!: SafeHtml;
 
+	dampedOscText3a!: SafeHtml;
+	dampedOscText3b!: SafeHtml;
+
 
     ngOnInit() {
         // restore subpage from URL query param
@@ -93,6 +96,9 @@ export class E2DampedOscillation {
         if (page && ['1','2','3'].includes(page)) {
             this.currentView = `damped_osc${page}`;
         }
+
+        // read entry-flow so continue button can navigate correctly
+        this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
 
         // start tracking this module
         this.trackingService.startModule('damped_oscillations');
@@ -204,6 +210,29 @@ export class E2DampedOscillation {
 			Die gedämpfte Eigenfrequenz kann im Experiment aus der Periodenlänge $T=\\frac{1}{\\omega_e}$ bestimmt werden.
 		`)
 
+		this.dampedOscText3a = this.sanitizer.bypassSecurityTrustHtml(`
+			In der linken Abbildung ist exemplarisch der zeitliche Verlauf der Winkelauslenkung eines gedämpften Systems dargestellt, wobei die Anfangsauslenkung $x_0>0$ und die Anfangsgeschwindigkeit $v_0=0$ sind.<br><br>
+
+			Die blaue Kurve zeigt jeweils die Winkelauslenkung des Rades über die Zeit, die rote gestrichelte Kurve deutet die abnehmende Amplitude über die Zeit an — sie wird auch Einhüllende genannt.<br><br>
+
+			Je stärker der Überlapp zwischen Magnet und Schwungrad, desto schneller nimmt die Amplitude des Systems ab. In den Abbildungen links nimmt die Dämpfung von oben nach unten zu, in der untersten Abbildung zeichnet sich bereits der Übergang zum aperiodischen Grenzfall ab.<br><br>
+
+			Kennt man den zeitlichen Verlauf, so kann das Verhältnis der Amplituden in Kombination mit der Periodendauer $T$ genutzt werden, um den Dämpfungskoeffizienten $\\beta$ zu bestimmen.<br><br>
+
+			Als zusätzliche Hilfsgröße zur Analyse der Dämpfung wird hierfür das „logarithmische Dekrement" $\\Lambda$, das sich explizit auf das Verhältnis benachbarter Maxima (zeitlicher Abstand = Periodendauer $T$) bezieht:
+			$$\\Lambda=\\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right)=\\ln(\\exp(\\beta T))=\\beta T.$$
+		`)
+
+		this.dampedOscText3b = this.sanitizer.bypassSecurityTrustHtml(`
+			$$\\Lambda=\\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right)$$
+			Setzen wir hier die allgemeine Lösung der Differentialgleichung von der vorangegangenen Seite ein, erhalten wir:
+			$$\\Lambda=\\ln\\left(\\frac{\\varphi_0\\cos(\\omega_e t+\\phi)\\exp(-\\beta t)}{\\varphi_0\\cos(\\omega_e(t+T)+\\phi)\\exp(-\\beta(t+T))}\\right)$$
+			Beachten wir die Periodizität der Cosinus-Funktion, also dass $\\cos(\\omega t+\\phi)=\\cos(\\omega(t+T)+\\phi)$, und die Additivität der Exponentialfunktion $\\exp(a+b)=\\exp(a)\\exp(b)$, ergibt sich:
+			$$\\Lambda=\\ln\\left(\\frac{\\varphi_0\\cos(\\omega_e t+\\phi)\\exp(-\\beta t)}{\\varphi_0\\cos(\\omega_e t+\\phi)\\exp(-\\beta t)\\exp(-\\beta T)}\\right)$$
+			Damit können wir einige Faktoren kürzen und erhalten den behaupteten Zusammenhang:
+			$$\\Lambda=\\ln(\\exp(\\beta T))=\\beta T.$$
+		`)
+
         this.renderMath();
     }
 
@@ -250,6 +279,8 @@ export class E2DampedOscillation {
 
     // navigation helpers
 	currentView: string = 'damped_osc1';
+    navigationFlow: string = '';
+
     get isFirstPage(): boolean {
         return this.currentView === 'damped_osc1';
     }
@@ -268,8 +299,6 @@ export class E2DampedOscillation {
             this.currentView = 'damped_osc1';
         } else if (this.currentView === 'damped_osc3') {
             this.currentView = 'damped_osc2';
-        } else if (this.currentView === 'damped_osc4') {
-            this.currentView = 'damped_osc3';
         }
         this.updateUrl();
         this.renderMath();
@@ -283,9 +312,11 @@ export class E2DampedOscillation {
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc3';
         } else if (this.currentView === 'damped_osc3') {
-            this.currentView = 'damped_osc4';
-        } else if (this.currentView === 'damped_osc4') {
-            this.router.navigate(['/decision/e-damped-oscillations']);
+            if (this.navigationFlow === 'learning-first') {
+                this.router.navigate(['/simulation/sim-e-damped-osc'], { queryParams: { flow: 'learning-first' } });
+            } else {
+                this.router.navigate(['/decision/e-driven-oscillations']);
+            }
             return;
         }
         this.updateUrl();

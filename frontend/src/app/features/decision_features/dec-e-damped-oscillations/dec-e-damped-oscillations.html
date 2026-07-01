@@ -10,25 +10,24 @@
         <div class="decision-options">
             <div class="decision-option decision-option-learning">
                 <h3>Lernmodul</h3>
-                <p>Arbeiten Sie die Theorie zu gedämpften Schwingungen Schritt für Schritt durch.</p>
-                <a [routerLink]="learningModuleLink" class="decision-btn decision-btn-learning">Zum Lernmodul →</a>
+                <p>Arbeiten Sie die Theorie zu gedämpften Schwingungen Schritt für Schritt durch bevor sie das Wissen in einer interaktiven Simulation weiter vertiefen können.</p>
+                <img src="assets/decision/learn.png" alt="Lernmodul" class="decision-option-img">
+                <button (click)="navigateToLearning()" class="decision-btn decision-btn-learning">Zum Lernmodul →</button>
             </div>
 
             <div class="decision-option decision-option-simulation">
                 <h3>Simulation</h3>
-                <p>Erforschen Sie gedämpfte Schwingungen interaktiv in der Simulation.</p>
-                <a [routerLink]="simulationLink" class="decision-btn decision-btn-simulation">Zur Simulation →</a>
+                <p>Erforschen Sie zuerst gedämpfte Schwingungen interaktiv in der Simulation.</p>
+                <img src="assets/decision/simulation.png" alt="Simulation" class="decision-option-img">
+                <button (click)="navigateToSimulation()" class="decision-btn decision-btn-simulation">Zur Simulation →</button>
             </div>
 
             <div class="decision-option decision-option-test">
                 <h3>Test</h3>
                 <p>Testen Sie direkt Ihr Wissen zu gedämpften Schwingungen.</p>
-                <a [routerLink]="testLink" class="decision-btn decision-btn-test">Zum Test →</a>
+                <img src="assets/decision/test.png" alt="Test" class="decision-option-img">
+                <button (click)="router.navigate([testLink])" class="decision-btn decision-btn-test">Zum Test →</button>
             </div>
-        </div>
-
-        <div class="button-container">
-            <button class="btn" (click)="goBack()">← Zurück</button>
         </div>
     </div>
 </div>

@@ -68,9 +68,9 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 			Ziehen Sie die Bilder in die richtige Reihenfolge (stärkste Dämpfung oben, schwächste unten).`,
 		questionInstruction: 'Frage 1 von 5 (30 Punkte): Sortierung Dämpfungskonstante',
         images: [
-			{ id: 'weak', imageSrc: 'assets/images/damped_oscillations/weak_damping_1.png', label: 'Schwingung A' },
-            { id: 'medium', imageSrc: 'assets/images/damped_oscillations/medium_damping_1.png', label: 'Schwingung B' },
-            { id: 'strong', imageSrc: 'assets/images/damped_oscillations/strong_damping_1.png', label: 'Schwingung C' }
+			{ id: 'weak', imageSrc: 'assets/images/test_e_damped_oscillations/weak_damping_1.png', label: 'Schwingung A' },
+            { id: 'medium', imageSrc: 'assets/images/test_e_damped_oscillations/medium_damping_1.png', label: 'Schwingung B' },
+            { id: 'strong', imageSrc: 'assets/images/test_e_damped_oscillations/strong_damping_1.png', label: 'Schwingung C' }
         ],
         correctOrder: ['strong', 'medium', 'weak'],
         maxPoints: 30,
@@ -86,9 +86,9 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 			Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante nach oben einsortieren (andere Variablen sind konstant gehalten).`,
 		questionInstruction: 'Frage 2 von 5 (30 Punkte): Sortierung Federkonstante',
         images: [
-			{ id: 'weak', imageSrc: 'assets/images/damped_oscillations/weak_spring_constant_2.png', label: 'Schwingung A' },
-            { id: 'medium', imageSrc: 'assets/images/damped_oscillations/medium_spring_constant_2.png', label: 'Schwingung B' },
-            { id: 'strong', imageSrc: 'assets/images/damped_oscillations/strong_spring_constant_2.png', label: 'Schwingung C' }
+			{ id: 'weak', imageSrc: 'assets/images/test_e_damped_oscillations/weak_spring_constant_2.png', label: 'Schwingung A' },
+            { id: 'medium', imageSrc: 'assets/images/test_e_damped_oscillations/medium_spring_constant_2.png', label: 'Schwingung B' },
+            { id: 'strong', imageSrc: 'assets/images/test_e_damped_oscillations/strong_spring_constant_2.png', label: 'Schwingung C' }
         ],
         correctOrder: ['strong', 'medium', 'weak'],
         maxPoints: 30,
@@ -146,21 +146,21 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
         containers: [
             { 
 				id: 'spiral1', 
-				imageSrc: 'assets/images/damped_oscillations/phase_space_spiral1_5.png', 
+				imageSrc: 'assets/images/test_e_damped_oscillations/phase_space_spiral1_5.png', 
 				imageAlt: 'Spirale 1', 
 				correctAnswerIds: [ 'phi_gr_zero', 'phi_dot_eq_zero', 'gamma_weak' ], 
 				assignedAnswerIds: [] 
 			},
             { 
 				id: 'spiral2', 
-				imageSrc: 'assets/images/damped_oscillations/phase_space_spiral2_5.png', 
+				imageSrc: 'assets/images/test_e_damped_oscillations/phase_space_spiral2_5.png', 
 				imageAlt: 'Spirale 2', 
 				correctAnswerIds: [ 'phi_sm_zero', 'phi_dot_gr_zero', 'gamma_medium' ],
 				assignedAnswerIds: [] 
 			},
             { 
 				id: 'spiral3', 
-				imageSrc: 'assets/images/damped_oscillations/phase_space_spiral3_5.png', 
+				imageSrc: 'assets/images/test_e_damped_oscillations/phase_space_spiral3_5.png', 
 				imageAlt: 'Spirale 3', 
 				correctAnswerIds: [ 'phi_eq_zero', 'phi_dot_sm_zero', 'gamma_strong'], 
 				assignedAnswerIds: [] }

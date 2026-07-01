@@ -86,9 +86,9 @@ Im folgenden sind vier Phasenraumdiagramme für unterschiedliche Anfangsbedingun
 Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 		questionInstruction: 'Frage 2 von 4 (5 Punkte): Einschwingvorgang abgeschlossen?',
         options: [
-			{ value: 'osc1', imageSrc: 'assets/images/driven_oscillation_t/Einschwingvorgang_JA.png', label: 'Schwingung A' },
-            { value: 'osc2', imageSrc: 'assets/images/driven_oscillation_t/Einschwingvorgang_NEIN1.png', label: 'Schwingung B' },
-            { value: 'osc3', imageSrc: 'assets/images/driven_oscillation_t/Einschwingvorgang_NEIN2.png', label: 'Schwingung C' }
+			{ value: 'osc1', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_JA.png', label: 'Schwingung A' },
+            { value: 'osc2', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_NEIN1.png', label: 'Schwingung B' },
+            { value: 'osc3', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_NEIN2.png', label: 'Schwingung C' }
         ],
         correctAnswer: 'osc1',
         maxPoints: 5,
@@ -105,9 +105,9 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
         Bei welcher der unten stehenden Abbildungen ist die x-Achsenskalierung korrekt? (Beachten Sie die Beschriftung der x-Achse)`,
 		questionInstruction: 'Frage 3 von 4 (10 Punkte): Zusammenhang Frequenz und Schwingungsamplitude - Resonanzkurve',
         options: [
-            { value: 'answer1', imageSrc: 'assets/images/driven_oscillation_t/Einschwingvorgang_JA.png', label: 'Resonanzkurve A' },
-            { value: 'answer2', imageSrc: 'assets/images/driven_oscillation_t/Einschwingvorgang_JA.png', label: 'Resonanzkurve B' },
-            { value: 'answer3', imageSrc: 'assets/images/driven_oscillation_t/Einschwingvorgang_JA.png', label: 'Resonanzkurve C' },
+            { value: 'answer1', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_JA.png', label: 'Resonanzkurve A' },
+            { value: 'answer2', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_JA.png', label: 'Resonanzkurve B' },
+            { value: 'answer3', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_JA.png', label: 'Resonanzkurve C' },
         ],
 		correctAnswer: 'answer2',
         maxPoints: 10,

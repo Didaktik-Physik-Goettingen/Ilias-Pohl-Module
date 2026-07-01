@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 
 @Component({
   selector: 'app-dec-e-damped-oscillations',
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './dec-e-damped-oscillations.html',
   styleUrl: './dec-e-damped-oscillations.css',
 })
@@ -15,7 +15,15 @@ export class DecEDampedOscillations {
     testLink = '/test/e-damped-osc';
     simulationLink = '/simulation/sim-e-damped-osc';
 
-    constructor(private router: Router) {}
+    constructor(public router: Router) {}
+
+    navigateToLearning() {
+        this.router.navigate([this.learningModuleLink], { queryParams: { flow: 'learning-first' } });
+    }
+
+    navigateToSimulation() {
+        this.router.navigate([this.simulationLink], { queryParams: { flow: 'sim-first' } });
+    }
 
     goBack() {
         this.router.navigate(['/learning/e1-intro-experiment'], { queryParams: { page: 4 } });

@@ -1,5 +1,6 @@
-import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 declare global {
@@ -28,7 +29,7 @@ interface Vec2 {
   // can't reconcile it and ends up replacing the subtree right after the first paint
   host: { ngSkipHydration: 'true' },
 })
-export class SimEDampedOscillations implements AfterViewInit, OnDestroy {
+export class SimEDampedOscillations implements OnInit, AfterViewInit, OnDestroy {
     @ViewChild('canPend') canPendRef!: ElementRef<HTMLCanvasElement>;
     @ViewChild('canRotPend') canRotPendRef!: ElementRef<HTMLCanvasElement>;
     @ViewChild('canTime') canTimeRef!: ElementRef<HTMLCanvasElement>;
@@ -52,7 +53,6 @@ export class SimEDampedOscillations implements AfterViewInit, OnDestroy {
     showTimeDiagram = true;
     dynamicMode = true;
     startButtonLabel = 'Start';
-    interactionHintText = '';
 
     private wasPendulumVisible = false;
     private wasRotPendulumVisible = true;
@@ -70,10 +70,18 @@ export class SimEDampedOscillations implements AfterViewInit, OnDestroy {
 
     private prevPointsTime: Point[] = [];
 
+    navigationFlow: string = '';
+
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
-        private location: Location
+        private location: Location,
+        private route: ActivatedRoute,
+        private router: Router
     ) {}
+
+    ngOnInit() {
+        this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
+    }
 
     ngAfterViewInit() {
         if (!isPlatformBrowser(this.platformId)) return;
@@ -97,6 +105,14 @@ export class SimEDampedOscillations implements AfterViewInit, OnDestroy {
 
     goBack() {
         this.location.back();
+    }
+
+    goForward() {
+        if (this.navigationFlow === 'sim-first') {
+            this.router.navigate(['/learning/e2-damped-oscillations'], { queryParams: { flow: 'sim-first' } });
+        } else {
+            this.router.navigate(['/decision/e-driven-oscillations']);
+        }
     }
 
     // trigger MathJax rendering
@@ -182,14 +198,15 @@ export class SimEDampedOscillations implements AfterViewInit, OnDestroy {
         }
     }
 
-    // ── interaction hint (placeholder for follow-up links) ─────────────
+    // ── interaction threshold — unlocks the continue button ────────────
+
+    get interactionThresholdReached(): boolean {
+        return this.interactionCount > 8;
+    }
 
     private interactionCounter() {
-        if (this.interactionCount > 8) {
-            this.interactionHintText = 'Wählen Sie abhängig davon, welche theoretischen Kapitel Sie bereits erarbeitet haben: Hier würden jetzt die weiterführenden Links erscheinen.';
-        } else {
+        if (this.interactionCount <= 8) {
             this.interactionCount += 1;
-            this.interactionHintText = '';
         }
     }
 
