@@ -43,7 +43,7 @@
                     <p>
                         Aufgrund des durch die Masse bewirkten Drehmoments lautet die gesamte Bewegungsgleichung für das gedämpfte, harmonisch getriebene System:
                     </p>
-                    <p [innerHTML]="differentialgleichung"></p>
+                    <div [innerHTML]="differentialgleichung"></div>
                 </div>
             }
 
@@ -53,7 +53,9 @@
                         <img src="assets/images/intro_experiment/experiment_schematic_2.png" alt="Versuchsaufbau" class="full-width-image">
                     </div>
                     <aside class="notice-box notice-blue">
-                        <img class="notice-icon" src="assets/icons/Speech bubble.svg" alt="" aria-hidden="true">
+                        <span class="notice-icon" aria-hidden="true">
+                            <img src="assets/icons/Speech bubble.svg" alt="">
+                        </span>
                         <p>Hier noch ein paar Hinweise zum Aufbau:</p>
                         <p>Die <b>Feder</b> sorgt für ein rücktreibendes <a href="#glossary-angular-momentum">Drehmoment</a> und induziert daher eine Bewegung des Schwungrads,
                         wenn dieses aus seiner Ruhelage ausgelenkt wird.

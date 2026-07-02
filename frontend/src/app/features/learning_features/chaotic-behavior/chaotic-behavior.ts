@@ -63,13 +63,19 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
           Stattdessen entstehen zwei neue, symmetrisch um den Ursprung verteilte Gleichgewichtslagen.
       `);
       this.differentialgleichung = this.sanitizer.bypassSecurityTrustHtml(`
-          $$\\ddot{\\varphi} + 2\\tilde{\\beta} \\dot{\\varphi} + \\tilde{\\omega}_0^2\\phi + \\alpha\\sin{\\phi} = N\\cos{\\omega t} $$
+          <aside class="formula-box">
+            <span class="formula-lightbulb" aria-hidden="true"><img src="assets/icons/light_bulb.svg" alt=""></span>
+            <div class="formula">$$\\ddot{\\varphi} + 2\\tilde{\\beta} \\dot{\\varphi} + \\tilde{\\omega}_0^2\\phi + \\alpha\\sin{\\phi} = N\\cos{\\omega t} $$</div>
+          </aside>
           Beachte, dass durch Tilden über den Variablen angezeigt werden soll, dass sich das aufgrund der Zusatzmassen das 
           <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a> geändert hat. 
           Zudem haben wir die Variable $\\alpha = \\frac{mgr}{\\Theta_1}$ mit dem neuen <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a><br>
           Für sehr kleine Nichtlinearitäten, können wir bei kleinen Auslenkungen die Sinusfunktion in erster Näherung betrachten: 
           $\\sin(\\phi) \\approx \\phi$, wodurch sich wieder eine lineare Schwingungsgleichung ergibt:
-          $$\\ddot{\\varphi} + 2\\tilde{\\beta} \\dot{\\varphi} +( \\tilde{\\omega}_0^2+\\alpha)\\phi = N\\cos{\\omega t} $$<br>
+          <aside class="formula-box">
+            <span class="formula-lightbulb" aria-hidden="true"><img src="assets/icons/light_bulb.svg" alt=""></span>
+            <div class="formula">$$\\ddot{\\varphi} + 2\\tilde{\\beta} \\dot{\\varphi} +( \\tilde{\\omega}_0^2+\\alpha)\\phi = N\\cos{\\omega t} $$</div>
+          </aside>
           Diese Gleichung kann wie gewohnt gelöst werden und es zeigt sich, dass die zusätzliche Masse lediglich eine Änderung der
           <a href="#glossary-angular-frequency" class="glossary-link">Eigenschwingfrequenz</a> bewirkt.<br>
           Für größere Auslenkungen müssen weitere Terme der Taylorentwicklung berücksichtigt werden, die zu einer Verzerrung (zu höheren Frequenzen) der Resonanzfrequenz-Kurve führen.<br><br>
