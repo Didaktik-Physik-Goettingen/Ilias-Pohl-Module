@@ -73,42 +73,12 @@
 
 .notice-icon {
   position: absolute;
-  top: -42px;
+  top: -32px;
   left: 26px;
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
+  width: 64px;
+  height: 64px;
   z-index: 2;
-}
-
-.speech-icon {
-  background-color: #eef1f5;
-}
-
-.speech-icon::before {
-  content: "";
-  position: absolute;
-  left: 23px;
-  top: 25px;
-  width: 40px;
-  height: 29px;
-  background-color: #40577a;
-  border-radius: 18px;
-  box-shadow:
-    9px 12px 0 -6px #ffffff,
-    20px 12px 0 -6px #ffffff,
-    31px 12px 0 -6px #ffffff;
-}
-
-.speech-icon::after {
-  content: "";
-  position: absolute;
-  left: 28px;
-  top: 47px;
-  width: 0;
-  height: 0;
-  border-top: 14px solid #40577a;
-  border-right: 14px solid transparent;
+  object-fit: contain;
 }
 
 .lightbulb-icon {
@@ -932,23 +902,10 @@
 
   .notice-icon {
     left: 18px;
-    top: -36px;
-    width: 72px;
-    height: 72px;
+    top: -28px;
+    width: 56px;
+    height: 56px;
   }
-
-  .speech-icon::before {
-    left: 20px;
-    top: 22px;
-    width: 34px;
-    height: 25px;
-  }
-
-  .speech-icon::after {
-    left: 24px;
-    top: 42px;
-  }
-
 
   .formula-line,
   .formula-stack {
@@ -1188,24 +1145,9 @@
 
   .notice-icon {
     left: 10px;
-    top: -28px;
-    width: 56px;
-    height: 56px;
-  }
-
-  .speech-icon::before {
-    left: 14px;
-    top: 16px;
-    width: 26px;
-    height: 18px;
-    border-radius: 14px;
-  }
-
-  .speech-icon::after {
-    left: 16px;
-    top: 32px;
-    border-top-width: 12px;
-    border-right-width: 12px;
+    top: -22px;
+    width: 44px;
+    height: 44px;
   }
 
   .feedback-box {

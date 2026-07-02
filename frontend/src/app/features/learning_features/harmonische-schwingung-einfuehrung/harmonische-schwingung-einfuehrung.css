@@ -53,24 +53,14 @@
   justify-content: center;
 }
 
-.box-icon {
+.notice-icon {
   position: absolute;
-  top: -42px;
+  top: -32px;
   left: 26px;
-  width: 84px;
-  height: 84px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
-  line-height: 1;
+  width: 64px;
+  height: 64px;
   z-index: 2;
-}
-
-.speech-icon {
-  background: #eef1f5;
-  color: #40577a;
+  object-fit: contain;
 }
 
 .lightbulb-icon {
@@ -193,12 +183,11 @@
     padding: 44px 20px 24px;
   }
 
-  .box-icon {
+  .notice-icon {
     left: 18px;
-    width: 72px;
-    height: 72px;
-    top: -36px;
-    font-size: 28px;
+    width: 56px;
+    height: 56px;
+    top: -28px;
   }
   .multiple-choice-task {
   margin-top: 44px;
