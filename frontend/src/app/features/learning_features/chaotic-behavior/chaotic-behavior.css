@@ -1,0 +1,23 @@
+.notice-box {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: #ffffff;
+  border: 2px solid transparent;
+  margin: 0 0 24px;
+  padding: 44px 28px 22px;
+}
+
+.notice-blue {
+  border-color: #40577a;
+}
+
+.notice-icon {
+  position: absolute;
+  top: -26px;
+  left: 22px;
+  width: 52px;
+  height: 52px;
+  z-index: 2;
+  object-fit: contain;
+}
