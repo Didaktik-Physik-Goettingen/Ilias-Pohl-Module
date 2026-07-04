@@ -18,18 +18,31 @@ import { HomDgl } from './features/glossary_features/hom-dgl/hom-dgl';
 import { InhomDgl } from './features/glossary_features/inhom-dgl/inhom-dgl';
 import { AngularFrequency } from './features/glossary_features/angular-frequency/angular-frequency';
 import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/moment-of-inertia';
+import { DirectiveMoment } from './features/glossary_features/directive-moment/directive-moment';
+import { ResonanceFrequency } from './features/glossary_features/resonance-frequency/resonance-frequency';
 
 // learning features
-import { IntroExperiment } from './features/learning_features/intro-experiment/intro-experiment';
+import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
+import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
+import { E3DrivenOscillations } from './features/learning_features/e3-driven-oscillations/e3-driven-oscillations';
+
+// decision features
+import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
+import { DecEDrivenOscillations } from './features/decision_features/dec-e-driven-oscillations/dec-e-driven-oscillations';
 
 // test features
-import { TestDampedOscillations } from './features/test_features/damped-oscillations/damped-oscillations';
-import { TDampedOscillation } from './features/test_features/t-damped-oscillation/t-damped-oscillation';
-import { TDrivenOscillation } from './features/test_features/t-driven-oscillation/t-driven-oscillation';
-import { EDrivenOscillation } from './features/test_features/e-driven-osc/e-driven-oscillation';
+import { TestEDampedOscillations } from './features/test_features/test-e-damped-oscillations/test-e-damped-oscillations';
+import { TestTDampedOscillation } from './features/test_features/test-t-damped-oscillation/test-t-damped-oscillation';
+import { TestTDrivenOscillation } from './features/test_features/test-t-driven-oscillation/test-t-driven-oscillation';
+import { TestEDrivenOscillations } from './features/test_features/test-e-driven-oscillations/test-e-driven-oscillations';
 
 // simulation features
-import { SimDampedOscillationsExperiment } from './features/simulation_features/damped-oscillations-experiment/damped-oscillations-experiment';
+import { SimEDampedOscillations } from './features/simulation_features/sim-e-damped-oscillations/sim-e-damped-oscillations';
+import { SimEDrivenOscillations } from './features/simulation_features/sim-e-driven-oscillations/sim-e-driven-oscillations';
+
+// target features
+import { TarExperiment } from './features/target_features/tar-experiment/tar-experiment';
+
 
 // ── Standalone HTML simulations ───────────────────────────────────────────────
 // Plain HTML pages served as static files from public/simulations/.
@@ -52,6 +65,7 @@ export const routes: Routes = [
     { path: '', component: Home, title: 'Pohlsches Rad' },
     { path: 'glossary', component: Glossary, title: 'Pohlsches Rad - Begriffe' },
 
+    // glossary pages
     { path: 'glossary/amplitude',           component: Amplitude,           title: 'Amplitude' },
     { path: 'glossary/critical-damping',    component: CriticalDamping,     title: 'Aperiodischer Grenzfall' },
     { path: 'glossary/damping-coefficient', component: DampingCoefficient,  title: 'Dämpungskoeffizient' },
@@ -63,16 +77,31 @@ export const routes: Routes = [
     { path: 'glossary/inhom-dgl',           component: InhomDgl,            title: 'Inhomogene DGL' },
     { path: 'glossary/angular-frequency',   component: AngularFrequency,    title: 'Kreisfrequenz' },
     { path: 'glossary/moment-of-inertia',   component: MomentOfInertia,     title: 'Trägheitsmoment' },
+    { path: 'glossary/directive-moment',    component: DirectiveMoment,     title: 'Richtmoment' },
+    { path: 'glossary/resonance-frequency',    component: ResonanceFrequency,     title: 'Resonanzfrequenz' },
 
-    { path: 'learning/intro-experiment', component: IntroExperiment, title: 'Einstieg Versuchsaufbau' },
+    // conventional learning module pages
+    { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg Versuchsaufbau' },
+    { path: 'learning/e2-damped-oscillations', component: E2DampedOscillation, title: 'Experiment: Gedämpfte Schwingungen' },
+    { path: 'learning/e3-driven-oscillations', component: E3DrivenOscillations, title: 'Experiment: Getriebene Schwingungen' },
 
-    { path: 'test/damped-oscillations', component: TestDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
-    { path: 'test/t-damped-oscillations', component: TDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
 
-    { path:  'test/driven-oscillations-t', component: TDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
-    { path:  'test/driven-oscillations-e', component: EDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
+    // decision pages
+    { path: 'decision/e-damped-oscillations', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
+    { path: 'decision/e-driven-oscillations', component: DecEDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
 
-    { path: 'simulation/damped-oscillations-experiment', component: SimDampedOscillationsExperiment, title: 'Simulation: Gedämpfte Schwingungen' },
+    // test pages
+    { path: 'test/e-damped-osc', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'test/t-damped-osc', component: TestTDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'test/t-driven-osc', component: TestTDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
+    { path: 'test/e-driven-osc', component: TestEDrivenOscillations, title: 'Test: Getriebene Schwingungen'},
+
+    // simulation pages
+    { path: 'simulation/sim-e-damped-osc', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
+    { path: 'simulation/sim-e-driven-osc', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
+
+    // target pages
+    { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },
 
     // Standalone HTML simulations — redirect to static files in public/simulations/
     { path: 'simulation/theory-undamped',             			canActivate: [sim('Simulation_01_Einstieg_undamped_linear.html')],              component: SimulationRedirect, title: 'Simulation: Ungedämpfte Schwingung' },
@@ -81,7 +110,7 @@ export const routes: Routes = [
     { path: 'simulation/theory-damped-driven-davanced', 		canActivate: [sim('Simulation_04_Vertiefung_damped_driven_rot.html')],          component: SimulationRedirect, title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
     // { path: 'simulation/experiment-damped',               		canActivate: [sim('Simulation_11_Einstieg_damped_rot_20251107.html')],          component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung' },
     // { path: 'simulation/damped-rot-advanced',         canActivate: [sim('Simulation_12_Vertiefung_damped_rot_20251107.html')],        component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung (Vertiefung)' },
-    { path: 'simulation/experiment-damped',               		canActivate: [sim('Simulation_12_Vertiefung_damped_rot.html')],                 component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung v2' },
+    // 'simulation/experiment-damped' replaced by the sim-e-damped-oscillations component (see 'simulation/sim-e-damped-osc' above)
     { path: 'simulation/experiment-damped-driven',     			canActivate: [sim('Simulation_13_Einleitung_damped_driven_rot_202511072.html')], component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Einleitung)' },
     { path: 'simulation/experiment-damped-driven-advanced',  	canActivate: [sim('Simulation_14_Vertiefung_damped_driven_rot.html')],          component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Vertiefung)' },
 ];

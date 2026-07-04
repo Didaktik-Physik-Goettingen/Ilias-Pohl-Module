@@ -1,0 +1,106 @@
+<div class="container">
+    <div class="card">
+        <h1 class="h1-test">
+            @if (currentView === 'driven_osc1') { <span>Test: Getriebene Schwingungen (1/4)</span> }
+            @else if (currentView === 'driven_osc2') { <span>Test: Getriebene Schwingungen (2/4)</span> }
+            @else if (currentView === 'driven_osc3') { <span>Test: Getriebene Schwingungen (3/4)</span> }
+            @else if (currentView === 'driven_osc4') { <span>Test: Getriebene Schwingungen (4/4)</span> }
+            @else { <span>Test: Getriebene Schwingungen - Ergebnis</span> }
+        </h1>
+
+        <!-- page 1 -->
+        @if (currentView === 'driven_osc1') {
+            <div>
+                <app-test-true-false
+                    [questionId]="question1.questionId"
+                    [question]="question1.question"
+                    [questionInstruction]="question1.questionInstruction"
+                    [statements]="question1.statements"
+                    [maxPoints]="question1.maxPoints"
+                    [containerId]="question1.containerId"
+                    (onSubmit)="onQuestion1Submit($event)">
+                </app-test-true-false>
+            </div>
+        }
+
+        <!-- page 2 -->
+        @if (currentView === 'driven_osc2') {
+            <div>
+                <app-test-image-choice
+                    [questionId]="question2.questionId"
+                    [question]="question2.question"
+                    [questionInstruction]="question2.questionInstruction"
+                    [options]="question2.options"
+                    [correctAnswer]="question2.correctAnswer"
+                    [maxPoints]="question2.maxPoints"
+                    [containerId]="question2.containerId"
+                    (onSubmit)="onQuestion2Submit($event)">
+                </app-test-image-choice>
+            </div>
+        }
+
+        <!-- page 3 -->
+        @if (currentView === 'driven_osc3') {
+            <div>
+                <app-test-image-choice
+                    [questionId]="question3.questionId"
+                    [question]="question3.question"
+                    [questionInstruction]="question3.questionInstruction"
+                    [options]="question3.options"
+                    [correctAnswer]="question3.correctAnswer"
+                    [maxPoints]="question3.maxPoints"
+                    [containerId]="question3.containerId"
+                    (onSubmit)="onQuestion3Submit($event)">
+                </app-test-image-choice>
+            </div>
+        }
+
+        <!-- page 4 -->
+        @if (currentView === 'driven_osc4') {
+            <div>
+                <app-test-true-false
+                    [questionId]="question4.questionId"
+                    [question]="question4.question"
+                    [questionInstruction]="question4.questionInstruction"
+                    [statements]="question4.statements"
+                    [maxPoints]="question4.maxPoints"
+                    [pointsPerCorrectClick]="question4.pointsPerCorrectClick"
+                    [containerId]="question4.containerId"
+                    (onSubmit)="onQuestion4Submit($event)">
+                </app-test-true-false>
+            </div>
+        }
+
+        <!-- page 5: test results -->
+        @if (currentView === 'driven_osc5') {
+            <div>
+                <app-end-page
+                    [testId]="'driven-oscillations'"
+                    [testTitle]="'Getriebene Schwingungen'"
+                    [thresholds]="performanceThresholds"
+                    (resultsCalculated)="onResultsCalculated($event)">
+                </app-end-page>
+            </div>
+        }
+
+        <!-- navigation buttons -->
+        <div class="button-container" [class]="getPerformanceClass()">
+            @if (isFirstPage) {
+                <button [routerLink]="['/learning/e1-intro-experiment']"  [queryParams]="{page: 4}"
+                     class="btn" [disabled]="!canGoBack">← Zurück zum Einstieg</button>
+            } @else {
+                <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
+            }
+
+            @if (!isEndPage) {
+                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter →</button>
+            }
+            @if (currentView === 'driven_osc4') {
+                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Test beenden →</button>
+            }
+            @if (currentView === 'driven_osc5') {
+                <button class="btn" (click)="goForward()" [disabled]="!canProceed">{{ continueLinkText }} →</button>
+            }
+        </div>
+    </div>
+</div>

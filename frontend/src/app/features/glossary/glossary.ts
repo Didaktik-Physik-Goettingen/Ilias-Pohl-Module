@@ -79,6 +79,16 @@ export class Glossary {
 			link: '/glossary/angular-frequency'
         },
         {
+            title: 'Resonanzfrequenz',
+            definition: 'Die Resonanzfrequenz einer erzwungenen Schwingung ist die Frequenz bei der ihre Amplitude maximal wird.',
+				link: '/glossary/resonance-frequency'
+			},
+        {
+            title: 'Richtmoment',
+            definition: 'Das Richtmoment (oder Direktionsmoment) D ist die Proportionalitätskonstante zwischen dem anliegenden Drehmoment M und dem Drehwinkel φ. Es beschreibt, wie stark das von der Feder ausgeübte Drehmoment bei einer bestimmten Auslenkung ist.',
+				link: '/glossary/directive-moment'
+			},
+        {
             title: 'Trägheitsmoment',
             definition: 'Das Trägheitsmoment Θ ist ein Maß für den Widerstand, den ein Körper der Änderung seiner Winkelgeschwindigkeit entgegensetzt. Es spielt damit bei einer Drehbewegung die gleiche Rolle wie die (träge) Masse im Verhältnis von Kraft und Beschleunigung (Translationsbewegeung).',
 			link: '/glossary/moment-of-inertia'

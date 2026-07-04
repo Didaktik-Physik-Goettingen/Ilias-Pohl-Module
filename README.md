@@ -82,7 +82,8 @@ README.md
 │               │   └── amplitude/
 │               │   └── ...
 │               │
-│               └── learning_features/
+│               └── learning_features/          // standard content pages
+│               └── decision_features/          // decision between (next) content page, simulation, or test 
 │               └── test_features/
 │               └── sidepath_features/
 │               └── target_features/
@@ -243,6 +244,10 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
     - *intro-exp-4-direktionsmoment*
     - *intro-exp-5-winkel-drehmoment*
     - *intro-exp-6-winkel-zeit*
+
+
+### Decision Features
+
 
 
 ### Test Features

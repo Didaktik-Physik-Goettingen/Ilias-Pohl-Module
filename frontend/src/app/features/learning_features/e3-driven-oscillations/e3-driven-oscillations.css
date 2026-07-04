@@ -1,0 +1,49 @@
+.image-description {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+    text-align: center;  /* or left, depending on your preference */
+    font-style: italic;  /* optional - makes it look more like a caption */
+}
+
+
+/* Text + Image horizontal layout */
+.text-image-container {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    margin-bottom: 2rem;
+}
+
+.text-content {
+    flex: 1;
+}
+
+.image-content {
+    flex: 0 0 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.image-content img {
+    width: 100%;
+    max-width: 450px;
+    height: auto;
+    border-radius: 8px;
+    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
+}
+
+/* Responsive - stack on smaller screens */
+@media (max-width: 968px) {
+    .text-image-container {
+        flex-direction: column;
+    }
+    
+    .image-content {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+}

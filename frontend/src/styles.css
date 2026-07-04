@@ -39,7 +39,11 @@
     --bg-footer: var(--uni-blau-2);
     --glossary-link-color: var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
-    --test-h1-color: var(--physik-gelb)
+    --test-h1-color: var(--physik-gelb);
+
+    /* formula coloring for MathJax \class{mjx-formula-hom/inhom}{} */
+    --formula-hom:   var(--forst-gruen);  /* homogeneous / transient term  */
+    --formula-inhom: var(--uni-blau-2);   /* inhomogeneous / stationary term */
 }
 
 /* global Reset & Base Styles */
@@ -65,7 +69,11 @@
     --bg-footer: var(--uni-blau-2);
     --glossary-link-color:     var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
-    --test-h1-color:           var(--physik-gelb)
+    --test-h1-color:           var(--physik-gelb);
+
+    /* formula coloring — lighter/brighter variants for dark backgrounds */
+    --formula-hom:   #34c98a;             /* brightened forst-grün, ~7:1 on dark card */
+    --formula-inhom: var(--uni-blau-3);   /* #0091C8, ~5.5:1 on dark card */
 }
 
 html, body {
@@ -120,6 +128,15 @@ h1 {
 h2 {
     font-size: 1.8rem;
     color: var(--uni-blau-2);
+}
+
+.page-subheadline {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-weight: 400;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
 }
 
 /* Links */
@@ -186,7 +203,7 @@ button.btn {
     box-sizing: border-box;
     
     /* Size */
-    width: 25rem;
+    width: 30rem;
     padding: 0.75rem 1.5rem;
     
     /* Typography */
@@ -243,6 +260,59 @@ nav a {
     border-bottom: 2px solid transparent;
 }
 
+/* Expandable "spoiler" - optional/deep-dive content the reader can fold away */
+.spoiler {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--grau-80);
+    border-radius: 12px;
+    background: var(--altweiss);
+    box-shadow: 0 8px 16px rgba(33, 150, 243, 0.2);
+    overflow: hidden;
+}
+
+.spoiler-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.25rem 2rem;
+    font-weight: 600;
+    color: var(--uni-blau-1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s ease;
+}
+
+.spoiler-summary::-webkit-details-marker {
+    display: none;
+}
+
+.spoiler-summary::after {
+    content: '▾';
+    font-size: 1.2rem;
+    color: var(--uni-blau-2);
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.spoiler-summary:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.spoiler[open] > .spoiler-summary::after {
+    transform: rotate(180deg);
+}
+
+.spoiler[open] > .spoiler-summary {
+    border-bottom: 1px solid var(--grau-20);
+}
+
+.spoiler-content {
+    padding: 1.5rem 2rem 2rem;
+    color: var(--uni-blau-1);
+    line-height: 1.7;
+}
+
 nav a:hover {
     border-bottom: 2px solid var(--sky-blue);
 }
@@ -274,6 +344,13 @@ nav a:hover {
 .glossary-overlay-panel .button-container {
     display: none;
 }
+
+/* MathJax \class{mjx-formula-hom/inhom}{} — theme-aware formula term coloring */
+.mjx-formula-hom,
+.mjx-formula-hom * { color: var(--formula-hom) !important; }
+
+.mjx-formula-inhom,
+.mjx-formula-inhom * { color: var(--formula-inhom) !important; }
 
 /* inline glossary trigger links — works in both templates and sanitized strings */
 a.glossary-link {
