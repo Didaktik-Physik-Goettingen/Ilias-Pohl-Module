@@ -1,0 +1,181 @@
+.sim-controls-panel {
+    background: white;
+    color: var(--uni-blau-1);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 8px 16px rgba(33, 150, 243, 0.2);
+    border: 2px solid var(--grau-80);
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.sim-toolbar-panel {
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--grau-20);
+}
+
+.sim-toolbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding: 0.5rem 0;
+}
+
+.sim-switch-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+.sim-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+    vertical-align: text-bottom;
+}
+
+.sim-switch span {
+    position: absolute;
+    inset: 0;
+    background-color: var(--jura-rot);
+    border-radius: 17px;
+    cursor: pointer;
+    transition: background-color 0.4s;
+}
+
+.sim-switch span::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    height: 17px;
+    width: 17px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.sim-switch input {
+    display: none;
+}
+
+.sim-switch input:checked + span {
+    background-color: var(--uni-blau-1);
+}
+
+.sim-switch input:checked + span::before {
+    transform: translateX(26px);
+}
+
+.sim-canvas-container {
+    display: flex;
+    gap: 1.25rem;
+    background: var(--grau-10);
+    padding: 1.25rem;
+    flex-wrap: nowrap;
+    justify-content: center;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+}
+
+/*
+ * The driven oscillation has an optional 4th canvas (phase space).
+ * flex-wrap: wrap lets the 3 primary canvases fill row 1 (total basis = 100%)
+ * and the phase canvas wrap to row 2 when shown.
+ */
+.sim-canvas-container--driven {
+    flex-wrap: wrap;
+}
+
+.sim-canvas {
+    border: 2px solid var(--border-color);
+    background: white;
+    min-width: 0;
+    max-width: 100%;
+    height: auto;
+}
+
+/*
+ * Bases sized so that the 3 primary canvases (1 narrow + 2 square) exactly
+ * fill row 1. The 4th canvas (phase, same square class) wraps to row 2.
+ */
+.sim-canvas-narrow {
+    flex: 0 1 calc((100% - 2.5rem) * 0.2);
+}
+
+.sim-canvas-square {
+    flex: 0 1 calc((100% - 2.5rem) * 0.4);
+}
+
+.sim-run-controls {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.sim-run-controls .eval-btn {
+    width: 100%;
+    flex: 1 1 280px;
+    max-width: 360px;
+}
+
+.sim-controls {
+    display: flex;
+    gap: 3rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.sim-controls-group {
+    flex: 1 1 280px;
+    max-width: 360px;
+}
+
+.sim-slider {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background: var(--grau-20);
+    margin: 0.5rem 0 1rem;
+}
+
+.sim-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--uni-blau-1);
+    cursor: pointer;
+}
+
+.sim-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--uni-blau-1);
+    cursor: pointer;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    .sim-canvas-container {
+        gap: 0.5rem;
+        padding: 0.75rem;
+    }
+
+    .sim-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -11,14 +11,14 @@
                 <h3>Lernmodul</h3>
                 <p>Zuerst mit den mathematischen Beschreibungen zu getriebenen, gedämpften Schwingungen fortfahren.</p>
                 <img src="assets/decision/learn.png" alt="Lernmodul" class="decision-option-img">
-                <button (click)="router.navigate([learningModuleLink])" class="decision-btn decision-btn-learning">Zum Lernmodul →</button>
+                <button (click)="navigateToLearning()" class="decision-btn decision-btn-learning">Zum Lernmodul →</button>
             </div>
 
             <div class="decision-option decision-option-simulation">
                 <h3>Simulation</h3>
                 <p>Zunächst anhand einer Simulation die Einflüsse unterschiedlicher Parameter auf die Bewegung des Schwungrades ausprobieren, bevor sie sich mit den mathematischen Grundlagen im Lernmodul beschäftigen.</p>
                 <img src="assets/decision/simulation.png" alt="Simulation" class="decision-option-img">
-                <button (click)="router.navigate([simulationLink])" class="decision-btn decision-btn-simulation">Zur Simulation →</button>
+                <button (click)="navigateToSimulation()" class="decision-btn decision-btn-simulation">Zur Simulation →</button>
             </div>
 
             <div class="decision-option decision-option-test">

@@ -360,7 +360,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     // going back shows the previous subpage / home page
     goBack() {
 		if (this.currentView === 'driven_osc1') {
-            this.router.navigate(['/learning/e1-intro-experiment'], { queryParams: { page: 4 } });
+            this.router.navigate(['/decision/e-driven-oscillations'], { queryParams: { page: 4 } });
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';

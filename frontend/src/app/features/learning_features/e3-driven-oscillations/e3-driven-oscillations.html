@@ -137,14 +137,71 @@
                         <p [innerHTML]="drivenOscText5b"></p>
                     </div>
                 </div>
+                <div>
+                    <app-single-choice
+                        [questionId]="question5.questionId"
+                        [question]="question5.question"
+                        [options]="question5.options"
+                        [correctAnswer]="question5.correctAnswer"
+                        [containerId]="question5.containerId"
+                        [successMessage]="question5.successMessage"
+                        [incorrectMessage]="question5.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion5Answered($event)">
+                    </app-single-choice>
+                </div>
+                <div>
+                    <app-single-choice
+                        [questionId]="question6.questionId"
+                        [question]="question6.question"
+                        [options]="question6.options"
+                        [correctAnswer]="question6.correctAnswer"
+                        [containerId]="question6.containerId"
+                        [successMessage]="question6.successMessage"
+                        [incorrectMessage]="question6.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion6Answered($event)">
+                    </app-single-choice>
+                </div>
             }
 
             @if (currentView === 'driven_osc6') {
-
+                <div class="text-content">
+                    <p [innerHTML]="drivenOscText6"></p>
+                </div>
             }
 
             @if (currentView === 'driven_osc7') {
-
+                <div class="text-image-container">
+                    <div class="text-content">
+                        <p [innerHTML]="drivenOscText7"></p>
+                    </div>
+                    <div class="image-content">
+                        <img src="assets/images/e3_driven_oscillations/Phasenverschub_Daempfung.png" alt="Phasenverschub für verschiedene Dämpungen">
+                    </div>
+                </div> 
+                <div>
+                    <app-single-choice
+                        [questionId]="question7.questionId"
+                        [question]="question7.question"
+                        [options]="question7.options"
+                        [correctAnswer]="question7.correctAnswer"
+                        [containerId]="question7.containerId"
+                        [successMessage]="question7.successMessage"
+                        [incorrectMessage]="question7.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion7Answered($event)">
+                    </app-single-choice>
+                </div>
+                <div>
+                    <app-single-choice
+                        [questionId]="question8.questionId"
+                        [question]="question8.question"
+                        [options]="question8.options"
+                        [correctAnswer]="question8.correctAnswer"
+                        [containerId]="question8.containerId"
+                        [successMessage]="question8.successMessage"
+                        [incorrectMessage]="question8.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion8Answered($event)">
+                    </app-single-choice>
+                </div>
             }
 
         </div>
@@ -159,7 +216,7 @@
 
             @if (isLastPage) {
                 <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter mit der Simulation →' : 'Weiter zu getriebenen Schwingungen →' }}
+                    {{ navigationFlow === 'learning-first' ? 'Weiter mit der Simulation →' : 'Weiter zur Anleitung →' }}
                 </button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>

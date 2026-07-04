@@ -39,7 +39,11 @@
     --bg-footer: var(--uni-blau-2);
     --glossary-link-color: var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
-    --test-h1-color: var(--physik-gelb)
+    --test-h1-color: var(--physik-gelb);
+
+    /* formula coloring for MathJax \class{mjx-formula-hom/inhom}{} */
+    --formula-hom:   var(--forst-gruen);  /* homogeneous / transient term  */
+    --formula-inhom: var(--uni-blau-2);   /* inhomogeneous / stationary term */
 }
 
 /* global Reset & Base Styles */
@@ -65,7 +69,11 @@
     --bg-footer: var(--uni-blau-2);
     --glossary-link-color:     var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
-    --test-h1-color:           var(--physik-gelb)
+    --test-h1-color:           var(--physik-gelb);
+
+    /* formula coloring — lighter/brighter variants for dark backgrounds */
+    --formula-hom:   #34c98a;             /* brightened forst-grün, ~7:1 on dark card */
+    --formula-inhom: var(--uni-blau-3);   /* #0091C8, ~5.5:1 on dark card */
 }
 
 html, body {
@@ -336,6 +344,13 @@ nav a:hover {
 .glossary-overlay-panel .button-container {
     display: none;
 }
+
+/* MathJax \class{mjx-formula-hom/inhom}{} — theme-aware formula term coloring */
+.mjx-formula-hom,
+.mjx-formula-hom * { color: var(--formula-hom) !important; }
+
+.mjx-formula-inhom,
+.mjx-formula-inhom * { color: var(--formula-inhom) !important; }
 
 /* inline glossary trigger links — works in both templates and sanitized strings */
 a.glossary-link {

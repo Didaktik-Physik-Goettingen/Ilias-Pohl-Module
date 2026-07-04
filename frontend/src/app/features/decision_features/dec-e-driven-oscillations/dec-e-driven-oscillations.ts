@@ -16,7 +16,15 @@ export class DecEDrivenOscillations {
 
     constructor(public router: Router) {}
 
+    navigateToLearning() {
+        this.router.navigate([this.learningModuleLink], { queryParams: { flow: 'learning-first' } });
+    }
+
+    navigateToSimulation() {
+        this.router.navigate([this.simulationLink], { queryParams: { flow: 'sim-first' } });
+    }
+
     goBack() {
-        this.router.navigate(['/decision/e-damped-oscillations']);
+        this.router.navigate(['/decision/e2-damped-oscillations'], { queryParams: { page: 7 } });
     }
 }

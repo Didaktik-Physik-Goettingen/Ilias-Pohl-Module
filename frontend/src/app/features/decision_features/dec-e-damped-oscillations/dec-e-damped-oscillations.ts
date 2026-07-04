@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
   styleUrl: './dec-e-damped-oscillations.css',
 })
 export class DecEDampedOscillations {
-    // TODO: point to the dedicated experimental-line learning page for damped oscillations once it exists
     learningModuleLink = '/learning/e2-damped-oscillations';
     testLink = '/test/e-damped-osc';
     simulationLink = '/simulation/sim-e-damped-osc';

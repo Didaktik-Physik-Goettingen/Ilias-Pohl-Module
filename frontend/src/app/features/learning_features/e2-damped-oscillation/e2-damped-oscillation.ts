@@ -43,10 +43,10 @@ export class E2DampedOscillation {
 		questionId: 'damped_osc-1-schwungrad',
         question: 'Welche der folgenden Aussagen trifft auf das schwingfende Rad zu?',
         options: [
-            { value: 'answer1', label: ' Je größer der Überlapp zwischen Magnet und Schwungrad, desto größer ist die Periodenlänge der Schwingung.' },
-            { value: 'answer2', label: ' Die Größe des Überlapps zwischen Magnet und Schwungrad hat keinen Einfluss auf die Bewegung des Schwungrads.' },
-            { value: 'answer3', label: 'Die Einstellung der Wirbelstrombremse bedingt nur die Abnahme der Amplitude, die Frequenz ist hiervon unabhängig.' },
-            { value: 'answer4', label: ' Je größer der Überlapp zwischen Magnet und Schwungrad, desto kleiner ist die Periodenlänge der Schwingung.' }
+            { value: 'answer1', label: 'Die Resonanzfrequenz ist kleiner als ω1=200 mHz.' },
+            { value: 'answer2', label: 'Die Resonanzfrequenz liegt zwischen ω1 und ω2.' },
+            { value: 'answer3', label: 'Die Resonanzfrequenz ist größer als ω2=400 mHz.' },
+            { value: 'answer4', label: ' Über die Größe der Resonanzfrequenz kann keine Aussage getroffen werden.' }
         ],
         correctAnswers: ['answer1'],
         containerId: 'question1-container',

@@ -23,11 +23,12 @@ import { ResonanceFrequency } from './features/glossary_features/resonance-frequ
 
 // learning features
 import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
+import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
+import { E3DrivenOscillations } from './features/learning_features/e3-driven-oscillations/e3-driven-oscillations';
 
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
 import { DecEDrivenOscillations } from './features/decision_features/dec-e-driven-oscillations/dec-e-driven-oscillations';
-
 
 // test features
 import { TestEDampedOscillations } from './features/test_features/test-e-damped-oscillations/test-e-damped-oscillations';
@@ -37,8 +38,11 @@ import { TestEDrivenOscillations } from './features/test_features/test-e-driven-
 
 // simulation features
 import { SimEDampedOscillations } from './features/simulation_features/sim-e-damped-oscillations/sim-e-damped-oscillations';
-import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
-import { E3DrivenOscillations } from './features/learning_features/e3-driven-oscillations/e3-driven-oscillations';
+import { SimEDrivenOscillations } from './features/simulation_features/sim-e-driven-oscillations/sim-e-driven-oscillations';
+
+// target features
+import { TarExperiment } from './features/target_features/tar-experiment/tar-experiment';
+
 
 // ── Standalone HTML simulations ───────────────────────────────────────────────
 // Plain HTML pages served as static files from public/simulations/.
@@ -94,6 +98,10 @@ export const routes: Routes = [
 
     // simulation pages
     { path: 'simulation/sim-e-damped-osc', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
+    { path: 'simulation/sim-e-driven-osc', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
+
+    // target pages
+    { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },
 
     // Standalone HTML simulations — redirect to static files in public/simulations/
     { path: 'simulation/theory-undamped',             			canActivate: [sim('Simulation_01_Einstieg_undamped_linear.html')],              component: SimulationRedirect, title: 'Simulation: Ungedämpfte Schwingung' },

@@ -156,16 +156,101 @@ export class E3DrivenOscillations {
             Beachte, dass die Abhängigkeiten der Parameter in der Gleichung von den Eigenschaften des Systems.`
     };
 
+	// question 5 data
+    question5 = {
+		questionId: 'driven_osc-5-damping-resonance-freq',
+        question: 'Je stärker die Dämpfung, desto...',
+        options: [
+            { value: 'answer1', label: '... größer die Resonanzfrequenz.' },
+            { value: 'answer2', label: '... größer die Amplitude bei der Resonanzfrequenz.' },
+            { value: 'answer3', label: ' ... größer die Abweichung der Resonanzfrequenz von der Eigenfrequenz $\\omega_0$.' },
+        ],
+        correctAnswer: 'answer1',
+        containerId: 'question5-container',
+        successMessage: `✓ Richtig!<br><br>
+
+            In dem Versuch werden Sie die Resonanzkurven bei unterschiedlichen Dämpfungen in Abhängigkeit von der Amplitude und der Frequenz der Anregung vermessen.<br>
+            Überlegen Sie sich für die Versuchsdurchführung: Was sollten Sie bei der Wahl der Frequenzabstände beachten, wenn Sie die Dämpfung verringern?
+		`,
+        incorrectMessage: `✗ Das stimmt nicht, versuchen Sie es nochmals!<br><br>
+
+            Betrachten Sie noch einmal die Abbildung.<br>
+            Beachten Sie: Die Dämpfung für die dunkelblaue Kurve ist höher, als für die hellblaue Kurve.
+			`
+    };
+
+	// question 6 data
+    question6 = {
+		questionId: 'driven_osc-6-damping-resonance-freq-exp',
+        question: `Überlegen Sie, was diese Beobachtung für Konsequenzen für die Versuchsdurchführung hat:
+            Je größer die Dämpfung, desto...`,
+        options: [
+            { value: 'answer1', label: '... vorsichtiger muss man sein bei Messungen im Bereich der Resonanzfrequenz, damit der Aufbau nicht kaputt geht.' },
+            { value: 'answer2', label: '... kleinschrittiger sollte man die Frequenz im Bereich der Resonanzfrequenz variieren.' },
+            { value: 'answer3', label: '... gleichmäßiger können die Schritte sein, in denen die Frequenz variiert wird.' },
+        ],
+        correctAnswer: 'answer1',
+        containerId: 'question6-container',
+        successMessage: `✓ Genau.<br><br>
+
+            Um Ressourcen sinnvoll einzusetzen, kann es hilfrreich sein die Schritte, in denen man die Frequenz variiert, anzupassen.<br>
+            Bei niedriger Dämpfung ist der Amplituden-Peak um die Resonanzfrequenz schmaler, weshalb es sinnvoll ist in diesem Bereich in kleineren und in Randbereichen in größeren Schritten zu messen.
+            Bei größeren Dämpfungen ist der Amplituden-Peak breiter, weshalb eine Anpassung der Frequenzschritte weniger relevant ist.<br>
+            Die genauen Abstände, in denen die Frequenz variiert werden sollte, hängt aber natürlich von der Fragestellung und vom System ab.
+		`,
+        incorrectMessage: `✗ Falsche Wahl!<br><br>
+
+            Versuchen Sie es nochmals!
+            Das ist in der Weise nicht korrekt.
+            Betrachten Sie noch einmal die Abbildung. Je größer die Dämpfung ist, desto flacher und breiter ist der Amplituden-Peak. Hilft Ihnen das weiter?
+			`
+    };
+
+    // question 7 data
+    question7 = {
+        questionId: 'driven_osc-7-exciting-frequency',
+        question: `Entspricht die Anregungsfrequenz gerade der Resonanzfrequenz $\\omega_r$, so...`,
+        options: [
+            { value: 'answer1', label: '... ist die Phasenverschiebung kleiner als $\\pi/2$.' },
+            { value: 'answer2', label: '... ist die Phasenverschiebung genau $\\pi/2$.' },
+            { value: 'answer3', label: '... ist die Phasenverschiebung größer als $\\pi/2$.' },
+            { value: 'answer4', label: '...  kann man keine Aussage über die Phasenverschiebung treffen.' },
+        ],
+        correctAnswer: 'answer1',
+        containerId: 'question7-container',
+        successMessage: `✓ Richtig.`,
+        incorrectMessage: `✗ Falsche Wahl!<br><br>Versuchen Sie es nochmals!`
+    }
+
+
+    // question 8 data
+    question8 = {
+        questionId: 'driven_osc-8-measure-time-delta',
+        question: `Sie vermessen die Reaktion eines gedämpften Schwungrads bei zwei unterschiedlichen Frequenzen,       $\\omega_1=200\\,\\mathrm{mHz}$ und $\\omega_2=400\\,\\mathrm{mHz}$.
+            Bei der ersten Messung ist der zeitliche Abstand zwischen dem Nulldurchgang des Anregers und dem Nulldurchgang des Rads $\\Delta t=0{,}25\\,\\mathrm{s}$, bei der zweiten Messung ist der entsprechende Abstand $\\Delta t=1{,}4\\,\\mathrm{s}$.
+            Was können Sie aus dieser Messung über die Größe der Resonanzfrequenz des Systems aussagen?`,
+        options: [
+            { value: 'answer1', label: 'Die Resonanzfrequenz ist kleiner als $\\omega_1=200\\,\\mathrm{mHz}$.' },
+            { value: 'answer2', label: 'Die Resonanzfrequenz liegt zwischen $\\omega_1$ und $\\omega_2$.' },
+            { value: 'answer3', label: 'Die Resonanzfrequenz ist größer als $\\omega_2=400\\,\\mathrm{mHz}$.' },
+            { value: 'answer4', label: 'Über die Größe der Resonanzfrequenz kann keine Aussage getroffen werden.' },
+        ],
+        correctAnswer: 'answer2',
+        containerId: 'question8-container',
+        successMessage: `✓ Richtig.`,
+        incorrectMessage: `✗ Falsche Wahl!<br><br>Versuchen Sie es nochmals!`
+    }
+
 
 	// track completion
 	isCorrect1 = false;
 	isCorrect2 = false;
 	isCorrect3 = false;
 	isCorrect4 = false;
-	// isCorrect5 = false;
-	// isCorrect6 = false;
-	// isCorrect7 = false;
-	// isCorrect8 = false;
+	isCorrect5 = false;
+	isCorrect6 = false;
+	isCorrect7 = false;
+	isCorrect8 = false;
 
 
 	// QA states
@@ -173,10 +258,10 @@ export class E3DrivenOscillations {
 	showResult2 = false;
 	showResult3 = false;
 	showResult4 = false;
-	// showResult5 = false;
-	// showResult6 = false;
-	// showResult7 = false;
-	// showResult8 = false;
+	showResult5 = false;
+	showResult6 = false;
+	showResult7 = false;
+	showResult8 = false;
 
 
 	// actions upon aswering questions
@@ -196,39 +281,37 @@ export class E3DrivenOscillations {
 		this.isCorrect4 = isCorrect;
     }
 
-    // onQuestion5Answered(isCorrect: boolean) {
-	// 	this.isCorrect5 = isCorrect;
-    // }
+    onQuestion5Answered(isCorrect: boolean) {
+		this.isCorrect5 = isCorrect;
+    }
 
-    // onQuestion6Answered(isCorrect: boolean) {
-	// 	this.isCorrect6 = isCorrect;
-    // }
+    onQuestion6Answered(isCorrect: boolean) {
+		this.isCorrect6 = isCorrect;
+    }
 
-    // onQuestion7Answered(isCorrect: boolean) {
-	// 	this.isCorrect7 = isCorrect;
-    // }
+    onQuestion7Answered(isCorrect: boolean) {
+		this.isCorrect7 = isCorrect;
+    }
 
-    // onQuestion8Answered(isCorrect: boolean) {
-	// 	this.isCorrect8 = isCorrect;
-    // }
+    onQuestion8Answered(isCorrect: boolean) {
+		this.isCorrect8 = isCorrect;
+    }
 
 
 	// +++ TeX rendering +++
 	drivenOscText1a!: SafeHtml;
 	drivenOscText1b!: SafeHtml;
 	drivenOscText1c!: SafeHtml;
-
 	drivenOscText2a!: SafeHtml;
 	drivenOscText2b!: SafeHtml;
 	drivenOscText2c!: SafeHtml;
-
 	drivenOscText3a!: SafeHtml;
 	drivenOscText3b!: SafeHtml;
-
     drivenOscText4!: SafeHtml;
-
     drivenOscText5a!: SafeHtml;
     drivenOscText5b!: SafeHtml;
+    drivenOscText6!: SafeHtml;
+    drivenOscText7!: SafeHtml;
 
 
     ngOnInit() {
@@ -410,6 +493,35 @@ export class E3DrivenOscillations {
             $$\\omega_r=\\sqrt{\\omega_0^2-2\\beta^2}.$$
         `)
 
+        this.drivenOscText6 = this.sanitizer.bypassSecurityTrustHtml(`
+            Im stationären Zustand hinkt ein gedämpftes Schwungrad dem Antrieb hinterher. Wie die Amplitude, so hängt auch die Phasenverschiebung von der Dämpfung $\\beta$, der 
+            <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a> 
+            $\\omega_0$ und der Frequenz des Antriebs $\\omega$ ab.<br><br>
+
+            Gehen wir zurück auf die stationäre Lösung des gedämpften, getriebenen Systems:
+            $$\\varphi(t)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right).$$
+
+            Vergleichen wir diese Gleichung mit dem Antrieb des Systems,
+            $$\\varphi_\\text{ext}=N\\cos(\\omega t),$$
+            so fällt auf, dass die Argumente der Cosinus-Funktionen sich unterscheiden. Dieser Unterschied entspricht einer Phasenverschiebung $\\Phi$:
+            $$\\Phi(\\omega)=\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right).$$
+        `)
+
+        this.drivenOscText7 = this.sanitizer.bypassSecurityTrustHtml(`
+            In der nebenstehenden Abbildung ist die Phasenverschiebung
+            $$\\Phi(\\omega)=\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)$$
+            für unterschiedliche 
+            <a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskonstanten</a>
+            $\\beta$ dargestellt.<br><br>
+
+            Es zeigt sich, dass die 
+            <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a> 
+            $\\omega_0$ einen charakteristischen Punkt darstellt:
+            Entspricht die Anregungsfrequenz gerade der 
+            <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a>
+            , so ist die Phasenverschiebung $\\Phi(\\omega_0)=\\pi/2$.
+        `)
+
 
         this.renderMath();
     }
@@ -427,10 +539,10 @@ export class E3DrivenOscillations {
 		this.isCorrect2 = this.trackingService.isQuestionCompleted(this.question2.questionId);
 		this.isCorrect3 = this.trackingService.isQuestionCompleted(this.question3.questionId);
 		this.isCorrect4 = this.trackingService.isQuestionCompleted(this.question4.questionId);
-		// this.isCorrect5 = this.trackingService.isQuestionCompleted(this.question5.questionId);
-		// this.isCorrect6 = this.trackingService.isQuestionCompleted(this.question6.questionId);
-		// this.isCorrect7 = this.trackingService.isQuestionCompleted(this.question7.questionId);
-		// this.isCorrect8 = this.trackingService.isQuestionCompleted(this.question8.questionId);
+		this.isCorrect5 = this.trackingService.isQuestionCompleted(this.question5.questionId);
+		this.isCorrect6 = this.trackingService.isQuestionCompleted(this.question6.questionId);
+		this.isCorrect7 = this.trackingService.isQuestionCompleted(this.question7.questionId);
+		this.isCorrect8 = this.trackingService.isQuestionCompleted(this.question8.questionId);
     }
 
 
@@ -516,8 +628,7 @@ export class E3DrivenOscillations {
             if (this.navigationFlow === 'learning-first') {
                 this.router.navigate(['/simulation/sim-e-driven-osc'], { queryParams: { flow: 'learning-first' } });
             } else {
-				// to be adjusted
-                this.router.navigate(['/decision/e-driven-oscillations']);
+                this.router.navigate(['/target/tar-experiment']);
             }
             return;
         }

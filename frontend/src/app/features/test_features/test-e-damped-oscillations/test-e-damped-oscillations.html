@@ -105,8 +105,8 @@
         <!-- navigation buttons -->
         <div class="button-container" [class]="getPerformanceClass()">
             @if (isFirstPage) {
-                <button [routerLink]="['/learning/e1-intro-experiment']" [queryParams]="{page: 4}"
-                        class="btn" [disabled]="!canGoBack">← Zurück zum Versuchsaufbau</button>
+                <button [routerLink]="['/decision/e-damped-oscillations']" [queryParams]="{page: 4}"
+                        class="btn" [disabled]="!canGoBack">← Zurück zur Entscheidungsseite</button>
             } @else {
                 <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
             }
