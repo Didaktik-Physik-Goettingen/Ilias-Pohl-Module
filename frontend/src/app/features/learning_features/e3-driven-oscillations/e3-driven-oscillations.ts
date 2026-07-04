@@ -130,14 +130,38 @@ export class E3DrivenOscillations {
             Dass der Einschwingvorgang abgeschlossen ist, sieht man im Phasenraumdiagramm an einer geschlossenen Bahnkurve. Sowohl der Winkel, als auch die Winkelgeschwindigkeit verändern sich zu diesem Zeitpunkt periodisch, weshalb sich im Phasenraumdiagramm eine "geschlossene" Bewegung ergibt.`
 	};
 
+	// question 4 data
+    question4 = {
+		questionId: 'driven_osc-4-max-amp',
+        question: 'Welche Parameter des System beeinflussen die maximale Amplitude des stationär schwingenden (gedämpften) Systems?',
+        options: [
+            { value: 'answer1', label: 'Trägheitsmoment des Schwungkörpers $\\theta$' },
+            { value: 'answer2', label: 'Anfangsgeschwindigkeit $v_0$' },
+            { value: 'answer3', label: 'Eigenfrequenz $\\omega_0$' },
+            { value: 'answer4', label: 'Anfangsauslenkung $x_0$' },
+            { value: 'answer5', label: 'Dämpfung (Wirbelstrombremse und Reibungsverluste) $\\rho$' },
+            { value: 'answer6', label: 'Stärke der Dämpfung $\\beta$' },
 
+        ],
+        correctAnswers: ['answer1', 'answer3, answer5', 'answer6'],
+        containerId: 'question2-container',
+        successMessage: `✓ Völlig richtig!<br><br>
+			Aufgrund der Dämpfung wird die Bedeutung des ersten Summanden (grün) mit der Zeit geringer und das schwingende System wird durch den zweiten Term, also durch den Antrieb, dominiert.
+			Der erste Summand ist nur im sogenannten "Einschwingvorgang" relevant. Der zweite Term wird auch als "stationäre Lösung" beschrieben, da maximale Amplitude und Phasenverschiebung hier nicht von der Zeit abhängen.<br>
+			Die Dämpfung hat hierbei einen Einfluss auf die maximale Auslenkung und auch auf die Phasenverschiebung zwischen Anreger und Schwungrad. Auf der folgenden Seite werden wir uns diese beiden Größen und die Abhängigkeiten noch einmal genauer anschauen.<br><br>
+		`,
+        incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch!<br><br>
+            Beachte, dass die Abhängigkeiten der Parameter in der Gleichung von den Eigenschaften des Systems.`,
+        incorrectMessage: `✗ Das ist noch nicht ganz richtig - einige Ihrer Antworten sind falsch!<br><br>
+            Beachte, dass die Abhängigkeiten der Parameter in der Gleichung von den Eigenschaften des Systems.`
+    };
 
 
 	// track completion
 	isCorrect1 = false;
 	isCorrect2 = false;
 	isCorrect3 = false;
-	// isCorrect4 = false;
+	isCorrect4 = false;
 	// isCorrect5 = false;
 	// isCorrect6 = false;
 	// isCorrect7 = false;
@@ -148,7 +172,7 @@ export class E3DrivenOscillations {
 	showResult1 = false;
 	showResult2 = false;
 	showResult3 = false;
-	// showResult4 = false;
+	showResult4 = false;
 	// showResult5 = false;
 	// showResult6 = false;
 	// showResult7 = false;
@@ -168,9 +192,9 @@ export class E3DrivenOscillations {
 		this.isCorrect3 = isCorrect;
     }
 
-    // onQuestion4Answered(isCorrect: boolean) {
-	// 	this.isCorrect4 = isCorrect;
-    // }
+    onQuestion4Answered(isCorrect: boolean) {
+		this.isCorrect4 = isCorrect;
+    }
 
     // onQuestion5Answered(isCorrect: boolean) {
 	// 	this.isCorrect5 = isCorrect;
@@ -202,6 +226,9 @@ export class E3DrivenOscillations {
 	drivenOscText3b!: SafeHtml;
 
     drivenOscText4!: SafeHtml;
+
+    drivenOscText5a!: SafeHtml;
+    drivenOscText5b!: SafeHtml;
 
 
     ngOnInit() {
@@ -333,15 +360,55 @@ export class E3DrivenOscillations {
         `);
 
         this.drivenOscText4 = this.sanitizer.bypassSecurityTrustHtml(`
-Im Folgenden betrachten wir nur die stationäre Lösung der Gleichung, also
-φ(t)=N(ω20−ω2)2+4β2ω2−−−−−−−−−−−−−−−√cos(ωt−arctan(2βωω20−ω2)).
+            Im Folgenden betrachten wir nur die stationäre Lösung der Gleichung, also
+            $$\\varphi(t)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right).$$
 
-Zunächst beschäftigen wir uns mit der Amplitude:
+            Zunächst beschäftigen wir uns mit der 
+            <a href="#glossary-amplitude" class="glossary-link">Amplitude</a>
+            :
+            $$\\varphi_0(\\omega)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}.$$
 
-φ0(ω)=N(ω20−ω2)2+4β2ω2−−−−−−−−−−−−−−−√.
-
-Sie haben sicher schon von dem Phänomen der "Resonanzkatastrophe" gehört. Man spricht hiervon, wenn die Amplitude der Schwingung, bedingt durch die äußere Anregung, stark zunimmt. Doch wovon hängt es ab, ob es zu einer "Resonanzkatastrophe" kommt?
+            Sie haben sicher schon von dem Phänomen der „Resonanzkatastrophe" gehört. Man spricht hiervon, wenn die 
+            <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> 
+            der Schwingung, bedingt durch die äußere Anregung, stark zunimmt. Doch wovon hängt es ab, ob es zu einer „Resonanzkatastrophe" kommt?
         `);
+
+        this.drivenOscText5a = this.sanitizer.bypassSecurityTrustHtml(`
+            Richtig, das Zusammenspiel unterschiedlicher Aspekte beeinflusst die Amplitude der Schwingung.
+            Im Versuch werden Sie nicht alle Parameter variieren können. Der Versuchsaufbau erlaubt Ihnen einerseits die Anpassung der Dämpfung,
+            andererseits die Anpassung der Amplitude und Frequenz des Antriebs.<br><br>
+
+            Mathematisch ist die Amplitude gegeben als:
+            $$\\varphi_0(\\omega)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}.$$
+        `)
+
+        this.drivenOscText5b = this.sanitizer.bypassSecurityTrustHtml(`
+            Die Abbildung zeigt den Zusammenhang zwischen der normierten 
+            <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> 
+            des Schwungrads und der Anregungsfrequenz $\\omega$
+            für unterschiedliche 
+            <a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskonstante</a> 
+            $\\beta$ bei einem gleichbleibenden System
+            ($\\omega_0$ ist im Versuch nicht variabel und dient hier daher zur Normierung).<br><br>
+
+            Beachten Sie, dass die 
+            <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> 
+            der Anregung ($N$) in $\\varphi_0(0)$ enthalten ist.<br><br>
+
+            Die graue gestrichelte Kurve zeigt die normierte 
+            <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> 
+            bei der 
+            <a href="#glossary-resonance-frequency" class="glossary-link">Resonanzfrequenz</a> 
+            für unterschiedliche Dämpfungen.<br><br>
+
+            Die 
+            <a href="#glossary-resonance-frequency" class="glossary-link">Resonanzfrequenz</a>
+            gibt die Frequenz an, bei der die 
+            <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> 
+            des schwingenden Rades maximal wird.
+            Mathematisch ergibt sie sich zu:
+            $$\\omega_r=\\sqrt{\\omega_0^2-2\\beta^2}.$$
+        `)
 
 
         this.renderMath();
@@ -359,7 +426,7 @@ Sie haben sicher schon von dem Phänomen der "Resonanzkatastrophe" gehört. Man 
         this.isCorrect1 = this.trackingService.isQuestionCompleted(this.question1.questionId);
 		this.isCorrect2 = this.trackingService.isQuestionCompleted(this.question2.questionId);
 		this.isCorrect3 = this.trackingService.isQuestionCompleted(this.question3.questionId);
-		// this.isCorrect4 = this.trackingService.isQuestionCompleted(this.question4.questionId);
+		this.isCorrect4 = this.trackingService.isQuestionCompleted(this.question4.questionId);
 		// this.isCorrect5 = this.trackingService.isQuestionCompleted(this.question5.questionId);
 		// this.isCorrect6 = this.trackingService.isQuestionCompleted(this.question6.questionId);
 		// this.isCorrect7 = this.trackingService.isQuestionCompleted(this.question7.questionId);
@@ -439,6 +506,8 @@ Sie haben sicher schon von dem Phänomen der "Resonanzkatastrophe" gehört. Man 
             this.currentView = 'driven_osc3';
         } else if (this.currentView === 'driven_osc3') {
             this.currentView = 'driven_osc4';
+        } else if (this.currentView === 'driven_osc4') {
+            this.currentView = 'driven_osc5';
         } else if (this.currentView === 'driven_osc5') {
             this.currentView = 'driven_osc6';
         } else if (this.currentView === 'driven_osc6') {

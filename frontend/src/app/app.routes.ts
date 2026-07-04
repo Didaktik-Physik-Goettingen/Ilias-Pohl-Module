@@ -19,6 +19,7 @@ import { InhomDgl } from './features/glossary_features/inhom-dgl/inhom-dgl';
 import { AngularFrequency } from './features/glossary_features/angular-frequency/angular-frequency';
 import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/moment-of-inertia';
 import { DirectiveMoment } from './features/glossary_features/directive-moment/directive-moment';
+import { ResonanceFrequency } from './features/glossary_features/resonance-frequency/resonance-frequency';
 
 // learning features
 import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
@@ -73,6 +74,7 @@ export const routes: Routes = [
     { path: 'glossary/angular-frequency',   component: AngularFrequency,    title: 'Kreisfrequenz' },
     { path: 'glossary/moment-of-inertia',   component: MomentOfInertia,     title: 'Trägheitsmoment' },
     { path: 'glossary/directive-moment',    component: DirectiveMoment,     title: 'Richtmoment' },
+    { path: 'glossary/resonance-frequency',    component: ResonanceFrequency,     title: 'Resonanzfrequenz' },
 
     // conventional learning module pages
     { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg Versuchsaufbau' },

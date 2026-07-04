@@ -15,20 +15,22 @@ import { InhomDgl }            from '../../features/glossary_features/inhom-dgl/
 import { MomentOfInertia }     from '../../features/glossary_features/moment-of-inertia/moment-of-inertia';
 import { NaturalFrequency }    from '../../features/glossary_features/natural-frequency/natural-frequency';
 import { SpringConstant }      from '../../features/glossary_features/spring-constant/spring-constant';
+import { ResonanceFrequency } from '../../features/glossary_features/resonance-frequency/resonance-frequency';
 
 const TERM_MAP: Record<string, Type<any>> = {
-    'amplitude':           Amplitude,
-    'angular-frequency':   AngularFrequency,
-    'angular-momentum':    AngularMomentum,
-    'critical-damping':    CriticalDamping,
-    'damping-coefficient': DampingCoefficient,
-    'directive-moment':    DirectiveMoment,
-    'exponential-ansatz':  ExponentialAnsatz,
-    'hom-dgl':             HomDgl,
-    'inhom-dgl':           InhomDgl,
-    'moment-of-inertia':   MomentOfInertia,
-    'natural-frequency':   NaturalFrequency,
-    'spring-constant':     SpringConstant,
+    'amplitude':            Amplitude,
+    'angular-frequency':    AngularFrequency,
+    'angular-momentum':     AngularMomentum,
+    'critical-damping':     CriticalDamping,
+    'damping-coefficient':  DampingCoefficient,
+    'directive-moment':     DirectiveMoment,
+    'exponential-ansatz':   ExponentialAnsatz,
+    'hom-dgl':              HomDgl,
+    'inhom-dgl':            InhomDgl,
+    'moment-of-inertia':    MomentOfInertia,
+    'natural-frequency':    NaturalFrequency,
+    'spring-constant':      SpringConstant,
+    'resonance-frequency':  ResonanceFrequency,
 };
 
 @Component({

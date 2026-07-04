@@ -29,7 +29,7 @@
             @if (currentView === 'driven_osc1') {
                 <div class="text-image-container">
                     <div class="image-content">
-                        <img src="assets/images/e3_driven_oscillations/Antrieb.jpg" alt="Schwungrad mit Massestück">
+                        <img src="assets/images/e3_driven_oscillations/Antrieb.jpg" alt="Antrieb">
                         <p class="image-description">
                             Antrieb über Schrittmotor (hier nicht sichtbar), der über die Stange die Position des Aufhängungspunkts der Feder periodisch variiert.
                         </p>
@@ -104,11 +104,39 @@
             }
 
             @if (currentView === 'driven_osc4') {
-
+                <div class="text-content">
+                    <p [innerHTML]="drivenOscText4"></p>
+                </div>
+                <div>
+                    <app-multiple-choice
+                        [questionId]="question4.questionId"
+                        [question]="question4.question"
+                        [options]="question4.options"
+                        [correctAnswers]="question4.correctAnswers"
+                        [containerId]="question4.containerId"
+                        [successMessage]="question4.successMessage"
+                        [incompleteMessage]="question4.incompleteMessage"
+                        [incorrectMessage]="question4.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion4Answered($event)">
+                    </app-multiple-choice>
+                </div>
             }
 
             @if (currentView === 'driven_osc5') {
-
+                <div class="text-content">
+                    <p [innerHTML]="drivenOscText5a"></p>
+                </div>
+                <div class="text-image-container">
+                    <div class="image-content">
+                        <img src="assets/images/e3_driven_oscillations/Amplitude_Daempfung.png" alt="Amplitude für verschiedene Dämpungen">
+                        <p class="image-description">
+                            Normierte Amplitude für unterschiedliche Dämpfungen, in Abhängigkeit von der Anregungsfrequenz
+                        </p>
+                    </div>
+                    <div class="text-content">
+                        <p [innerHTML]="drivenOscText5b"></p>
+                    </div>
+                </div>
             }
 
             @if (currentView === 'driven_osc6') {
@@ -124,7 +152,7 @@
         <!-- navigation buttons -->
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/decision/e-damped-oscillations" class="btn">← Zurück zur Entscheidungsseite</button>
+                <button routerLink="/decision/e-driven-oscillations" class="btn">← Zurück zur Entscheidungsseite</button>
             } @else {
                 <button class="btn" (click)="goBack()">← Zurück</button>
             }

@@ -21,7 +21,7 @@
 }
 
 .image-content {
-    flex: 0 0 400px;
+    flex: 0 0 450px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -30,7 +30,7 @@
 
 .image-content img {
     width: 100%;
-    max-width: 400px;
+    max-width: 450px;
     height: auto;
     border-radius: 8px;
     /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
