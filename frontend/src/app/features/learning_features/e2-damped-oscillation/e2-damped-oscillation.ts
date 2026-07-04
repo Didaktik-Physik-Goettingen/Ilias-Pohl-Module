@@ -132,9 +132,13 @@ export class E2DampedOscillation {
 		`)
 
 		this.dampedOscText1c = this.sanitizer.bypassSecurityTrustHtml(`
-			Die DGL für die Bewegung des Schwungrads lautet also
+			Die 
+			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			für die Bewegung des Schwungrads lautet also
 			$$\\Theta\\ddot{\\varphi}+\\rho\\dot{\\varphi}+D\\varphi=0$$
-			Häufig verwendet man die sogenannte "Normalform", also die Form, in der kein zusätzlicher Faktor in dem Term mit der höchsten Ableitung steht. In dieser Form lautet die Differentialgleichung:
+			Häufig verwendet man die sogenannte "Normalform", also die Form, in der kein zusätzlicher Faktor in dem Term mit der höchsten Ableitung steht. In dieser Form lautet die 
+			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			:
 		`)
 
 		this.dampedOscText1d = this.sanitizer.bypassSecurityTrustHtml(`
@@ -144,13 +148,21 @@ export class E2DampedOscillation {
 		this.dampedOscText1e = this.sanitizer.bypassSecurityTrustHtml(`
 			mit den Abkürzungen $2\\beta:=\\rho/\\Theta$ ($\\beta$:
 			<a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>;
-			die Wahl des Faktor 2 ist hier zunächst beliebig, es zeigt sich in der Lösung der Gleichung, dass diese Wahl geschickt ist) und  $\\omega_0^2:=D/\\Theta$ ($\\omega_0$: <b>ungedämpfte Eigenfrequenz</b>).
+			die Wahl des Faktor 2 ist hier zunächst beliebig, es zeigt sich in der Lösung der Gleichung, dass diese Wahl geschickt ist) und  $\\omega_0^2:=D/\\Theta$ ($\\omega_0$:
+			<a href="#glossary-natural-frequency" class="glossary-link">ungedämpfte Eigenfrequenz</a>
+			).
 		`)
 
 		this.dampedOscText2a = this.sanitizer.bypassSecurityTrustHtml(`
-			Diese Differentialgleichung beschreibt, bis auf Anfangsbedingungen, das System vollständig, die Lösung der Gleichung gibt aber einen deutlich besseren Einblick darein, wie die Bewegung möglicherweise aussieht.<br><br>
+			Diese 
+			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			beschreibt, bis auf Anfangsbedingungen, das System vollständig, die Lösung der Gleichung gibt aber einen deutlich besseren Einblick darein, wie die Bewegung möglicherweise aussieht.<br><br>
 
-			Zur Lösung der Differentialgleichung kann der sogenannte "Exponentialansatz" verwendet werden.
+			Zur Lösung der 
+			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			kann der sogenannte 
+			<a href="#glossary-exponential-ansatz" class="glossary-link">Exponentialansatz</a>
+			verwendet werden.
 			Dieser Ansatz bietet sich bei vielen Bewegungsgleichungen an und die grundsätzliche Idee ist, dass man annimmt die Lösung sei von der Form $\\varphi(t)=exp(\\lambda t)$ und dann durch Einsetzen schaut, für welche $\\lambda$ dieser Ansatz gerechtfertigt ist.
 		`)
 
@@ -184,7 +196,8 @@ export class E2DampedOscillation {
 		`)
 
 		this.dampedOscText2c = this.sanitizer.bypassSecurityTrustHtml(`
-			Für den <b>Schwingfall</b> ($\\omega_0^2>\\beta^2$), wenn also die Dämpfung klein im Vergleich zur Eigenfrequenz des Systems ist, kann die Lösung in zwei äquivalenten Weisen angegeben werden:
+			Für den <b>Schwingfall</b> ($\\omega_0^2>\\beta^2$), wenn also die Dämpfung klein im Vergleich zur <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a> 
+			des Systems ist, kann die Lösung in zwei äquivalenten Weisen angegeben werden:
 		`)
 
 		this.dampedOscText2d = this.sanitizer.bypassSecurityTrustHtml(`
@@ -199,25 +212,41 @@ export class E2DampedOscillation {
 		this.dampedOscText2e = this.sanitizer.bypassSecurityTrustHtml(`
 			Zur Erinnerung: $\\beta$ ist der 
 			<a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a> 
-			und $\\omega_0$ die ungedämpfte Eigenfrequenz, die durch 
+			und $\\omega_0$ die 
+			<a href="#glossary-natural-frequency" class="glossary-link">ungedämpfte Eigenfrequenz</a>
+			, die durch 
 			<a href="#glossary-directive-moment" class="glossary-link">Richtmoment</a>
 			und 
 			<a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a> 
 			bestimmt ist.
 			<br><br>
-			Die Variablen $a$ und $b$ in der obigen Gleichung sowie $\\varphi_0$ (Maximalamplitude) und $\\phi$ (Phasenverschiebung) in der unteren Gleichung ergeben sich aus den Anfangsbedingungen (Anfangsauslenkung und -geschwindigkeit).
+			Die Variablen $a$ und $b$ in der obigen Gleichung sowie $\\varphi_0$ (
+			<a href="#glossary-amplitude" class="glossary-link">Maximalamplitude</a> 
+			) und $\\phi$ (Phasenverschiebung) in der unteren Gleichung ergeben sich aus den Anfangsbedingungen (Anfangsauslenkung und -geschwindigkeit).
 			<br><br>
-			Die gedämpfte Eigenfrequenz kann im Experiment aus der Periodenlänge $T=\\frac{1}{\\omega_e}$ bestimmt werden.
+			Die  
+			<a href="#glossary-natural-frequency" class="glossary-link">gedämpfte Eigenfrequenz</a> 
+			kann im Experiment aus der Periodenlänge $T=\\frac{1}{\\omega_e}$ bestimmt werden.
 		`)
 
 		this.dampedOscText3a = this.sanitizer.bypassSecurityTrustHtml(`
 			In der linken Abbildung ist exemplarisch der zeitliche Verlauf der Winkelauslenkung eines gedämpften Systems dargestellt, wobei die Anfangsauslenkung $x_0>0$ und die Anfangsgeschwindigkeit $v_0=0$ sind.<br><br>
 
-			Die blaue Kurve zeigt jeweils die Winkelauslenkung des Rades über die Zeit, die rote gestrichelte Kurve deutet die abnehmende Amplitude über die Zeit an — sie wird auch Einhüllende genannt.<br><br>
+			Die blaue Kurve zeigt jeweils die Winkelauslenkung des Rades über die Zeit, die rote gestrichelte Kurve deutet die abnehmende 
+			<a href="#glossary-amplitude" class="glossary-link">Amplitude</a> 
+			über die Zeit an — sie wird auch Einhüllende genannt.<br><br>
 
-			Je stärker der Überlapp zwischen Magnet und Schwungrad, desto schneller nimmt die Amplitude des Systems ab. In den Abbildungen links nimmt die Dämpfung von oben nach unten zu, in der untersten Abbildung zeichnet sich bereits der Übergang zum aperiodischen Grenzfall ab.<br><br>
+			Je stärker der Überlapp zwischen Magnet und Schwungrad, desto schneller nimmt die 
+			<a href="#glossary-amplitude" class="glossary-link">Amplitude</a> 
+			des Systems ab. In den Abbildungen links nimmt die Dämpfung von oben nach unten zu, in der untersten Abbildung zeichnet sich bereits der Übergang zum 
+			<a href="#glossary-critical-damping" class="glossary-link">aperischen Grenzfall</a> 
+			ab.<br><br>
 
-			Kennt man den zeitlichen Verlauf, so kann das Verhältnis der Amplituden in Kombination mit der Periodendauer $T$ genutzt werden, um den Dämpfungskoeffizienten $\\beta$ zu bestimmen.<br><br>
+			Kennt man den zeitlichen Verlauf, so kann das Verhältnis der 
+			<a href="#glossary-amplitude" class="glossary-link">Amplituden</a>  
+			in Kombination mit der Periodendauer $T$ genutzt werden, um den 
+			<a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a> 
+			$\\beta$ zu bestimmen.<br><br>
 
 			Als zusätzliche Hilfsgröße zur Analyse der Dämpfung wird hierfür das „logarithmische Dekrement" $\\Lambda$, das sich explizit auf das Verhältnis benachbarter Maxima (zeitlicher Abstand = Periodendauer $T$) bezieht:
 			$$\\Lambda=\\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right)=\\ln(\\exp(\\beta T))=\\beta T.$$

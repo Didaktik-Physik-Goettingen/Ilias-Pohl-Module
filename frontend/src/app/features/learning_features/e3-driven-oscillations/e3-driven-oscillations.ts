@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choice';
 import { SingleChoice } from '../../../shared/evaluation/single-choice/single-choice';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
@@ -12,7 +13,7 @@ import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overl
 
 @Component({
 	selector: 'app-e3-driven-oscillations',
-	imports: [CommonModule, RouterLink, SingleChoice, MultipleChoice],
+	imports: [CommonModule, RouterLink, SingleChoice, ImageChoice, MultipleChoice],
 	templateUrl: './e3-driven-oscillations.html',
 	styleUrl: './e3-driven-oscillations.css',
 })
@@ -56,14 +57,12 @@ export class E3DrivenOscillations {
 			Frage am Rande:
 			Warum funktioniert das so mit der Unterteilung in Lösung der homogenen und speziellen Lösung?
 		`,
-        incorrectMessage: `✗ Falsche Wahl.<br><br>
-			Versuchen Sie es nochmals!<br>
+        incorrectMessage: `✗ Falsche Wahl, versuchen Sie es nochmals!<br><br>
 			Sie haben entweder angegeben, dass Sie die Begriffe in dieser Weise nicht kennen, oder eine falsche Lösung angekreuzt.<br><br>
-			Entscheiden Sie an dieser Stelle selber, wie sie weitergehen möchten:<br><br>
 
-			Auf der nächsten Seite finden Sie einen kurzen Überblick, wie die soeben aufgestellte Differentialgleichung gelöst werden kann. Für den Versuch ist diese Seite ausreichend.<br><br>
+			Auf der nächsten Seite finden Sie einen kurzen Überblick, wie die soeben aufgestellte Differentialgleichung gelöst werden kann.<br><br>
 
-			Hier erhalten Sie gerne einen allgemeineren Einblick in das Lösen von 
+			Hier erhalten Sie einen allgemeineren Einblick in das Lösen von 
 			<a href="#glossary-hom-dgl" class="glossary-link">homogenen</a>
 			oder
 			<a href="#glossary-inhom-dgl" class="glossary-link">inhomogenen Differentialgleichungen</a>
@@ -74,7 +73,7 @@ export class E3DrivenOscillations {
 
 	// question 2 data
     question2 = {
-		questionId: 'damped_osc-2-inhom-dgl',
+		questionId: 'driven_osc-2-inhom-dgl',
         question: 'Welche der folgenden Aussagen sind korrekt?',
         options: [
             { value: 'answer1', label: 'Aufgrund des äußeren Antriebs ist die Schwingung zu allen Zeiten gleichmäßig und periodisch.' },
@@ -86,18 +85,50 @@ export class E3DrivenOscillations {
             { value: 'answer7', label: 'Der zweite Summand ist bei einem gedämpften System nach einer gewissen Zeit zu vernachlässigen -- er spielt nur zu Beginn der Schwingung eine Rolle.' },
         ],
         correctAnswers: ['answer4', 'answer6'],
-        containerId: 'question1-container',
+        containerId: 'question2-container',
         successMessage: `✓ Völlig richtig!<br><br>
-		
 			Aufgrund der Dämpfung wird die Bedeutung des ersten Summanden (grün) mit der Zeit geringer und das schwingende System wird durch den zweiten Term, also durch den Antrieb, dominiert.
 			Der erste Summand ist nur im sogenannten "Einschwingvorgang" relevant. Der zweite Term wird auch als "stationäre Lösung" beschrieben, da maximale Amplitude und Phasenverschiebung hier nicht von der Zeit abhängen.<br>
 			Die Dämpfung hat hierbei einen Einfluss auf die maximale Auslenkung und auch auf die Phasenverschiebung zwischen Anreger und Schwungrad. Auf der folgenden Seite werden wir uns diese beiden Größen und die Abhängigkeiten noch einmal genauer anschauen.<br><br>
 		`,
-        incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.<br><br>
-		
-		Betrachten Sie alternativ noch einmal die Gleichung. Überlegen Sie, wie sich die Gleichung reduziert für $t\\rightarrow\\infty$. Überlege, in welchen Termen die Dämpfung (\\beta) eine Rolle spielt und wie sich die Gleichung für $\\beta=0$ verhält.`,
-        incorrectMessage: `✗ Das ist noch nicht ganz richtig - einige Ihrer Antworten sind falsch.<br><br>`
+        incompleteMessage: `✗ Das ist so noch nicht ganz richtig, versuchen Sie es nochmals!<br><br>
+            Betrachte noch einmal die Gleichung. Überlege, wie sich die Gleichung reduziert für $$\\t\\rightarrow\\infty$$. Überlege, in welchen Termen die Dämpfung (\\beta) eine Rolle spielt und wie sich die Gleichung für $$\\beta=0$$ verhält.`,
+        incorrectMessage: `✗ Das ist so noch nicht ganz richtig, versuchen Sie es nochmals!<br><br>
+            Betrachte noch einmal die Gleichung. Überlege, wie sich die Gleichung reduziert für $$\\t\\rightarrow\\infty$$. Überlege, in welchen Termen die Dämpfung (\\beta) eine Rolle spielt und wie sich die Gleichung für $$\\beta=0$$ verhält.`
     };
+
+    // question 3 data
+	question3 = {
+		questionId: 'driven_osc-3-swinging-process',
+		question: `Woran kann man im Phasenraumdiagramm erkennen, dass der Einschwingvorgang abgeschlossen ist?<br>
+            Bei welcher der folgenden Abbildungen kann der Einschwingvorgang als abgeschlossen angesehen werden?
+            Überlegen Sie auf Basis der obigen Gleichung.<br>
+            Das graue Kreuz markiert den ersten Messwert, das rote Kreuz markiert den letzten Messwert.`,
+		options: [
+			{ 
+				value: 'answer1', 
+				imageSrc: 'assets/images/e3_driven_oscillations/swinging_process_option1_3.png',
+				// label: 'Plot 1'
+			},
+			{ 
+				value: 'answer2', 
+				imageSrc: 'assets/images/e3_driven_oscillations/swinging_process_option2_3.png',
+				// label: 'Plot 2'
+			},
+			{ 
+				value: 'answer3', 
+				imageSrc: 'assets/images/e3_driven_oscillations/swinging_process_option3_3.png',
+				// label: 'Plot3'
+			},
+		],
+		correctAnswers: ['answer1'],
+		containerId: 'question3-container',
+		successMessage: `✓ Richtig, der Zusammenhang sollte etwa linear sein - je größer das wirkende Drehmoment, desto    stärker wird das Rad ausgelenkt. Es gilt der Zusammenhang $M=\\varphi D$.<br><br>
+			Das Drehmoment kann nicht direkt im Versuch gemessen/variiert werden, Sie können aber durch das Anhängen unterschiedlicher Massekörper ein Drehmoment erzeugen.`,
+        incorrectMessage: `✗ Falsche Wahl, versuchen Sie es nochmals!<br><br>
+            Bei dieser Bewegung ist der Einschwingvorgang noch nicht abgeschlossen.
+            Dass der Einschwingvorgang abgeschlossen ist, sieht man im Phasenraumdiagramm an einer geschlossenen Bahnkurve. Sowohl der Winkel, als auch die Winkelgeschwindigkeit verändern sich zu diesem Zeitpunkt periodisch, weshalb sich im Phasenraumdiagramm eine "geschlossene" Bewegung ergibt.`
+	};
 
 
 
@@ -105,7 +136,7 @@ export class E3DrivenOscillations {
 	// track completion
 	isCorrect1 = false;
 	isCorrect2 = false;
-	// isCorrect3 = false;
+	isCorrect3 = false;
 	// isCorrect4 = false;
 	// isCorrect5 = false;
 	// isCorrect6 = false;
@@ -116,7 +147,7 @@ export class E3DrivenOscillations {
 	// QA states
 	showResult1 = false;
 	showResult2 = false;
-	// showResult3 = false;
+	showResult3 = false;
 	// showResult4 = false;
 	// showResult5 = false;
 	// showResult6 = false;
@@ -133,9 +164,9 @@ export class E3DrivenOscillations {
 		this.isCorrect2 = isCorrect;
     }
 
-    // onQuestion3Answered(isCorrect: boolean) {
-	// 	this.isCorrect3 = isCorrect;
-    // }
+    onQuestion3Answered(isCorrect: boolean) {
+		this.isCorrect3 = isCorrect;
+    }
 
     // onQuestion4Answered(isCorrect: boolean) {
 	// 	this.isCorrect4 = isCorrect;
@@ -159,20 +190,18 @@ export class E3DrivenOscillations {
 
 
 	// +++ TeX rendering +++
-	dampedOscText1a!: SafeHtml;
-	dampedOscText1b!: SafeHtml;
-	dampedOscText1c!: SafeHtml;
-	dampedOscText1d!: SafeHtml;
-	dampedOscText1e!: SafeHtml;
+	drivenOscText1a!: SafeHtml;
+	drivenOscText1b!: SafeHtml;
+	drivenOscText1c!: SafeHtml;
 
-	dampedOscText2a!: SafeHtml;
-	dampedOscText2b!: SafeHtml;
-	dampedOscText2c!: SafeHtml;
-	dampedOscText2d!: SafeHtml;
-	dampedOscText2e!: SafeHtml;
+	drivenOscText2a!: SafeHtml;
+	drivenOscText2b!: SafeHtml;
+	drivenOscText2c!: SafeHtml;
 
-	dampedOscText3a!: SafeHtml;
-	dampedOscText3b!: SafeHtml;
+	drivenOscText3a!: SafeHtml;
+	drivenOscText3b!: SafeHtml;
+
+    drivenOscText4!: SafeHtml;
 
 
     ngOnInit() {
@@ -191,7 +220,128 @@ export class E3DrivenOscillations {
         // restore completion states from previous session
         this.restoreCompletionState();
 
+		// sanitized string to enable LaTeX rendering
+        this.drivenOscText1a = this.sanitizer.bypassSecurityTrustHtml(`
+			Neben einer Wirbelstrombremse zur Dämpfung, verfügt der Aufbau auch über einen externen Antrieb. Über einen Schrittmotor, der über eine Software angesteuert wird, kann hierbei das Rad zusätzlich periodisch in Bewegung versetzt werden. Hierbei kann einerseits die Frequenz und andererseits die 
+            <a href="#glossary-amplitude" class="glossary-link">Amplitude</a>  
+            verändert werden.<br><br>
 
+			Da der externe Antrieb über ein Rad realisiert wird, kann dieser mathematisch modelliert werden als zusätzlicher Beitrag zur
+			<a href="#glossary-inhom-dgl" class="glossary-link">Differentialgleichung</a>
+			mit $F_\\text{ext}=A\\cos(\\omega t)$, wobei $\\omega$ die Frequenz des Antriebs ist und $A$ mit dessen <a href="#glossary-amplitude" class="glossary-link">Amplitude</a>  
+            in Zusammenhang steht.
+			Während die Frequenz über eine digitale Ansteuerung des Schrittmotors eingestellt wird, kann die Amplitude manuell durch Verschieben an der rechten Scheibe verändert werden.<br><br>
+
+			Insgesamt ist die
+			<a href="#glossary-inhom-dgl" class="glossary-link">Differentialgleichung</a>
+			zur Beschreibung der Bewegung des Rades mit Dämpfung ($\\Theta$:
+			<a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a>,
+			$\\rho$: Reibungskoeffizient, $D^*$:
+			<a href="#glossary-directive-moment" class="glossary-link">Richtmoment</a>
+			der Feder) und externem Antrieb gegeben als:
+			$$\\Theta\\ddot{\\varphi}+\\rho\\dot{\\varphi}+D^*\\varphi=A\\cos(\\omega t)$$
+			In der Regel wird diese Gleichung in normierter Form betrachtet; wie bereits zuvor werden neue Variablen eingeführt:
+			$$2\\beta:=\\frac{\\rho}{\\Theta},\\quad\\omega_0^2:=\\frac{D^*}{\\Theta},\\quad N:=\\frac{A}{\\Theta}.$$
+			Diese Umbenennung vereinfacht die Schreibweise und entspricht der „Standardform" einer
+			<a href="#glossary-inhom-dgl" class="glossary-link">inhomogenen linearen Differentialgleichung</a>
+			2. Ordnung:
+        `);
+
+        this.drivenOscText1b = this.sanitizer.bypassSecurityTrustHtml(`
+			$$\\ddot{\\varphi}+2\\beta\\dot{\\varphi}+\\omega_0^2\\varphi=N\\cos(\\omega t).$$
+        `);   
+        
+        this.drivenOscText1c = this.sanitizer.bypassSecurityTrustHtml(`
+			Beachte, dass hierbei $\\omega_0$ und $\\omega$ unterschiedliche Frequenzen sind, die nicht direkt in Zusammenhang miteinander stehen — während $\\omega_0$ die
+			<a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a>
+			des ungedämpften Rades beschreibt, ist $\\omega$ die Frequenz des Antriebs. Zur Erinnerung: $\\beta$ ist der
+			<a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>.
+        `);
+        
+        this.drivenOscText2a = this.sanitizer.bypassSecurityTrustHtml(`
+            Die Lösung der 
+            <a href="#glossary-inhom-dgl" class="glossary-link">inhomogenen Differentialgleichung</a>
+            $$\\ddot{\\varphi}+2\\beta\\dot{\\varphi}+\\omega_0^2\\varphi=N\\cos(\\omega t)$$
+            ergibt sich aus der Summe von homogener und spezieller Lösung:
+            $$\\varphi(t)=\\varphi_\\text{homogen}(t)+\\varphi_\\text{speziell}(t).$$
+
+            Die Lösung der homogenen Gleichung (ohne externen Antrieb) wurde bereits auf den vergangenen Seiten verwendet. Sie kann geschrieben werden als:
+            $$\\varphi_\\text{homogen}=\\varphi_0\\cos(\\omega_e t+\\Phi)\\,e^{-\\beta t},$$
+            wobei sich die maximale Auslenkung $\\varphi_0$ und die Phase $\\Phi$ aus den Anfangsbedingungen ergeben und $\\omega_e=\\sqrt{\\omega_0^2-\\beta^2}$ ($\\omega_0$: 
+            <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a> 
+            des Systems; $\\beta$: 
+            <a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskonstante</a>
+            ).<br><br>
+
+            Um eine spezielle Lösung zu finden, ist es ratsam, einen Ansatz zu wählen, der der Inhomogenität (in diesem Fall $N\\cos(\\omega t)$) ähnelt.<br><br>
+
+            Eine Möglichkeit wäre als Ansatz $\\varphi_\\text{speziell}=\\varphi_s\\cos(\\omega t+\\Phi_s)$ zu wählen. Man setzt diesen Ansatz in die 
+            <a href="#glossary-inhom-dgl" class="glossary-link">Differentialgleichung</a> 
+            ein und bestimmt hieraus die beiden Variablen $\\varphi_s$ und $\\Phi_s$.<br><br>
+
+            Eine andere Möglichkeit, bei der die Rechnung an einigen Stellen etwas leichter ist, wirkt zunächst wie ein Umweg: Man erweitert die Inhomogenität komplex. Statt $N\\cos(\\omega t)$ betrachtet man $Ne^{i\\omega t}$ — beachte $N\\cos(\\omega t)=\\text{Re}\\{Ne^{i\\omega t}\\}$. Mit dem Ansatz $\\tilde{\\varphi}_\\text{speziell}=Ae^{i\\omega t}$ (A komplexwertig) setzt man diesen in die 
+            <a href="#glossary-inhom-dgl" class="glossary-link">inhomogene Differentialgleichung</a> 
+            ein und bestimmt $A$. Die spezielle Lösung ergibt sich dann als $\\text{Re}\\{\\tilde{\\varphi}_\\text{speziell}\\}$.
+        `)
+
+        this.drivenOscText2b = this.sanitizer.bypassSecurityTrustHtml(`
+            Wir verwenden den komplexen Erweiterungsansatz. Ausgangspunkt ist die inhomogene Differentialgleichung:
+            $$\\ddot{\\varphi}+2\\beta\\dot{\\varphi}+\\omega_0^2\\varphi=N\\cos(\\omega t).$$
+
+            Anstatt der Inhomogenität $N\\cos(\\omega t)$ betrachten wir die komplexifizierte Gleichung mit der Inhomogenität $Ne^{i\\omega t}$
+            und wählen den Ansatz $\\tilde{\\varphi}_\\text{speziell}=Ae^{i\\omega t}$, wobei $A\\in\\mathbb{C}$ komplexwertig ist.
+            Beachte: $N\\cos(\\omega t)=\\text{Re}\\{Ne^{i\\omega t}\\}$, weshalb sich die gesuchte spezielle Lösung am Ende als Realteil ergibt.<br><br>
+
+            Die Ableitungen des Ansatzes sind:
+            $$\\dot{\\tilde{\\varphi}}=i\\omega A e^{i\\omega t},\\qquad\\ddot{\\tilde{\\varphi}}=-\\omega^2 A e^{i\\omega t}.$$
+
+            Einsetzen in die Differentialgleichung und Division durch $e^{i\\omega t}\\neq 0$ liefert:
+            $$A\\left(\\omega_0^2-\\omega^2+2i\\beta\\omega\\right)=N\\quad\\Rightarrow\\quad
+            A=\\frac{N}{\\omega_0^2-\\omega^2+2i\\beta\\omega}.$$
+
+            Zur Berechnung des Realteils multiplizieren wir mit dem konjugiert-komplexen Nenner:
+            $$A=\\frac{N(\\omega_0^2-\\omega^2-2i\\beta\\omega)}{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}.$$
+
+            Wir schreiben $A=|A|\\,e^{-i\\Phi_s}$ in Polarform:
+            $$|A|=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}},\\qquad
+            \\Phi_s=\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right).$$
+
+            Die spezielle Lösung der ursprünglichen Gleichung ergibt sich schließlich als:
+            $$\\varphi_\\text{speziell}=\\text{Re}\\{\\tilde{\\varphi}_\\text{speziell}\\}=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos(\\omega t-\\Phi_s).$$
+        `);
+
+        this.drivenOscText2c = this.sanitizer.bypassSecurityTrustHtml(`
+            Als Gesamtlösung des Systems ergibt sich nach dem vorgestellten Schema:
+            $$\\varphi(t)=\\underbrace{\\varphi_0\\cos(\\omega_e t+\\Phi)\\,e^{-\\beta t}}_{\\text{homogen}}+\\underbrace{\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right)}_{\\text{speziell}}$$
+
+            Der erste Summand entspricht der homogenen Lösung, der zweite der speziellen Lösung. Der erste Term beschreibt das „freie" Schwingverhalten des Pendels; der zweite Term beinhaltet die Reaktion des Systems auf die externe Anregung.
+        `);
+
+        this.drivenOscText3a = this.sanitizer.bypassSecurityTrustHtml(`
+            Im Versuch zur getriebenen Schwingung werden Sie sich auf eine Analyse der stationären Schwingung (nach der Einschwingphase),
+            also auf den zweiten Term der Gesamtlösung, fokussieren.
+            Da ein reales System immer gedämpft ist und sich daher nach einer Einschwingphase immer eine stationäre Lösung einstellt,
+            ist diese Betrachtung im Realexperiment sinnvoll:
+            $$\\varphi(t)=\\underbrace{\\varphi_0\\cos(\\omega_e t+\\Phi)\\,e^{-\\beta t}}_{\\xrightarrow{\\;t\\to\\infty\\;}\\,0}
+            +\\underbrace{\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right)}_{\\text{stationäre Lösung}}$$
+
+            Wenn die Einschwingphase abgeschlossen ist, spielen die Anfangsbedingungen eine untergeordnete Rolle
+            und das System schwingt periodisch mit der Frequenz $\\omega$ des Antriebs.<br><br>
+
+            Der Zeitpunkt, zu dem die Einschwingphase abgeschlossen ist, ist sehr gut im sogenannten Phasenraumdiagramm sichtbar.
+            In einem Phasenraumdiagramm wird die (Winkel-)geschwindigkeit über den Winkel aufgetragen.
+        `);
+
+        this.drivenOscText4 = this.sanitizer.bypassSecurityTrustHtml(`
+Im Folgenden betrachten wir nur die stationäre Lösung der Gleichung, also
+φ(t)=N(ω20−ω2)2+4β2ω2−−−−−−−−−−−−−−−√cos(ωt−arctan(2βωω20−ω2)).
+
+Zunächst beschäftigen wir uns mit der Amplitude:
+
+φ0(ω)=N(ω20−ω2)2+4β2ω2−−−−−−−−−−−−−−−√.
+
+Sie haben sicher schon von dem Phänomen der "Resonanzkatastrophe" gehört. Man spricht hiervon, wenn die Amplitude der Schwingung, bedingt durch die äußere Anregung, stark zunimmt. Doch wovon hängt es ab, ob es zu einer "Resonanzkatastrophe" kommt?
+        `);
 
 
         this.renderMath();
@@ -208,7 +358,7 @@ export class E3DrivenOscillations {
         // check if questions were already answered correctly
         this.isCorrect1 = this.trackingService.isQuestionCompleted(this.question1.questionId);
 		this.isCorrect2 = this.trackingService.isQuestionCompleted(this.question2.questionId);
-		// this.isCorrect3 = this.trackingService.isQuestionCompleted(this.question3.questionId);
+		this.isCorrect3 = this.trackingService.isQuestionCompleted(this.question3.questionId);
 		// this.isCorrect4 = this.trackingService.isQuestionCompleted(this.question4.questionId);
 		// this.isCorrect5 = this.trackingService.isQuestionCompleted(this.question5.questionId);
 		// this.isCorrect6 = this.trackingService.isQuestionCompleted(this.question6.questionId);
@@ -253,7 +403,7 @@ export class E3DrivenOscillations {
         return this.currentView === 'driven_osc1';
     }
     get isLastPage(): boolean {
-        return this.currentView === 'driven_osc3';
+        return this.currentView === 'driven_osc7';
     }
 
 
@@ -283,17 +433,17 @@ export class E3DrivenOscillations {
 
     // go forward shows next subpage / page
     goForward() {
-        if (this.currentView === 'damped_osc1') {
-            this.currentView = 'damped_osc2';
-        } else if (this.currentView === 'damped_osc2') {
-            this.currentView = 'damped_osc3';
-        } else if (this.currentView === 'damped_osc3') {
-            this.currentView = 'damped_osc4';
-        } else if (this.currentView === 'damped_osc5') {
-            this.currentView = 'damped_osc6';
-        } else if (this.currentView === 'damped_osc6') {
-            this.currentView = 'damped_osc7';
-        } else if (this.currentView === 'damped_osc7') {
+        if (this.currentView === 'driven_osc1') {
+            this.currentView = 'driven_osc2';
+        } else if (this.currentView === 'driven_osc2') {
+            this.currentView = 'driven_osc3';
+        } else if (this.currentView === 'driven_osc3') {
+            this.currentView = 'driven_osc4';
+        } else if (this.currentView === 'driven_osc5') {
+            this.currentView = 'driven_osc6';
+        } else if (this.currentView === 'driven_osc6') {
+            this.currentView = 'driven_osc7';
+        } else if (this.currentView === 'driven_osc7') {
             if (this.navigationFlow === 'learning-first') {
                 this.router.navigate(['/simulation/sim-e-driven-osc'], { queryParams: { flow: 'learning-first' } });
             } else {

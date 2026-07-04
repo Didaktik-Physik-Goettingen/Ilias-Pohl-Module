@@ -122,6 +122,15 @@ h2 {
     color: var(--uni-blau-2);
 }
 
+.page-subheadline {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-weight: 400;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+}
+
 /* Links */
 a {
     color: var(--uni-blau-2);

@@ -1,19 +1,50 @@
 <div class="container">
     <div class="card">
-        <h1>
-            @if (currentView === 'driven_osc1') { <span>Getriebene Schwingungen (1/7)</span> }
-            @else if (currentView === 'driven_osc2') { <span>Getriebene Schwingungen (2/7)</span> }
-            @else if (currentView === 'driven_osc3') { <span>Getriebene Schwingungen (3/7)</span> }
-            @else if (currentView === 'driven_osc4') { <span>Getriebene Schwingungen (4/7)</span> }
-            @else if (currentView === 'driven_osc5') { <span>Getriebene Schwingungen (5/7)</span> }
-            @else if (currentView === 'driven_osc6') { <span>Getriebene Schwingungen (6/7)</span> }
-            @else { <span>Getriebene Schwingungen (7/7)</span> }
-        </h1>
+        @if (currentView === 'driven_osc1') {
+            <h1>Getriebene Schwingungen (1/7)</h1>
+            <!-- <p class="page-subheadline"></p> -->
+        } @else if (currentView === 'driven_osc2') {
+            <h1>Getriebene Schwingungen (2/7)</h1>
+            <p class="page-subheadline">Grundlagen zur Lösung 1</p>
+        } @else if (currentView === 'driven_osc3') {
+            <h1>Getriebene Schwingungen (3/7)</h1>
+            <p class="page-subheadline">Grundlagen zur Lösung 2</p>
+        } @else if (currentView === 'driven_osc4') {
+            <h1>Getriebene Schwingungen (4/7)</h1>
+            <p class="page-subheadline">Woven ist die Amplitude abhängig?</p>
+        } @else if (currentView === 'driven_osc5') {
+            <h1>Getriebene Schwingungen (5/7)</h1>
+            <p class="page-subheadline">Analyse der Formel</p>
+        } @else if (currentView === 'driven_osc6') {
+            <h1>Getriebene Schwingungen (6/7)</h1>
+            <p class="page-subheadline">Wovon ist die Phasenverschiebung abhängig?</p>
+        } @else {
+            <h1>Getriebene Schwingungen (7/7)</h1>
+            <p class="page-subheadline">Analyse der Formel</p>
+        }
 
 
 <!-- Content sections -->
         <div class="content">
             @if (currentView === 'driven_osc1') {
+                <div class="text-image-container">
+                    <div class="image-content">
+                        <img src="assets/images/e3_driven_oscillations/Antrieb.jpg" alt="Schwungrad mit Massestück">
+                        <p class="image-description">
+                            Antrieb über Schrittmotor (hier nicht sichtbar), der über die Stange die Position des Aufhängungspunkts der Feder periodisch variiert.
+                        </p>
+                    </div>
+                    <div class="text-content">
+                        <p [innerHTML]="drivenOscText1a"></p>
+                    </div>
+                </div>
+                <div class="glossary-lamp">
+                    <div class="glossary-lamp-text" [innerHTML]="drivenOscText1b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="drivenOscText1c"></p>
+                </div>
+
                 <div>
                     <app-single-choice
                         [questionId]="question1.questionId"
@@ -29,11 +60,47 @@
             }
             
             @if (currentView === 'driven_osc2') {
-
+                <div class="text-content">
+                    <p [innerHTML]="drivenOscText2a"></p>
+                </div>
+                <details class="spoiler">
+                    <summary class="spoiler-summary">Detaillierte Lösung der Differentialgleichung - nicht für den Versuch erforderlich</summary>
+                    <div class="spoiler-content" [innerHTML]="drivenOscText2b"></div>
+                </details>
+                <div class="text-content">
+                    <p [innerHTML]="drivenOscText2c"></p>
+                </div>
+                <div>
+                    <app-multiple-choice
+                        [questionId]="question2.questionId"
+                        [question]="question2.question"
+                        [options]="question2.options"
+                        [correctAnswers]="question2.correctAnswers"
+                        [containerId]="question2.containerId"
+                        [successMessage]="question2.successMessage"
+                        [incompleteMessage]="question2.incompleteMessage"
+                        [incorrectMessage]="question2.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion2Answered($event)">
+                    </app-multiple-choice>
+                </div>
             }
 
             @if (currentView === 'driven_osc3') {
-
+                <div class="text-content">
+                    <p [innerHTML]="drivenOscText3a"></p>
+                </div>
+                <div>
+                    <app-image-choice
+                        [questionId]="question3.questionId"
+                        [question]="question3.question"
+                        [options]="question3.options"
+                        [correctAnswers]="question3.correctAnswers"
+                        [containerId]="question3.containerId"
+                        [successMessage]="question3.successMessage"
+                        [incorrectMessage]="question3.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion3Answered($event)">
+                    </app-image-choice>
+                </div>
             }
 
             @if (currentView === 'driven_osc4') {
