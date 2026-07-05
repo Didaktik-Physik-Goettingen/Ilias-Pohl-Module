@@ -18,7 +18,7 @@ export class DevModeService {
 
     constructor(@Inject(DOCUMENT) private doc: Document) {
         const win = this.doc.defaultView;
-        this.isEnabled = win?.sessionStorage.getItem(this.KEY) === 'true';
+        this.isEnabled = win?.sessionStorage?.getItem(this.KEY) === 'true';
 
         if (!win) return;
 
@@ -43,10 +43,5 @@ export class DevModeService {
             'font-family:monospace', 'letter-spacing:0.05em', 'opacity:0.85'
         ].join(';');
         this.doc.body.appendChild(this.badge);
-    }
-
-    private removeBadge() {
-        this.badge?.remove();
-        this.badge = null;
     }
 }

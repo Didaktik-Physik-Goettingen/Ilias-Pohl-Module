@@ -40,6 +40,7 @@
     --glossary-link-color: var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
     --test-h1-color: var(--physik-gelb);
+    --target-h1-color: var(--philo-purple);
 
     /* formula coloring for MathJax \class{mjx-formula-hom/inhom}{} */
     --formula-hom:   var(--forst-gruen);  /* homogeneous / transient term  */
@@ -70,6 +71,7 @@
     --glossary-link-color:     var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
     --test-h1-color:           var(--physik-gelb);
+    --target-h1-color:         #c084fc;
 
     /* formula coloring — lighter/brighter variants for dark backgrounds */
     --formula-hom:   #34c98a;             /* brightened forst-grün, ~7:1 on dark card */

@@ -1,1 +1,102 @@
-<p>tar-experiment works!</p>
+<div class="container">
+    <div class="card">
+        <h1 class="h1-target">Entscheidung zum Offenheitsgrad der Anleitung</h1>
+
+        <p>
+            Sie haben sich nun mit den theoretischen Grundlagen des Versuchs vertraut gemacht.
+            Nun dürfen Sie selber entscheiden, worauf Sie im Versuch ihren Fokus setzen wollen
+            und wie konkret Ihre Anleitung für den Versuch sein soll.
+        </p>
+
+        <p style="margin-top: 1rem;">
+            Wählen Sie einen der folgenden Schwerpunkte und Offenheitsgrade für die Anleitung.
+            Laden Sie sich die Anleitung direkt herunter und notieren Sie sich das entsprechende
+            Kürzel ihrer Versuchsvariante.
+        </p>
+
+        <div class="target-options">
+
+            <!-- Wide card: E1 + E2 share one heading -->
+            <div class="target-option target-option--wide">
+                <h3>Fokus Charakterisierung des Aufbaus</h3>
+                <div class="target-variants-grid">
+
+                    <!-- E1 -->
+                    <div class="target-variant-col">
+                        <span class="target-variant">Anleitung mit konkreteren Angaben</span>
+                        <p class="target-description">
+                            Was kann man da denn alles am Aufbau drehen?
+                            Anleitung zum Messen unterschiedlicher Einflüsse auf das Schwingungsverhalten.
+                        </p>
+                        <div class="target-code">
+                            Kürzel: <span class="target-code-badge">E1</span>
+                        </div>
+                        <div class="target-downloads">
+                            <a class="target-download-btn" href="assets/target/Anleitung_E1.pdf" download>
+                                ↓ Anleitung_E1.pdf
+                                <span class="target-file-size">415 KB</span>
+                            </a>
+                            <a class="target-download-btn" href="assets/target/Analysehilfe_2.ipynb" download>
+                                ↓ Analysehilfe_2.ipynb
+                                <span class="target-file-size">63 KB</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- E2 -->
+                    <div class="target-variant-col">
+                        <span class="target-variant">Anleitung mit freierer Versuchsgestaltung</span>
+                        <p class="target-description">
+                            Was kann man da denn alles am Aufbau drehen?
+                            Anleitung zum Messen unterschiedlicher Einflüsse auf das Schwingungsverhalten.
+                        </p>
+                        <div class="target-code">
+                            Kürzel: <span class="target-code-badge">E2</span>
+                        </div>
+                        <div class="target-downloads">
+                            <a class="target-download-btn" href="assets/target/Anleitung_E2.pdf" download>
+                                ↓ Anleitung_E2.pdf
+                                <span class="target-file-size">419 KB</span>
+                            </a>
+                            <a class="target-download-btn" href="assets/target/Analysehilfe_2.ipynb" download>
+                                ↓ Analysehilfe_2.ipynb
+                                <span class="target-file-size">63 KB</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- E3 card -->
+            <div class="target-option">
+                <h3>Fokus Auswertemethoden</h3>
+                <span class="target-variant">Anleitung mit Fokus Auswertung</span>
+                <p class="target-description">
+                    Wie beeinflusst die Auswertemethode meine Ergebnisse?
+                    Vergleich manueller und digitaler Auswertung von Daten.
+                </p>
+                <div class="target-code">
+                    Kürzel: <span class="target-code-badge">E3</span>
+                </div>
+                <div class="target-downloads">
+                    <a class="target-download-btn" href="assets/target/Anleitung_E3.pdf" download>
+                        ↓ Anleitung_E3.pdf
+                        <span class="target-file-size">411 KB</span>
+                    </a>
+                    <a class="target-download-btn" href="assets/target/Analysehilfe_2.ipynb" download>
+                        ↓ Analysehilfe_2.ipynb
+                        <span class="target-file-size">63 KB</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="button-container">
+            @if (devMode.isEnabled) {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+        </div>
+    </div>
+</div>

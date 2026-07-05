@@ -36,16 +36,19 @@ README.md
 │   │
 │   └── src/
 │       │   index.html                          // main .html
-│       │   styles.css                          // main stylesheet
+│       │   styles.css                          // main stylesheet (color palette, layout, buttons)
 │       │   styles_glossary.css                 // stylesheet for the glossary
 │       │   styles_evaluation.css               // stylesheet for the evaluation types
-│       │   styles_test.css                     // stylesheet for the test evaluations
+│       │   styles_test.css                     // stylesheet for the test pages
+│       │   styles_decision.css                 // stylesheet for the decision pages
+│       │   styles_target.css                   // stylesheet for the target pages
 │       │
-│       └── assets/                             // images, icons, etc.
+│       └── assets/                             // images, icons, downloadable files, etc.
 │       │
 │       └── app/
 │           │   app.html                        // general page structure
-│           │   app.routes.ts                   // contains all the routing
+│           │   app.routes.ts                   // client-side routing (all routes)
+│           │   app.routes.server.ts            // SSR render-mode per route (Prerender / Client)
 │           │
 │           └── core/
 │           │   └── services/                   // project-wide services
@@ -55,6 +58,7 @@ README.md
 │           │           results-tracking.ts     // learning module answer logging
 │           │           test-tracking.ts        // test answer logging (single-submission)
 │           │           data-export.ts          // aggregates all tracking; saves to / loads from API
+│           │           dev-mode.ts             // developer mode toggle (Shift+Alt+D)
 │           │
 │           └── shared/
 │           │   └── footer/                     // footer component
@@ -71,7 +75,9 @@ README.md
 │           │       └── order-images/
 │           │       └── single-choice/
 │           │       └── multiple-choice/
+│           │       └── image-choice/
 │           │       └── drag-and-drop/
+│           │       └── test-true-false/
 │           │       └── end-page/               // results display; triggers progress save
 │           │
 │           └── features/                       // individual pages
@@ -82,11 +88,12 @@ README.md
 │               │   └── amplitude/
 │               │   └── ...
 │               │
-│               └── learning_features/          // standard content pages
-│               └── decision_features/          // decision between (next) content page, simulation, or test 
-│               └── test_features/
+│               └── learning_features/          // multi-page content modules
+│               └── decision_features/          // choice between learning, simulation, or test
+│               └── simulation_features/        // Angular-based interactive simulations
+│               └── test_features/              // single-submission test pages
 │               └── sidepath_features/
-│               └── target_features/
+│               └── target_features/            // end-of-module guide download pages
 │
 └── public/
     └── simulations/                            // standalone HTML simulation pages (static)
@@ -198,6 +205,7 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **results-tracking.ts:** logs learning question answers; allows retries, increments `attemptCount`
 - **test-tracking.ts:** logs test question answers; blocks re-submission of the same question
 - **data-export.ts:** aggregates all three tracking services; calls `saveProgress()` on test completion and on `beforeunload`; calls `loadProgress()` on app startup to restore previous session; silently skips rogue users
+- **dev-mode.ts:** developer mode toggle; press `Shift+Alt+D` anywhere to enable/disable; state persists in `sessionStorage` across SPA navigation; when active, shows an amber badge and reveals gated back-navigation buttons on decision, simulation, learning, test, and target pages; SSR-safe
 
 
 ### Evaluation Formats (Learning Pages)
@@ -213,9 +221,10 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **order-images:** sort images by dragging them up / down
 - **single-choice:** single correct answer
 - **multiple-choice:** multiple correct answers
-- **drag-and-drop:** assign answers to images
 - **image-choice:** single correct answer for images
+- **drag-and-drop:** assign answers to images
 - **test-true-false:** assess individual statements for accuracy
+- **end-page:** aggregates scores, shows performance feedback, triggers progress save
 
 
 ## Features
@@ -227,17 +236,19 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **angular-momentum** ("Drehmoment")
 - **critical-damping** ("Aperiodischer Grenzfall")
 - **damping-coefficient** ("Dämpfungskoeffizient")
+- **directive-moment** ("Richtmoment")
 - **exponential-ansatz** ("Exponentialansatz")
 - **hom-dgl** ("Homogene Differentialgleichung")
 - **inhom-dgl** ("Inhomogene Differentialgleichung")
 - **moment-of-inertia** ("Trägheitsmoment")
 - **natural-frequency** ("Eigenschwingfrequenz")
+- **resonance-frequency** ("Resonanzfrequenz")
 - **spring-constant** ("Federkonstante")
 
 
 ### Learning Features
 
-- **intro-experiment:**
+- **e1-intro-experiment** → `/learning/e1-intro-experiment` — Einstieg: Versuchsaufbau
     - *intro-exp-1-schwungrad*
     - *intro-exp-2-feder*
     - *intro-exp-3-wirbelstrombremse*
@@ -245,46 +256,65 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
     - *intro-exp-5-winkel-drehmoment*
     - *intro-exp-6-winkel-zeit*
 
+- **e2-damped-oscillation** → `/learning/e2-damped-oscillations` — Experiment: Gedämpfte Schwingungen
+    - *damped-osc1*
+    - *damped-osc2*
+    - *damped-osc3*
+
+- **e3-driven-oscillations** → `/learning/e3-driven-oscillations` — Experiment: Getriebene Schwingungen
+    - *driven-osc1*
+    - *driven-osc2*
+    - *driven-osc3*
+    - *driven-osc4*
+    - *driven-osc5*
+    - *driven-osc6*
+    - *driven-osc7*
+
 
 ### Decision Features
 
+Decision pages present the user with a choice between the conventional learning module, an interactive simulation, and a test. Cards are colour-coded by destination type (blue = learning, yellow = test, blue = simulation).
+
+- **dec-e-damped-oscillations** → `/decision/e-damped-oscillations` — Gedämpfte Schwingungen
+- **dec-e-driven-oscillations** → `/decision/e-driven-oscillations` — Getriebene Schwingungen
 
 
 ### Test Features
 
-- **damped-oscillations:**
-    - *damped-osc-1-daempfungsstaerke*
-    - *damped-osc-2-federkonstante*
-    - *damped-osc-3-frequency-damping*
-    - *damped-osc-4-log-decrement*
-    - *damped-osc-5-phase-space*
+Tests use single-submission question formats. The `e-` prefix denotes the experimental strand (reached after the experiment), the `t-` prefix the theoretical strand (reached after the theory module).
+
+- **test-e-damped-oscillations** → `/test/e-damped-osc` — Test: Gedämpfte Schwingungen (5 questions + results)
+- **test-e-driven-oscillations** → `/test/e-driven-osc` — Test: Getriebene Schwingungen (4 questions + results)
+- **test-t-damped-oscillation** → `/test/t-damped-osc` — Test: Gedämpfte Schwingungen (5 questions + results)
+- **test-t-driven-oscillation** → `/test/t-driven-osc` — Test: Getriebene Schwingungen (4 questions + results)
+
+
+### Target Features
+
+Target pages are reached at the end of a module strand and offer downloadable experiment guides tailored to the student's earlier choice of focus and openness level.
+
+- **tar-experiment** → `/target/tar-experiment` — Anleitung: Versuchsdurchführung
+    - Guide E1: Fokus Charakterisierung des Aufbaus (konkretere Angaben) — `Anleitung_E1.pdf`
+    - Guide E2: Fokus Charakterisierung des Aufbaus (freierer Versuchsgestaltung) — `Anleitung_E2.pdf`
+    - Guide E3: Fokus Auswertemethoden — `Anleitung_E3.pdf`
+    - Analysis notebook — `Analysehilfe_2.ipynb`
 
 
 ### Sidepath Features
 
-### Target Features
-
-- **simulation:**
-- **chaos:**
-- **common-free:**
-- **common-technical:**
-- **setup-free:**
-- **setup-concrete:**
-- **evaluation-comparison:**
-
 
 ### Simulation Features
 
-Angular component:
-- **damped-oscillations-experiment** → `/simulation/damped-oscillations-experiment`
+Angular components (interactive, use canvas / MathJax — served client-side):
 
-Standalone HTML pages (in `frontend/public/simulations/`):
-- **undamped-linear** → `/simulation/undamped-linear`
-- **damped-linear** → `/simulation/damped-linear`
-- **damped-driven-linear** → `/simulation/damped-driven-linear`
-- **damped-driven-rot** → `/simulation/damped-driven-rot`
-- **damped-rot** → `/simulation/damped-rot`
-- **damped-rot-advanced** → `/simulation/damped-rot-advanced`
-- **damped-rot-v2** → `/simulation/damped-rot-v2`
-- **damped-driven-rot-intro** → `/simulation/damped-driven-rot-intro`
-- **damped-driven-rot-advanced** → `/simulation/damped-driven-rot-advanced`
+- **sim-e-damped-oscillations** → `/simulation/sim-e-damped-osc` — Simulation: Gedämpfte Schwingungen
+- **sim-e-driven-oscillations** → `/simulation/sim-e-driven-osc` — Simulation: Getriebene Schwingungen
+
+Standalone HTML pages (static files in `frontend/public/simulations/`, served via redirect guard):
+
+- `/simulation/theory-undamped` — Ungedämpfte Schwingung (Einstieg)
+- `/simulation/theory-damped` — Gedämpfte Schwingung (Einstieg)
+- `/simulation/theory-damped-driven` — Gedämpfte getriebene Schwingung (Einstieg)
+- `/simulation/theory-damped-driven-advanced` — Gedämpfte getriebene Drehschwingung (Vertiefung)
+- `/simulation/experiment-damped-driven` — Getriebene Drehschwingung (Einleitung)
+- `/simulation/experiment-damped-driven-advanced` — Getriebene Drehschwingung (Vertiefung)
