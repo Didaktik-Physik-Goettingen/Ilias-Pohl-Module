@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { DevModeService } from '../../../core/services/dev-mode';
 import { TestOrderImages } from '../../../shared/test/order-images/order-images';
 import { TestSingleChoice } from '../../../shared/test/single-choice/single-choice';
 import { TestMultipleChoice } from '../../../shared/test/multiple-choice/multiple-choice';
@@ -36,27 +37,30 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             maxPercentage: 25,
             level: 'low' as const,
             message: 'Sie werden sich nun anhand einer <b>interaktiven Simulation</b> anschauen, welchen Einfluss unterschiedliche Parameter auf den Bewegungsverlauf haben.',
-            continueLink: '/experiment/intro',
-            continueLinkText: 'Weiter zur Simulation'
+            continueLink: '/simulation/sim-e-damped-osc',
+            continueLinkText: 'Weiter zur Simulation',
+            continueQueryParams: { flow: 'sim-first' }
         },
         {
             minPercentage: 25,
             maxPercentage: 79,
             level: 'medium' as const,
             message: `
-				Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> erarbeiten. 
-				Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine gedämpfte Schwingung 
+				Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> erarbeiten.
+				Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine gedämpfte Schwingung
 				und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
-            continueLink: '/learning/resonance',
-            continueLinkText: 'Weiter zu den theoretischen Grundlagen'
+            continueLink: '/learning/e2-damped-oscillations',
+            continueLinkText: 'Weiter zu den theoretischen Grundlagen',
+            continueQueryParams: { flow: 'learning-first' }
         },
         {
             minPercentage: 80,
             maxPercentage: 100,
             level: 'high' as const,
             message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
-            continueLink: '/learning/forced-oscillations',
-            continueLinkText: 'Weiter zum Test'
+            continueLink: '/test/e-driven-osc',
+            continueLinkText: 'Weiter zum Test',
+            continueQueryParams: {} as { [key: string]: string }
         }
     ];
 
@@ -194,6 +198,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
     // results page data
     continueLink = '/';
     continueLinkText = 'Weiter';
+    continueQueryParams: { [key: string]: string } = {};
     performanceLevel: 'low' | 'medium' | 'high' = 'low';
 
     // calculate results directly when navigating to results page
@@ -218,6 +223,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             this.performanceLevel = threshold.level;
             this.continueLink = threshold.continueLink;
             this.continueLinkText = threshold.continueLinkText;
+            this.continueQueryParams = threshold.continueQueryParams;
         }
     }
 
@@ -241,6 +247,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
         @Inject(PLATFORM_ID) private platformId: Object,
         private router: Router,
         private testTracking: TestTracking,
+        public devMode: DevModeService
     ) {}
 	
 	
@@ -457,7 +464,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 				this.calculateResults();
 				this.currentView = 'damped_osc6';
 			} else if (this.currentView === 'damped_osc6') {
-                this.router.navigate([this.continueLink]);
+                this.router.navigate([this.continueLink], { queryParams: this.continueQueryParams });
 			}
             this.renderMath();
         }

@@ -8,6 +8,7 @@ import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multi
 import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
+import { DevModeService } from '../../../core/services/dev-mode';
 
 
 
@@ -33,7 +34,8 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
 		private trackingService: ResultsTracking,
-        public glossaryOverlay: GlossaryOverlay
+        public glossaryOverlay: GlossaryOverlay,
+        public devMode: DevModeService
     ) {}
 
     @HostListener('click', ['$event'])

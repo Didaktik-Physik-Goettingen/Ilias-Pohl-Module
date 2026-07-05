@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { DevModeService } from '../../../core/services/dev-mode';
 import { TestOrderImages } from '../../../shared/test/order-images/order-images';
 import { TestSingleChoice } from '../../../shared/test/single-choice/single-choice';
 import { TestMultipleChoice } from '../../../shared/test/multiple-choice/multiple-choice';
@@ -222,6 +223,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
         @Inject(PLATFORM_ID) private platformId: Object,
         private router: Router,
         private testTracking: TestTracking,
+        public devMode: DevModeService
     ) {}
 	
 	

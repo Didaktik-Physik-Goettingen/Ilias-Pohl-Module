@@ -6,6 +6,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
+import { DevModeService } from '../../../core/services/dev-mode';
 
 
 
@@ -22,7 +23,8 @@ export class E2DampedOscillation {
         private route: ActivatedRoute,
         private router: Router,
 		private trackingService: ResultsTracking,
-        public glossaryOverlay: GlossaryOverlay
+        public glossaryOverlay: GlossaryOverlay,
+        public devMode: DevModeService
     ) {}
 
     @HostListener('click', ['$event'])

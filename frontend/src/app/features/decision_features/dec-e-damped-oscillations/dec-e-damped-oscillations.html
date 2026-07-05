@@ -29,5 +29,11 @@
                 <button (click)="router.navigate([testLink])" class="decision-btn decision-btn-test">Zum Test →</button>
             </div>
         </div>
+
+        @if (devMode.isEnabled) {
+        <div class="button-container">
+            <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+        </div>
+        }
     </div>
 </div>

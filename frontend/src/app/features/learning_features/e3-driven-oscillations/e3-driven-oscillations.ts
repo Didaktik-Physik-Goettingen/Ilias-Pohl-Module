@@ -8,6 +8,7 @@ import { SingleChoice } from '../../../shared/evaluation/single-choice/single-ch
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
+import { DevModeService } from '../../../core/services/dev-mode';
 
 
 
@@ -24,7 +25,8 @@ export class E3DrivenOscillations {
         private route: ActivatedRoute,
         private router: Router,
 		private trackingService: ResultsTracking,
-        public glossaryOverlay: GlossaryOverlay
+        public glossaryOverlay: GlossaryOverlay,
+        public devMode: DevModeService
     ) {}
 
     @HostListener('click', ['$event'])

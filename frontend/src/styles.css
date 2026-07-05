@@ -187,6 +187,19 @@ main {
     align-items: center;
 }
 
+/* Forward button: anchors to right even when back button is absent. */
+.button-container > button:last-of-type {
+    margin-left: auto;
+}
+
+/* Back button: always anchors to left.
+   Uses button.btn-back (specificity 0,2,1) to win over button:last-of-type (also 0,2,1)
+   by source order, since this rule is declared after. */
+.button-container > button.btn-back {
+    margin-right: auto;
+    margin-left: 0;
+}
+
 /* individual button placed pn the right side */
 .button-container-right {
     display: flex;

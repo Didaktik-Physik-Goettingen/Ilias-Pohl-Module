@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { DevModeService } from '../../../core/services/dev-mode';
 import { TestOrderImages } from '../../../shared/test/order-images/order-images';
 import { TestSingleChoice } from '../../../shared/test/single-choice/single-choice';
 import { TestImageChoice } from '../../../shared/test/image-choice/image-choice';
@@ -31,27 +32,40 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private testTracking: TestTracking,
+        public devMode: DevModeService
     ) {}
 
     // Custom thresholds for this test
     performanceThresholds = [
         {
             minPercentage: 0,
-            maxPercentage: 79,
+            maxPercentage: 25,
             level: 'low' as const,
-            message: 'In Bezug auf getriebene Schwingungen fehlen Ihnen noch einige Aspekte. Entscheiden Sie selber, wie Sie fortfahren möchten. Sie können sich entweder zunächst mit den Bewegungsmustern anhand einer interaktiven Simulation vertraut machen, oder die theoretischen Grundlagen in einem interaktiven Lernmodul erarbeiten.',
-            continueLink: '/experiment/intro',
+            message: 'Sie werden sich nun anhand einer <b>interaktiven Simulation</b> anschauen, welchen Einfluss unterschiedliche Parameter auf den Bewegungsverlauf haben.',
+            continueLink: '/simulation/sim-e-driven-osc',
             continueLinkText: 'Weiter zur Simulation',
-            continueLink2: '/learning/resonance',
-            continueLinkText2: 'Weiter zu den theoretischen Grundlagen'
+            continueQueryParams: { flow: 'sim-first' }
+        },
+        {
+            minPercentage: 25,
+            maxPercentage: 79,
+            level: 'medium' as const,
+            message: `
+				Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> erarbeiten.
+				Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine getriebene, gedämpfte Schwingung
+				und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
+            continueLink: '/learning/e3-driven-oscillations',
+            continueLinkText: 'Weiter zu den theoretischen Grundlagen',
+            continueQueryParams: { flow: 'learning-first' }
         },
         {
             minPercentage: 80,
             maxPercentage: 100,
             level: 'high' as const,
-            message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
-            continueLink: '/test/forced-oscillations',
-            continueLinkText: 'Weiter zur Entscheidung über die Ausrichtung des Versuchs'
+            message: 'Sie haben ein gutes Grundlagenwissen zu getriebenen, gedämpften Schwingungen und bekommen nun ihre <b>Versuchsanleitung</b>.',
+            continueLink: '/target/tar-experiment',
+            continueLinkText: 'Weiter zur Anleitung',
+            continueQueryParams: {} as { [key: string]: string }
         }
     ];
 
@@ -147,7 +161,8 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     // results page data
     continueLink = '/';
     continueLinkText = 'Weiter';
-    performanceLevel: 'low' | 'high' = 'low';
+    continueQueryParams: { [key: string]: string } = {};
+    performanceLevel: 'low' | 'medium' | 'high' = 'low';
 
     // calculate results directly when navigating to results page
     private calculateResults() {
@@ -171,6 +186,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             this.performanceLevel = threshold.level;
             this.continueLink = threshold.continueLink;
             this.continueLinkText = threshold.continueLinkText;
+            this.continueQueryParams = threshold.continueQueryParams;
         }
     }
 
@@ -388,7 +404,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             } else if (this.currentView === 'driven_osc4') {
 				this.currentView = 'driven_osc5';
 			} else if (this.currentView === 'driven_osc5') {
-                this.router.navigate([this.continueLink]);
+                this.router.navigate([this.continueLink], { queryParams: this.continueQueryParams });
                 return;
 			}
             this.updateUrl();

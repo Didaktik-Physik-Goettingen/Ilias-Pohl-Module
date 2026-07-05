@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { DevModeService } from '../../../core/services/dev-mode';
 
 
 
@@ -14,7 +15,7 @@ export class DecEDrivenOscillations {
     testLink = '/test/e-driven-osc';
     simulationLink = '/simulation/sim-e-driven-osc';
 
-    constructor(public router: Router) {}
+    constructor(public router: Router, public devMode: DevModeService) {}
 
     navigateToLearning() {
         this.router.navigate([this.learningModuleLink], { queryParams: { flow: 'learning-first' } });
