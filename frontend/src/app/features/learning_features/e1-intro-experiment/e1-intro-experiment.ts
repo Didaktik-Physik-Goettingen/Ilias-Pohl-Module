@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -27,7 +27,7 @@ declare global {
     templateUrl: './e1-intro-experiment.html',
     styleUrl: './e1-intro-experiment.css',
 })
-export class E1IntroExperiment implements OnInit, OnDestroy {
+export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -37,6 +37,8 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
         public glossaryOverlay: GlossaryOverlay,
         public devMode: DevModeService
     ) {}
+
+    private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
@@ -327,12 +329,16 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
             Feder aus: $(M_{\\text{Feder}} = -D\\varphi)$.
         `);
 
+    }
+
+
+    ngAfterViewInit() {
         this.renderMath();
     }
 
 
     ngOnDestroy() {
-        // End tracking when leaving the module
+        if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }
 
@@ -351,12 +357,10 @@ export class E1IntroExperiment implements OnInit, OnDestroy {
     // trigger MathJax rendering
 	renderMath() {
 		if (isPlatformBrowser(this.platformId)) {
-			setTimeout(() => {
+			if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
+			this.mathJaxTimeout = setTimeout(() => {
+				this.mathJaxTimeout = null;
 				if (window.MathJax) {
-					// Clear all previous MathJax processing
-					const elements = document.querySelectorAll('.MathJax');
-					elements.forEach(el => el.remove());
-					
 					window.MathJax.typesetPromise();
 				}
 			}, 100);

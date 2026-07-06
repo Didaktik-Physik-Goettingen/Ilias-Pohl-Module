@@ -11,7 +11,7 @@
                 [class.incorrect]="isSubmitted && getSelectedValue(statement.id) === 'false' && statement.isCorrect"
                 [class.disabled]="isSubmitted">
 
-                <div class="statement-text">{{ statement.text }}</div>
+                <div class="statement-text" [innerHTML]="statement.text"></div>
                 
                 <div class="statement-options">
                     <button

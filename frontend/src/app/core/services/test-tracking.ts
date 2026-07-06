@@ -15,6 +15,10 @@ export interface TestQuestionResult {
     timestamp: number;
     timestampISO: string;
     sessionId: string;
+    questionText?: string;
+    questionInstruction?: string;
+    userAnswerTexts?: string[];
+    correctAnswerTexts?: string[];
 }
 
 
@@ -93,7 +97,8 @@ export class TestTracking {
         userAnswer: any,
         correctAnswer: any,
         pointsAwarded: number,
-        maxPoints: number
+        maxPoints: number,
+        meta?: { questionText?: string; questionInstruction?: string; userAnswerTexts?: string[]; correctAnswerTexts?: string[] }
     ) {
         if (!this.currentTestId) {
             console.warn('No test started. Call startTest() first.');
@@ -128,7 +133,11 @@ export class TestTracking {
             maxPoints,
             timestamp: Date.now(),
             timestampISO: new Date().toISOString(),
-            sessionId
+            sessionId,
+            questionText:       meta?.questionText,
+            questionInstruction: meta?.questionInstruction,
+            userAnswerTexts:    meta?.userAnswerTexts,
+            correctAnswerTexts: meta?.correctAnswerTexts,
         };
 
         testProgress.results.push(result);

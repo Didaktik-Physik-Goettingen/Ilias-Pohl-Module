@@ -150,6 +150,15 @@
     border-bottom: 2px solid var(--philo-purple);
 }
 
+/* ── Lernpfad summary block on target page ───────────────────────────────── */
+.summary-container {
+    margin-top: 2rem;
+    padding: 1.75rem;
+    background: var(--card-background, #fff);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px var(--shadow-color, rgba(0,0,0,0.08));
+}
+
 /* ── Responsive ──────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
     .target-options {

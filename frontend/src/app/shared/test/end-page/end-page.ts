@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DataExport } from '../../../core/services/data-export';
@@ -53,6 +53,12 @@ export class EndPage implements OnInit {
         }
     ];
 
+    @Output() resultsCalculated = new EventEmitter<{
+        level: 'low' | 'medium' | 'high';
+        continueLink: string;
+        continueLinkText: string;
+    }>();
+
     totalPoints = 0;
     maxPoints = 0;
     percentage = 0;
@@ -93,6 +99,11 @@ export class EndPage implements OnInit {
             this.performanceMessage = threshold.message;
             this.continueLink = threshold.continueLink;
             this.continueLinkText = threshold.continueLinkText;
+            this.resultsCalculated.emit({
+                level: this.performanceLevel,
+                continueLink: this.continueLink,
+                continueLinkText: this.continueLinkText,
+            });
         }
     }
 

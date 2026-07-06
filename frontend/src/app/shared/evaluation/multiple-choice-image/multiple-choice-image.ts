@@ -131,11 +131,14 @@ export class MultipleChoiceImage implements OnInit {
         this.showResult = true;
 
         // Track the result
+        const selectedAnswerTexts = selectedAnswers.map(v => this.options.find(o => o.value === v)?.label ?? v);
+        const correctAnswerTexts  = this.correctAnswers.map(v => this.options.find(o => o.value === v)?.label ?? v);
         this.trackingService.trackQuestionResult(
             this.questionId,
             this.isCorrect,
             selectedAnswers,
-            this.correctAnswers
+            this.correctAnswers,
+            { questionText: this.question, selectedAnswerTexts, correctAnswerTexts }
         );
 
         if (this.isCorrect) {

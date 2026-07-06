@@ -115,12 +115,21 @@ export class ImageChoice implements OnInit {
         this.isCorrect = allCorrectSelected && noIncorrectSelected;
         this.showResult = true;
 
-        // track the result
+        // track the result — use imageSrc when no label exists so images can be shown in summary
+        const selectedAnswerTexts = selectedAnswers.map(v => {
+            const opt = this.options.find(o => o.value === v);
+            return opt?.label ?? opt?.imageSrc ?? v;
+        });
+        const correctAnswerTexts = this.correctAnswers.map(v => {
+            const opt = this.options.find(o => o.value === v);
+            return opt?.label ?? opt?.imageSrc ?? v;
+        });
         this.trackingService.trackQuestionResult(
             this.questionId,
             this.isCorrect,
             selectedAnswers,
-            this.correctAnswers
+            this.correctAnswers,
+            { questionText: this.question, selectedAnswerTexts, correctAnswerTexts }
         );
 
         if (this.isCorrect) {

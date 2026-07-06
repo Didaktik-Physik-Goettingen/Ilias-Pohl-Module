@@ -29,7 +29,8 @@
               "src/styles_evaluation.css",
               "src/styles_test.css",
               "src/styles_decision.css",
-              "src/styles_target.css"
+              "src/styles_target.css",
+              "src/styles_summary.css"
             ],
             "server": "src/main.server.ts",
             "outputMode": "server",

@@ -261,7 +261,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 	
 	
     ngOnDestroy() {
-		// end tracking when leaving
+        if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.testTracking.endTest();
     }
 	
@@ -278,95 +278,78 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 	
     onQuestion1Submit(result: any) {
 		this.question1Submitted = true;
-		
-        // track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question1.questionId)) {
+            const userAnswerTexts    = (result.userAnswer as string[]).map((id: string) => this.question1.images.find((img: any) => img.id === id)?.imageSrc ?? id);
+            const correctAnswerTexts = this.question1.correctOrder.map((id: string) => this.question1.images.find((img: any) => img.id === id)?.imageSrc ?? id);
 			this.testTracking.trackQuestionResult(
-				this.question1.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question1.correctOrder,
-                result.pointsAwarded,
-                this.question1.maxPoints
+				this.question1.questionId, result.isCorrect, result.userAnswer,
+                this.question1.correctOrder, result.pointsAwarded, this.question1.maxPoints,
+                { questionText: this.question1.question, questionInstruction: this.question1.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
     onQuestion2Submit(result: any) {
 		this.question2Submitted = true;
-
-        // track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question2.questionId)) {
+            const userAnswerTexts    = (result.userAnswer as string[]).map((id: string) => this.question2.images.find((img: any) => img.id === id)?.imageSrc ?? id);
+            const correctAnswerTexts = this.question2.correctOrder.map((id: string) => this.question2.images.find((img: any) => img.id === id)?.imageSrc ?? id);
 			this.testTracking.trackQuestionResult(
-				this.question2.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question2.correctOrder,
-                result.pointsAwarded,
-                this.question2.maxPoints
+				this.question2.questionId, result.isCorrect, result.userAnswer,
+                this.question2.correctOrder, result.pointsAwarded, this.question2.maxPoints,
+                { questionText: this.question2.question, questionInstruction: this.question2.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
 	}
 
     onQuestion3Submit(result: any) {
         this.question3Submitted = true;
-
-        // Track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question3.questionId)) {
+            const userAnswerTexts    = [this.question3.options.find((o: any) => o.value === result.userAnswer)?.label ?? result.userAnswer];
+            const correctAnswerTexts = [this.question3.options.find((o: any) => o.value === this.question3.correctAnswer)?.label ?? this.question3.correctAnswer];
             this.testTracking.trackQuestionResult(
-                this.question3.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question3.correctAnswer,
-                result.pointsAwarded,
-                this.question3.maxPoints
+                this.question3.questionId, result.isCorrect, result.userAnswer,
+                this.question3.correctAnswer, result.pointsAwarded, this.question3.maxPoints,
+                { questionText: this.question3.question, questionInstruction: this.question3.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
     onQuestion4Submit(result: any) {
         this.question4Submitted = true;
-
-        // Track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question4.questionId)) {
+            const userAnswerTexts    = (result.userAnswer as string[]).map((v: string) => this.question4.options.find((o: any) => o.value === v)?.label ?? v);
+            const correctAnswerTexts = this.question4.correctAnswers.map((v: string) => this.question4.options.find((o: any) => o.value === v)?.label ?? v);
             this.testTracking.trackQuestionResult(
-                this.question4.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question4.correctAnswers,
-                result.pointsAwarded,
-                this.question4.maxPoints
+                this.question4.questionId, result.isCorrect, result.userAnswer,
+                this.question4.correctAnswers, result.pointsAwarded, this.question4.maxPoints,
+                { questionText: this.question4.question, questionInstruction: this.question4.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
-
 
     onQuestion5Submit(result: any) {
         this.question5Submitted = true;
-
         if (!this.testTracking.isQuestionAnswered(this.question5.questionId)) {
             this.testTracking.trackQuestionResult(
-                this.question5.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                {},
-                result.pointsAwarded,
-                this.question5.maxPoints
+                this.question5.questionId, result.isCorrect, result.userAnswer,
+                {}, result.pointsAwarded, this.question5.maxPoints,
+                { questionText: this.question5.question, questionInstruction: this.question5.questionInstruction }
             );
         }
     }
 
 
+
+    private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
 
     // trigger MathJax rendering
 	renderMath() {
 		if (isPlatformBrowser(this.platformId)) {
-			setTimeout(() => {
+			if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
+			this.mathJaxTimeout = setTimeout(() => {
+				this.mathJaxTimeout = null;
 				if (window.MathJax) {
-					// Clear all previous MathJax processing
-					const elements = document.querySelectorAll('.MathJax');
-					elements.forEach(el => el.remove());
-					
 					window.MathJax.typesetPromise();
 				}
 			}, 100);
