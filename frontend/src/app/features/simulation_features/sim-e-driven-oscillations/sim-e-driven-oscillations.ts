@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DevModeService } from '../../../core/services/dev-mode';
 import { FormsModule } from '@angular/forms';
 
 declare global {
@@ -90,7 +91,8 @@ export class SimEDrivenOscillations implements OnInit, AfterViewInit, OnDestroy 
         @Inject(PLATFORM_ID) private platformId: Object,
         private location: Location,
         private route: ActivatedRoute,
-        private router: Router
+        private router: Router,
+        public devMode: DevModeService
     ) {}
 
     ngOnInit() {

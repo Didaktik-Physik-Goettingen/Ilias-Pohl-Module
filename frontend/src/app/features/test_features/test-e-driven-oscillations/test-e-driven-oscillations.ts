@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { DevModeService } from '../../../core/services/dev-mode';
 import { TestOrderImages } from '../../../shared/test/order-images/order-images';
 import { TestSingleChoice } from '../../../shared/test/single-choice/single-choice';
 import { TestImageChoice } from '../../../shared/test/image-choice/image-choice';
@@ -31,27 +32,40 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
         private route: ActivatedRoute,
         private router: Router,
         private testTracking: TestTracking,
+        public devMode: DevModeService
     ) {}
 
     // Custom thresholds for this test
     performanceThresholds = [
         {
             minPercentage: 0,
-            maxPercentage: 79,
+            maxPercentage: 25,
             level: 'low' as const,
-            message: 'In Bezug auf getriebene Schwingungen fehlen Ihnen noch einige Aspekte. Entscheiden Sie selber, wie Sie fortfahren möchten. Sie können sich entweder zunächst mit den Bewegungsmustern anhand einer interaktiven Simulation vertraut machen, oder die theoretischen Grundlagen in einem interaktiven Lernmodul erarbeiten.',
-            continueLink: '/experiment/intro',
+            message: 'Sie werden sich nun anhand einer <b>interaktiven Simulation</b> anschauen, welchen Einfluss unterschiedliche Parameter auf den Bewegungsverlauf haben.',
+            continueLink: '/simulation/sim-e-driven-osc',
             continueLinkText: 'Weiter zur Simulation',
-            continueLink2: '/learning/resonance',
-            continueLinkText2: 'Weiter zu den theoretischen Grundlagen'
+            continueQueryParams: { flow: 'sim-first' }
+        },
+        {
+            minPercentage: 25,
+            maxPercentage: 79,
+            level: 'medium' as const,
+            message: `
+				Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> erarbeiten.
+				Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine getriebene, gedämpfte Schwingung
+				und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
+            continueLink: '/learning/e3-driven-oscillations',
+            continueLinkText: 'Weiter zu den theoretischen Grundlagen',
+            continueQueryParams: { flow: 'learning-first' }
         },
         {
             minPercentage: 80,
             maxPercentage: 100,
             level: 'high' as const,
-            message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
-            continueLink: '/test/forced-oscillations',
-            continueLinkText: 'Weiter zur Entscheidung über die Ausrichtung des Versuchs'
+            message: 'Sie haben ein gutes Grundlagenwissen zu getriebenen, gedämpften Schwingungen und bekommen nun ihre <b>Versuchsanleitung</b>.',
+            continueLink: '/target/tar-experiment',
+            continueLinkText: 'Weiter zur Anleitung',
+            continueQueryParams: {} as { [key: string]: string }
         }
     ];
 
@@ -105,9 +119,9 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
         Bei welcher der unten stehenden Abbildungen ist die x-Achsenskalierung korrekt? (Beachten Sie die Beschriftung der x-Achse)`,
 		questionInstruction: 'Frage 3 von 4 (10 Punkte): Zusammenhang Frequenz und Schwingungsamplitude - Resonanzkurve',
         options: [
-            { value: 'answer1', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_JA.png', label: 'Resonanzkurve A' },
-            { value: 'answer2', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_JA.png', label: 'Resonanzkurve B' },
-            { value: 'answer3', imageSrc: 'assets/images/test_t_driven_oscillations/Einschwingvorgang_JA.png', label: 'Resonanzkurve C' },
+            { value: 'answer1', imageSrc: 'assets/images/test_t_driven_oscillations/Resonanzkurve_1.png', label: 'Resonanzkurve A' },
+            { value: 'answer2', imageSrc: 'assets/images/test_t_driven_oscillations/Resonanzkurve_2.png', label: 'Resonanzkurve B' },
+            { value: 'answer3', imageSrc: 'assets/images/test_t_driven_oscillations/Resonanzkurve_3.png', label: 'Resonanzkurve C' },
         ],
 		correctAnswer: 'answer2',
         maxPoints: 10,
@@ -120,7 +134,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
         questionId: 'driven-osc-e-4-resonance_damping',
         question: `Wie verändert sich die Messung, wenn Sie den Überlapp zwischen dem Magneten (Wirbelstrombremse) und dem Schwungrad vergrößern? <br>
         Überlegen Sie was passiert, wenn Sie nur diese Einstellung am Aufbau ändern und alle anderen konstant halten.<br><br>
-        Welche der folgenden Aussagen sind korrekt?<br><br>
+        Welche der folgenden Aussagen sind korrekt?
         Je größer der Überlapp, desto ... `,
         questionInstruction: 'Frage 4 von 4 (30 Punkte): Einfluss der Dämpfung',
         statements: [
@@ -147,7 +161,8 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     // results page data
     continueLink = '/';
     continueLinkText = 'Weiter';
-    performanceLevel: 'low' | 'high' = 'low';
+    continueQueryParams: { [key: string]: string } = {};
+    performanceLevel: 'low' | 'medium' | 'high' = 'low';
 
     // calculate results directly when navigating to results page
     private calculateResults() {
@@ -171,6 +186,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             this.performanceLevel = threshold.level;
             this.continueLink = threshold.continueLink;
             this.continueLinkText = threshold.continueLinkText;
+            this.continueQueryParams = threshold.continueQueryParams;
         }
     }
 
@@ -208,7 +224,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 	
 	
     ngOnDestroy() {
-		// end tracking when leaving
+        if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.testTracking.endTest();
     }
 	
@@ -224,77 +240,67 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 	
     onQuestion1Submit(result: any) {
 		this.question1Submitted = true;
-		
-        // track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question1.questionId)) {
+            const userAnswerTexts    = (result.userAnswer as { statementId: string; selected: 'true' | 'false' }[])
+                .map(ans => { const s = this.question1.statements.find((st: any) => st.id === ans.statementId); return s ? `${s.text}: ${ans.selected === 'true' ? 'Wahr' : 'Falsch'}` : ans.statementId; });
+            const correctAnswerTexts = this.question1.statements.map((s: any) => `${s.text}: ${s.isCorrect ? 'Wahr' : 'Falsch'}`);
 			this.testTracking.trackQuestionResult(
-				this.question1.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                [],
-                result.pointsAwarded,
-                this.question1.maxPoints
+				this.question1.questionId, result.isCorrect, result.userAnswer,
+                [], result.pointsAwarded, this.question1.maxPoints,
+                { questionText: this.question1.question, questionInstruction: this.question1.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
     onQuestion2Submit(result: any) {
 		this.question2Submitted = true;
-
-        // track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question2.questionId)) {
+            const userAnswerTexts    = [this.question2.options.find((o: any) => o.value === result.userAnswer)?.label ?? result.userAnswer];
+            const correctAnswerTexts = [this.question2.options.find((o: any) => o.value === this.question2.correctAnswer)?.label ?? this.question2.correctAnswer];
 			this.testTracking.trackQuestionResult(
-				this.question2.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question2.correctAnswer,
-                result.pointsAwarded,
-                this.question2.maxPoints
+				this.question2.questionId, result.isCorrect, result.userAnswer,
+                this.question2.correctAnswer, result.pointsAwarded, this.question2.maxPoints,
+                { questionText: this.question2.question, questionInstruction: this.question2.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
 	}
 
     onQuestion3Submit(result: any) {
         this.question3Submitted = true;
-
-        // Track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question3.questionId)) {
+            const userAnswerTexts    = [this.question3.options.find((o: any) => o.value === result.userAnswer)?.label ?? result.userAnswer];
+            const correctAnswerTexts = [this.question3.options.find((o: any) => o.value === this.question3.correctAnswer)?.label ?? this.question3.correctAnswer];
             this.testTracking.trackQuestionResult(
-                this.question3.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question3.correctAnswer,
-                result.pointsAwarded,
-                this.question3.maxPoints
+                this.question3.questionId, result.isCorrect, result.userAnswer,
+                this.question3.correctAnswer, result.pointsAwarded, this.question3.maxPoints,
+                { questionText: this.question3.question, questionInstruction: this.question3.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
     onQuestion4Submit(result: any) {
         this.question4Submitted = true;
-
-        // Track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question4.questionId)) {
+            const userAnswerTexts    = (result.userAnswer as { statementId: string; selected: 'true' | 'false' }[])
+                .map(ans => { const s = this.question4.statements.find((st: any) => st.id === ans.statementId); return s ? `${s.text}: ${ans.selected === 'true' ? 'Wahr' : 'Falsch'}` : ans.statementId; });
+            const correctAnswerTexts = this.question4.statements.map((s: any) => `${s.text}: ${s.isCorrect ? 'Wahr' : 'Falsch'}`);
             this.testTracking.trackQuestionResult(
-                this.question4.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                [],
-                result.pointsAwarded,
-                this.question4.maxPoints
+                this.question4.questionId, result.isCorrect, result.userAnswer,
+                [], result.pointsAwarded, this.question4.maxPoints,
+                { questionText: this.question4.question, questionInstruction: this.question4.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
+    private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+
     // trigger MathJax rendering
 	renderMath() {
 		if (isPlatformBrowser(this.platformId)) {
-			setTimeout(() => {
+			if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
+			this.mathJaxTimeout = setTimeout(() => {
+				this.mathJaxTimeout = null;
 				if (window.MathJax) {
-					// Clear all previous MathJax processing
-					const elements = document.querySelectorAll('.MathJax');
-					elements.forEach(el => el.remove());
-					
 					window.MathJax.typesetPromise();
 				}
 			}, 100);
@@ -386,9 +392,10 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             } else if (this.currentView === 'driven_osc3') {
                 this.currentView = 'driven_osc4';
             } else if (this.currentView === 'driven_osc4') {
+				this.calculateResults();
 				this.currentView = 'driven_osc5';
 			} else if (this.currentView === 'driven_osc5') {
-                this.router.navigate([this.continueLink]);
+                this.router.navigate([this.continueLink], { queryParams: this.continueQueryParams });
                 return;
 			}
             this.updateUrl();

@@ -1,7 +1,7 @@
 <div class="test-container" [id]="containerId" [class.submitted]="isSubmitted">
     <div class="test-content">
-        <h3 class="test-question">{{ question }}</h3>
-        <p class="test-instruction">{{ questionInstruction }}</p>
+        <h3 class="test-question" [innerHTML]="question"></h3>
+        <p class="test-instruction" [innerHTML]="questionInstruction"></p>
 
         <div class="choice-options">
             <label 

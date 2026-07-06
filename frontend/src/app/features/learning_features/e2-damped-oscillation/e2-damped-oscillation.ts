@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -6,6 +6,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
+import { DevModeService } from '../../../core/services/dev-mode';
 
 
 
@@ -15,15 +16,18 @@ import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overl
 	templateUrl: './e2-damped-oscillation.html',
 	styleUrl: './e2-damped-oscillation.css',
 })
-export class E2DampedOscillation {
+export class E2DampedOscillation implements AfterViewInit {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
         private route: ActivatedRoute,
         private router: Router,
 		private trackingService: ResultsTracking,
-        public glossaryOverlay: GlossaryOverlay
+        public glossaryOverlay: GlossaryOverlay,
+        public devMode: DevModeService
     ) {}
+
+    private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
@@ -43,9 +47,9 @@ export class E2DampedOscillation {
 		questionId: 'damped_osc-1-schwungrad',
         question: 'Welche der folgenden Aussagen trifft auf das schwingfende Rad zu?',
         options: [
-            { value: 'answer1', label: 'Die Resonanzfrequenz ist kleiner als ω1=200 mHz.' },
-            { value: 'answer2', label: 'Die Resonanzfrequenz liegt zwischen ω1 und ω2.' },
-            { value: 'answer3', label: 'Die Resonanzfrequenz ist größer als ω2=400 mHz.' },
+            { value: 'answer1', label: 'Die Resonanzfrequenz ist kleiner als $\\omega_1=200\\,\\mathrm{mHz}$.' },
+            { value: 'answer2', label: 'Die Resonanzfrequenz liegt zwischen $\\omega_1$ und $\\omega_2$.' },
+            { value: 'answer3', label: 'Die Resonanzfrequenz ist größer als $\\omega_2=400\\,\\mathrm{mHz}$.' },
             { value: 'answer4', label: ' Über die Größe der Resonanzfrequenz kann keine Aussage getroffen werden.' }
         ],
         correctAnswers: ['answer1'],
@@ -262,12 +266,16 @@ export class E2DampedOscillation {
 			$$\\Lambda=\\ln(\\exp(\\beta T))=\\beta T.$$
 		`)
 
+    }
+
+
+    ngAfterViewInit() {
         this.renderMath();
     }
 
 
     ngOnDestroy() {
-        // End tracking when leaving the module
+        if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }
 
@@ -281,12 +289,10 @@ export class E2DampedOscillation {
     // trigger MathJax rendering
 	renderMath() {
 		if (isPlatformBrowser(this.platformId)) {
-			setTimeout(() => {
+			if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
+			this.mathJaxTimeout = setTimeout(() => {
+				this.mathJaxTimeout = null;
 				if (window.MathJax) {
-					// Clear all previous MathJax processing
-					const elements = document.querySelectorAll('.MathJax');
-					elements.forEach(el => el.remove());
-
 					window.MathJax.typesetPromise();
 				}
 			}, 100);

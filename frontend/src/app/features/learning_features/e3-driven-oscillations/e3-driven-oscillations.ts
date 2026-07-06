@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -8,6 +8,7 @@ import { SingleChoice } from '../../../shared/evaluation/single-choice/single-ch
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
+import { DevModeService } from '../../../core/services/dev-mode';
 
 
 
@@ -17,15 +18,18 @@ import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overl
 	templateUrl: './e3-driven-oscillations.html',
 	styleUrl: './e3-driven-oscillations.css',
 })
-export class E3DrivenOscillations {
+export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
         private route: ActivatedRoute,
         private router: Router,
 		private trackingService: ResultsTracking,
-        public glossaryOverlay: GlossaryOverlay
+        public glossaryOverlay: GlossaryOverlay,
+        public devMode: DevModeService
     ) {}
+
+    private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
@@ -92,9 +96,9 @@ export class E3DrivenOscillations {
 			Die Dämpfung hat hierbei einen Einfluss auf die maximale Auslenkung und auch auf die Phasenverschiebung zwischen Anreger und Schwungrad. Auf der folgenden Seite werden wir uns diese beiden Größen und die Abhängigkeiten noch einmal genauer anschauen.<br><br>
 		`,
         incompleteMessage: `✗ Das ist so noch nicht ganz richtig, versuchen Sie es nochmals!<br><br>
-            Betrachte noch einmal die Gleichung. Überlege, wie sich die Gleichung reduziert für $$\\t\\rightarrow\\infty$$. Überlege, in welchen Termen die Dämpfung (\\beta) eine Rolle spielt und wie sich die Gleichung für $$\\beta=0$$ verhält.`,
+            Betrachte noch einmal die Gleichung. Überlege, wie sich die Gleichung reduziert für $$t\\rightarrow\\infty .$$ Überlege, in welchen Termen die Dämpfung (\\beta) eine Rolle spielt und wie sich die Gleichung für $$\\beta=0$$ verhält.`,
         incorrectMessage: `✗ Das ist so noch nicht ganz richtig, versuchen Sie es nochmals!<br><br>
-            Betrachte noch einmal die Gleichung. Überlege, wie sich die Gleichung reduziert für $$\\t\\rightarrow\\infty$$. Überlege, in welchen Termen die Dämpfung (\\beta) eine Rolle spielt und wie sich die Gleichung für $$\\beta=0$$ verhält.`
+            Betrachte noch einmal die Gleichung. Überlege, wie sich die Gleichung reduziert für $$t\\rightarrow\\infty .$$ Überlege, in welchen Termen die Dämpfung (\\beta) eine Rolle spielt und wie sich die Gleichung für $$\\beta=0$$ verhält.`
     };
 
     // question 3 data
@@ -523,12 +527,16 @@ export class E3DrivenOscillations {
         `)
 
 
+    }
+
+
+    ngAfterViewInit() {
         this.renderMath();
     }
 
 
    ngOnDestroy() {
-        // End tracking when leaving the module
+        if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }
 
@@ -549,12 +557,10 @@ export class E3DrivenOscillations {
     // trigger MathJax rendering
 	renderMath() {
 		if (isPlatformBrowser(this.platformId)) {
-			setTimeout(() => {
+			if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
+			this.mathJaxTimeout = setTimeout(() => {
+				this.mathJaxTimeout = null;
 				if (window.MathJax) {
-					// Clear all previous MathJax processing
-					const elements = document.querySelectorAll('.MathJax');
-					elements.forEach(el => el.remove());
-
 					window.MathJax.typesetPromise();
 				}
 			}, 100);

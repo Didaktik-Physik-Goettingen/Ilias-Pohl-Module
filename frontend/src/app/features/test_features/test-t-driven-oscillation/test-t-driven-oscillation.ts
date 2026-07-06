@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { DevModeService } from '../../../core/services/dev-mode';
 import { TestOrderImages } from '../../../shared/test/order-images/order-images';
 import { TestSingleChoice } from '../../../shared/test/single-choice/single-choice';
 import { TestImageChoice } from '../../../shared/test/image-choice/image-choice';
@@ -142,6 +143,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     // results page data
     continueLink = '/';
     continueLinkText = 'Weiter';
+    continueQueryParams: { [key: string]: string } = {};
     performanceLevel: 'low' | 'high' = 'low';
 
     // calculate results directly when navigating to results page
@@ -189,6 +191,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
         @Inject(PLATFORM_ID) private platformId: Object,
         private router: Router,
         private testTracking: TestTracking,
+        public devMode: DevModeService
     ) {}
 	
 	
@@ -202,7 +205,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 	
 	
     ngOnDestroy() {
-		// end tracking when leaving
+        if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.testTracking.endTest();
     }
 	
@@ -218,77 +221,67 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 	
     onQuestion1Submit(result: any) {
 		this.question1Submitted = true;
-		
-        // track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question1.questionId)) {
+            const userAnswerTexts    = (result.userAnswer as { statementId: string; selected: 'true' | 'false' }[])
+                .map(ans => { const s = this.question1.statements.find((st: any) => st.id === ans.statementId); return s ? `${s.text}: ${ans.selected === 'true' ? 'Wahr' : 'Falsch'}` : ans.statementId; });
+            const correctAnswerTexts = this.question1.statements.map((s: any) => `${s.text}: ${s.isCorrect ? 'Wahr' : 'Falsch'}`);
 			this.testTracking.trackQuestionResult(
-				this.question1.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                [],
-                result.pointsAwarded,
-                this.question1.maxPoints
+				this.question1.questionId, result.isCorrect, result.userAnswer,
+                [], result.pointsAwarded, this.question1.maxPoints,
+                { questionText: this.question1.question, questionInstruction: this.question1.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
     onQuestion2Submit(result: any) {
 		this.question2Submitted = true;
-
-        // track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question2.questionId)) {
+            const userAnswerTexts    = [this.question2.options.find((o: any) => o.value === result.userAnswer)?.label ?? result.userAnswer];
+            const correctAnswerTexts = [this.question2.options.find((o: any) => o.value === this.question2.correctAnswer)?.label ?? this.question2.correctAnswer];
 			this.testTracking.trackQuestionResult(
-				this.question2.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question2.correctAnswer,
-                result.pointsAwarded,
-                this.question2.maxPoints
+				this.question2.questionId, result.isCorrect, result.userAnswer,
+                this.question2.correctAnswer, result.pointsAwarded, this.question2.maxPoints,
+                { questionText: this.question2.question, questionInstruction: this.question2.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
 	}
 
     onQuestion3Submit(result: any) {
         this.question3Submitted = true;
-
-        // Track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question3.questionId)) {
+            const userAnswerTexts    = [this.question3.options.find((o: any) => o.value === result.userAnswer)?.label ?? result.userAnswer];
+            const correctAnswerTexts = [this.question3.options.find((o: any) => o.value === this.question3.correctAnswer)?.label ?? this.question3.correctAnswer];
             this.testTracking.trackQuestionResult(
-                this.question3.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                this.question3.correctAnswer,
-                result.pointsAwarded,
-                this.question3.maxPoints
+                this.question3.questionId, result.isCorrect, result.userAnswer,
+                this.question3.correctAnswer, result.pointsAwarded, this.question3.maxPoints,
+                { questionText: this.question3.question, questionInstruction: this.question3.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
     onQuestion4Submit(result: any) {
         this.question4Submitted = true;
-
-        // Track the result (only if not already tracked)
         if (!this.testTracking.isQuestionAnswered(this.question4.questionId)) {
+            const userAnswerTexts    = (result.userAnswer as { statementId: string; selected: 'true' | 'false' }[])
+                .map(ans => { const s = this.question4.statements.find((st: any) => st.id === ans.statementId); return s ? `${s.text}: ${ans.selected === 'true' ? 'Wahr' : 'Falsch'}` : ans.statementId; });
+            const correctAnswerTexts = this.question4.statements.map((s: any) => `${s.text}: ${s.isCorrect ? 'Wahr' : 'Falsch'}`);
             this.testTracking.trackQuestionResult(
-                this.question4.questionId,
-                result.isCorrect,
-                result.userAnswer,
-                [],
-                result.pointsAwarded,
-                this.question4.maxPoints
+                this.question4.questionId, result.isCorrect, result.userAnswer,
+                [], result.pointsAwarded, this.question4.maxPoints,
+                { questionText: this.question4.question, questionInstruction: this.question4.questionInstruction, userAnswerTexts, correctAnswerTexts }
             );
         }
     }
 
+    private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+
     // trigger MathJax rendering
 	renderMath() {
 		if (isPlatformBrowser(this.platformId)) {
-			setTimeout(() => {
+			if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
+			this.mathJaxTimeout = setTimeout(() => {
+				this.mathJaxTimeout = null;
 				if (window.MathJax) {
-					// Clear all previous MathJax processing
-					const elements = document.querySelectorAll('.MathJax');
-					elements.forEach(el => el.remove());
-					
 					window.MathJax.typesetPromise();
 				}
 			}, 100);
@@ -372,9 +365,10 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             } else if (this.currentView === 'driven_osc3') {
                 this.currentView = 'driven_osc4';
             } else if (this.currentView === 'driven_osc4') {
+				this.calculateResults();
 				this.currentView = 'driven_osc5';
 			} else if (this.currentView === 'driven_osc5') {
-                this.router.navigate([this.continueLink]);
+                this.router.navigate([this.continueLink], { queryParams: this.continueQueryParams });
 			}
             this.renderMath();
         }

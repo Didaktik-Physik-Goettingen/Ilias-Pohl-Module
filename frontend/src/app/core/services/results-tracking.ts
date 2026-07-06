@@ -10,6 +10,9 @@ export interface QuestionResult {
     isCorrect: boolean;
     selectedAnswers: string[];
     correctAnswers: string[];
+    questionText?: string;
+    selectedAnswerTexts?: string[];
+    correctAnswerTexts?: string[];
     timestamp: number;
     timestampISO: string;
     attemptCount: number;
@@ -106,7 +109,8 @@ export class ResultsTracking {
         questionId: string,
         isCorrect: boolean,
         selectedAnswers: string[],
-        correctAnswers: string[]
+        correctAnswers: string[],
+        meta?: { questionText?: string; selectedAnswerTexts?: string[]; correctAnswerTexts?: string[] }
     ) {
         if (!this.currentModuleId) {
             console.warn('No module started. Call startModule() first.');
@@ -132,6 +136,9 @@ export class ResultsTracking {
             existingResult.selectedAnswers = selectedAnswers;
             existingResult.timestamp = Date.now();
             existingResult.timestampISO = new Date().toISOString();
+            if (meta?.questionText !== undefined) existingResult.questionText = meta.questionText;
+            if (meta?.selectedAnswerTexts !== undefined) existingResult.selectedAnswerTexts = meta.selectedAnswerTexts;
+            if (meta?.correctAnswerTexts !== undefined) existingResult.correctAnswerTexts = meta.correctAnswerTexts;
             
             console.log(`${sessionId} tried ${questionId} on attempt ${existingResult.attemptCount}, result: ${isCorrect}`);
             console.log('RESLOG:', existingResult);
@@ -143,6 +150,9 @@ export class ResultsTracking {
                 isCorrect,
                 selectedAnswers,
                 correctAnswers,
+                questionText: meta?.questionText,
+                selectedAnswerTexts: meta?.selectedAnswerTexts,
+                correctAnswerTexts: meta?.correctAnswerTexts,
                 timestamp: Date.now(),
                 timestampISO: new Date().toISOString(),
                 attemptCount: 1,

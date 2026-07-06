@@ -105,10 +105,12 @@
         <!-- navigation buttons -->
         <div class="button-container" [class]="getPerformanceClass()">
             @if (isFirstPage) {
-                <button [routerLink]="['/learning/e1-intro-experiment']" [queryParams]="{page: 4}"
-                        class="btn" [disabled]="!canGoBack">← Zurück zum Einstieg</button>
+                @if (devMode.isEnabled) {
+                    <button [routerLink]="['/learning/e1-intro-experiment']" [queryParams]="{page: 4}"
+                            class="btn btn-back" [disabled]="!canGoBack">← Zurück zum Einstieg</button>
+                }
             } @else {
-                <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
+                <button class="btn btn-back" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
             }
 
             @if (!isEndPage) {

@@ -107,11 +107,18 @@ export class SingleChoice implements OnInit {
         this.isCorrect = selectedAnswer === this.correctAnswer;
         this.showResult = true;
 
+        const selectedAnswerText = this.options.find(o => o.value === selectedAnswer)?.label;
+        const correctAnswerText  = this.options.find(o => o.value === this.correctAnswer)?.label ?? this.correctAnswer;
         this.trackingService.trackQuestionResult(
             this.questionId,
             this.isCorrect,
             selectedAnswer ? [selectedAnswer] : [],
-            [this.correctAnswer]
+            [this.correctAnswer],
+            {
+                questionText:        this.question,
+                selectedAnswerTexts: selectedAnswerText ? [selectedAnswerText] : [],
+                correctAnswerTexts:  [correctAnswerText],
+            }
         );
 
         if (this.isCorrect) {

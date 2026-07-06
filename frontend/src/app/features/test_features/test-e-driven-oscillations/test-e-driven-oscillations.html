@@ -86,10 +86,12 @@
         <!-- navigation buttons -->
         <div class="button-container" [class]="getPerformanceClass()">
             @if (isFirstPage) {
-                <button [routerLink]="['/decision/e-driven-oscillations']" [queryParams]="{page: 4}"
-                        class="btn" [disabled]="!canGoBack">← Zurück zur Entscheidungsseite</button>
+                @if (devMode.isEnabled) {
+                    <button [routerLink]="['/decision/e-driven-oscillations']" [queryParams]="{page: 4}"
+                            class="btn btn-back" [disabled]="!canGoBack">← Zurück zur Entscheidungsseite</button>
+                }
             } @else {
-                <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
+                <button class="btn btn-back" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
             }
 
             @if (!isEndPage) {

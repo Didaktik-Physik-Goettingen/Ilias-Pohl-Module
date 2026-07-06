@@ -170,9 +170,11 @@
         <!-- navigation buttons -->
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/" class="btn">← Zurück zur Startseite</button>
+                @if (devMode.isEnabled) {
+                    <button routerLink="/" class="btn btn-back">← Zurück zur Startseite</button>
+                }
             } @else {
-                <button class="btn" (click)="goBack()">← Zurück</button>
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
 
             @if (isLastPage) {

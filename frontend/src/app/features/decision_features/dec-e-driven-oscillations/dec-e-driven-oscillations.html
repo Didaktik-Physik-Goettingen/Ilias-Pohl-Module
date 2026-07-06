@@ -29,8 +29,10 @@
             </div>
         </div>
 
-        <!-- <div class="button-container">
-            <button class="btn" (click)="goBack()">← Zurück</button>
-        </div> -->
+        @if (devMode.isEnabled) {
+        <div class="button-container">
+            <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+        </div>
+        }
     </div>
 </div>
