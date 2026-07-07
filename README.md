@@ -134,7 +134,7 @@ The Angular app is also accessible directly at **`http://localhost:4200`** (rogu
 
 1. Build the Angular app:
    ```bash
-   cd frontend && ng build --base-href ng build --base-href "https://interapt.uni-goettingen.de/pohl/"
+   cd frontend && ng build --base-href "https://interapt.uni-goettingen.de/pohl/"
    ```
 2. Upload to the server:
    - `frontend/dist/.../browser/` → server base path (static files), rename `browser/` to `pohl/` and upload to server
