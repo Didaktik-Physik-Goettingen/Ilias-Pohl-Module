@@ -1,8 +1,8 @@
 <div class="container">
     <div class="card">
-        @if (currentView === 't2_page1') {
+        @if (currentView === 'free_osc1') {
             <h1>DGL des ungedämpften harmonischen Oszillators (1/3)</h1>
-        } @else if (currentView === 't2_page2') {
+        } @else if (currentView === 'free_osc2') {
             <h1>Phasenraum (2/3)</h1>
         } @else {
             <h1>Entscheidung (3/3)</h1>
@@ -10,7 +10,7 @@
 
         <div class="content">
 
-            @if (currentView === 't2_page1') {
+            @if (currentView === 'free_osc1') {
                 <p>Die Differentialgleichung des ungedämpften harmonischen Oszillators lautet:</p>
 
                 <aside class="notice-box formula-box">
@@ -153,7 +153,7 @@
                 </app-multiple-choice>
             }
 
-            @if (currentView === 't2_page2') {
+            @if (currentView === 'free_osc2') {
                 <p>
                     Der sogenannte Phasenraum beschreibt die Menge aller möglichen Zustände eines dynamischen Systems.
                     Ausgehend von einer Bewegungsgleichung werden alle möglichen Kombinationen von
@@ -237,7 +237,7 @@
                 </app-multiple-choice>
             }
 
-            @if (currentView === 't2_page3') {
+            @if (currentView === 'free_osc3') {
                 <p>Am Ende dieses Kapitels gibt es drei mögliche Wege:</p>
 
                 <div class="decision-list">
@@ -265,7 +265,7 @@
 
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/learning/t1-intro-experiment" class="btn btn-back">← Zurück</button>
+                <button routerLink="/learning/t1-intro-theory" class="btn btn-back">← Zurück</button>
             } @else {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }

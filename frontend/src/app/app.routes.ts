@@ -25,6 +25,10 @@ import { ResonanceFrequency } from './features/glossary_features/resonance-frequ
 import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
 import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
 import { E3DrivenOscillations } from './features/learning_features/e3-driven-oscillations/e3-driven-oscillations';
+import { T1IntroTheory } from './features/learning_features/t1-intro-theory/t1-intro-theory';
+import { T2FreeOscillations } from './features/learning_features/t2-free-oscillations/t2-free-oscillations';
+import { T3DampedOscillations } from './features/learning_features/t3-damped-oscillations/t3-damped-oscillations';
+import { T4DrivenOscillations } from './features/learning_features/t4-driven-oscillations/t4-driven-oscillations';
 
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
@@ -88,6 +92,10 @@ export const routes: Routes = [
     { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg Versuchsaufbau' },
     { path: 'learning/e2-damped-oscillations', component: E2DampedOscillation, title: 'Experiment: Gedämpfte Schwingungen' },
     { path: 'learning/e3-driven-oscillations', component: E3DrivenOscillations, title: 'Experiment: Getriebene Schwingungen' },
+    { path: 'learning/t1-intro-theory',        component: T1IntroTheory,        title: 'Theorie: Einführung' },
+    { path: 'learning/t2-free-oscillations',   component: T2FreeOscillations,   title: 'Theorie: Freie Schwingung' },
+    { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
+    { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },
 
 
     // decision pages

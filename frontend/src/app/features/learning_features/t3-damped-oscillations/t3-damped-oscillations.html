@@ -1,14 +1,14 @@
 <div class="container">
     <div class="card">
-        @if (currentView === 't3_page1') {
+        @if (currentView === 'damped_osc1') {
             <h1>Exponentialansatz für den gedämpften Oszillator (1/6)</h1>
-        } @else if (currentView === 't3_page2') {
+        } @else if (currentView === 'damped_osc2') {
             <h1>Schwingfall (2/6)</h1>
-        } @else if (currentView === 't3_page3') {
+        } @else if (currentView === 'damped_osc3') {
             <h1>Kriechfall (3/6)</h1>
-        } @else if (currentView === 't3_page4') {
+        } @else if (currentView === 'damped_osc4') {
             <h1>Aperiodischer Grenzfall (4/6)</h1>
-        } @else if (currentView === 't3_page5') {
+        } @else if (currentView === 'damped_osc5') {
             <h1>Zusammenfassung (5/6)</h1>
         } @else {
             <h1>Entscheidung (6/6)</h1>
@@ -17,7 +17,7 @@
         <div class="content">
 
             <!-- ── Page 1: Exponentialansatz ── -->
-            @if (currentView === 't3_page1') {
+            @if (currentView === 'damped_osc1') {
                 <p>Die DGL des gedämpften, freien harmonischen Oszillators lautet:</p>
 
                 <div class="formula-line" [innerHTML]="formulas.dampedDglLong"></div>
@@ -101,7 +101,7 @@
             }
 
             <!-- ── Page 2: Schwingfall ── -->
-            @if (currentView === 't3_page2') {
+            @if (currentView === 'damped_osc2') {
                 <p>Unter dem <strong>Schwingfall</strong> oder schwacher Dämpfung (<em>γ &lt; ω₀</em>) fallen die periodisch schwingenden Lösungen. Die Lösungen der Bestimmungsgleichung sind komplex:</p>
 
                 <div class="formula-line" [innerHTML]="formulas.schwingfallLambda"></div>
@@ -215,7 +215,7 @@
             }
 
             <!-- ── Page 3: Kriechfall ── -->
-            @if (currentView === 't3_page3') {
+            @if (currentView === 'damped_osc3') {
                 <p>
                     Unter dem Begriff <strong>Kriechfall</strong> (starke Dämpfung, <em>γ &gt; ω₀</em>) fallen Schwingungen, die nicht periodisch schwingen, sondern deren Auslenkung
                     für <em>t → ∞</em> langsam gegen Null geht. Im Vergleich mit dem aperiodischen Grenzfall fällt die starke Dämpfung langsamer ab.
@@ -252,7 +252,7 @@
             }
 
             <!-- ── Page 4: Aperiodischer Grenzfall ── -->
-            @if (currentView === 't3_page4') {
+            @if (currentView === 'damped_osc4') {
                 <p>Im Fall <em>γ = ω₀</em> sind die Lösungen entartet:</p>
 
                 <div class="formula-line" [innerHTML]="formulas.aperDegen"></div>
@@ -302,7 +302,7 @@
             }
 
             <!-- ── Page 5: Zusammenfassung ── -->
-            @if (currentView === 't3_page5') {
+            @if (currentView === 'damped_osc5') {
                 <p>Abschließend betrachten wir die drei Fälle gemeinsam:</p>
 
                 <img src="assets/images/theorie-strang/Grundlagen/vergleich_faelle.png"
@@ -343,7 +343,7 @@
             }
 
             <!-- ── Page 6: Entscheidung ── -->
-            @if (currentView === 't3_page6') {
+            @if (currentView === 'damped_osc6') {
                 <p>Am Ende dieses Kapitels gibt es vier mögliche Wege:</p>
 
                 <div class="decision-list">
