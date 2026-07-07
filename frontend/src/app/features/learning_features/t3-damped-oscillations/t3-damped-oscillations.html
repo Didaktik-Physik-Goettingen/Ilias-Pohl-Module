@@ -1,0 +1,391 @@
+<div class="container">
+    <div class="card">
+        @if (currentView === 't3_page1') {
+            <h1>Exponentialansatz für den gedämpften Oszillator (1/6)</h1>
+        } @else if (currentView === 't3_page2') {
+            <h1>Schwingfall (2/6)</h1>
+        } @else if (currentView === 't3_page3') {
+            <h1>Kriechfall (3/6)</h1>
+        } @else if (currentView === 't3_page4') {
+            <h1>Aperiodischer Grenzfall (4/6)</h1>
+        } @else if (currentView === 't3_page5') {
+            <h1>Zusammenfassung (5/6)</h1>
+        } @else {
+            <h1>Entscheidung (6/6)</h1>
+        }
+
+        <div class="content">
+
+            <!-- ── Page 1: Exponentialansatz ── -->
+            @if (currentView === 't3_page1') {
+                <p>Die DGL des gedämpften, freien harmonischen Oszillators lautet:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.dampedDglLong"></div>
+
+                <p>In kompakterer Schreibweise (Newtonsche Notation):</p>
+
+                <aside class="notice-box formula-box">
+                    <div class="formula" [innerHTML]="formulas.dampedDglShort"></div>
+                </aside>
+
+                <p>Mit der Abkürzung <span [innerHTML]="formulas.omegaDefinition"></span> nennt man diese Gleichung:</p>
+
+                <ul>
+                    <li><strong>gedämpft</strong>, weil Dämpfung durch eine zur Geschwindigkeit proportionale Reibungskraft <span [innerHTML]="formulas.dampingForce"></span> mit <span [innerHTML]="formulas.dampingRelation"></span> betrachtet wird,</li>
+                    <li><strong>frei</strong>, weil keinerlei äußere Anregung existiert (homogene DGL), und</li>
+                    <li><strong>harmonisch</strong>, weil die entstehenden Sinustöne als harmonisch empfunden werden.</li>
+                </ul>
+
+                <details class="exkurs-accordion">
+                    <summary class="exkurs-summary">Vertiefung: Herleitung der Bestimmungsgleichung</summary>
+                    <div class="exkurs-content">
+                        <p>Die DGL wird mit dem Ansatz <span [innerHTML]="formulas.exponentialAnsatz"></span> gelöst. Einsetzen und Ableiten ergibt:</p>
+                        <div class="formula-stack">
+                            <div [innerHTML]="formulas.firstDerivative"></div>
+                            <div [innerHTML]="formulas.secondDerivative"></div>
+                        </div>
+                        <p>Kürzen des nie null werdenden Faktors liefert die Bestimmungsgleichung:</p>
+                        <div class="formula-line" [innerHTML]="formulas.dampedCharEq"></div>
+                    </div>
+                </details>
+
+                <p>Die Bestimmungsgleichung in <em>λ</em> lautet:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.dampedCharEq"></div>
+
+                <p>Die beiden Lösungen ergeben sich über die pq-Formel:</p>
+
+                <aside class="notice-box formula-box">
+                    <div class="formula" [innerHTML]="formulas.dampedLambda"></div>
+                </aside>
+
+                <p>Je nach Verhältnis von Dämpfung und Eigenfrequenz unterscheidet man drei Fälle:</p>
+
+                <ul>
+                    <li><strong>Schwingfall</strong> (schwache Dämpfung, <em>γ &lt; ω₀</em>): λ komplex</li>
+                    <li><strong>Kriechfall</strong> (starke Dämpfung, <em>γ &gt; ω₀</em>): λ reell</li>
+                    <li><strong>Aperiodischer Grenzfall</strong> (kritische Dämpfung, <em>γ = ω₀</em>): entartet</li>
+                </ul>
+
+                <p>Die allgemeine Lösung mit <span [innerHTML]="formulas.eigenfrequency"></span> lautet:</p>
+
+                <aside class="notice-box formula-box">
+                    <div class="formula" [innerHTML]="formulas.dampedGenSolution"></div>
+                </aside>
+
+                <app-multiple-choice
+                    [questionId]="question1.questionId"
+                    [question]="question1.question"
+                    [options]="question1.options"
+                    [correctAnswers]="question1.correctAnswers"
+                    [containerId]="question1.containerId"
+                    [successMessage]="question1.successMessage"
+                    [incompleteMessage]="question1.incompleteMessage"
+                    [incorrectMessage]="question1.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion1Answered($event)">
+                </app-multiple-choice>
+
+                <p>Was lässt sich über die allgemeine Lösung <span [innerHTML]="formulas.dampedGenSolution"></span> aussagen?</p>
+
+                <app-multiple-choice
+                    [questionId]="question2.questionId"
+                    [question]="question2.question"
+                    [options]="question2.options"
+                    [correctAnswers]="question2.correctAnswers"
+                    [containerId]="question2.containerId"
+                    [successMessage]="question2.successMessage"
+                    [incompleteMessage]="question2.incompleteMessage"
+                    [incorrectMessage]="question2.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion2Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 2: Schwingfall ── -->
+            @if (currentView === 't3_page2') {
+                <p>Unter dem <strong>Schwingfall</strong> oder schwacher Dämpfung (<em>γ &lt; ω₀</em>) fallen die periodisch schwingenden Lösungen. Die Lösungen der Bestimmungsgleichung sind komplex:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.schwingfallLambda"></div>
+
+                <p>Die allgemeine Lösung ergibt sich zu:</p>
+
+                <aside class="notice-box formula-box">
+                    <div class="formula" [innerHTML]="formulas.dampedGenSolution"></div>
+                </aside>
+
+                <p>Je nach Anfangsbedingungen vereinfacht sich die Lösung zu:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.dampedSpecialSolution"></div>
+
+                <p>Dies stellt eine gedämpfte Schwingung dar, deren Amplitude exponentiell abnimmt.</p>
+
+                <img src="assets/images/theorie-strang/ged%C3%A4mpfte%20Schwingung/01_gedaempfte_schwingung_schwingfall.svg"
+                     alt="Zeitlicher Verlauf der gedämpften freien Schwingung"
+                     style="max-width:100%">
+                <p><em>Zeitlicher Verlauf der gedämpften freien Schwingung mit den Anfangsbedingungen x₀ &gt; 0 und v₀ = 0 (blau). Die rote Kurve illustriert den exponentiellen Abfall der Amplitude.</em></p>
+
+                <img src="assets/images/theorie-strang/Grundlagen/vergleich_daempfungen4gamma.png"
+                     alt="Vergleich zweier gedämpfter freier Schwingungen"
+                     style="max-width:100%">
+                <p><em>Vergleich zweier gedämpfter freier Schwingungen mit einfacher und vierfacher Dämpfung.</em></p>
+
+                <h2>Phasenraumdarstellung</h2>
+
+                <p>Die Phasenraumdarstellung wird vom Kreis zur Spirale, denn die Energie des Systems nimmt stetig ab.</p>
+
+                <p>Die Trajektorie im Phasenraum erhält man, indem man die Bewegungsgleichung <span [innerHTML]="formulas.dampedDglShort"></span> umschreibt:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.phasenraumTrajectory"></div>
+
+                <p>Dies stellt eine Spirale mit den Achsen x und <span [innerHTML]="formulas.xDotOverOmega"></span> dar, die gegen den Ursprung strebt. Man spricht auch davon, dass der Nullpunkt ein <strong>stabiler Attraktor</strong> ist.</p>
+
+                <app-multiple-choice
+                    [questionId]="question3.questionId"
+                    [question]="question3.question"
+                    [options]="question3.options"
+                    [correctAnswers]="question3.correctAnswers"
+                    [containerId]="question3.containerId"
+                    [successMessage]="question3.successMessage"
+                    [incompleteMessage]="question3.incompleteMessage"
+                    [incorrectMessage]="question3.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion3Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question4.questionId"
+                    [question]="question4.question"
+                    [options]="question4.options"
+                    [correctAnswers]="question4.correctAnswers"
+                    [containerId]="question4.containerId"
+                    [successMessage]="question4.successMessage"
+                    [incompleteMessage]="question4.incompleteMessage"
+                    [incorrectMessage]="question4.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion4Answered($event)">
+                </app-multiple-choice>
+
+                <p>Zwei aufeinanderfolgende Maxima der gedämpften Schwingung haben das Verhältnis <span [innerHTML]="formulas.maxRatio"></span>, wobei die Periodendauer <span [innerHTML]="formulas.periodFormulaSchwingfall"></span> ist.</p>
+
+                <img src="assets/images/theorie-strang/ged%C3%A4mpfte%20Schwingung/phasenraum_10.png"
+                     alt="Zeitlicher Verlauf der gedämpften freien Schwingung – logarithmisches Dekrement"
+                     style="max-width:100%">
+                <p><em>Aufeinanderfolgende Maxima nehmen mit dem Faktor <span [innerHTML]="formulas.expDecayBeta"></span> ab.</em></p>
+
+                <p>Dies motiviert das sogenannte <strong>logarithmische Dekrement</strong>:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.logDekrement"></div>
+
+                <p>Was beschreibt der Faktor <span [innerHTML]="formulas.maxRatio"></span> in der Lösung des gedämpften Oszillators?</p>
+
+                <app-multiple-choice
+                    [questionId]="question5.questionId"
+                    [question]="question5.question"
+                    [options]="question5.options"
+                    [correctAnswers]="question5.correctAnswers"
+                    [containerId]="question5.containerId"
+                    [successMessage]="question5.successMessage"
+                    [incompleteMessage]="question5.incompleteMessage"
+                    [incorrectMessage]="question5.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion5Answered($event)">
+                </app-multiple-choice>
+
+                <p>Wie verändert sich der Quotient <span [innerHTML]="formulas.maxRatio"></span>, wenn die Dämpfung γ größer wird?</p>
+
+                <app-multiple-choice
+                    [questionId]="question6.questionId"
+                    [question]="question6.question"
+                    [options]="question6.options"
+                    [correctAnswers]="question6.correctAnswers"
+                    [containerId]="question6.containerId"
+                    [successMessage]="question6.successMessage"
+                    [incompleteMessage]="question6.incompleteMessage"
+                    [incorrectMessage]="question6.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion6Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question7.questionId"
+                    [question]="question7.question"
+                    [options]="question7.options"
+                    [correctAnswers]="question7.correctAnswers"
+                    [containerId]="question7.containerId"
+                    [successMessage]="question7.successMessage"
+                    [incompleteMessage]="question7.incompleteMessage"
+                    [incorrectMessage]="question7.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion7Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 3: Kriechfall ── -->
+            @if (currentView === 't3_page3') {
+                <p>
+                    Unter dem Begriff <strong>Kriechfall</strong> (starke Dämpfung, <em>γ &gt; ω₀</em>) fallen Schwingungen, die nicht periodisch schwingen, sondern deren Auslenkung
+                    für <em>t → ∞</em> langsam gegen Null geht. Im Vergleich mit dem aperiodischen Grenzfall fällt die starke Dämpfung langsamer ab.
+                </p>
+
+                <p>Für die Lösungen der Bestimmungsgleichung gilt:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.kriechfallLambda"></div>
+
+                <p>Die allgemeine Lösung der DGL ergibt sich daher zu:</p>
+
+                <aside class="notice-box formula-box">
+                    <div class="formula" [innerHTML]="formulas.kriechfallGenSolution"></div>
+                </aside>
+
+                <p>Der Term <em>e<sup>−γt</sup></em> strebt schneller gegen Null als der Term <em>e<sup>αt</sup></em> wächst, da <em>γ &gt; α</em>.</p>
+
+                <img src="assets/images/theorie-strang/Grundlagen/kriechfall.png"
+                     alt="Kriechfall für Anfangsbedingungen x(t=0)=A, ẋ(t=0)=0"
+                     style="max-width:100%">
+                <p><em>Kriechfall für Anfangsbedingungen x(t = 0) = A, ẋ(t = 0) = 0</em></p>
+
+                <p>Mit den Anfangsbedingungen <span [innerHTML]="formulas.boundaryCondition"></span> ergeben sich die speziellen Lösungen:</p>
+
+                <div class="formula-stack">
+                    <div [innerHTML]="formulas.kriechfallSpec1"></div>
+                    <div [innerHTML]="formulas.kriechfallSpec2"></div>
+                </div>
+
+                <img src="assets/images/theorie-strang/Grundlagen/kriechfall2.png"
+                     alt="Kriechfall für Anfangsbedingungen x(0)=0, ẋ(0)=v₀"
+                     style="max-width:100%">
+                <p><em>Kriechfall für Anfangsbedingungen x(0) = 0, ẋ(0) = v₀</em></p>
+            }
+
+            <!-- ── Page 4: Aperiodischer Grenzfall ── -->
+            @if (currentView === 't3_page4') {
+                <p>Im Fall <em>γ = ω₀</em> sind die Lösungen entartet:</p>
+
+                <div class="formula-line" [innerHTML]="formulas.aperDegen"></div>
+
+                <p>
+                    Da die allgemeine Lösung der DGL aber zwei freie Integrationskonstanten enthalten muss,
+                    erweitert man den Ansatz mit einem zeitabhängigen Vorfaktor:
+                    \( x(t) = c(t) \cdot e^&#123;-\gamma t&#125; \).
+                    Für den Fall <em>λ = −γ</em> erhält man <em>c̈ = 0</em>, woraus <em>c = c₁t + c₂</em> folgt.
+                </p>
+
+                <p>Die allgemeine Lösung für den aperiodischen Grenzfall lautet daher:</p>
+
+                <aside class="notice-box formula-box">
+                    <div class="formula" [innerHTML]="formulas.aperGenSolution"></div>
+                </aside>
+
+                <img src="assets/images/theorie-strang/ged%C3%A4mpfte%20Schwingung/Demtroeder_I_Abb11-18.png"
+                     alt="Auslenkung des gedämpften Oszillators für kritische und überkritische Dämpfung"
+                     style="max-width:480px">
+                <p><em>Auslenkung des gedämpften Oszillators für kritische (rote Kurve, aperiodischer Grenzfall) und überkritische Dämpfung (schwarze Kurve, Kriechfall).</em></p>
+
+                <p>Für die Anfangsbedingung <em>x(0) = A, ẋ(0) = 0</em> ergibt sich:</p>
+
+                <div [innerHTML]="formulas.aperSpec1"></div>
+
+                <p>Für die Anfangsbedingung <em>ẋ(0) = v₀</em> beim Nulldurchgang <em>x(0) = 0</em> ergibt sich:</p>
+
+                <div [innerHTML]="formulas.aperSpec2"></div>
+
+                <p>
+                    Der aperiodische Grenzfall strebt dem Nullpunkt schneller zu als der Kriechfall (<em>γ &gt; ω₀</em>).
+                    Das Maximum liegt bei <em>t<sub>max</sub> = 1/γ</em>. Ein besonders schnelles Zurückkehren zu Null ist bei Messvorgängen gewünscht, z. B. bei Schwingkreisen in Multimetern.
+                </p>
+
+                <app-multiple-choice
+                    [questionId]="question8.questionId"
+                    [question]="question8.question"
+                    [options]="question8.options"
+                    [correctAnswers]="question8.correctAnswers"
+                    [containerId]="question8.containerId"
+                    [successMessage]="question8.successMessage"
+                    [incompleteMessage]="question8.incompleteMessage"
+                    [incorrectMessage]="question8.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion8Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 5: Zusammenfassung ── -->
+            @if (currentView === 't3_page5') {
+                <p>Abschließend betrachten wir die drei Fälle gemeinsam:</p>
+
+                <img src="assets/images/theorie-strang/Grundlagen/vergleich_faelle.png"
+                     alt="Vergleich aller drei Dämpfungsfälle"
+                     style="max-width:100%">
+
+                <p>
+                    Im <strong>Schwingfall</strong> sind viele Schwingungen zu beobachten.
+                    <strong>Kriechfall</strong> und <strong>aperiodischer Grenzfall</strong> zeigen jeweils eine einzelne Auslenkung, die monoton gegen Null geht.
+                    Der Kriechfall kriecht dabei langsamer gegen 0 als der aperiodische Grenzfall.
+                </p>
+
+                <app-multiple-choice
+                    [questionId]="question9.questionId"
+                    [question]="question9.question"
+                    [options]="question9.options"
+                    [correctAnswers]="question9.correctAnswers"
+                    [containerId]="question9.containerId"
+                    [successMessage]="question9.successMessage"
+                    [incompleteMessage]="question9.incompleteMessage"
+                    [incorrectMessage]="question9.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion9Answered($event)">
+                </app-multiple-choice>
+
+                <p>Hohe Gebäude werden bei Wind oder Erdbeben zu Schwingungen angeregt. Ein gutes Schwingungsverhalten sollte dafür sorgen, dass Personen möglichst wenig von länger anhaltenden Schwingungen belastet werden und die Konstruktion nicht unnötig vielen Lastwechseln ausgesetzt wird.</p>
+
+                <app-multiple-choice
+                    [questionId]="question10.questionId"
+                    [question]="question10.question"
+                    [options]="question10.options"
+                    [correctAnswers]="question10.correctAnswers"
+                    [containerId]="question10.containerId"
+                    [successMessage]="question10.successMessage"
+                    [incompleteMessage]="question10.incompleteMessage"
+                    [incorrectMessage]="question10.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion10Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 6: Entscheidung ── -->
+            @if (currentView === 't3_page6') {
+                <p>Am Ende dieses Kapitels gibt es vier mögliche Wege:</p>
+
+                <div class="decision-list">
+                    <article class="decision-card">
+                        <h2>Theorie: Angetriebene Schwingungen</h2>
+                        <p>Ich möchte mir jetzt die Theorie zu angetriebenen Schwingungen anschauen.</p>
+                        <a routerLink="/learning/t4-driven-oscillations" class="btn">Weiter zur Theorie →</a>
+                    </article>
+
+                    <article class="decision-card">
+                        <h2>Simulation: Angetriebene Schwingungen</h2>
+                        <p>Ich möchte mir jetzt eine Simulation zu angetriebenen Schwingungen anschauen.</p>
+                        <a routerLink="/simulation/theory-damped-driven" class="btn">Zur Simulation →</a>
+                    </article>
+
+                    <article class="decision-card">
+                        <h2>Direkt zum Test</h2>
+                        <p>Die Theorie zu gedämpften Schwingungen ist mir vertraut. Ich möchte mein Wissen testen.</p>
+                        <a routerLink="/test/t-damped-osc" class="btn">Zum Test →</a>
+                    </article>
+
+                    <article class="decision-card">
+                        <h2>Simulation: Gedämpfte Schwingungen</h2>
+                        <p>Ich möchte mir noch eine Simulation zu gedämpften Schwingungen anschauen.</p>
+                        <a routerLink="/simulation/theory-damped" class="btn">Zur Simulation →</a>
+                    </article>
+                </div>
+            }
+
+        </div>
+
+        <div class="button-container">
+            @if (isFirstPage) {
+                <button routerLink="/learning/t2-free-oscillations" class="btn btn-back">← Zurück</button>
+            } @else {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+            @if (isLastPage) {
+                <button class="btn" (click)="goForward()">Weiter zu Angetriebene Schwingungen →</button>
+            } @else {
+                <button class="btn" (click)="goForward()">Weiter →</button>
+            }
+        </div>
+    </div>
+</div>

@@ -39,6 +39,10 @@ import { TestEDrivenOscillations } from './features/test_features/test-e-driven-
 // simulation features
 import { SimEDampedOscillations } from './features/simulation_features/sim-e-damped-oscillations/sim-e-damped-oscillations';
 import { SimEDrivenOscillations } from './features/simulation_features/sim-e-driven-oscillations/sim-e-driven-oscillations';
+import { SimTFreeOscillations } from './features/simulation_features/sim-t-free-oscillations/sim-t-free-oscillations';
+import { SimTDampedOscillations } from './features/simulation_features/sim-t-damped-oscillations/sim-t-damped-oscillations';
+import { SimTDrivenXOscillations } from './features/simulation_features/sim-t-driven-x-oscillations/sim-t-driven-x-oscillations';
+import { SimTDrivenPhiOscillations } from './features/simulation_features/sim-t-driven-phi-oscillations/sim-t-driven-phi-oscillations';
 
 // target features
 import { TarExperiment } from './features/target_features/tar-experiment/tar-experiment';
@@ -103,11 +107,11 @@ export const routes: Routes = [
     // target pages
     { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },
 
-    // Standalone HTML simulations — redirect to static files in public/simulations/
-    { path: 'simulation/theory-undamped',             			canActivate: [sim('Simulation_01_Einstieg_undamped_linear.html')],              component: SimulationRedirect, title: 'Simulation: Ungedämpfte Schwingung' },
-    { path: 'simulation/theory-damped',               			canActivate: [sim('Simulation_02_Einstieg_damped_linear.html')],                component: SimulationRedirect, title: 'Simulation: Gedämpfte Schwingung' },
-    { path: 'simulation/theory-damped-driven',        			canActivate: [sim('Simulation_03_Einstieg_damped_driven_linear.html')],         component: SimulationRedirect, title: 'Simulation: Gedämpfte getriebene Schwingung' },
-    { path: 'simulation/theory-damped-driven-davanced', 		canActivate: [sim('Simulation_04_Vertiefung_damped_driven_rot.html')],          component: SimulationRedirect, title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
+    // Theory simulation Angular components
+    { path: 'simulation/theory-undamped',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
+    { path: 'simulation/theory-damped',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
+    { path: 'simulation/theory-damped-driven',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
+    { path: 'simulation/theory-damped-driven-davanced', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
     // { path: 'simulation/experiment-damped',               		canActivate: [sim('Simulation_11_Einstieg_damped_rot_20251107.html')],          component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung' },
     // { path: 'simulation/damped-rot-advanced',         canActivate: [sim('Simulation_12_Vertiefung_damped_rot_20251107.html')],        component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung (Vertiefung)' },
     // 'simulation/experiment-damped' replaced by the sim-e-damped-oscillations component (see 'simulation/sim-e-damped-osc' above)
