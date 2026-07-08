@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 interface ChoiceOption {
     value: string;
@@ -31,6 +32,7 @@ export class TestMultipleChoice implements OnInit {
         pointsBreakdown: string;
     }>();
 
+    shuffledOptions: ChoiceOption[] = [];
     selectedAnswers: Set<string> = new Set();
     isSubmitted = false;
     isCorrect = false;
@@ -38,10 +40,11 @@ export class TestMultipleChoice implements OnInit {
     feedbackMessage = '';
     pointsBreakdown = '';
 
-    constructor(private testTracking: TestTracking) {}
+    constructor(private testTracking: TestTracking, private shuffleOrder: ShuffleOrder) {}
 
     ngOnInit() {
-        // Check if this question was already answered
+        const order = this.shuffleOrder.getOrCreate(this.questionId, this.options.length);
+        this.shuffledOptions = order.map(i => this.options[i]);
         this.restorePreviousAnswer();
     }
 

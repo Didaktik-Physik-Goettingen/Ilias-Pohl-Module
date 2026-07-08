@@ -3,7 +3,7 @@
         <h3 class="test-question" [innerHTML]="question"></h3>
         <p class="test-instruction" [innerHTML]="questionInstruction" ></p>
         <div class="statements-container">
-            @for (statement of statements; track statement.id; let i = $index) {
+            @for (statement of shuffledStatements; track statement.id; let i = $index) {
             <div
                 class="statement-item"
                 [class.selected]="getSelectedValue(statement.id) !== null"

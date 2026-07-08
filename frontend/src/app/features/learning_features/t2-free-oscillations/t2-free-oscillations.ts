@@ -192,6 +192,7 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 	// ── Navigation ───────────────────────────────────────────────────────────
 
 	goBack(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'free_osc1') {
 			this.router.navigate(['/learning/t1-intro-theory']); return;
 		} else if (this.currentView === 'free_osc2') {
@@ -203,6 +204,7 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	goForward(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'free_osc1' && !this.isCorrect1) return;
 		if (this.currentView === 'free_osc2' && (!this.isCorrect4 || !this.isCorrect5 || !this.isCorrect6)) return;
 		if (this.currentView === 'free_osc1') {

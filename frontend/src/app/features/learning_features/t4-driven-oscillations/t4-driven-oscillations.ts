@@ -278,6 +278,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	goBack(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'driven_osc1') {
 			this.router.navigate(['/learning/t3-damped-oscillations']); return;
 		} else if (this.currentView === 'driven_osc2') {
@@ -301,6 +302,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	goForward(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'driven_osc1' && !this.isCorrect1) return;
 		if (this.currentView === 'driven_osc2' && !(this.isCorrect2 && this.isCorrect3)) return;
 		if (this.currentView === 'driven_osc4' && !(this.isCorrect4 && this.isCorrect5)) return;

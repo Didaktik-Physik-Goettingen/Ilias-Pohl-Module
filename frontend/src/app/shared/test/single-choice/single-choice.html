@@ -5,7 +5,7 @@
 
         <div class="choice-options">
             <label 
-                *ngFor="let option of options" 
+                *ngFor="let option of shuffledOptions"
                 class="choice-option"
                 [class.selected]="selectedAnswer === option.value"
                 [class.correct]="isSubmitted && option.value === correctAnswer"

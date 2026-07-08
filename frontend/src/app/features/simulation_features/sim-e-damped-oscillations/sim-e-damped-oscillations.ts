@@ -106,10 +106,12 @@ export class SimEDampedOscillations implements OnInit, AfterViewInit, OnDestroy 
     }
 
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         this.location.back();
     }
 
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.navigationFlow === 'sim-first') {
             this.router.navigate(['/learning/e2-damped-oscillations'], { queryParams: { flow: 'sim-first' } });
         } else {

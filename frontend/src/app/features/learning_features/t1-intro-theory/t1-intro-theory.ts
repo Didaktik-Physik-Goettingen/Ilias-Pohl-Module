@@ -72,10 +72,12 @@ export class T1IntroTheory implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	goBack(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		this.router.navigate(['/']);
 	}
 
 	goForward(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'intro_theo1') {
 			this.router.navigate(['/learning/t2-free-oscillations']);
 			return;

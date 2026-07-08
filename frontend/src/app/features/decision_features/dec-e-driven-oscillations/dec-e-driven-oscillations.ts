@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DevModeService } from '../../../core/services/dev-mode';
+import { TestTracking } from '../../../core/services/test-tracking';
 
 
 
@@ -10,12 +11,20 @@ import { DevModeService } from '../../../core/services/dev-mode';
   templateUrl: './dec-e-driven-oscillations.html',
   styleUrl: './dec-e-driven-oscillations.css',
 })
-export class DecEDrivenOscillations {
+export class DecEDrivenOscillations implements OnInit {
     learningModuleLink = '/learning/e3-driven-oscillations';
     testLink = '/test/e-driven-osc';
     simulationLink = '/simulation/sim-e-driven-osc';
+    testDisabled = false;
 
-    constructor(public router: Router, public devMode: DevModeService) {}
+    constructor(public router: Router, public devMode: DevModeService, private testTracking: TestTracking) {}
+
+    ngOnInit() {
+        const result = this.testTracking.getTestResults('e-driven-oscillations');
+        if (result?.percentageScore !== undefined && result.percentageScore < 80) {
+            this.testDisabled = true;
+        }
+    }
 
     navigateToLearning() {
         this.router.navigate([this.learningModuleLink], { queryParams: { flow: 'learning-first' } });

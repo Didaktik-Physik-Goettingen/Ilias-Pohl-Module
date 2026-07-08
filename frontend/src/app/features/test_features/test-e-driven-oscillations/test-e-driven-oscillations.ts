@@ -39,25 +39,25 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
     performanceThresholds = [
         {
             minPercentage: 0,
-            maxPercentage: 25,
+            maxPercentage: 79,
             level: 'low' as const,
-            message: 'Sie werden sich nun anhand einer <b>interaktiven Simulation</b> anschauen, welchen Einfluss unterschiedliche Parameter auf den Bewegungsverlauf haben.',
-            continueLink: '/simulation/sim-e-driven-osc',
-            continueLinkText: 'Weiter zur Simulation',
+            message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
+            continueLink: '/decision/e-driven-oscillations',
+            continueLinkText: 'Zurück zur Entscheidungsseite',
             continueQueryParams: { flow: 'sim-first' }
         },
-        {
-            minPercentage: 25,
-            maxPercentage: 79,
-            level: 'medium' as const,
-            message: `
-				Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> erarbeiten.
-				Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine getriebene, gedämpfte Schwingung
-				und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
-            continueLink: '/learning/e3-driven-oscillations',
-            continueLinkText: 'Weiter zu den theoretischen Grundlagen',
-            continueQueryParams: { flow: 'learning-first' }
-        },
+        // {
+        //     minPercentage: 25,
+        //     maxPercentage: 79,
+        //     level: 'medium' as const,
+        //     message: `
+		// 		Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> erarbeiten.
+		// 		Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine getriebene, gedämpfte Schwingung
+		// 		und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
+        //     continueLink: '/learning/e3-driven-oscillations',
+        //     continueLinkText: 'Weiter zu den theoretischen Grundlagen',
+        //     continueQueryParams: { flow: 'learning-first' }
+        // },
         {
             minPercentage: 80,
             maxPercentage: 100,
@@ -365,6 +365,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 	
     // going back shows the previous subpage / home page
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'driven_osc1') {
             this.router.navigate(['/decision/e-driven-oscillations'], { queryParams: { page: 4 } });
             return;
@@ -384,6 +385,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
     // go forward shows next subpage / page
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.canProceed) {
             if (this.currentView === 'driven_osc1') {
                 this.currentView = 'driven_osc2';

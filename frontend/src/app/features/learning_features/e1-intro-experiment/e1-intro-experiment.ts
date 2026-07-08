@@ -393,6 +393,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
 
     // going back shows the previous subpage / home page
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'intro_exp1') {
             this.router.navigate(['/']);
             return;
@@ -410,6 +411,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
 
     // go forward shows next subpage / page
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'intro_exp1') {
             this.currentView = 'intro_exp2';
         } else if (this.currentView === 'intro_exp2') {

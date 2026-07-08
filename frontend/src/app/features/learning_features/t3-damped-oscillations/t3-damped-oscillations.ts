@@ -254,6 +254,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
 	// ── Navigation ───────────────────────────────────────────────────────────
 
 	goBack(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'damped_osc1') {
 			this.router.navigate(['/learning/t2-free-oscillations']); return;
 		} else if (this.currentView === 'damped_osc2') {
@@ -271,6 +272,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
 	}
 
 	goForward(): void {
+	    window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'damped_osc1' && (!this.isCorrect1 || !this.isCorrect2)) return;
 		if (this.currentView === 'damped_osc2' && (!this.isCorrect3 || !this.isCorrect4 || !this.isCorrect5 || !this.isCorrect6 || !this.isCorrect7)) return;
 		if (this.currentView === 'damped_osc4' && !this.isCorrect8) return;

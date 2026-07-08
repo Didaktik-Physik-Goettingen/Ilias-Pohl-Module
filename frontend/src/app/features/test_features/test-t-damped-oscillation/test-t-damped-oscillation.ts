@@ -386,6 +386,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 	
     // going back shows the previous subpage / home page
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'damped_osc1') {
             this.router.navigate(['/learning/e1-intro-experiment'], { queryParams: { page: 4 } });
             return;
@@ -410,6 +411,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
     // go forward shows next subpage / page
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.canProceed) {
             if (this.currentView === 'damped_osc1') {
                 this.currentView = 'damped_osc2';

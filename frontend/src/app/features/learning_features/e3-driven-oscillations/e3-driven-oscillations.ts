@@ -595,6 +595,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
     // going back shows the previous subpage / home page
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'driven_osc1') {
             this.router.navigate(["/decision/e-driven-oscillations"]);
             return;
@@ -618,6 +619,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
     // go forward shows next subpage / page
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'driven_osc1') {
             this.currentView = 'driven_osc2';
         } else if (this.currentView === 'driven_osc2') {

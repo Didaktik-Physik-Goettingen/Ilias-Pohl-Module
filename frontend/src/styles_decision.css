@@ -26,7 +26,7 @@
 
 .decision-option p {
     flex: 1;
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: var(--uni-blau-1);
     font-weight: 500;
     margin-top: 1rem;
@@ -108,6 +108,12 @@
     background: white;
     color: var(--uni-blau-1);
     border-color: var(--uni-blau-1);
+}
+
+/* Grayed-out card when the option is unavailable (e.g. test already failed) */
+.decision-option--disabled {
+    opacity: 0.4;
+    pointer-events: none;
 }
 
 /* Option images — sit between description text and the action button */

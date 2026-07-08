@@ -327,6 +327,7 @@ export class E2DampedOscillation implements AfterViewInit {
 
     // going back shows the previous subpage / home page
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'damped_osc1') {
             this.router.navigate(["/decision/e-damped-oscillations"]);
             return;
@@ -342,6 +343,7 @@ export class E2DampedOscillation implements AfterViewInit {
 
     // go forward shows next subpage / page
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'damped_osc1') {
             this.currentView = 'damped_osc2';
         } else if (this.currentView === 'damped_osc2') {

@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 
 
@@ -33,16 +34,18 @@ export class TestImageChoice implements OnInit {
         pointsAwarded: number;
     }>();
 
+    shuffledOptions: ImageOption[] = [];
     selectedAnswer: string = '';
     isSubmitted = false;
     isCorrect = false;
     pointsAwarded = 0;
     feedbackMessage = '';
 
-    constructor(private testTracking: TestTracking) {}
+    constructor(private testTracking: TestTracking, private shuffleOrder: ShuffleOrder) {}
 
     ngOnInit() {
-        // Check if this question was already answered
+        const order = this.shuffleOrder.getOrCreate(this.questionId, this.options.length);
+        this.shuffledOptions = order.map(i => this.options[i]);
         this.restorePreviousAnswer();
     }
 

@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, Inject, 
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 declare global {
     interface Window {
@@ -57,18 +58,19 @@ export class TestDragDrop implements OnInit, AfterViewInit {
 
     constructor(
         private testTracking: TestTracking,
+        private shuffleOrder: ShuffleOrder,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
     ngOnInit() {
-        // Initialize containers and answers
         this.resultContainers = this.containers.map(c => ({
             ...c,
             assignedAnswerIds: []
         }));
-        this.availableAnswers = JSON.parse(JSON.stringify(this.answers));
-        
-        // Check if this question was already answered
+        const deep: DraggableAnswer[] = JSON.parse(JSON.stringify(this.answers));
+        const order = this.shuffleOrder.getOrCreate(this.questionId, deep.length);
+        this.availableAnswers = order.map(i => deep[i]);
+
         this.restorePreviousAnswer();
     }
 

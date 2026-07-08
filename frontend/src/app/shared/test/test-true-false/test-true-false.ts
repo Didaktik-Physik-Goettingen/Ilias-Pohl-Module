@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 interface TrueFalseoption {
   value: string;
@@ -28,6 +29,7 @@ export class TestTrueFalse implements OnInit{
     pointsBreakdown: string;
   }>();
 
+  shuffledStatements: {id: string; text: string; isCorrect: boolean}[] = [];
   selectedAnswers: Map<string, 'true' | 'false'> = new Map();
   isSubmitted = false;
   isCorrect = false;
@@ -35,9 +37,11 @@ export class TestTrueFalse implements OnInit{
   feedbackMessage = '';
   pointsBreakdown = '';
 
-  constructor(private testTracking: TestTracking) {}
+  constructor(private testTracking: TestTracking, private shuffleOrder: ShuffleOrder) {}
 
   ngOnInit() {
+    const order = this.shuffleOrder.getOrCreate(this.questionId, this.statements.length);
+    this.shuffledStatements = order.map(i => this.statements[i]);
     this.restorePreviousAnswer();
   }
   private restorePreviousAnswer() {

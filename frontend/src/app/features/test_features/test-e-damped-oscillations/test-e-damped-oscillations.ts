@@ -34,25 +34,25 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
     performanceThresholds = [
         {
             minPercentage: 0,
-            maxPercentage: 25,
+            maxPercentage: 79,
             level: 'low' as const,
-            message: 'Sie werden sich nun anhand einer <b>interaktiven Simulation</b> anschauen, welchen Einfluss unterschiedliche Parameter auf den Bewegungsverlauf haben.',
-            continueLink: '/simulation/sim-e-damped-osc',
-            continueLinkText: 'Weiter zur Simulation',
+            message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
+            continueLink: '/decision/e-damped-oscillations',
+            continueLinkText: 'Zurück zur Entscheidungsseite',
             continueQueryParams: { flow: 'sim-first' }
         },
-        {
-            minPercentage: 25,
-            maxPercentage: 79,
-            level: 'medium' as const,
-            message: `
-				Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> erarbeiten.
-				Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine gedämpfte Schwingung
-				und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
-            continueLink: '/learning/e2-damped-oscillations',
-            continueLinkText: 'Weiter zu den theoretischen Grundlagen',
-            continueQueryParams: { flow: 'learning-first' }
-        },
+        // {
+        //     minPercentage: 25,
+        //     maxPercentage: 79,
+        //     level: 'medium' as const,
+        //     message: `
+		// 		Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> erarbeiten.
+		// 		Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine gedämpfte Schwingung
+		// 		und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
+        //     continueLink: '/learning/e2-damped-oscillations',
+        //     continueLinkText: 'Weiter zu den theoretischen Grundlagen',
+        //     continueQueryParams: { flow: 'learning-first' }
+        // },
         {
             minPercentage: 80,
             maxPercentage: 100,
@@ -410,6 +410,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 	
     // going back shows the previous subpage / home page
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'damped_osc1') {
             this.router.navigate(['/decision/e-damped-oscillations'], { queryParams: { page: 4 } });
             return;
@@ -434,6 +435,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
     // go forward shows next subpage / page
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.canProceed) {
             if (this.currentView === 'damped_osc1') {
                 this.currentView = 'damped_osc2';

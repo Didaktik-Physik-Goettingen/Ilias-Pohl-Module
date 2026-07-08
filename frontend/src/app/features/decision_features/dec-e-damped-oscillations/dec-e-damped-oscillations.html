@@ -22,11 +22,11 @@
                 <button (click)="navigateToSimulation()" class="decision-btn decision-btn-simulation">Zur Simulation →</button>
             </div>
 
-            <div class="decision-option decision-option-test">
+            <div class="decision-option decision-option-test" [class.decision-option--disabled]="testDisabled">
                 <h3>Test</h3>
                 <p>Testen Sie direkt Ihr Wissen zu gedämpften Schwingungen.</p>
                 <img src="assets/decision/test.png" alt="Test" class="decision-option-img">
-                <button (click)="router.navigate([testLink])" class="decision-btn decision-btn-test">Zum Test →</button>
+                <button (click)="router.navigate([testLink])" class="decision-btn decision-btn-test" [disabled]="testDisabled">Zum Test →</button>
             </div>
         </div>
 
