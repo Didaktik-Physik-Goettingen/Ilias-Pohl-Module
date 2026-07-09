@@ -240,9 +240,12 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
 
 	// ── Lifecycle ────────────────────────────────────────────────────────────
 
+	navigationFlow: string = '';
+
 	ngOnInit(): void {
 		const page = this.route.snapshot.queryParamMap.get('page');
 		if (page) this.currentView = `damped_osc${page}`;
+		this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
 	}
 
 	ngAfterViewInit(): void { this.renderMath(); }
@@ -288,7 +291,13 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
 		} else if (this.currentView === 'damped_osc5') {
 			this.currentView = 'damped_osc6';
 		} else if (this.currentView === 'damped_osc6') {
-			this.router.navigate(['/learning/t4-driven-oscillations']); return;
+			if (this.navigationFlow === 'learning-first') {
+				sessionStorage.setItem('learning-done-t-damped', 'true');
+				this.router.navigate(['/decision/t-damped-oscillations']);
+			} else {
+				this.router.navigate(['/learning/t4-driven-oscillations']);
+			}
+			return;
 		}
 		this.updateUrl(); this.renderMath();
 	}

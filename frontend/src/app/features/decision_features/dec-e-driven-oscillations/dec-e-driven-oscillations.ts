@@ -15,7 +15,9 @@ export class DecEDrivenOscillations implements OnInit {
     learningModuleLink = '/learning/e3-driven-oscillations';
     testLink = '/test/e-driven-osc';
     simulationLink = '/simulation/sim-e-driven-osc';
+    nextLink = '/target/tar-experiment';
     testDisabled = false;
+    learningCompleted = false;
 
     constructor(public router: Router, public devMode: DevModeService, private testTracking: TestTracking) {}
 
@@ -24,6 +26,7 @@ export class DecEDrivenOscillations implements OnInit {
         if (result?.percentageScore !== undefined && result.percentageScore < 80) {
             this.testDisabled = true;
         }
+        this.learningCompleted = sessionStorage.getItem('learning-done-e-driven') === 'true';
     }
 
     navigateToLearning() {
@@ -31,7 +34,12 @@ export class DecEDrivenOscillations implements OnInit {
     }
 
     navigateToSimulation() {
-        this.router.navigate([this.simulationLink], { queryParams: { flow: 'sim-first' } });
+        const flow = this.learningCompleted ? 'learning-first' : 'sim-first';
+        this.router.navigate([this.simulationLink], { queryParams: { flow } });
+    }
+
+    navigateNext() {
+        this.router.navigate([this.nextLink]);
     }
 
     goBack() {

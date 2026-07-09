@@ -380,7 +380,7 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 		if (this.currentView === 'free_osc1') {
 			this.currentView = 'free_osc2';
 		} else if (this.currentView === 'free_osc2') {
-			this.router.navigate(['/decision/t-free-oscillations']);
+			this.router.navigate(['/decision/t-damped-oscillations']);
 			return;
 		}
 		this.updateUrl();

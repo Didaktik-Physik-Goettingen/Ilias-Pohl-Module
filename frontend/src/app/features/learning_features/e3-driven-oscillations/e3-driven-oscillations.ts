@@ -634,7 +634,8 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
             this.currentView = 'driven_osc7';
         } else if (this.currentView === 'driven_osc7') {
             if (this.navigationFlow === 'learning-first') {
-                this.router.navigate(['/simulation/sim-e-driven-osc'], { queryParams: { flow: 'learning-first' } });
+                sessionStorage.setItem('learning-done-e-driven', 'true');
+                this.router.navigate(['/decision/e-driven-oscillations']);
             } else {
                 this.router.navigate(['/target/tar-experiment']);
             }

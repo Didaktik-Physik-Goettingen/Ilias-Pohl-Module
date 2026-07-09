@@ -388,7 +388,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'damped_osc1') {
-            this.router.navigate(['/learning/e1-intro-experiment'], { queryParams: { page: 4 } });
+            this.router.navigate(['/decision/t-damped-oscillations'], { queryParams: { page: 4 } });
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';

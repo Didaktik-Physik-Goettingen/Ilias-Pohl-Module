@@ -218,7 +218,7 @@
 
             @if (isLastPage) {
                 <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter mit der Simulation →' : 'Weiter zur Anleitung →' }}
+                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zur Anleitung →' }}
                 </button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>

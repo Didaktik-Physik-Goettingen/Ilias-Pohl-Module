@@ -33,6 +33,8 @@ import { T4DrivenOscillations } from './features/learning_features/t4-driven-osc
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
 import { DecEDrivenOscillations } from './features/decision_features/dec-e-driven-oscillations/dec-e-driven-oscillations';
+import { DecTDampedOscillations } from './features/decision_features/dec-t-damped-oscillations/dec-t-damped-oscillations';
+import { DecTDrivenOscillations } from './features/decision_features/dec-t-driven-oscillations/dec-t-driven-oscillations';
 
 // test features
 import { TestEDampedOscillations } from './features/test_features/test-e-damped-oscillations/test-e-damped-oscillations';
@@ -101,6 +103,8 @@ export const routes: Routes = [
     // decision pages
     { path: 'decision/e-damped-oscillations', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
     { path: 'decision/e-driven-oscillations', component: DecEDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
+    { path: 'decision/t-damped-oscillations', component: DecTDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
+    { path: 'decision/t-driven-oscillations', component: DecTDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
 
     // test pages
     { path: 'test/e-damped-osc', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },

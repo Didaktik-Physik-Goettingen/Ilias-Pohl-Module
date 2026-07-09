@@ -15,7 +15,9 @@ export class DecEDampedOscillations implements OnInit {
     learningModuleLink = '/learning/e2-damped-oscillations';
     testLink = '/test/e-damped-osc';
     simulationLink = '/simulation/sim-e-damped-osc';
+    nextLink = '/decision/e-driven-oscillations';
     testDisabled = false;
+    learningCompleted = false;
 
     constructor(public router: Router, public devMode: DevModeService, private testTracking: TestTracking) {}
 
@@ -24,6 +26,7 @@ export class DecEDampedOscillations implements OnInit {
         if (result?.percentageScore !== undefined && result.percentageScore < 80) {
             this.testDisabled = true;
         }
+        this.learningCompleted = sessionStorage.getItem('learning-done-e-damped') === 'true';
     }
 
     navigateToLearning() {
@@ -31,7 +34,12 @@ export class DecEDampedOscillations implements OnInit {
     }
 
     navigateToSimulation() {
-        this.router.navigate([this.simulationLink], { queryParams: { flow: 'sim-first' } });
+        const flow = this.learningCompleted ? 'learning-first' : 'sim-first';
+        this.router.navigate([this.simulationLink], { queryParams: { flow } });
+    }
+
+    navigateNext() {
+        this.router.navigate([this.nextLink]);
     }
 
     goBack() {

@@ -23,6 +23,10 @@ header {
     margin-bottom: 0.2rem;
 }
 
+.header-title--clickable {
+    cursor: pointer;
+}
+
 .header-subtitle {
     font-size: 1rem;
     opacity: 0.9;

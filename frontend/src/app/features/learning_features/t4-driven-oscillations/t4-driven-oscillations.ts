@@ -12,6 +12,7 @@ import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multi
 })
 export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 	currentView = 'driven_osc1';
+	navigationFlow: string = '';
 
 	get isFirstPage(): boolean { return this.currentView === 'driven_osc1'; }
 	get isLastPage(): boolean { return this.currentView === 'driven_osc9'; }
@@ -269,6 +270,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 	ngOnInit(): void {
 		const page = this.route.snapshot.queryParamMap.get('page');
 		if (page) this.currentView = `driven_osc${page}`;
+		this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
 	}
 
 	ngAfterViewInit(): void { this.renderMath(); }
@@ -326,7 +328,13 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 		} else if (this.currentView === 'driven_osc8') {
 			this.currentView = 'driven_osc9';
 		} else if (this.currentView === 'driven_osc9') {
-			this.router.navigate(['/simulation/theory-damped-driven']); return;
+			if (this.navigationFlow === 'learning-first') {
+				sessionStorage.setItem('learning-done-t-driven', 'true');
+				this.router.navigate(['/decision/t-driven-oscillations']);
+			} else {
+				this.router.navigate(['/simulation/theory-damped-driven']);
+			}
+			return;
 		}
 		this.updateUrl(); this.renderMath();
 	}
