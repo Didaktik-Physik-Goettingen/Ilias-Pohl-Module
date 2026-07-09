@@ -29,16 +29,14 @@
             </div>
         </div>
 
-        @if (learningCompleted || devMode.isEnabled) {
-        <div class="button-container-right">
-            <button class="btn" (click)="navigateNext()">Weiter zur Simulation →</button>
-        </div>
-        }
-
-        @if (devMode.isEnabled) {
+        
         <div class="button-container">
-            <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            @if (devMode.isEnabled) {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+            @if (learningCompleted || devMode.isEnabled) {
+                <button class="btn" (click)="navigateNext()">Weiter zur Simulation →</button>
+            }
         </div>
-        }
     </div>
 </div>

@@ -18,24 +18,28 @@
                     </div>
 
                     <!-- Drop zone on right -->
-                    <div 
+                    <div
                         class="drop-zone"
                         [id]="'container-' + container.id"
+                        [class.click-target-active]="selectedForMove !== null"
                         cdkDropList
                         [cdkDropListData]="getAssignedAnswersForDisplay(container)"
                         [cdkDropListConnectedTo]="getConnectedLists()"
-                        (cdkDropListDropped)="drop($event)">
-                        
+                        (cdkDropListDropped)="drop($event)"
+                        (click)="clickPlaceInContainer(container)">
+
                         <!-- Assigned answers - iterate over full answer objects -->
-                        <div 
-                            *ngFor="let answer of getAssignedAnswersForDisplay(container)" 
+                        <div
+                            *ngFor="let answer of getAssignedAnswersForDisplay(container)"
                             class="assigned-answer"
                             [class.disabled]="isSubmitted"
+                            [class.selected-for-move]="selectedForMove?.id === answer.id"
                             [class.answer-correct]="isSubmitted && isAnswerCorrect(container, answer.id)"
                             [class.answer-incorrect]="isSubmitted && !isAnswerCorrect(container, answer.id)"
                             cdkDrag
                             [cdkDragData]="answer"
-                            [cdkDragDisabled]="isSubmitted">
+                            [cdkDragDisabled]="isSubmitted"
+                            (click)="selectAnswer(answer, container, $event)">
                             
                             <span [innerHTML]="answer.label"></span>
                             <button 
@@ -63,21 +67,25 @@
             <div class="available-answers-container">
                 <!-- <h4 class="answers-title">Verfügbare Antworten:</h4> -->
                 
-                <div 
+                <div
                     id="available-answers"
                     class="available-answers"
+                    [class.click-target-active]="selectedForMove !== null && selectedFromContainer !== null"
                     cdkDropList
                     [cdkDropListData]="availableAnswers"
                     [cdkDropListConnectedTo]="getConnectedLists()"
-                    (cdkDropListDropped)="drop($event)">
-                    
-                    <div 
-                        *ngFor="let answer of availableAnswers" 
+                    (cdkDropListDropped)="drop($event)"
+                    (click)="clickReturnToPool()">
+
+                    <div
+                        *ngFor="let answer of availableAnswers"
                         class="draggable-answer"
                         [class.disabled]="isSubmitted"
+                        [class.selected-for-move]="selectedForMove?.id === answer.id"
                         cdkDrag
                         [cdkDragData]="answer"
-                        [cdkDragDisabled]="isSubmitted">
+                        [cdkDragDisabled]="isSubmitted"
+                        (click)="selectAnswer(answer, null, $event)">
                         <span [innerHTML]="answer.label"></span>
                     </div>
 

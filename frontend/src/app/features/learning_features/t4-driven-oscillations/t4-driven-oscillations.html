@@ -1,57 +1,36 @@
 <div class="container">
     <div class="card">
         @if (currentView === 'driven_osc1') {
-            <h1>Getriebener harmonischer Oszillator (1/9)</h1>
+            <h1>Getriebener harmonischer Oszillator <span class="page-subheadline">(1/8)</span></h1>
         } @else if (currentView === 'driven_osc2') {
-            <h1>DGL des Pohlschen Rads (2/9)</h1>
+            <h1>DGL des Pohlschen Rads <span class="page-subheadline">(2/8)</span></h1>
         } @else if (currentView === 'driven_osc3') {
-            <h1>Komplexe Erweiterung der DGL (3/9)</h1>
+            <h1>Komplexe Erweiterung der DGL <span class="page-subheadline">(3/8)</span></h1>
         } @else if (currentView === 'driven_osc4') {
-            <h1>Partikuläre Lösung (4/9)</h1>
+            <h1>Partikuläre Lösung <span class="page-subheadline">(4/8)</span></h1>
         } @else if (currentView === 'driven_osc5') {
-            <h1>Homogene Lösung (5/9)</h1>
+            <h1>Homogene Lösung <span class="page-subheadline">(5/8)</span></h1>
         } @else if (currentView === 'driven_osc6') {
-            <h1>Vollständige Lösung und Einschwingvorgang (6/9)</h1>
+            <h1>Vollständige Lösung und Einschwingvorgang <span class="page-subheadline">(6/8)</span></h1>
         } @else if (currentView === 'driven_osc7') {
-            <h1>Amplitude (7/9)</h1>
-        } @else if (currentView === 'driven_osc8') {
-            <h1>Phasenverschiebung (8/9)</h1>
+            <h1>Amplitude <span class="page-subheadline">(7/8)</span></h1>
         } @else {
-            <h1>Entscheidung (9/9)</h1>
+            <h1>Phasenverschiebung <span class="page-subheadline">(8/8)</span></h1>
         }
 
         <div class="content">
 
             <!-- ── Page 1: Getriebener harmonischer Oszillator ── -->
             @if (currentView === 'driven_osc1') {
-                <p>
-                    Wird ein harmonischer Oszillator nicht nur durch Dämpfung beeinflusst, sondern zusätzlich
-                    durch eine periodische äußere Kraft angetrieben, spricht man von einem
-                    <strong>getriebenen</strong> harmonischen Oszillator:
-                </p>
-
-                <div class="formula-line" [innerHTML]="formulas.drivenDglLinear"></div>
-
-                <p>
-                    Mit den Abkürzungen <span [innerHTML]="formulas.omegaDefinition"></span>,
-                    <span [innerHTML]="formulas.drivenAbbrevGamma"></span>,
-                    <span [innerHTML]="formulas.drivenAbbrevK"></span>
-                    ergibt sich die <strong>Normalform</strong>:
-                </p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.drivenDglNormal"></div>
-                </aside>
-
-                <p>Diese DGL nennt man:</p>
-
-                <ul>
-                    <li><strong>gedämpft</strong>, weil eine zur Geschwindigkeit proportionale Reibungskraft betrachtet wird,</li>
-                    <li><strong>getrieben</strong>, weil eine äußere, periodische Anregung im System wirkt, und</li>
-                    <li><strong>harmonisch</strong>, weil die entstehenden Sinustöne als harmonisch empfunden werden.</li>
-                </ul>
-
-                <p>Es handelt sich um eine <strong>inhomogene</strong> DGL, da der äußere Antriebsterm nicht von der Auslenkung oder ihrer Ableitung abhängt.</p>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text1a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text1b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text1c"></p>
+                </div>
 
                 <app-multiple-choice
                     [questionId]="question1.questionId"
@@ -68,40 +47,15 @@
 
             <!-- ── Page 2: DGL des Pohlschen Rads ── -->
             @if (currentView === 'driven_osc2') {
-                <p>
-                    Beim Pohlschen Rad betrachten wir eine <strong>Rotationsbewegung</strong>. Die DGL ist
-                    von der Form her äquivalent zum linearen Fall – wir ersetzen lediglich
-                    \( x \mapsto \varphi \) und verwenden \( \beta \) für die Dämpfungskonstante sowie
-                    \( N \) für die Stärke der äußeren Anregung.
-                </p>
-
-                <p>
-                    Die Differentialgleichung ergibt sich aus einer Betrachtung der Drehmomente
-                    \( \Theta\ddot&#123;\varphi&#125; = \sum_i M_i \) mit dem Trägheitsmoment \( \Theta \):
-                </p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.pohlDgl"></div>
-                </aside>
-
-                <details class="exkurs-accordion">
-                    <summary class="exkurs-summary">EXKURS: Erläuterung der Terme</summary>
-                    <div class="exkurs-content">
-                        <ul>
-                            <li><em>φ(t)</em>: Auslenkungswinkel der Drehscheibe. <span [innerHTML]="formulas.pohlBeta"></span> ist der Proportionalitätsfaktor zwischen Reibungskraft und Winkelgeschwindigkeit.</li>
-                            <li><span [innerHTML]="formulas.pohlOmega0sq"></span>: Eigenfrequenz des Systems ohne Dämpfung oder Anregung.</li>
-                            <li><span [innerHTML]="formulas.pohlNdef"></span>: äußeres periodisches Anregungsmoment mit der Amplitude <em>N</em> und der Frequenz <em>ω</em>.</li>
-                        </ul>
-                    </div>
-                </details>
-
-                <p>
-                    Der Grundgedanke beim Lösen dieser inhomogenen DGL ist,
-                    die Lösungen für den homogenen (<em>φ<sub>h</sub></em>) und den partikulären
-                    (<em>φ<sub>p</sub></em>) Anteil zu addieren:
-                </p>
-
-                <div class="formula-line" [innerHTML]="formulas.totalSolutionPohl"></div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text2a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text2b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text2c"></p>
+                </div>
 
                 <app-multiple-choice
                     [questionId]="question2.questionId"
@@ -130,84 +84,37 @@
 
             <!-- ── Page 3: Komplexe Erweiterung ── -->
             @if (currentView === 'driven_osc3') {
-                <p>
-                    Es gibt verschiedene Wege, die inhomogene DGL zu lösen. Ein eleganter Ansatz ist die
-                    <strong>komplexe Erweiterung</strong>: Statt mit dem reellen Antrieb \( N\cos(\omega t) \)
-                    zu rechnen, betrachten wir den komplexen Antrieb \( Ne^&#123;i\omega t&#125; \).
-                </p>
-
-                <p>Den Zusammenhang, den wir ausnutzen, lautet:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.complexDrivingForce"></div>
-                </aside>
-
-                <p>
-                    Gleichzeitig lassen wir zu, dass die Lösungsfunktion \( \varphi \) komplex sein darf:
-                    \( \varphi \to \tilde\varphi \). Die reelle physikalische Lösung ergibt sich am Ende
-                    als Realteil von \( \tilde\varphi \).
-                </p>
-
-                <p>Die <strong>komplexe DGL</strong> lautet damit:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.complexDrivenDgl"></div>
-                </aside>
-
-                <p>
-                    Der Vorteil: Die komplexe Exponentialfunktion \( e^&#123;i\omega t&#125; \) verhält sich unter
-                    Ableitung besonders einfach – es entstehen nur konstante Vorfaktoren, keine Wechsel
-                    zwischen Sinus und Kosinus.
-                </p>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text3a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text3b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text3c"></p>
+                </div>
             }
 
             <!-- ── Page 4: Partikuläre Lösung ── -->
             @if (currentView === 'driven_osc4') {
-                <p>
-                    Die homogene Gleichung haben wir bereits auf den vorangegangenen Seiten gelöst. Zum
-                    Finden einer vollständigen Lösung der inhomogenen DGL fehlt noch eine
-                    <strong>partikuläre</strong> (spezielle) Lösung.
-                </p>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text4a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text4b"></div>
+                </div>
 
-                <p>
-                    Wir wählen einen Ansatz, der von seiner Struktur der Inhomogenität ähnelt –
-                    also ebenfalls proportional zu einer komplexen e-Funktion ist:
-                </p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.particularAnsatz"></div>
-                </aside>
-
-                <p>mit der <strong>komplexen Amplitude</strong> \( A \in \mathbb&#123;C&#125; \).</p>
-
-                <details class="exkurs-accordion">
-                    <summary class="exkurs-summary">EXKURS: Detaillierte Beschreibung der Vorgehensweise</summary>
-                    <div class="exkurs-content">
-                        <p>Die zeitlichen Ableitungen des Ansatzes lauten:</p>
-                        <div class="formula-stack">
-                            <div>\( \tilde&#123;\varphi&#125;(t) = A_p \, e^&#123;i\omega t&#125; \)</div>
-                            <div>\( \dot&#123;\tilde&#123;\varphi&#125;&#125;(t) = i\omega A_p \, e^&#123;i\omega t&#125; \)</div>
-                            <div>\( \ddot&#123;\tilde&#123;\varphi&#125;&#125;(t) = -\omega^2 A_p \, e^&#123;i\omega t&#125; \)</div>
-                        </div>
-                        <p>Einsetzen in die DGL und Ausklammern von \( e^&#123;i\omega t&#125; \) ergibt:</p>
-                        <div class="formula-line">
-                            \( A(-\omega^2 + 2i\beta\omega + \omega_0^2) = N \)
-                        </div>
-                        <p>Durch Umstellen und Berechnung von Betrag und Phase der komplexen Amplitude:</p>
-                        <div class="formula-stack">
-                            <div [innerHTML]="formulas.complexAmplitudeMod"></div>
-                            <div [innerHTML]="formulas.phaseShiftDef"></div>
-                        </div>
-                    </div>
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Detaillierte Herleitung der partikulären Lösung</summary>
+                    <div class="spoiler-content" [innerHTML]="t4Text4spoiler"></div>
                 </details>
 
-                <p>Die reelle partikuläre Lösung ergibt sich als <strong>Realteil</strong> der komplexen Lösung:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.particularRealSolution"></div>
-                </aside>
-
-                <p>mit der Phasenverschiebung <span [innerHTML]="formulas.phaseShiftDef"></span>.</p>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text4c"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text4d"></div>
+                </div>
 
                 <app-multiple-choice
                     [questionId]="question4.questionId"
@@ -236,92 +143,54 @@
 
             <!-- ── Page 5: Homogene Lösung ── -->
             @if (currentView === 'driven_osc5') {
-                <p>
-                    Die homogene Lösung des Pohlschen Rads – die Lösung <strong>ohne äußere Anregung</strong>
-                    – hängt vom Verhältnis zwischen Dämpfung <em>β</em> und Eigenfrequenz <em>ω₀</em> ab.
-                    Es gibt drei Fälle:
-                </p>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text5a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text5b"></div>
+                </div>
 
-                <p>Im <strong>Schwingfall</strong> (<em>β &lt; ω₀</em>), der im realen Experiment typischerweise vorliegt, gilt:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.homogenousWeakDamping"></div>
-                </aside>
-
-                <p>mit der gedämpften Eigenfrequenz <span [innerHTML]="formulas.dampedNaturalFreq"></span>.</p>
-
-                <details class="exkurs-accordion">
-                    <summary class="exkurs-summary">EXKURS: Alle drei Dämpfungsfälle im Überblick</summary>
-                    <div class="exkurs-content">
-                        <p><strong>Schwache Dämpfung</strong> (<em>β &lt; ω₀</em>) – Schwingfall:</p>
-                        <div class="formula-stack">
-                            <div [innerHTML]="formulas.homogenousWeakDamping"></div>
-                            <div [innerHTML]="formulas.dampedNaturalFreq"></div>
-                        </div>
-                        <p><strong>Kritische Dämpfung</strong> (<em>β = ω₀</em>) – Aperiodischer Grenzfall:</p>
-                        <div class="formula-line" [innerHTML]="formulas.pohlHomogeneCritical"></div>
-                        <p><strong>Starke Dämpfung</strong> (<em>β &gt; ω₀</em>) – Kriechfall:</p>
-                        <div class="formula-stack">
-                            <div [innerHTML]="formulas.pohlHomogeneStrong"></div>
-                            <div [innerHTML]="formulas.pohlLambdaStrong"></div>
-                        </div>
-                    </div>
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Alle drei Dämpfungsfälle im Überblick</summary>
+                    <div class="spoiler-content" [innerHTML]="t4Text5spoiler"></div>
                 </details>
 
-                <aside class="notice-box">
-                    <p>
-                        Die Konstanten <em>C₁, C₂</em> ergeben sich in allen Fällen aus den Anfangsbedingungen.
-                        Im stationären Zustand klingt die homogene Lösung vollständig ab –
-                        übrig bleibt nur die partikuläre Lösung.
-                    </p>
-                </aside>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text5c"></p>
+                </div>
             }
 
             <!-- ── Page 6: Vollständige Lösung und Einschwingvorgang ── -->
             @if (currentView === 'driven_osc6') {
-                <p>Die vollständige Lösung ergibt sich als Kombination der homogenen und partikulären Lösung:</p>
-
-                <div class="formula-line" [innerHTML]="formulas.totalSolutionPohl"></div>
-
-                <p>Für den Fall der <strong>schwachen Dämpfung</strong> (<em>β &lt; ω₀</em>, Schwingfall) ergibt sich:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.einschwingvorgangFull"></div>
-                </aside>
-
-                <p>
-                    Physikalisch überlagern sich hier <strong>zwei Schwingungen</strong>: die freie Schwingung
-                    <em>φ<sub>h</sub></em> und die erzwungene <em>φ<sub>p</sub></em>. Bei realistisch
-                    beobachtbaren Fällen klingt <em>φ<sub>h</sub>(t)</em> nach einer gewissen <strong>Einschwingzeit</strong>
-                    ab – danach schwingt das System nur noch mit der aufgezwungenen Frequenz <em>ω</em>
-                    im <strong>stationären Zustand</strong>.
-                </p>
-
-                <p>
-                    Der Zeitpunkt, zu dem die Einschwingphase abgeschlossen ist, ist gut im
-                    <strong>Phasenraumdiagramm</strong> sichtbar: Die Trajektorie wird zu einer
-                    <strong>geschlossenen, stabilen Ellipse</strong>.
-                </p>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text6a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text6b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text6c"></p>
+                </div>
 
                 <div class="image-answer-grid">
                     <figure>
                         <img src="assets/images/theorie-strang/abbildungen/17_phasenraumdiagramme_und_stationaere_schwingung_1.svg"
-                             alt="Phasenraumdiagramm a)" style="max-width:100%">
+                             alt="Phasenraumdiagramm a)" class="img-center">
                         <figcaption>a)</figcaption>
                     </figure>
                     <figure>
                         <img src="assets/images/theorie-strang/abbildungen/18_phasenraumdiagramme_und_stationaere_schwingung_2.svg"
-                             alt="Phasenraumdiagramm b)" style="max-width:100%">
+                             alt="Phasenraumdiagramm b)" class="img-center">
                         <figcaption>b)</figcaption>
                     </figure>
                     <figure>
                         <img src="assets/images/theorie-strang/abbildungen/19_phasenraumdiagramme_und_stationaere_schwingung_3.svg"
-                             alt="Phasenraumdiagramm c)" style="max-width:100%">
+                             alt="Phasenraumdiagramm c)" class="img-center">
                         <figcaption>c)</figcaption>
                     </figure>
                     <figure>
                         <img src="assets/images/theorie-strang/abbildungen/20_phasenraumdiagramme_und_stationaere_schwingung_4.svg"
-                             alt="Phasenraumdiagramm d)" style="max-width:100%">
+                             alt="Phasenraumdiagramm d)" class="img-center">
                         <figcaption>d)</figcaption>
                     </figure>
                 </div>
@@ -341,18 +210,21 @@
 
             <!-- ── Page 7: Amplitude ── -->
             @if (currentView === 'driven_osc7') {
-                <p>Im Folgenden betrachten wir nur die <strong>stationäre Lösung</strong>
-                \( \varphi(t) \approx \varphi_p(t) \):</p>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text7a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text7b"></div>
+                </div>
 
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.particularRealSolution"></div>
-                </aside>
+                <img src="assets/images/theorie-strang/ged%C3%A4mpfte%20Schwingung/amplitude_damping.png"
+                     alt="Normierte Amplitude für unterschiedliche Dämpfungen in Abhängigkeit von der Anregungsfrequenz"
+                     class="img-center img-md">
+                <p class="img-caption"><em>Normierte Amplitude für unterschiedliche Dämpfungen in Abhängigkeit von der Anregungsfrequenz. Die graue gestrichelte Kurve zeigt die normierte Amplitude bei der Resonanzfrequenz.</em></p>
 
-                <p>Die <strong>Amplitude</strong> wird vom Term vor dem Kosinus-Term beschrieben:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.stationaryAmplitude"></div>
-                </aside>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text7c"></p>
+                </div>
 
                 <app-multiple-choice
                     [questionId]="question7.questionId"
@@ -365,19 +237,6 @@
                     [incorrectMessage]="question7.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion7Answered($event)">
                 </app-multiple-choice>
-
-                <p>Im Versuch können Sie die <strong>Dämpfung</strong> und die <strong>Amplitude und Frequenz des Antriebs</strong> anpassen. Mathematisch ist die Amplitude gegeben als:</p>
-
-                <div class="formula-line" [innerHTML]="formulas.stationaryAmplitude"></div>
-
-                <img src="assets/images/theorie-strang/ged%C3%A4mpfte%20Schwingung/amplitude_damping.png"
-                     alt="Normierte Amplitude für unterschiedliche Dämpfungen in Abhängigkeit von der Anregungsfrequenz"
-                     style="max-width:480px">
-                <p><em>Normierte Amplitude für unterschiedliche Dämpfungen, in Abhängigkeit von der Anregungsfrequenz. Die graue gestrichelte Kurve zeigt die normierte Amplitude bei der Resonanzfrequenz für unterschiedliche Dämpfungen.</em></p>
-
-                <p>Die <strong>Resonanzfrequenz</strong> – bei der die Amplitude maximal wird – ergibt sich zu:</p>
-
-                <div class="formula-line" [innerHTML]="formulas.resonanceFreqDriven"></div>
 
                 <app-multiple-choice
                     [questionId]="question8.questionId"
@@ -406,39 +265,22 @@
 
             <!-- ── Page 8: Phasenverschiebung ── -->
             @if (currentView === 'driven_osc8') {
-                <p>
-                    Im stationären Zustand hinkt ein gedämpftes Schwungrad dem Antrieb hinterher.
-                    Wie die Amplitude hängt auch die <strong>Phasenverschiebung</strong> von der Dämpfung
-                    <em>β</em>, der Eigenfrequenz <em>ω₀</em> und der Anregungsfrequenz <em>ω</em> ab.
-                </p>
-
-                <p>Stationäre Lösung und äußerer Antrieb im Vergleich:</p>
-
-                <div class="formula-stack">
-                    <div [innerHTML]="formulas.particularRealSolution"></div>
-                    <div [innerHTML]="formulas.externalDrivePohl"></div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text8a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text8b"></div>
                 </div>
 
-                <p>Die Argumente der Kosinus-Funktionen unterscheiden sich um die <strong>Phasenverschiebung</strong> Φ:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.phaseFreqFormula"></div>
-                </aside>
-
-                <div class="text-image-layout" style="display:flex;gap:1.5rem;align-items:flex-start;flex-wrap:wrap">
-                    <div style="flex:1;min-width:200px">
-                        <div class="formula-line" [innerHTML]="formulas.phaseFreqFormula"></div>
-                        <p>
-                            Besonders charakteristisch: Wenn die Anregungsfrequenz genau der
-                            <strong>Eigenfrequenz</strong> entspricht, gilt stets
-                            <span [innerHTML]="formulas.phaseAtOmega0"></span> – unabhängig von der Dämpfung.
-                        </p>
+                <div class="text-image-container">
+                    <div class="text-content">
+                        <p [innerHTML]="t4Text8c"></p>
                     </div>
-                    <div style="flex:1;min-width:200px">
+                    <div class="image-content">
                         <img src="assets/images/theorie-strang/abbildungen/25_phase.svg"
-                             alt="Phasenverschiebung in Abhängigkeit von der Anregungsfrequenz für unterschiedliche Dämpfungskonstanten"
-                             style="max-width:100%">
-                        <p><em>Phasenverschiebung \(\Phi(\omega)\) für unterschiedliche Dämpfungskonstanten \(\beta\). Bei \(\omega = \omega_0\) gilt stets \(\Phi = \pi/2\).</em></p>
+                             alt="Phasenverschiebung in Abhängigkeit von der Anregungsfrequenz"
+                             class="img-center">
+                        <p class="img-caption"><em>Phasenverschiebung Φ(ω) für unterschiedliche Dämpfungskonstanten β. Bei ω = ω₀ gilt stets Φ = π/2.</em></p>
                     </div>
                 </div>
 
@@ -468,39 +310,24 @@
 
                 <img src="assets/images/theorie-strang/abbildungen/35_illustration_zur_phasenverschiebung.svg"
                      alt="Veranschaulichung der Phasenverschiebung zwischen Antrieb und Schwungrad"
-                     style="max-width:100%">
-                <p><em>Veranschaulichung der Phasenverschiebung: Der Antrieb eilt dem Schwungrad um die Phase \(\Phi\) voraus.</em></p>
-            }
-
-            <!-- ── Page 9: Entscheidung ── -->
-            @if (currentView === 'driven_osc9') {
-                <p>Sie haben die Theorie zur angetriebenen Schwingung abgeschlossen. Was möchten Sie als nächstes tun?</p>
-
-                <div class="decision-list">
-                    <article class="decision-card">
-                        <h2>Simulation: Angetriebene Schwingung</h2>
-                        <p>Ich möchte jetzt eine Simulation der getriebenen Schwingung anschauen und den Einfluss verschiedener Parameter selbst ausprobieren.</p>
-                        <a routerLink="/simulation/theory-damped-driven" class="btn">Zur Simulation →</a>
-                    </article>
-
-                    <article class="decision-card">
-                        <h2>Weiter zum Versuchsaufbau</h2>
-                        <p>Ich fühle mich sicher im Thema und möchte direkt weiter zum Versuchsaufbau des Pohlschen Resonators.</p>
-                        <a routerLink="/experiment" class="btn">Zum Versuch →</a>
-                    </article>
-                </div>
+                     class="img-center">
+                <p class="img-caption"><em>Veranschaulichung der Phasenverschiebung: Der Antrieb eilt dem Schwungrad um die Phase Φ voraus.</em></p>
             }
 
         </div>
 
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/learning/t3-damped-oscillations" class="btn btn-back">← Zurück</button>
+                @if (devMode.isEnabled) {
+                    <button routerLink="/decision/t-driven-oscillations" class="btn btn-back">← Zurück zur Entscheidungsseite</button>
+                }
             } @else {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()">Zur Simulation →</button>
+                <button class="btn" (click)="goForward()">
+                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zur Simulation →' }}
+                </button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>
             }

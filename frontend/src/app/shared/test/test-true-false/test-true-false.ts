@@ -90,7 +90,7 @@ export class TestTrueFalse implements OnInit{
       const userSelection = this.selectedAnswers.get(statement.id);
       const isCorrect = statement.isCorrect;
 
-      if (userSelection === (isCorrect ? 'true' : 'false')) {
+      if (userSelection !== undefined && userSelection === (isCorrect ? 'true' : 'false')) {
         correctClicks++;
       }
     });
