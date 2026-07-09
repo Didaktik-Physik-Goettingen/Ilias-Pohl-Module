@@ -235,16 +235,10 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
 		],
 		correctAnswers: ['answer3', 'answer4', 'answer6'],
 		containerId: 'question6-container',
-		successMessage: `Sehr gut! Das gedämpfte Schwungrad schwingt mit einer festen Frequenz und hat eine abnehmende Amplitude. Das war ein guter Start. 
-		Dann geht es hier jetzt weiter mit einem weiterführenden Test:
-		Klicken Sie hier, damit sich der Test in einem neuen Tab öffnet.
-		Kehren Sie anschließend in diesen Tab zurück, um hier zu erfahren, wie es für Sie weitergeht.`,
-		incompleteMessage: `✗ Einige der von die ausgewählten Bewegungsformen entsprechen nicht dem, was man aus einem Experiment erwarten würde. 
-			Hier findest du eine <a target="_blank" rel="noopener noreferrer" href="simulation/sim-e-damped-osc" class="glossary-link">Simulation des Experiments</a>. 
-            Verändere die Dämpfung und die Anfangsbedingungen, um zu sehen, wie sich die Bewegung des Schwungrads verändert:`,
-        incorrectMessage: `✗ Einige der von die ausgewählten Bewegungsformen entsprechen nicht dem, was man aus einem Experiment erwarten würde. 
-			Hier findest du eine <a target="_blank" rel="noopener noreferrer" href="simulation/sim-e-damped-osc" class="glossary-link">Simulation des Experiments</a>.
-            Verändere die Dämpfung und die Anfangsbedingungen, um zu sehen, wie sich die Bewegung des Schwungrads verändert:`
+		successMessage: `Sehr gut! Das gedämpfte Schwungrad schwingt mit einer festen Frequenz und hat eine abnehmende      Amplitude. Das war ein guter Start. `,
+		incompleteMessage: `✗ Einige der von die ausgewählten Bewegungsformen entsprechen nicht dem, was man aus einem     Experiment erwarten würde. `,
+        incorrectMessage: `✗ Einige der von die ausgewählten Bewegungsformen entsprechen nicht dem, was man aus einem  Experiment erwarten würde.
+            `
 	};
 
 

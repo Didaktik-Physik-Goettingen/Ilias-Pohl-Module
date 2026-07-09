@@ -369,6 +369,15 @@ nav a:hover {
     text-align: center;
 }
 
+/* centred, width-capped image for learning-page figures */
+.img-center {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 1rem auto;
+}
+
 /* ── Glossary overlay ─────────────────────────────────────────────────────── */
 .glossary-overlay-backdrop {
     background: rgba(0, 0, 0, 0.45);

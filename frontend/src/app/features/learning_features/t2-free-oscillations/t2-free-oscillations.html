@@ -1,106 +1,39 @@
 <div class="container">
     <div class="card">
         @if (currentView === 'free_osc1') {
-            <h1>DGL des ungedämpften harmonischen Oszillators (1/3)</h1>
-        } @else if (currentView === 'free_osc2') {
-            <h1>Phasenraum (2/3)</h1>
+            <h1>Freie Schwingungen (1/2)</h1>
+            <p class="page-subheadline">DGL des ungedämpften harmonischen Oszillators</p>
         } @else {
-            <h1>Entscheidung (3/3)</h1>
+            <h1>Freie Schwingungen (2/2)</h1>
+            <p class="page-subheadline">Phasenraum</p>
         }
 
         <div class="content">
 
             @if (currentView === 'free_osc1') {
-                <p>Die Differentialgleichung des ungedämpften harmonischen Oszillators lautet:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.mainDgl"></div>
-                </aside>
-
-                <p>
-                    Mit der Abkürzung <span [innerHTML]="formulas.omegaDefinition"></span>
-                    für die Masse <em>m</em> und die Federkonstante <em>D</em> nennt man diese Gleichung:
-                </p>
-
-                <ul>
-                    <li><strong>ungedämpft</strong>, weil keinerlei Dämpfung betrachtet wird,</li>
-                    <li><strong>frei</strong>, weil keinerlei äußere Anregung existiert. Die rechte Seite der DGL ist null. Deshalb heißt die Gleichung auch homogene DGL,</li>
-                    <li><strong>harmonisch</strong>, weil die akustische Überlagerung von den entstehenden „reinen" Sinustönen als harmonisch empfunden wird.</li>
-                </ul>
-
-                <p>Die DGL kann auch in der Newtonschen Notation geschrieben werden:</p>
-
-                <div class="formula-line" [innerHTML]="formulas.newtonNotation"></div>
-
-                <h2>Lösung mit dem Exponentialansatz</h2>
-
-                <p>Die DGL kann mit folgendem Ansatz gelöst werden:</p>
-
-                <div class="formula-line" [innerHTML]="formulas.exponentialAnsatz"></div>
-
-                <p>Dazu bestimmen wir die zeitlichen Ableitungen:</p>
-
-                <div class="formula-stack">
-                    <div [innerHTML]="formulas.firstDerivative"></div>
-                    <div [innerHTML]="formulas.secondDerivative"></div>
+                <div class="text-content">
+                    <p [innerHTML]="freeOscText1a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="freeOscText1b"></div>
+                </div>
+                <div class="glossary-write">
+                    <div class="glossary-text" [innerHTML]="freeOscText1c"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="freeOscText1d"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="freeOscText1e"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="freeOscText1f"></p>
                 </div>
 
-                <p>Nun setzen wir den Ansatz und die zweite Ableitung in die Differentialgleichung ein:</p>
-
-                <div class="formula-line" [innerHTML]="formulas.substitution"></div>
-
-                <p>Da der Faktor vor der Klammer nicht für alle Zeiten null wird, muss die Klammer selbst null werden. Dadurch ergibt sich die Bestimmungsgleichung:</p>
-
-                <div class="formula-stack">
-                    <div [innerHTML]="formulas.characteristicEquation"></div>
-                    <div [innerHTML]="formulas.lambdaSquared"></div>
-                    <div [innerHTML]="formulas.lambdaSolutions"></div>
-                </div>
-
-                <p>Es gibt also zwei komplexe Lösungen:</p>
-
-                <div class="formula-stack">
-                    <div [innerHTML]="formulas.solutionOne"></div>
-                    <div [innerHTML]="formulas.solutionTwo"></div>
-                </div>
-
-                <p>Die allgemeine Lösung ist die Linearkombination dieser beiden Lösungen:</p>
-
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.complexGeneralSolution"></div>
-                </aside>
-
-                <p>Aus physikalischen Gründen muss die Lösung reell sein. Daher kann sie auch in folgender Form geschrieben werden:</p>
-
-                <div class="formula-line" [innerHTML]="formulas.realGeneralSolution"></div>
-
-                <details class="exkurs-accordion">
-                    <summary class="exkurs-summary">EXKURS: Bestimmung der Konstanten</summary>
-                    <div class="exkurs-content">
-                        <p>Da die Auslenkung physikalisch reell sein muss, muss die Funktion mit ihrer komplex konjugierten Funktion übereinstimmen:</p>
-                        <div class="formula-line" [innerHTML]="formulas.realityCondition"></div>
-                        <p>Für die komplexe Lösung ergibt sich:</p>
-                        <div class="formula-stack">
-                            <div [innerHTML]="formulas.complexGeneralSolution"></div>
-                            <div [innerHTML]="formulas.conjugatedSolution"></div>
-                        </div>
-                        <p>Vergleicht man die Koeffizienten der Exponentialterme, erhält man:</p>
-                        <div class="formula-stack">
-                            <div [innerHTML]="formulas.coefficientConditionOne"></div>
-                            <div [innerHTML]="formulas.coefficientConditionTwo"></div>
-                            <div [innerHTML]="formulas.conjugatedConstants"></div>
-                        </div>
-                        <p>Das heißt: Die beiden komplexen Konstanten müssen komplex konjugiert zueinander sein.</p>
-                        <div class="formula-stack">
-                            <div [innerHTML]="formulas.complexC"></div>
-                            <div [innerHTML]="formulas.complexRealSolution"></div>
-                        </div>
-                        <p>Beispielsweise können die Randbedingungen durch die Geschwindigkeit beim Nulldurchgang gegeben sein:</p>
-                        <div class="formula-stack">
-                            <div [innerHTML]="formulas.boundaryCondition"></div>
-                            <div [innerHTML]="formulas.exampleResult"></div>
-                        </div>
-
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Bestimmung der Konstanten</summary>
+                    <div class="spoiler-content">
+                        <p [innerHTML]="freeOscText1g"></p>
                         <app-multiple-choice
                             [questionId]="question2.questionId"
                             [question]="question2.question"
@@ -115,17 +48,10 @@
                     </div>
                 </details>
 
-                <details class="exkurs-accordion">
-                    <summary class="exkurs-summary">EXKURS: Komplexe Lösungen bei reellen Gleichungen</summary>
-                    <div class="exkurs-content">
-                        <p>Man kann allgemeiner zeigen, dass komplexe Lösungen des charakteristischen Polynoms bei einer reellen Ausgangsgleichung paarweise auftreten.</p>
-                        <p>
-                            Ein komplex konjugiertes Paar besitzt die Form <span [innerHTML]="formulas.complexPair"></span>.
-                            Im ungedämpften Fall ist der Realteil null: <span [innerHTML]="formulas.undampedAlpha"></span>.
-                        </p>
-                        <p>Bei einer gedämpften harmonischen Schwingung treten zusätzlich Exponentialfaktoren auf:</p>
-                        <div class="formula-line" [innerHTML]="formulas.dampedFunctions"></div>
-
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Komplexe Lösungen bei reellen Gleichungen</summary>
+                    <div class="spoiler-content">
+                        <p [innerHTML]="freeOscText1h"></p>
                         <app-multiple-choice
                             [questionId]="question3.questionId"
                             [question]="question3.question"
@@ -140,124 +66,87 @@
                     </div>
                 </details>
 
-                <app-multiple-choice
-                    [questionId]="question1.questionId"
-                    [question]="question1.question"
-                    [options]="question1.options"
-                    [correctAnswers]="question1.correctAnswers"
-                    [containerId]="question1.containerId"
-                    [successMessage]="question1.successMessage"
-                    [incompleteMessage]="question1.incompleteMessage"
-                    [incorrectMessage]="question1.incorrectMessage"
-                    (onAnswerEvaluated)="onQuestion1Answered($event)">
-                </app-multiple-choice>
+                <div>
+                    <app-multiple-choice
+                        [questionId]="question1.questionId"
+                        [question]="question1.question"
+                        [options]="question1.options"
+                        [correctAnswers]="question1.correctAnswers"
+                        [containerId]="question1.containerId"
+                        [successMessage]="question1.successMessage"
+                        [incompleteMessage]="question1.incompleteMessage"
+                        [incorrectMessage]="question1.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion1Answered($event)">
+                    </app-multiple-choice>
+                </div>
             }
 
             @if (currentView === 'free_osc2') {
-                <p>
-                    Der sogenannte Phasenraum beschreibt die Menge aller möglichen Zustände eines dynamischen Systems.
-                    Ausgehend von einer Bewegungsgleichung werden alle möglichen Kombinationen von
-                    <span [innerHTML]="formulas.phaseState"></span>
-                    in einem Phasenraumdiagramm aufgetragen.
-                </p>
+                <div class="text-content">
+                    <p [innerHTML]="freeOscText2a"></p>
+                </div>
 
-                <img class="phase-image"
-                     src="assets/images/theorie-strang/Pendulum_phase_portrait_illustration.svg"
-                     alt="Phasenraumdiagramm eines Pendels"
-                     style="max-width:100%">
+                <img class="img-center img-lg"
+                    src="assets/images/t2_free_oscillations/Pendulum_phase_portrait_illustration.svg"
+                    alt="Phasenraumdiagramm eines Pendels">
 
-                <aside class="notice-box formula-box">
-                    <div class="formula" [innerHTML]="formulas.phaseDgl"></div>
-                </aside>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="freeOscText2b"></div>
+                </div>
 
-                <p>
-                    Für den ungedämpften harmonischen Oszillator mit der Rückstellkraft
-                    <span [innerHTML]="formulas.restoringForce"></span>
-                    gilt für die Energie:
-                </p>
+                <div class="text-content">
+                    <p [innerHTML]="freeOscText2c"></p>
+                </div>
 
-                <div class="formula-line" [innerHTML]="formulas.energyEquation"></div>
+                <img class="img-center img-sm"
+                    src="assets/images/t2_free_oscillations/phasenraumtrajektorie_Demtröder_432.png"
+                    alt="Phasenraumtrajektorie nach Demtröder">
 
-                <p>Mit <span [innerHTML]="formulas.omegaPhase"></span> ergibt sich durch Umstellen eine Kreisgleichung:</p>
+                <div>
+                    <app-multiple-choice
+                        [questionId]="question4.questionId"
+                        [question]="question4.question"
+                        [options]="question4.options"
+                        [correctAnswers]="question4.correctAnswers"
+                        [containerId]="question4.containerId"
+                        [successMessage]="question4.successMessage"
+                        [incompleteMessage]="question4.incompleteMessage"
+                        [incorrectMessage]="question4.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion4Answered($event)">
+                    </app-multiple-choice>
+                </div>
 
-                <div class="formula-line" [innerHTML]="formulas.phaseCircle"></div>
+                <div>
+                    <app-multiple-choice
+                        [questionId]="question5.questionId"
+                        [question]="question5.question"
+                        [options]="question5.options"
+                        [correctAnswers]="question5.correctAnswers"
+                        [containerId]="question5.containerId"
+                        [successMessage]="question5.successMessage"
+                        [incompleteMessage]="question5.incompleteMessage"
+                        [incorrectMessage]="question5.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion5Answered($event)">
+                    </app-multiple-choice>
+                </div>
 
-                <img class="phase-image"
-                     src="assets/images/theorie-strang/phasenraumtrajektorie_Demtröder_432.png"
-                     alt="Phasenraumtrajektorie nach Demtröder"
-                     style="max-width:100%">
-
-                <app-multiple-choice
-                    [questionId]="question4.questionId"
-                    [question]="question4.question"
-                    [options]="question4.options"
-                    [correctAnswers]="question4.correctAnswers"
-                    [containerId]="question4.containerId"
-                    [successMessage]="question4.successMessage"
-                    [incompleteMessage]="question4.incompleteMessage"
-                    [incorrectMessage]="question4.incorrectMessage"
-                    (onAnswerEvaluated)="onQuestion4Answered($event)">
-                </app-multiple-choice>
-
-                <app-multiple-choice
-                    [questionId]="question5.questionId"
-                    [question]="question5.question"
-                    [options]="question5.options"
-                    [correctAnswers]="question5.correctAnswers"
-                    [containerId]="question5.containerId"
-                    [successMessage]="question5.successMessage"
-                    [incompleteMessage]="question5.incompleteMessage"
-                    [incorrectMessage]="question5.incorrectMessage"
-                    (onAnswerEvaluated)="onQuestion5Answered($event)">
-                </app-multiple-choice>
-
-                <details class="exkurs-accordion">
-                    <summary class="exkurs-summary">EXKURS: Definition des Phasenraums</summary>
-                    <div class="exkurs-content">
-                        <p>Eine besonders anschauliche Darstellung des Schwingungsverhaltens ist im Phasenraum möglich. Für ein punktförmiges Teilchen im dreidimensionalen Ortsraum ist der Phasenraum als Menge aller Sechsertupel aus den drei Orts- und Impulskoordinaten definiert.</p>
-                        <p>Beim Pohlschen Pendel sind sowohl die Orts- als auch die Impulskoordinate eindimensionale Größen. Der Phasenraum reduziert sich dadurch auf zwei Dimensionen.</p>
-                        <p>
-                            Für einen ungedämpften Oszillator erhält man als Trajektorie einen Kreis.
-                            Sein Radius hängt mit der Energie des Systems zusammen: <span [innerHTML]="formulas.phaseRadius"></span>.
-                            Für einen schwach gedämpften Oszillator erhält man hingegen eine Spirale zum Nullpunkt.
-                        </p>
-                    </div>
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Definition des Phasenraums</summary>
+                    <div class="spoiler-content" [innerHTML]="freeOscText2d"></div>
                 </details>
 
-                <app-multiple-choice
-                    [questionId]="question6.questionId"
-                    [question]="question6.question"
-                    [options]="question6.options"
-                    [correctAnswers]="question6.correctAnswers"
-                    [containerId]="question6.containerId"
-                    [successMessage]="question6.successMessage"
-                    [incompleteMessage]="question6.incompleteMessage"
-                    [incorrectMessage]="question6.incorrectMessage"
-                    (onAnswerEvaluated)="onQuestion6Answered($event)">
-                </app-multiple-choice>
-            }
-
-            @if (currentView === 'free_osc3') {
-                <p>Am Ende dieses Kapitels gibt es drei mögliche Wege:</p>
-
-                <div class="decision-list">
-                    <article class="decision-card">
-                        <h2>Simulation anschauen</h2>
-                        <p>Ich möchte jetzt eine Simulation der freien Schwingung anschauen und den Einfluss verschiedener Parameter ausprobieren.</p>
-                        <a routerLink="/simulation/theory-undamped" class="btn">Zur Simulation →</a>
-                    </article>
-
-                    <article class="decision-card">
-                        <h2>Theorie vertiefen</h2>
-                        <p>Ich möchte vorher lieber noch mehr über die theoretischen Zusammenhänge zu gedämpften Schwingungen erfahren.</p>
-                        <a routerLink="/learning/t3-damped-oscillations" class="btn">Weiter zur Theorie →</a>
-                    </article>
-
-                    <article class="decision-card">
-                        <h2>Direkt zum Test</h2>
-                        <p>Ich fühle mich sicher im Thema und möchte direkt weiter zum Test zu den gedämpften Schwingungen.</p>
-                        <a routerLink="/test/t-damped-osc" class="btn">Zum Test →</a>
-                    </article>
+                <div>
+                    <app-multiple-choice
+                        [questionId]="question6.questionId"
+                        [question]="question6.question"
+                        [options]="question6.options"
+                        [correctAnswers]="question6.correctAnswers"
+                        [containerId]="question6.containerId"
+                        [successMessage]="question6.successMessage"
+                        [incompleteMessage]="question6.incompleteMessage"
+                        [incorrectMessage]="question6.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion6Answered($event)">
+                    </app-multiple-choice>
                 </div>
             }
 
@@ -270,7 +159,7 @@
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()">Weiter zu Gedämpfte Schwingungen →</button>
+                <button class="btn" (click)="goForward()">Weiter zu gedämpften Schwingungen →</button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>
             }
