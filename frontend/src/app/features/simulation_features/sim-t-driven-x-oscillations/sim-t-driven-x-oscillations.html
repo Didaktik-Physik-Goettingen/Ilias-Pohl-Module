@@ -75,8 +75,10 @@
             @if (devMode.isEnabled) {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
-            @if (interactionThresholdReached) {
-                <button class="btn" (click)="goForward()">Weiter →</button>
+            @if (navigationFlow && interactionThresholdReached) {
+                <button class="btn" (click)="goForward()">
+                    {{ navigationFlow === 'sim-first' ? 'Weiter zum Lernmodul →' : 'Weiter zur Anleitung →' }}
+                </button>
             }
         </div>
     </div>

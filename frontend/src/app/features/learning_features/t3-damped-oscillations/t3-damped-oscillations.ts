@@ -272,7 +272,9 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
             Der Faktor 2 in $2\\gamma$ erweist sich in der Lösung als rechnerisch günstig.<br><br>
 
             Diese Gleichung nennt man <strong>gedämpft</strong>, weil die Reibungskraft proportional zur
-            Geschwindigkeit ist, und <strong>frei</strong>, weil keine äußere Anregung wirkt (homogene DGL).<br><br>
+            Geschwindigkeit ist, und <strong>frei</strong>, weil keine äußere Anregung wirkt (
+			<a href="#glossary-hom-dgl" class="glossary-link">homogene Differentialgleichung</a>
+			).<br><br>
 
             Zur Lösung verwendet man den
             <a href="#glossary-exponential-ansatz" class="glossary-link">Exponentialansatz</a>
@@ -288,7 +290,9 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
         `);
 
         this.t3Text1e = this.sanitizer.bypassSecurityTrustHtml(`
-            Mit der gedämpften Eigenfrequenz $\\omega_e := \\sqrt{\\omega_0^2 - \\gamma^2}$ lautet die
+            Mit der gedämpften 
+			<a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a> 
+			$\\omega_e := \\sqrt{\\omega_0^2 - \\gamma^2}$ lautet die
             allgemeine Lösung:
             $$x(t) = e^{-\\gamma t}\\!\\left(c_1\\,e^{-i\\omega_e t} + c_2\\,e^{i\\omega_e t}\\right)$$
             Der Ausdruck unter der Wurzel bestimmt, welcher der drei Dämpfungsfälle vorliegt:
@@ -392,7 +396,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
 
         // Page 5 — Zusammenfassung
         this.t3Text5a = this.sanitizer.bypassSecurityTrustHtml(`
-            Die drei Dämpfungsfälle lassen sich anhand des Verhältnisses $\\gamma/\\omega_0$ klassifizieren:<br><br>
+            Die drei Dämpfungsfälle lassen sich anhand des Verhältnisses $\\gamma/\\omega_0$ klassifizieren:
             <ul>
                 <li><strong>Schwingfall</strong> ($\\gamma < \\omega_0$): periodische Schwingung mit exponentiell abnehmender Amplitude</li>
                 <li><strong>Kriechfall</strong> ($\\gamma > \\omega_0$): monotones Abklingen, langsamer als der Grenzfall</li>

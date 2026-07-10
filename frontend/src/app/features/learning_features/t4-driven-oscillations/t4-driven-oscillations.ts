@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
+import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
 
 @Component({
     selector: 'app-t4-driven-oscillations',
-    imports: [CommonModule, RouterLink, MultipleChoice],
+    imports: [CommonModule, RouterLink, MultipleChoice, ImageChoice],
     templateUrl: './t4-driven-oscillations.html',
     styleUrl: './t4-driven-oscillations.css',
 })
@@ -167,10 +168,10 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         questionId: 't4-q6-einschwing',
         question: 'Bei welcher der folgenden Abbildungen kann der Einschwingvorgang als abgeschlossen angesehen werden? (Das graue Kreuz markiert den ersten, das rote Kreuz den letzten Messwert.)',
         options: [
-            { value: 'answer1', label: 'Abbildung a)' },
-            { value: 'answer2', label: 'Abbildung b)' },
-            { value: 'answer3', label: 'Abbildung c)' },
-            { value: 'answer4', label: 'Abbildung d)' },
+            { value: 'answer1', imageSrc: 'assets/images/t4_driven_oscillations/17_phasenraumdiagramme_und_stationaere_schwingung_1.svg' },
+            { value: 'answer2', imageSrc: 'assets/images/t4_driven_oscillations/18_phasenraumdiagramme_und_stationaere_schwingung_2.svg' },
+            // { value: 'answer3', imageSrc: 'assets/images/t4_driven_oscillations/19_phasenraumdiagramme_und_stationaere_schwingung_3.svg' },
+            { value: 'answer4', imageSrc: 'assets/images/t4_driven_oscillations/20_phasenraumdiagramme_und_stationaere_schwingung_4.svg' },
         ],
         correctAnswers: ['answer4'],
         containerId: 't4-q6-container',
@@ -295,7 +296,9 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         `);
 
         this.t4Text1c = this.sanitizer.bypassSecurityTrustHtml(`
-            Diese DGL nennt man:
+            Diese 
+            <a href="#glossary-inhom-dgl" class="glossary-link">Differentialgleichung</a>
+            nennt man:
             <ul>
                 <li><strong>gedämpft</strong>, weil eine zur Geschwindigkeit proportionale Reibungskraft wirkt,</li>
                 <li><strong>getrieben</strong>, weil eine äußere, periodische Anregung im System wirkt, und</li>
@@ -328,16 +331,20 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         `);
 
         this.t4Text2c = this.sanitizer.bypassSecurityTrustHtml(`
-            Diese Gleichung ist formal identisch mit der Normalform des linearen Falls – lediglich die
+            Diese Gleichung ist formal identisch mit der Normalform des linearen Falls --- lediglich die
             Auslenkung $x$ wird durch den Winkel $\\varphi$ ersetzt und $\\gamma$ durch $\\beta$.<br><br>
-            Zur Lösung der <strong>inhomogenen</strong> DGL addiert man die Lösungen des homogenen
+            Zur Lösung der 
+            <a href="#glossary-inhom-dgl" class="glossary-link"><strong>inhomogenen</strong> Differentialgleichung</a>
+            addiert man die Lösungen des homogenen
             und partikulären Anteils:
             $$\\varphi(t) = \\varphi_h(t) + \\varphi_p(t)$$
         `);
 
         // Page 3 — Komplexe Erweiterung
         this.t4Text3a = this.sanitizer.bypassSecurityTrustHtml(`
-            Um die inhomogene DGL zu lösen, nutzt man einen eleganten Trick: Die reelle Inhomogenität
+            Um die 
+            <a href="#glossary-inhom-dgl" class="glossary-link">inhomogene Differentialgleichung</a> 
+            zu lösen, nutzt man einen eleganten Trick: Die reelle Inhomogenität
             $N\\cos(\\omega t)$ wird als Realteil einer komplexen Exponentialfunktion geschrieben:
             $$N\\cos(\\omega t) = \\operatorname{Re}\\!\\left[N e^{i\\omega t}\\right]$$
             Gleichzeitig lässt man zu, dass die Lösung $\\varphi$ komplex ist: $\\varphi \\to \\tilde{\\varphi}$.
@@ -351,15 +358,17 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
         this.t4Text3c = this.sanitizer.bypassSecurityTrustHtml(`
             Der Vorteil dieser Methode: Die komplexe Exponentialfunktion $e^{i\\omega t}$ verhält sich
-            unter Ableitung besonders einfach ($\\frac{d}{dt}e^{i\\omega t} = i\\omega e^{i\\omega t}$) –
+            unter Ableitung besonders einfach ($\\frac{d}{dt}e^{i\\omega t} = i\\omega e^{i\\omega t}$) ---
             es entstehen nur konstante Vorfaktoren, keine Übergänge zwischen Sinus und Cosinus.
             Das vereinfacht das Einsetzen des Ansatzes erheblich.
         `);
 
         // Page 4 — Partikuläre Lösung
         this.t4Text4a = this.sanitizer.bypassSecurityTrustHtml(`
-            Zur Lösung der komplexen inhomogenen DGL wählt man einen Ansatz, dessen Struktur der
-            Inhomogenität ähnelt – also eine komplexe Exponentialfunktion mit der <em>gleichen</em>
+            Zur Lösung der komplexen 
+            <a href="#glossary-inhom-dgl" class="glossary-link">inhomogenen Differentialgleichung</a> 
+            wählt man einen Ansatz, dessen Struktur der
+            Inhomogenität ähnelt - also eine komplexe Exponentialfunktion mit der <em>gleichen</em>
             Frequenz $\\omega$ wie die Anregung:
         `);
 
@@ -391,7 +400,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
         // Page 5 — Homogene Lösung
         this.t4Text5a = this.sanitizer.bypassSecurityTrustHtml(`
-            Die homogene Lösung $\\varphi_h(t)$ – die Lösung <em>ohne</em> äußere Anregung – entspricht
+            Die homogene Lösung $\\varphi_h(t)$ --- die Lösung <em>ohne</em> äußere Anregung --- entspricht
             den drei Dämpfungsfällen aus der gedämpften freien Schwingung. Im realen Experiment liegt
             in der Regel der <strong>Schwingfall</strong> ($\\beta < \\omega_0$) vor:
         `);
@@ -402,19 +411,19 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         `);
 
         this.t4Text5spoiler = this.sanitizer.bypassSecurityTrustHtml(`
-            <strong>Schwache Dämpfung</strong> ($\\beta < \\omega_0$) – Schwingfall:
+            <strong>Schwache Dämpfung</strong> ($\\beta < \\omega_0$) --- Schwingfall:
             $$\\varphi_h(t) = e^{-\\beta t}\\!\\left(c_1\\cos(\\omega_d t) + c_2\\sin(\\omega_d t)\\right),
               \\quad \\omega_d = \\sqrt{\\omega_0^2-\\beta^2}$$
-            <strong>Kritische Dämpfung</strong> ($\\beta = \\omega_0$) – Aperiodischer Grenzfall:
+            <strong>Kritische Dämpfung</strong> ($\\beta = \\omega_0$) --- Aperiodischer Grenzfall:
             $$\\varphi_h(t) = (C_1 + C_2 t)\\,e^{-\\beta t}$$
-            <strong>Starke Dämpfung</strong> ($\\beta > \\omega_0$) – Kriechfall:
+            <strong>Starke Dämpfung</strong> ($\\beta > \\omega_0$) --- Kriechfall:
             $$\\varphi_h(t) = C_1 e^{\\lambda_1 t} + C_2 e^{\\lambda_2 t},
               \\quad \\lambda_{1,2} = -\\beta \\pm \\sqrt{\\beta^2 - \\omega_0^2} \\in \\mathbb{R}$$
         `);
 
         this.t4Text5c = this.sanitizer.bypassSecurityTrustHtml(`
             Die Konstanten $c_1, c_2$ ergeben sich in allen Fällen aus den Anfangsbedingungen.
-            Im <strong>stationären Zustand</strong> klingt die homogene Lösung vollständig ab –
+            Im <strong>stationären Zustand</strong> klingt die homogene Lösung vollständig ab ---
             übrig bleibt nur die partikuläre Lösung.
         `);
 
@@ -433,7 +442,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         this.t4Text6c = this.sanitizer.bypassSecurityTrustHtml(`
             Physikalisch überlagern sich zwei Schwingungen: die freie Schwingung $\\varphi_h$ und die
             erzwungene $\\varphi_p$. Nach einer gewissen <strong>Einschwingzeit</strong> klingt
-            $\\varphi_h(t)$ ab – danach schwingt das System nur noch mit der aufgezwungenen Frequenz
+            $\\varphi_h(t)$ ab --- danach schwingt das System nur noch mit der aufgezwungenen Frequenz
             $\\omega$ im <strong>stationären Zustand</strong>.<br><br>
             Im <strong>Phasenraumdiagramm</strong> ist der Abschluss des Einschwingvorgangs gut
             erkennbar: Die Trajektorie wird zu einer <strong>geschlossenen, stabilen Ellipse</strong>.
@@ -451,7 +460,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         `);
 
         this.t4Text7c = this.sanitizer.bypassSecurityTrustHtml(`
-            Die <strong>Resonanzfrequenz</strong> – bei der die Amplitude maximal wird – ist etwas
+            Die <strong>Resonanzfrequenz</strong> --- bei der die Amplitude maximal wird --- ist etwas
             kleiner als die Eigenfrequenz:
             $$\\omega_r = \\sqrt{\\omega_0^2 - 2\\beta^2}$$
             Mit zunehmender Dämpfung $\\beta$ verschiebt sich $\\omega_r$ stärker von $\\omega_0$ weg
@@ -472,8 +481,9 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
         this.t4Text8c = this.sanitizer.bypassSecurityTrustHtml(`
             Besonders charakteristisch: Wenn die Anregungsfrequenz genau der
-            <strong>Eigenfrequenz</strong> $\\omega_0$ entspricht, gilt stets
-            $\\Phi(\\omega_0) = \\pi/2$ – unabhängig von der Dämpfung. Diese Eigenschaft
+            <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a>
+            $\\omega_0$ entspricht, gilt stets
+            $\\Phi(\\omega_0) = \\pi/2$ - unabhängig von der Dämpfung. Diese Eigenschaft
             lässt sich im Experiment nutzen, um $\\omega_0$ zu bestimmen.<br><br>
             Für $\\omega < \\omega_0$ gilt $\\Phi < \\pi/2$ (Antrieb und System nahezu in Phase),
             für $\\omega > \\omega_0$ gilt $\\Phi > \\pi/2$ (System läuft dem Antrieb stark hinterher).
@@ -517,32 +527,40 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'driven_osc1') {
             this.router.navigate(['/decision/t-driven-oscillations']); return;
-        } else if (this.currentView === 'driven_osc2') { this.currentView = 'driven_osc1';
-        } else if (this.currentView === 'driven_osc3') { this.currentView = 'driven_osc2';
-        } else if (this.currentView === 'driven_osc4') { this.currentView = 'driven_osc3';
-        } else if (this.currentView === 'driven_osc5') { this.currentView = 'driven_osc4';
-        } else if (this.currentView === 'driven_osc6') { this.currentView = 'driven_osc5';
-        } else if (this.currentView === 'driven_osc7') { this.currentView = 'driven_osc6';
-        } else if (this.currentView === 'driven_osc8') { this.currentView = 'driven_osc7';
+        } else if (this.currentView === 'driven_osc2') { 
+            this.currentView = 'driven_osc1';
+        } else if (this.currentView === 'driven_osc3') { 
+            this.currentView = 'driven_osc2';
+        } else if (this.currentView === 'driven_osc4') { 
+            this.currentView = 'driven_osc3';
+        } else if (this.currentView === 'driven_osc5') { 
+            this.currentView = 'driven_osc4';
+        } else if (this.currentView === 'driven_osc6') { 
+            this.currentView = 'driven_osc5';
+        } else if (this.currentView === 'driven_osc7') { 
+            this.currentView = 'driven_osc6';
+        } else if (this.currentView === 'driven_osc8') { 
+            this.currentView = 'driven_osc7';
         }
         this.updateUrl(); this.renderMath();
     }
 
     goForward(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        if (this.currentView === 'driven_osc1' && !this.isCorrect1) return;
-        if (this.currentView === 'driven_osc2' && !(this.isCorrect2 && this.isCorrect3)) return;
-        if (this.currentView === 'driven_osc4' && !(this.isCorrect4 && this.isCorrect5)) return;
-        if (this.currentView === 'driven_osc6' && !this.isCorrect6) return;
-        if (this.currentView === 'driven_osc7' && !(this.isCorrect7 && this.isCorrect8 && this.isCorrect9)) return;
-        if (this.currentView === 'driven_osc8' && !(this.isCorrect10 && this.isCorrect11)) return;
-        if (this.currentView === 'driven_osc1') { this.currentView = 'driven_osc2';
-        } else if (this.currentView === 'driven_osc2') { this.currentView = 'driven_osc3';
-        } else if (this.currentView === 'driven_osc3') { this.currentView = 'driven_osc4';
-        } else if (this.currentView === 'driven_osc4') { this.currentView = 'driven_osc5';
-        } else if (this.currentView === 'driven_osc5') { this.currentView = 'driven_osc6';
-        } else if (this.currentView === 'driven_osc6') { this.currentView = 'driven_osc7';
-        } else if (this.currentView === 'driven_osc7') { this.currentView = 'driven_osc8';
+        if (this.currentView === 'driven_osc1') { 
+            this.currentView = 'driven_osc2';
+        } else if (this.currentView === 'driven_osc2') { 
+            this.currentView = 'driven_osc3';
+        } else if (this.currentView === 'driven_osc3') { 
+            this.currentView = 'driven_osc4';
+        } else if (this.currentView === 'driven_osc4') { 
+            this.currentView = 'driven_osc5';
+        } else if (this.currentView === 'driven_osc5') { 
+            this.currentView = 'driven_osc6';
+        } else if (this.currentView === 'driven_osc6') { 
+            this.currentView = 'driven_osc7';
+        } else if (this.currentView === 'driven_osc7') { 
+            this.currentView = 'driven_osc8';
         } else if (this.currentView === 'driven_osc8') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-t-driven', 'true');

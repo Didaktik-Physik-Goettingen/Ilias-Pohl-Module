@@ -79,8 +79,19 @@ export class SimTDampedOscillations implements OnInit, AfterViewInit, OnDestroy 
 
     ngOnDestroy() { if (this.raf) cancelAnimationFrame(this.raf); }
 
-    goBack()    { this.location.back(); }
-    goForward() { this.router.navigate(['/']); }
+    goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.location.back();
+    }
+
+    goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (this.navigationFlow === 'sim-first') {
+            this.router.navigate(['/learning/t2-damped-oscillations'], { queryParams: { flow: 'sim-first' } });
+        } else {
+            this.router.navigate(['/decision/t-driven-oscillations']);
+        }
+    }
 
     renderMath() {
         if (isPlatformBrowser(this.platformId)) {

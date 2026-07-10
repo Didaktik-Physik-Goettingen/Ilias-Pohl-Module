@@ -1,15 +1,20 @@
 <div class="container">
     <div class="card">
         @if (currentView === 'damped_osc1') {
-            <h1>Exponentialansatz <span class="page-subheadline">(1/5)</span></h1>
+            <h1>Gedämpfte Schwingungen (1/5)</h1>
+            <p class="page-subheadline">Exponentialansatz</p>
         } @else if (currentView === 'damped_osc2') {
-            <h1>Schwingfall <span class="page-subheadline">(2/5)</span></h1>
+            <h1>Gedämpfte Schwingungen (2/5)</h1>
+            <p class="page-subheadline">Schwingfall</p>
         } @else if (currentView === 'damped_osc3') {
-            <h1>Kriechfall <span class="page-subheadline">(3/5)</span></h1>
+            <h1>Gedämpfte Schwingungen (3/5)</h1>
+            <p class="page-subheadline">Kriechfall</p>
         } @else if (currentView === 'damped_osc4') {
-            <h1>Aperiodischer Grenzfall <span class="page-subheadline">(4/5)</span></h1>
+            <h1>Gedämpfte Schwingungen (4/5)</h1>
+            <p class="page-subheadline">Aperiodischer Grenzfall</p>
         } @else {
-            <h1>Zusammenfassung <span class="page-subheadline">(5/5)</span></h1>
+            <h1>Gedämpfte Schwingungen (5/5)</h1>
+            <p class="page-subheadline">Zusammenfassung</p>
         }
 
         <div class="content">
@@ -71,15 +76,18 @@
                     <div class="learning-lamp-text" [innerHTML]="t3Text2b"></div>
                 </div>
 
-                <img src="assets/images/theorie-strang/gedämpfte Schwingung/01_gedaempfte_schwingung_schwingfall.svg"
-                     alt="Zeitlicher Verlauf der gedämpften freien Schwingung"
-                     class="img-center">
-                <p class="img-caption"><em>Zeitlicher Verlauf der gedämpften freien Schwingung mit $x_0 > 0$, $v_0 = 0$ (blau). Die rote Kurve zeigt die Einhüllende des exponentiellen Amplitudenabfalls.</em></p>
-
-                <img src="assets/images/theorie-strang/Grundlagen/vergleich_daempfungen4gamma.png"
-                     alt="Vergleich zweier gedämpfter freier Schwingungen"
-                     class="img-center">
-                <p class="img-caption"><em>Vergleich zweier gedämpfter Schwingungen mit einfacher und vierfacher Dämpfung.</em></p>
+                <div class="image-pair">
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/01_gedaempfte_schwingung_schwingfall.svg"
+                             alt="Zeitlicher Verlauf der gedämpften freien Schwingung">
+                        <figcaption><em><b>Zeitlicher Verlauf der gedämpften freien Schwingung</b> mit $x_0 > 0$, $v_0 = 0$ (blau). Die rote Kurve zeigt die Einhüllende des exponentiellen Amplitudenabfalls.</em></figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/vergleich_daempfungen4gamma.png"
+                             alt="Vergleich zweier gedämpfter freier Schwingungen">
+                        <figcaption><em><b>Vergleich zweier gedämpfter Schwingungen</b> mit einfacher und vierfacher Dämpfung.</em></figcaption>
+                    </figure>
+                </div>
 
                 <div class="text-content">
                     <p [innerHTML]="t3Text2c"></p>
@@ -93,9 +101,9 @@
                     <div class="spoiler-content" [innerHTML]="t3Text2spoiler"></div>
                 </details>
 
-                <img src="assets/images/theorie-strang/gedämpfte Schwingung/phasenraum_10.png"
-                     alt="Aufeinanderfolgende Maxima der gedämpften Schwingung"
-                     class="img-center">
+                <img src="assets/images/t3_damped_oscillations/phasenraum_10.png"
+                    alt="Aufeinanderfolgende Maxima der gedämpften Schwingung"
+                    class="img-center img-sm">
                 <p class="img-caption"><em>Aufeinanderfolgende Maxima nehmen mit dem Faktor e<sup>−γT</sup> ab.</em></p>
 
                 <app-multiple-choice
@@ -165,19 +173,22 @@
                     <p [innerHTML]="t3Text3a"></p>
                 </div>
 
-                <img src="assets/images/theorie-strang/Grundlagen/kriechfall.png"
-                     alt="Kriechfall für Anfangsbedingungen x(0)=A, ẋ(0)=0"
-                     class="img-center">
-                <p class="img-caption"><em>Kriechfall für Anfangsbedingungen x(0) = A, ẋ(0) = 0.</em></p>
+                <div class="image-pair">
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/kriechfall.png"
+                            alt="Kriechfall für Anfangsbedingungen x(0)=A, ẋ(0)=0">
+                        <figcaption><em>Kriechfall für Anfangsbedingungen x(0) = A, ẋ(0) = 0.</em></figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/kriechfall2.png"
+                     alt="Kriechfall für Anfangsbedingungen x(0)=0, ẋ(0)=v₀">
+                        <figcaption><em>Kriechfall für Anfangsbedingungen x(0) = 0, ẋ(0) = v₀.</em></figcaption>
+                    </figure>  
+                </div>
 
                 <div class="learning-lamp">
                     <div class="learning-lamp-text" [innerHTML]="t3Text3b"></div>
                 </div>
-
-                <img src="assets/images/theorie-strang/Grundlagen/kriechfall2.png"
-                     alt="Kriechfall für Anfangsbedingungen x(0)=0, ẋ(0)=v₀"
-                     class="img-center">
-                <p class="img-caption"><em>Kriechfall für Anfangsbedingungen x(0) = 0, ẋ(0) = v₀.</em></p>
             }
 
             <!-- ── Page 4: Aperiodischer Grenzfall ── -->
@@ -189,7 +200,7 @@
                     <div class="learning-lamp-text" [innerHTML]="t3Text4b"></div>
                 </div>
 
-                <img src="assets/images/theorie-strang/gedämpfte Schwingung/Demtroeder_I_Abb11-18.png"
+                <img src="assets/images/t3_damped_oscillations/Demtroeder_I_Abb11-18.png"
                      alt="Auslenkung für kritische und überkritische Dämpfung"
                      class="img-center img-md">
                 <p class="img-caption"><em>Auslenkung des Oszillators für kritische Dämpfung (rot, aperiodischer Grenzfall) und überkritische Dämpfung (schwarz, Kriechfall).</em></p>
@@ -213,13 +224,13 @@
 
             <!-- ── Page 5: Zusammenfassung ── -->
             @if (currentView === 'damped_osc5') {
-                <div class="text-content">
-                    <p [innerHTML]="t3Text5a"></p>
+                <div class="glossary-write">
+                    <div class="glossary-text" [innerHTML]="t3Text5a"></div>
                 </div>
 
-                <img src="assets/images/theorie-strang/Grundlagen/vergleich_faelle.png"
-                     alt="Vergleich aller drei Dämpfungsfälle"
-                     class="img-center">
+                <img src="assets/images/t3_damped_oscillations/vergleich_faelle.png"
+                    alt="Vergleich aller drei Dämpfungsfälle"
+                    class="img-center">
                 <p class="img-caption"><em>Alle drei Dämpfungsfälle im Vergleich: Schwingfall, aperiodischer Grenzfall und Kriechfall.</em></p>
 
                 <app-multiple-choice

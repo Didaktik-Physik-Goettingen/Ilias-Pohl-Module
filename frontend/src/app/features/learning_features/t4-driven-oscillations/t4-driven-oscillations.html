@@ -1,21 +1,29 @@
 <div class="container">
     <div class="card">
         @if (currentView === 'driven_osc1') {
-            <h1>Getriebener harmonischer Oszillator <span class="page-subheadline">(1/8)</span></h1>
+            <h1>Getriebene Schwingungen (1/8)</h1>
+            <p class="page-subheadline">Getriebener harmonischer Oszillator</p>
         } @else if (currentView === 'driven_osc2') {
-            <h1>DGL des Pohlschen Rads <span class="page-subheadline">(2/8)</span></h1>
+            <h1>Getriebene Schwingungen (2/8)</h1>
+            <p class="page-subheadline">DGL des Pohlschen Rads</p>
         } @else if (currentView === 'driven_osc3') {
-            <h1>Komplexe Erweiterung der DGL <span class="page-subheadline">(3/8)</span></h1>
+            <h1>Getriebene Schwingungen (3/8)</h1>
+            <p class="page-subheadline">Komplexe Erweiterung der DGL</p>
         } @else if (currentView === 'driven_osc4') {
-            <h1>Partikuläre Lösung <span class="page-subheadline">(4/8)</span></h1>
+            <h1>Getriebene Schwingungen (4/8)</h1>
+            <p class="page-subheadline">Partikuläre Lösung</p>
         } @else if (currentView === 'driven_osc5') {
-            <h1>Homogene Lösung <span class="page-subheadline">(5/8)</span></h1>
+            <h1>Getriebene Schwingungen (5/8)</h1>
+            <p class="page-subheadline">Homogene Lösung</p>
         } @else if (currentView === 'driven_osc6') {
-            <h1>Vollständige Lösung und Einschwingvorgang <span class="page-subheadline">(6/8)</span></h1>
+            <h1>Getriebene Schwingungen (6/8)</h1>
+            <p class="page-subheadline">Vollständige Lösung und Einschwingvorgang</p>
         } @else if (currentView === 'driven_osc7') {
-            <h1>Amplitude <span class="page-subheadline">(7/8)</span></h1>
+            <h1>Getriebene Schwingungen (7/8)</h1>
+            <p class="page-subheadline">Amplitude</p>
         } @else {
-            <h1>Phasenverschiebung <span class="page-subheadline">(8/8)</span></h1>
+            <h1>Getriebene Schwingungen (8/8)</h1>
+            <p class="page-subheadline">Phasenverschiebung</p>
         }
 
         <div class="content">
@@ -28,8 +36,8 @@
                 <div class="learning-lamp">
                     <div class="learning-lamp-text" [innerHTML]="t4Text1b"></div>
                 </div>
-                <div class="text-content">
-                    <p [innerHTML]="t4Text1c"></p>
+                <div class="glossary-write">
+                    <div class="glossary-text" [innerHTML]="t4Text1c"></div>
                 </div>
 
                 <app-multiple-choice
@@ -47,8 +55,8 @@
 
             <!-- ── Page 2: DGL des Pohlschen Rads ── -->
             @if (currentView === 'driven_osc2') {
-                <div class="text-content">
-                    <p [innerHTML]="t4Text2a"></p>
+                <div class="glossary-write">
+                    <div class="glossary-text" [innerHTML]="t4Text2a"></div>
                 </div>
                 <div class="learning-lamp">
                     <div class="learning-lamp-text" [innerHTML]="t4Text2b"></div>
@@ -172,30 +180,7 @@
                     <p [innerHTML]="t4Text6c"></p>
                 </div>
 
-                <div class="image-answer-grid">
-                    <figure>
-                        <img src="assets/images/theorie-strang/abbildungen/17_phasenraumdiagramme_und_stationaere_schwingung_1.svg"
-                             alt="Phasenraumdiagramm a)" class="img-center">
-                        <figcaption>a)</figcaption>
-                    </figure>
-                    <figure>
-                        <img src="assets/images/theorie-strang/abbildungen/18_phasenraumdiagramme_und_stationaere_schwingung_2.svg"
-                             alt="Phasenraumdiagramm b)" class="img-center">
-                        <figcaption>b)</figcaption>
-                    </figure>
-                    <figure>
-                        <img src="assets/images/theorie-strang/abbildungen/19_phasenraumdiagramme_und_stationaere_schwingung_3.svg"
-                             alt="Phasenraumdiagramm c)" class="img-center">
-                        <figcaption>c)</figcaption>
-                    </figure>
-                    <figure>
-                        <img src="assets/images/theorie-strang/abbildungen/20_phasenraumdiagramme_und_stationaere_schwingung_4.svg"
-                             alt="Phasenraumdiagramm d)" class="img-center">
-                        <figcaption>d)</figcaption>
-                    </figure>
-                </div>
-
-                <app-multiple-choice
+                <app-image-choice
                     [questionId]="question6.questionId"
                     [question]="question6.question"
                     [options]="question6.options"
@@ -205,7 +190,7 @@
                     [incompleteMessage]="question6.incompleteMessage"
                     [incorrectMessage]="question6.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion6Answered($event)">
-                </app-multiple-choice>
+                </app-image-choice>
             }
 
             <!-- ── Page 7: Amplitude ── -->
@@ -217,7 +202,7 @@
                     <div class="learning-lamp-text" [innerHTML]="t4Text7b"></div>
                 </div>
 
-                <img src="assets/images/theorie-strang/ged%C3%A4mpfte%20Schwingung/amplitude_damping.png"
+                <img src="assets/images/t4_driven_oscillations/amplitude_damping.png"
                      alt="Normierte Amplitude für unterschiedliche Dämpfungen in Abhängigkeit von der Anregungsfrequenz"
                      class="img-center img-md">
                 <p class="img-caption"><em>Normierte Amplitude für unterschiedliche Dämpfungen in Abhängigkeit von der Anregungsfrequenz. Die graue gestrichelte Kurve zeigt die normierte Amplitude bei der Resonanzfrequenz.</em></p>
@@ -277,7 +262,7 @@
                         <p [innerHTML]="t4Text8c"></p>
                     </div>
                     <div class="image-content">
-                        <img src="assets/images/theorie-strang/abbildungen/25_phase.svg"
+                        <img src="assets/images/t4_driven_oscillations/25_phase.svg"
                              alt="Phasenverschiebung in Abhängigkeit von der Anregungsfrequenz"
                              class="img-center">
                         <p class="img-caption"><em>Phasenverschiebung Φ(ω) für unterschiedliche Dämpfungskonstanten β. Bei ω = ω₀ gilt stets Φ = π/2.</em></p>
@@ -308,9 +293,9 @@
                     (onAnswerEvaluated)="onQuestion11Answered($event)">
                 </app-multiple-choice>
 
-                <img src="assets/images/theorie-strang/abbildungen/35_illustration_zur_phasenverschiebung.svg"
+                <img src="assets/images/t4_driven_oscillations/35_illustration_zur_phasenverschiebung.svg"
                      alt="Veranschaulichung der Phasenverschiebung zwischen Antrieb und Schwungrad"
-                     class="img-center">
+                     class="img-center img-lg">
                 <p class="img-caption"><em>Veranschaulichung der Phasenverschiebung: Der Antrieb eilt dem Schwungrad um die Phase Φ voraus.</em></p>
             }
 
