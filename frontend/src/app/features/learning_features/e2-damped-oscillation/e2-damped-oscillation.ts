@@ -16,7 +16,7 @@ import { DevModeService } from '../../../core/services/dev-mode';
 	templateUrl: './e2-damped-oscillation.html',
 	styleUrl: './e2-damped-oscillation.css',
 })
-export class E2DampedOscillation implements AfterViewInit {
+export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -327,6 +327,7 @@ export class E2DampedOscillation implements AfterViewInit {
 
     // going back shows the previous subpage / home page
     goBack() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'damped_osc1') {
             this.router.navigate(["/decision/e-damped-oscillations"]);
             return;
@@ -342,13 +343,15 @@ export class E2DampedOscillation implements AfterViewInit {
 
     // go forward shows next subpage / page
     goForward() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'damped_osc1') {
             this.currentView = 'damped_osc2';
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc3';
         } else if (this.currentView === 'damped_osc3') {
             if (this.navigationFlow === 'learning-first') {
-                this.router.navigate(['/simulation/sim-e-damped-osc'], { queryParams: { flow: 'learning-first' } });
+                sessionStorage.setItem('learning-done-e-damped', 'true');
+                this.router.navigate(['/decision/e-damped-oscillations']);
             } else {
                 this.router.navigate(['/decision/e-driven-oscillations']);
             }

@@ -1,0 +1,64 @@
+<div class="container">
+    <div class="card">
+        <h1>Einstieg Theorie</h1>
+
+        <div class="content">
+            <div class="glossary-write">
+                <div class="glossary-text">
+                    <p>
+                        <strong>Beachten Sie:</strong>
+                        In diesem Versuch beschäftigen Sie sich nur mit eindimensionalen Bewegungen.
+                        Auch der theoretische Überblick beschränkt sich daher auf diese Betrachtung.
+                        Wenn Sie sich für die Weiterführung in mehreren Dimensionen interessieren,
+                        dann folgen Sie an gegebener Stelle den Hinweisen.
+                    </p>
+                </div> 
+            </div>
+            <div class="text-image-container">
+                <div class="text-content">
+                    <p [innerHTML]="introTheoText1a"></p>
+                </div>
+                <div class="image-content">
+                    <img src="assets/images/t1_intro_theory/Feder_Grundlagen.png" alt="Schwungrad mit Massestück">
+                </div>
+            </div>
+            <div class="learning-lamp">
+                <div class="learning-lamp-text" [innerHTML]="introTheoText1b"></div>
+            </div>
+            <div class="text-content">
+                <p [innerHTML]="introTheoText1c"></p>
+            </div>
+
+            <app-multiple-choice
+                [questionId]="question1.questionId"
+                [question]="question1.question"
+                [options]="question1.options"
+                [correctAnswers]="question1.correctAnswers"
+                [containerId]="question1.containerId"
+                [successMessage]="question1.successMessage"
+                [incompleteMessage]="question1.incompleteMessage"
+                [incorrectMessage]="question1.incorrectMessage"
+                (onAnswerEvaluated)="onQuestion1Answered($event)">
+            </app-multiple-choice>
+
+            @if (isCorrect1) {
+                <p>Gelangen Sie <a class="glossary-link" routerLink="/test/t-damped-osc">hier direkt zum Test zu gedämpften Schwingungen</a>.</p>
+            }
+
+            <div class="text-content">
+                <p [innerHTML]="introTheoText1d"></p>
+            </div>
+            <img src="assets/images/t1_intro_theory/schwingung0.svg"
+                alt="Kosinusförmige freie Schwingung"
+                class="img-center">
+
+        </div>
+
+        <div class="button-container">
+                @if (devMode.isEnabled) {
+                    <button routerLink="/" class="btn btn-back">← Zurück zur Startseite</button>
+                }
+            <button routerLink="/learning/t2-free-oscillations" class="btn">Weiter zu freien Schwingungen →</button>
+        </div>
+    </div>
+</div>

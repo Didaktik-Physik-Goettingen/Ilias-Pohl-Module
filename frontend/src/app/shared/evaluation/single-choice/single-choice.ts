@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, Inject, PLATFORM_ID } f
 import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 
 
@@ -41,6 +42,7 @@ export class SingleChoice implements OnInit {
     @Output() onCorrectAnswer = new EventEmitter<void>();
     @Output() onAnswerEvaluated = new EventEmitter<boolean>();
 
+    shuffledOptions: QuestionOption[] = [];
     showResult = false;
     isCorrect = false;
     resultMessage: SafeHtml = '';
@@ -50,11 +52,14 @@ export class SingleChoice implements OnInit {
     constructor(
         private sanitizer: DomSanitizer,
         private trackingService: ResultsTracking,
+        private shuffleOrder: ShuffleOrder,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
 
     ngOnInit() {
+        const order = this.shuffleOrder.getOrCreate(this.questionId, this.options.length);
+        this.shuffledOptions = order.map(i => this.options[i]);
         this.restorePreviousAnswer();
     }
 

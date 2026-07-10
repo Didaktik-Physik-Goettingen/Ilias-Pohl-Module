@@ -3,7 +3,7 @@
         <h3 class="test-question" [innerHTML]="question"></h3>
         <p class="test-instruction" [innerHTML]="questionInstruction"></p>
         <div class="image-options-grid">
-            @for (option of options; track option.value; let i = $index) {
+            @for (option of shuffledOptions; track option.value; let i = $index) {
             <div
                 class="image-option"
                 [class.selected]="selectedAnswer === option.value"

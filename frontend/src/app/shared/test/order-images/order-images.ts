@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 
 
@@ -43,11 +44,10 @@ export class TestOrderImages implements OnInit {
     feedbackMessage = '';
 
 
-    constructor(private testTracking: TestTracking) {}
+    constructor(private testTracking: TestTracking, private shuffleOrder: ShuffleOrder) {}
 
 
     ngOnInit() {
-        // Check if this question was already answered
         this.restorePreviousAnswer();
     }
 
@@ -83,8 +83,8 @@ export class TestOrderImages implements OnInit {
             
             console.log(`Restored test question: ${this.questionId} (${this.pointsAwarded}/${this.maxPoints} points)`);
         } else {
-            // First time - shuffle images initially
-            this.orderedImages = [...this.images];
+            const order = this.shuffleOrder.getOrCreate(this.questionId, this.images.length);
+            this.orderedImages = order.map(i => this.images[i]);
         }
     }
 

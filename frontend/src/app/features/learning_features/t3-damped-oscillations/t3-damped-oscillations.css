@@ -1,0 +1,30 @@
+.image-pair {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    margin: 1rem 0;
+}
+
+.image-pair figure {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+.image-pair figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.image-pair figcaption {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--grau-70, #555);
+    text-align: center;
+}
+
+.img-center.img-lg { max-width: 750px; }
+.img-center.img-sm { max-width: 400px; }

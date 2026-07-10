@@ -28,6 +28,7 @@
     --bg-primary: #f0f2f5;
     --bg-secondary: var(--altweiss);
     --text-primary: var(--uni-blau-1);
+    /* --text-primary: black; */
     --text-secondary: var(--uni-blau-2);
     --card-bg: #ffffff;
     --border-color: rgba(21, 50, 104, 0.08);
@@ -92,7 +93,7 @@ body {
     display: flex;
     flex-direction: column;
 	text-align: justify;
-	font-size: 0.8rem;
+	font-size: 1rem;
 }
 
 /* app container - full viewport height */
@@ -166,7 +167,7 @@ main {
 
 /* Container for page content */
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 2rem;
     width: 100%;
@@ -328,6 +329,37 @@ nav a {
     line-height: 1.7;
 }
 
+/* learning pages: formula/key-result highlight box — hardcoded yellow, theme-invariant */
+.learning-lamp {
+    position: relative;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem 1.5rem 1rem 3.5rem;
+    background: linear-gradient(rgba(255, 197, 131, 0.15), rgba(255, 197, 131, 0.15)) #ffffff;
+    border: 2px solid rgb(255, 197, 131);
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(255, 197, 131, 0.35);
+    transition: all 0.3s ease;
+}
+
+.learning-lamp::before {
+    content: '💡';
+    position: absolute;
+    left: 0.75rem;
+    top: 0.9rem;
+    font-size: 1.4rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+.learning-lamp-text {
+    color: var(--uni-blau-1);
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 500;
+}
+
 nav a:hover {
     border-bottom: 2px solid var(--sky-blue);
 }
@@ -335,6 +367,19 @@ nav a:hover {
 /* Utility classes */
 .text-center {
     text-align: center;
+}
+
+/* centred, width-capped image for learning-page figures */
+.img-center {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 1rem auto;
+}
+
+.img-caption {
+    margin-bottom: 1rem;
 }
 
 /* ── Glossary overlay ─────────────────────────────────────────────────────── */

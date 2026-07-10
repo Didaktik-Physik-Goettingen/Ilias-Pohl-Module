@@ -1,0 +1,42 @@
+<div class="container">
+    <div class="card">
+        <h1>Getriebene Schwingungen: Wie möchten Sie fortfahren?</h1>
+
+        <p>
+            Sie haben nun unterschiedliche Optionen innerhalb dieser Lerneinheit weiterzugehen:
+        </p>
+
+        <div class="decision-options">
+            <div class="decision-option decision-option-learning" [class.decision-option--disabled]="learningCompleted && !devMode.isEnabled">
+                <h3>Lernmodul</h3>
+                <p>Zuerst mit den mathematischen Beschreibungen zu getriebenen, gedämpften Schwingungen fortfahren.</p>
+                <img src="assets/decision/learn.png" alt="Lernmodul" class="decision-option-img">
+                <button (click)="navigateToLearning()" class="decision-btn decision-btn-learning" [disabled]="learningCompleted && !devMode.isEnabled">Zum Lernmodul →</button>
+            </div>
+
+            <div class="decision-option decision-option-simulation">
+                <h3>Simulation</h3>
+                <p>Zunächst anhand einer Simulation die Einflüsse unterschiedlicher Parameter auf getriebene Schwingungen ausprobieren.</p>
+                <img src="assets/decision/simulation.png" alt="Simulation" class="decision-option-img">
+                <button (click)="navigateToSimulation()" class="decision-btn decision-btn-simulation">Zur Simulation →</button>
+            </div>
+
+            <div class="decision-option decision-option-test" [class.decision-option--disabled]="testDisabled && !devMode.isEnabled">
+                <h3>Test</h3>
+                <p>Testen Sie direkt Ihr Wissen zu getriebenen, gedämpften Schwingungen.</p>
+                <img src="assets/decision/test.png" alt="Test" class="decision-option-img">
+                <button (click)="router.navigate([testLink])" class="decision-btn decision-btn-test" [disabled]="testDisabled && !devMode.isEnabled">Zum Test →</button>
+            </div>
+        </div>
+
+        
+        <div class="button-container">
+            @if (devMode.isEnabled) {
+                <button class="btn btn-back" (click)="goBack()">← Zurück zu gedämpften Schwingungen</button>
+            }
+            @if (learningCompleted && !devMode.isEnabled || devMode.isEnabled) {
+                <button class="btn" (click)="navigateNext()">Weiter zur Simulation →</button>
+            }
+        </div>
+    </div>
+</div>

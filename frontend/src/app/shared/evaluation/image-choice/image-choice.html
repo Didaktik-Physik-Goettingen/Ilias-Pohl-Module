@@ -4,7 +4,7 @@
         
         <div class="image-options-grid">
             <div 
-                *ngFor="let option of options; let i = index"
+                *ngFor="let option of shuffledOptions; let i = index"
                 class="image-option"
                 [class.selected]="isSelected(option.value)"
                 [class.disabled]="isCorrect"

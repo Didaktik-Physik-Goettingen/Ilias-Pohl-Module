@@ -38,8 +38,8 @@
                         <p [innerHTML]="drivenOscText1a"></p>
                     </div>
                 </div>
-                <div class="glossary-lamp">
-                    <div class="glossary-lamp-text" [innerHTML]="drivenOscText1b"></div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="drivenOscText1b"></div>
                 </div>
                 <div class="text-content">
                     <p [innerHTML]="drivenOscText1c"></p>
@@ -64,7 +64,7 @@
                     <p [innerHTML]="drivenOscText2a"></p>
                 </div>
                 <details class="spoiler">
-                    <summary class="spoiler-summary">Detaillierte Lösung der Differentialgleichung - nicht für den Versuch erforderlich</summary>
+                    <summary class="spoiler-summary">EXKURS: Detaillierte Lösung der Differentialgleichung - nicht für den Versuch erforderlich</summary>
                     <div class="spoiler-content" [innerHTML]="drivenOscText2b"></div>
                 </details>
                 <div class="text-content">
@@ -218,7 +218,7 @@
 
             @if (isLastPage) {
                 <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter mit der Simulation →' : 'Weiter zur Anleitung →' }}
+                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zur Anleitung →' }}
                 </button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>

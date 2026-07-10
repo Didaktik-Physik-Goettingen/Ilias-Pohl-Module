@@ -1,0 +1,284 @@
+<div class="container">
+    <div class="card">
+        @if (currentView === 'damped_osc1') {
+            <h1>Gedämpfte Schwingungen (1/5)</h1>
+            <p class="page-subheadline">Exponentialansatz</p>
+        } @else if (currentView === 'damped_osc2') {
+            <h1>Gedämpfte Schwingungen (2/5)</h1>
+            <p class="page-subheadline">Schwingfall</p>
+        } @else if (currentView === 'damped_osc3') {
+            <h1>Gedämpfte Schwingungen (3/5)</h1>
+            <p class="page-subheadline">Kriechfall</p>
+        } @else if (currentView === 'damped_osc4') {
+            <h1>Gedämpfte Schwingungen (4/5)</h1>
+            <p class="page-subheadline">Aperiodischer Grenzfall</p>
+        } @else {
+            <h1>Gedämpfte Schwingungen (5/5)</h1>
+            <p class="page-subheadline">Zusammenfassung</p>
+        }
+
+        <div class="content">
+
+            <!-- ── Page 1: Exponentialansatz ── -->
+            @if (currentView === 'damped_osc1') {
+                <div class="text-content">
+                    <p [innerHTML]="t3Text1a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t3Text1b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t3Text1c"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t3Text1d"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t3Text1e"></p>
+                </div>
+
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Herleitung der Bestimmungsgleichung</summary>
+                    <div class="spoiler-content" [innerHTML]="t3Text1spoiler"></div>
+                </details>
+
+                <app-multiple-choice
+                    [questionId]="question1.questionId"
+                    [question]="question1.question"
+                    [options]="question1.options"
+                    [correctAnswers]="question1.correctAnswers"
+                    [containerId]="question1.containerId"
+                    [successMessage]="question1.successMessage"
+                    [incompleteMessage]="question1.incompleteMessage"
+                    [incorrectMessage]="question1.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion1Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question2.questionId"
+                    [question]="question2.question"
+                    [options]="question2.options"
+                    [correctAnswers]="question2.correctAnswers"
+                    [containerId]="question2.containerId"
+                    [successMessage]="question2.successMessage"
+                    [incompleteMessage]="question2.incompleteMessage"
+                    [incorrectMessage]="question2.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion2Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 2: Schwingfall ── -->
+            @if (currentView === 'damped_osc2') {
+                <div class="text-content">
+                    <p [innerHTML]="t3Text2a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t3Text2b"></div>
+                </div>
+
+                <div class="image-pair">
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/01_gedaempfte_schwingung_schwingfall.svg"
+                             alt="Zeitlicher Verlauf der gedämpften freien Schwingung">
+                        <figcaption><em><b>Zeitlicher Verlauf der gedämpften freien Schwingung</b> mit $x_0 > 0$, $v_0 = 0$ (blau). Die rote Kurve zeigt die Einhüllende des exponentiellen Amplitudenabfalls.</em></figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/vergleich_daempfungen4gamma.png"
+                             alt="Vergleich zweier gedämpfter freier Schwingungen">
+                        <figcaption><em><b>Vergleich zweier gedämpfter Schwingungen</b> mit einfacher und vierfacher Dämpfung.</em></figcaption>
+                    </figure>
+                </div>
+
+                <div class="text-content">
+                    <p [innerHTML]="t3Text2c"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t3Text2d"></div>
+                </div>
+
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Herleitung des logarithmischen Dekrements</summary>
+                    <div class="spoiler-content" [innerHTML]="t3Text2spoiler"></div>
+                </details>
+
+                <img src="assets/images/t3_damped_oscillations/phasenraum_10.png"
+                    alt="Aufeinanderfolgende Maxima der gedämpften Schwingung"
+                    class="img-center img-sm">
+                <p class="img-caption"><em>Aufeinanderfolgende Maxima nehmen mit dem Faktor e<sup>−γT</sup> ab.</em></p>
+
+                <app-multiple-choice
+                    [questionId]="question3.questionId"
+                    [question]="question3.question"
+                    [options]="question3.options"
+                    [correctAnswers]="question3.correctAnswers"
+                    [containerId]="question3.containerId"
+                    [successMessage]="question3.successMessage"
+                    [incompleteMessage]="question3.incompleteMessage"
+                    [incorrectMessage]="question3.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion3Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question4.questionId"
+                    [question]="question4.question"
+                    [options]="question4.options"
+                    [correctAnswers]="question4.correctAnswers"
+                    [containerId]="question4.containerId"
+                    [successMessage]="question4.successMessage"
+                    [incompleteMessage]="question4.incompleteMessage"
+                    [incorrectMessage]="question4.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion4Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question5.questionId"
+                    [question]="question5.question"
+                    [options]="question5.options"
+                    [correctAnswers]="question5.correctAnswers"
+                    [containerId]="question5.containerId"
+                    [successMessage]="question5.successMessage"
+                    [incompleteMessage]="question5.incompleteMessage"
+                    [incorrectMessage]="question5.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion5Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question6.questionId"
+                    [question]="question6.question"
+                    [options]="question6.options"
+                    [correctAnswers]="question6.correctAnswers"
+                    [containerId]="question6.containerId"
+                    [successMessage]="question6.successMessage"
+                    [incompleteMessage]="question6.incompleteMessage"
+                    [incorrectMessage]="question6.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion6Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question7.questionId"
+                    [question]="question7.question"
+                    [options]="question7.options"
+                    [correctAnswers]="question7.correctAnswers"
+                    [containerId]="question7.containerId"
+                    [successMessage]="question7.successMessage"
+                    [incompleteMessage]="question7.incompleteMessage"
+                    [incorrectMessage]="question7.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion7Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 3: Kriechfall ── -->
+            @if (currentView === 'damped_osc3') {
+                <div class="text-content">
+                    <p [innerHTML]="t3Text3a"></p>
+                </div>
+
+                <div class="image-pair">
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/kriechfall.png"
+                            alt="Kriechfall für Anfangsbedingungen x(0)=A, ẋ(0)=0">
+                        <figcaption><em>Kriechfall für Anfangsbedingungen x(0) = A, ẋ(0) = 0.</em></figcaption>
+                    </figure>
+                    <figure>
+                        <img src="assets/images/t3_damped_oscillations/kriechfall2.png"
+                     alt="Kriechfall für Anfangsbedingungen x(0)=0, ẋ(0)=v₀">
+                        <figcaption><em>Kriechfall für Anfangsbedingungen x(0) = 0, ẋ(0) = v₀.</em></figcaption>
+                    </figure>  
+                </div>
+
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t3Text3b"></div>
+                </div>
+            }
+
+            <!-- ── Page 4: Aperiodischer Grenzfall ── -->
+            @if (currentView === 'damped_osc4') {
+                <div class="text-content">
+                    <p [innerHTML]="t3Text4a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t3Text4b"></div>
+                </div>
+
+                <img src="assets/images/t3_damped_oscillations/Demtroeder_I_Abb11-18.png"
+                     alt="Auslenkung für kritische und überkritische Dämpfung"
+                     class="img-center img-md">
+                <p class="img-caption"><em>Auslenkung des Oszillators für kritische Dämpfung (rot, aperiodischer Grenzfall) und überkritische Dämpfung (schwarz, Kriechfall).</em></p>
+
+                <div class="text-content">
+                    <p [innerHTML]="t3Text4c"></p>
+                </div>
+
+                <app-multiple-choice
+                    [questionId]="question8.questionId"
+                    [question]="question8.question"
+                    [options]="question8.options"
+                    [correctAnswers]="question8.correctAnswers"
+                    [containerId]="question8.containerId"
+                    [successMessage]="question8.successMessage"
+                    [incompleteMessage]="question8.incompleteMessage"
+                    [incorrectMessage]="question8.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion8Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 5: Zusammenfassung ── -->
+            @if (currentView === 'damped_osc5') {
+                <div class="glossary-write">
+                    <div class="glossary-text" [innerHTML]="t3Text5a"></div>
+                </div>
+
+                <img src="assets/images/t3_damped_oscillations/vergleich_faelle.png"
+                    alt="Vergleich aller drei Dämpfungsfälle"
+                    class="img-center">
+                <p class="img-caption"><em>Alle drei Dämpfungsfälle im Vergleich: Schwingfall, aperiodischer Grenzfall und Kriechfall.</em></p>
+
+                <app-multiple-choice
+                    [questionId]="question9.questionId"
+                    [question]="question9.question"
+                    [options]="question9.options"
+                    [correctAnswers]="question9.correctAnswers"
+                    [containerId]="question9.containerId"
+                    [successMessage]="question9.successMessage"
+                    [incompleteMessage]="question9.incompleteMessage"
+                    [incorrectMessage]="question9.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion9Answered($event)">
+                </app-multiple-choice>
+
+                <div class="text-content">
+                    <p>Hohe Gebäude werden bei Wind oder Erdbeben zu Schwingungen angeregt. Ein gutes Schwingungsverhalten sollte dafür sorgen, dass Personen möglichst wenig von länger anhaltenden Schwingungen belastet werden und die Konstruktion nicht unnötig vielen Lastwechseln ausgesetzt wird.</p>
+                </div>
+
+                <app-multiple-choice
+                    [questionId]="question10.questionId"
+                    [question]="question10.question"
+                    [options]="question10.options"
+                    [correctAnswers]="question10.correctAnswers"
+                    [containerId]="question10.containerId"
+                    [successMessage]="question10.successMessage"
+                    [incompleteMessage]="question10.incompleteMessage"
+                    [incorrectMessage]="question10.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion10Answered($event)">
+                </app-multiple-choice>
+            }
+
+        </div>
+
+        <div class="button-container">
+            @if (isFirstPage) {
+                @if (devMode.isEnabled) {
+                    <button routerLink="/decision/t-damped-oscillations" class="btn btn-back">← Zurück zur Entscheidungsseite</button>
+                }
+            } @else {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+            @if (isLastPage) {
+                <button class="btn" (click)="goForward()">
+                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zu getriebenen Schwingungen →' }}
+                </button>
+            } @else {
+                <button class="btn" (click)="goForward()">Weiter →</button>
+            }
+        </div>
+    </div>
+</div>

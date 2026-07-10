@@ -21,7 +21,7 @@
     background: white;
     border: 2px solid var(--uni-blau-4);
     border-radius: 8px;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .result-container.correct {
@@ -59,7 +59,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, border-style 0.1s ease;
 }
 
 .drop-zone.cdk-drop-list-dragging {
@@ -88,7 +88,7 @@
     font-weight: 500;
     font-size: 0.85rem;
     cursor: move;
-    transition: all 0.2s ease;
+    transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     position: relative;
 }
 
@@ -103,6 +103,8 @@
 
 .assigned-answer.cdk-drag-preview {
     box-shadow: 0 8px 16px rgba(33, 150, 243, 0.4);
+    transition: none;
+    will-change: transform;
 }
 
 .assigned-answer.cdk-drag-animating {
@@ -186,7 +188,7 @@
     font-weight: 500;
     font-size: 0.85rem;
     color: var(--uni-blau-1);
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .draggable-answer:not(.disabled):hover {
@@ -201,6 +203,8 @@
 
 .draggable-answer.cdk-drag-preview {
     opacity: 0.9;
+    transition: none;
+    will-change: transform;
 }
 
 .draggable-answer.cdk-drag-animating {
@@ -212,6 +216,25 @@
     font-style: italic;
     text-align: center;
     padding: 2rem 0;
+}
+
+/* Click-to-move selection state */
+.draggable-answer.selected-for-move,
+.assigned-answer.selected-for-move {
+    background: var(--uni-blau-4);
+    border-color: var(--uni-blau-1);
+    color: var(--uni-blau-1);
+    /* box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.3); */
+    cursor: pointer;
+}
+
+.drop-zone.click-target-active {
+    border-style: solid;
+    cursor: pointer;
+}
+
+.available-answers.click-target-active {
+    cursor: pointer;
 }
 
 /* Responsive */
