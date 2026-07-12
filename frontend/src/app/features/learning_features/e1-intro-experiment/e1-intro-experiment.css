@@ -64,15 +64,6 @@
     box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
 }
 
-.image-description {
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: var(--text-primary);
-    line-height: 1.7;
-    text-align: center;  /* or left, depending on your preference */
-    font-style: italic;  /* optional - makes it look more like a caption */
-}
-
 /* Text + Image horizontal layout */
 .text-image-container {
     display: flex;

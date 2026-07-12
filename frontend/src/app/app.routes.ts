@@ -30,6 +30,7 @@ import { T2FreeOscillations } from './features/learning_features/t2-free-oscilla
 import { T3DampedOscillations } from './features/learning_features/t3-damped-oscillations/t3-damped-oscillations';
 import { T4DrivenOscillations } from './features/learning_features/t4-driven-oscillations/t4-driven-oscillations';
 import { TChaos } from './features/learning_features/t-chaos/t-chaos';
+import { TSimulation } from './features/learning_features/t-simulation/t-simulation';
 import { TSetup } from './features/learning_features/t-setup/t-setup';
 
 // decision features
@@ -55,6 +56,8 @@ import { SimTDrivenPhiOscillations } from './features/simulation_features/sim-t-
 // target features
 import { TarExperiment } from './features/target_features/tar-experiment/tar-experiment';
 import { TarTheory } from './features/target_features/tar-theory/tar-theory';
+import { TarChaos } from './features/target_features/tar-chaos/tar-chaos';
+import { TarSimulation } from './features/target_features/tar-simulation/tar-simulation';
 
 
 
@@ -86,6 +89,7 @@ export const routes: Routes = [
     { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
     { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },
     { path: 'learning/t-chaos',               component: TChaos,               title: 'Grundlagen nichtlineare Schwingung und Chaos' },
+     { path: 'learning/t-simulation',           component: TSimulation,               title: 'Grundbausteine Simulation' },
     { path: 'learning/t-setup',               component: TSetup,               title: 'Versuchsaufbau: Der Pohlsche Resonator' },
 
 

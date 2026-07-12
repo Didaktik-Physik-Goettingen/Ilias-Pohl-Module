@@ -463,3 +463,13 @@ a.glossary-link:hover {
     margin-bottom: 10px;
     color: #007bff;
 }
+
+/* Unified image caption / description style */
+.image-description {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+    text-align: center;
+    font-style: italic;
+}

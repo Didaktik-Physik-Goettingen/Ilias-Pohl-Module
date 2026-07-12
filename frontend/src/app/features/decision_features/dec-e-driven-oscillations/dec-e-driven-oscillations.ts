@@ -46,6 +46,6 @@ export class DecEDrivenOscillations implements OnInit {
     }
 
     goBack() {
-        this.router.navigate(['/decision/e2-damped-oscillations'], { queryParams: { page: 7 } });
+        this.router.navigate(['/learning/e2-damped-oscillations'], { queryParams: { page: 7 } });
     }
 }

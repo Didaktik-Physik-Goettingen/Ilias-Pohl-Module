@@ -46,6 +46,6 @@ export class DecTDrivenOscillations implements OnInit {
     }
 
     goBack() {
-          this.router.navigate(['/learning/t3-damped-oscillations'], { queryParams: { page: 6 } });
+          this.router.navigate(['/learning/t3-damped-oscillations'], { queryParams: { page: 5 } });
     }
 }

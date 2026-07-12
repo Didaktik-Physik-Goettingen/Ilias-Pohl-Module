@@ -57,7 +57,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
             { id: 'medium', imageSrc: 'assets/images/test_e_damped_oscillations/medium_damping_1.png', label: 'Schwingung B' },
             { id: 'strong', imageSrc: 'assets/images/test_e_damped_oscillations/strong_damping_1.png', label: 'Schwingung C' }
         ],
-        correctOrder: ['strong', 'medium', 'weak'],
+        correctOrder: [ 'weak', 'medium', 'strong'],
         maxPoints: 30,
         containerId: 'test-question1-container'
     };
