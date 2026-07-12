@@ -39,20 +39,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
             continueLink: '/decision/e-damped-oscillations',
             continueLinkText: 'Zurück zur Entscheidungsseite',
-            continueQueryParams: {}
         },
-        // {
-        //     minPercentage: 25,
-        //     maxPercentage: 79,
-        //     level: 'medium' as const,
-        //     message: `
-		// 		Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> erarbeiten.
-		// 		Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine gedämpfte Schwingung
-		// 		und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
-        //     continueLink: '/learning/e2-damped-oscillations',
-        //     continueLinkText: 'Weiter zu den theoretischen Grundlagen',
-        //     continueQueryParams: { flow: 'learning-first' }
-        // },
         {
             minPercentage: 80,
             maxPercentage: 100,
@@ -60,7 +47,6 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
             continueLink: '/test/e-driven-osc',
             continueLinkText: 'Weiter zum Test',
-            continueQueryParams: {} as { [key: string]: string }
         }
     ];
 
@@ -198,7 +184,6 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
     // results page data
     continueLink = '/';
     continueLinkText = 'Weiter';
-    continueQueryParams: { [key: string]: string } = {};
     performanceLevel: 'low' | 'medium' | 'high' = 'low';
 
     // calculate results directly when navigating to results page
@@ -223,7 +208,6 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             this.performanceLevel = threshold.level;
             this.continueLink = threshold.continueLink;
             this.continueLinkText = threshold.continueLinkText;
-            this.continueQueryParams = threshold.continueQueryParams;
         }
     }
 
@@ -449,7 +433,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 				this.calculateResults();
 				this.currentView = 'damped_osc6';
 			} else if (this.currentView === 'damped_osc6') {
-                this.router.navigate([this.continueLink], { queryParams: this.continueQueryParams });
+                this.router.navigate([this.continueLink]);
 			}
             this.renderMath();
         }

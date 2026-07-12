@@ -30,21 +30,19 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
             minPercentage: 0,
             maxPercentage: 79,
             level: 'low' as const,
-            message: 'In Bezug auf getriebene Schwingungen fehlen Ihnen noch einige Aspekte. \
-            Entscheiden Sie selber, wie Sie fortfahren möchten. \
-            Sie können sich entweder zunächst mit den Bewegungsmustern anhand einer interaktiven Simulation vertraut machen, \
-            oder die theoretischen Grundlagen in einem interaktiven Lernmodul erarbeiten.',
-            continueLink: '/experiment/intro',
-            continueLinkText: 'Weiter zur Simulation',
-            continueLink2: '/experiment/intro',
-            continueLinkText2: 'Weiter zu den theoretischen Grundlagen'
+            message: `In Bezug auf gedämpfte Schwingungen fehlen Ihnen noch einige Aspekte.
+            Entscheiden Sie selber, wie Sie fortfahren möchten.
+            Sie können sich entweder zunächst mit den Bewegungsmustern anhand einer interaktiven Simulation vertraut machen,
+            oder die theoretischen Grundlagen in einem interaktiven Lernmodul erarbeiten.`,
+            continueLink: '/decision/t-damped-oscillations',
+            continueLinkText: 'Zurück zur Entscheidungsseite',
         },
         {
             minPercentage: 80,
             maxPercentage: 100,
             level: 'high' as const,
             message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
-            continueLink: '/learning/forced-oscillations',
+            continueLink: '/test/t-driven-osc',
             continueLinkText: 'Weiter zum Test'
         }
     ];

@@ -44,20 +44,7 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
             message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
             continueLink: '/decision/e-driven-oscillations',
             continueLinkText: 'Zurück zur Entscheidungsseite',
-            continueQueryParams: {}
         },
-        // {
-        //     minPercentage: 25,
-        //     maxPercentage: 79,
-        //     level: 'medium' as const,
-        //     message: `
-		// 		Sie werden sich nun noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> erarbeiten.
-		// 		Dazu bearbeiten sie ein interaktives Lernmodul zum Aufstellen und Lösen der Bewegungsgleichung für eine getriebene, gedämpfte Schwingung
-		// 		und der Analyse unterschiedlicher experimenteller Einstellungen auf den Bewegungsverlauf.`,
-        //     continueLink: '/learning/e3-driven-oscillations',
-        //     continueLinkText: 'Weiter zu den theoretischen Grundlagen',
-        //     continueQueryParams: { flow: 'learning-first' }
-        // },
         {
             minPercentage: 80,
             maxPercentage: 100,
@@ -65,7 +52,6 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
             message: 'Sie haben ein gutes Grundlagenwissen zu getriebenen, gedämpften Schwingungen und bekommen nun ihre <b>Versuchsanleitung</b>.',
             continueLink: '/target/tar-experiment',
             continueLinkText: 'Weiter zur Anleitung',
-            continueQueryParams: {} as { [key: string]: string }
         }
     ];
 
@@ -161,7 +147,6 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     // results page data
     continueLink = '/';
     continueLinkText = 'Weiter';
-    continueQueryParams: { [key: string]: string } = {};
     performanceLevel: 'low' | 'medium' | 'high' = 'low';
 
     // calculate results directly when navigating to results page
@@ -186,7 +171,6 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             this.performanceLevel = threshold.level;
             this.continueLink = threshold.continueLink;
             this.continueLinkText = threshold.continueLinkText;
-            this.continueQueryParams = threshold.continueQueryParams;
         }
     }
 
@@ -397,7 +381,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 				this.calculateResults();
 				this.currentView = 'driven_osc5';
 			} else if (this.currentView === 'driven_osc5') {
-                this.router.navigate([this.continueLink], { queryParams: this.continueQueryParams });
+                this.router.navigate([this.continueLink]);
                 return;
 			}
             this.updateUrl();
