@@ -34,8 +34,11 @@ export class DecEDrivenOscillations implements OnInit {
     }
 
     navigateToSimulation() {
-        const flow = this.learningCompleted ? 'learning-first' : 'sim-first';
-        this.router.navigate([this.simulationLink], { queryParams: { flow } });
+        if (this.learningCompleted) {
+            this.router.navigate([this.simulationLink], { queryParams: { flow: 'learning-first' } });
+        } else {
+            this.router.navigate([this.simulationLink]);
+        }
     }
 
     navigateNext() {

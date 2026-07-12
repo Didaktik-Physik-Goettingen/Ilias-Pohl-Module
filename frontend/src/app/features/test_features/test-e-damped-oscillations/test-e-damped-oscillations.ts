@@ -39,7 +39,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
             continueLink: '/decision/e-damped-oscillations',
             continueLinkText: 'Zurück zur Entscheidungsseite',
-            continueQueryParams: { flow: 'sim-first' }
+            continueQueryParams: {}
         },
         // {
         //     minPercentage: 25,

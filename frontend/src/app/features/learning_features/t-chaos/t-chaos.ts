@@ -13,13 +13,13 @@ declare global {
 }
 
 @Component({
-  selector: 'app-chaotic-behavior',
+  selector: 'app-t-chaos',
   imports: [CommonModule, RouterLink],
-  templateUrl: './chaotic-behavior.html',
-  styleUrl: './chaotic-behavior.css',
+  templateUrl: './t-chaos.html',
+  styleUrl: './t-chaos.css',
 })
 
-export class ChaoticBehavior implements OnInit, OnDestroy {
+export class TChaos implements OnInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -50,7 +50,7 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
       }
 
       // start tracking this module
-      this.trackingService.startModule('chaotic-behavior');
+      this.trackingService.startModule('t-chaos');
 
       // sanitized string to enable LaTeX rendering
       this.AbschnittPotential = this.sanitizer.bypassSecurityTrustHtml(`
@@ -114,7 +114,7 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
   	// +++ in-page navigation +++
 
     private updateUrl() {
-        const page = this.currentView.replace('chaotic-behavior', '');
+        const page = this.currentView.replace('t-chaos', '');
         this.router.navigate([], {
             relativeTo: this.route,
             queryParams: { page },

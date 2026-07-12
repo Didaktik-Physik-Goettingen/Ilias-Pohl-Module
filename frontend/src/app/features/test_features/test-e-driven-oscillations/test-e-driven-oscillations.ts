@@ -44,7 +44,7 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
             message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
             continueLink: '/decision/e-driven-oscillations',
             continueLinkText: 'Zurück zur Entscheidungsseite',
-            continueQueryParams: { flow: 'sim-first' }
+            continueQueryParams: {}
         },
         // {
         //     minPercentage: 25,

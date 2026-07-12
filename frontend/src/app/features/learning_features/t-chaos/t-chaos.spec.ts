@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChaoticBehavior } from './chaotic-behavior';
+import { TChaos } from './t-chaos';
 
-describe('ChaoticBehavior', () => {
-  let component: ChaoticBehavior;
-  let fixture: ComponentFixture<ChaoticBehavior>;
+describe('TChaos', () => {
+  let component: TChaos;
+  let fixture: ComponentFixture<TChaos>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChaoticBehavior]
+      imports: [TChaos]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ChaoticBehavior);
+    fixture = TestBed.createComponent(TChaos);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

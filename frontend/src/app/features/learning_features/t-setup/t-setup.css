@@ -1,0 +1,19 @@
+.full-width-image-container {
+    margin: 2rem 0;
+}
+
+.full-width-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.image-description {
+    margin-top: 1rem;
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+    text-align: center;
+    font-style: italic;
+}

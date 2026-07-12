@@ -564,9 +564,9 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'driven_osc8') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-t-driven', 'true');
-                this.router.navigate(['/decision/t-driven-oscillations']);
+                this.router.navigate(['/learning/t-setup']);
             } else {
-                this.router.navigate(['/simulation/theory-damped-driven']);
+                this.router.navigate(['/simulation/sim-t-driven']);
             }
             return;
         }

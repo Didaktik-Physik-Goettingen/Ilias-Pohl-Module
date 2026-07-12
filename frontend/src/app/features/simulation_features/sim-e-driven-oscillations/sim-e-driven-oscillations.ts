@@ -125,8 +125,8 @@ export class SimEDrivenOscillations implements OnInit, AfterViewInit, OnDestroy 
 
     goForward() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        if (this.navigationFlow === 'sim-first') {
-            this.router.navigate(['/learning/e3-driven-oscillations'], { queryParams: { flow: 'sim-first' } });
+        if (this.navigationFlow !== 'learning-first') {
+            this.router.navigate(['/learning/e3-driven-oscillations']);
         } else {
             this.router.navigate(['/target/tar-experiment']);
         }

@@ -86,8 +86,8 @@ export class SimTDampedOscillations implements OnInit, AfterViewInit, OnDestroy 
 
     goForward() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        if (this.navigationFlow === 'sim-first') {
-            this.router.navigate(['/learning/t2-damped-oscillations'], { queryParams: { flow: 'sim-first' } });
+        if (this.navigationFlow !== 'learning-first') {
+            this.router.navigate(['/learning/t3-damped-oscillations']);
         } else {
             this.router.navigate(['/decision/t-driven-oscillations']);
         }

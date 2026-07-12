@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { Location, isPlatformBrowser } from '@angular/common';
+import { isPlatformBrowser } from '@angular/common';
 import { DevModeService } from '../../../core/services/dev-mode';
 import { SummaryService, SummaryData, SummaryQuestion } from '../../../core/services/summary.service';
+import { Router, RouterLink } from '@angular/router';
 
 
 
@@ -19,7 +20,7 @@ export interface ModuleGroup {
 
 @Component({
     selector: 'app-tar-experiment',
-    imports: [],
+    imports: [RouterLink],
     templateUrl: './tar-experiment.html',
     styleUrl: './tar-experiment.css',
 })
@@ -54,7 +55,7 @@ export class TarExperiment implements OnInit {
 
     constructor(
         public devMode: DevModeService,
-        private location: Location,
+        private router: Router,
         private summaryService: SummaryService,
         @Inject(PLATFORM_ID) private platformId: Object,
     ) {}
@@ -106,6 +107,6 @@ export class TarExperiment implements OnInit {
 
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.location.back();
+        this.router.navigate(['/learning/e3-driven-oscillations']);
     }
 }

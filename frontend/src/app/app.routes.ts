@@ -22,7 +22,6 @@ import { DirectiveMoment } from './features/glossary_features/directive-moment/d
 import { ResonanceFrequency } from './features/glossary_features/resonance-frequency/resonance-frequency';
 
 // learning features
-import { ChaoticBehavior } from './features/learning_features/chaotic-behavior/chaotic-behavior';
 import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
 import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
 import { E3DrivenOscillations } from './features/learning_features/e3-driven-oscillations/e3-driven-oscillations';
@@ -30,6 +29,8 @@ import { T1IntroTheory } from './features/learning_features/t1-intro-theory/t1-i
 import { T2FreeOscillations } from './features/learning_features/t2-free-oscillations/t2-free-oscillations';
 import { T3DampedOscillations } from './features/learning_features/t3-damped-oscillations/t3-damped-oscillations';
 import { T4DrivenOscillations } from './features/learning_features/t4-driven-oscillations/t4-driven-oscillations';
+import { TChaos } from './features/learning_features/t-chaos/t-chaos';
+import { TSetup } from './features/learning_features/t-setup/t-setup';
 
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
@@ -53,22 +54,7 @@ import { SimTDrivenPhiOscillations } from './features/simulation_features/sim-t-
 
 // target features
 import { TarExperiment } from './features/target_features/tar-experiment/tar-experiment';
-
-
-// ── Standalone HTML simulations ───────────────────────────────────────────────
-// Plain HTML pages served as static files from public/simulations/.
-// The guard redirects the browser there; SimulationRedirect is never rendered.
-
-@Component({ template: '', standalone: true })
-class SimulationRedirect {}
-
-function sim(file: string): CanActivateFn {
-    return () => {
-        inject(DOCUMENT).location.href = `simulations/${file}`;
-        return false;
-    };
-}
-// ─────────────────────────────────────────────────────────────────────────────
+import { TarTheory } from './features/target_features/tar-theory/tar-theory';
 
 
 
@@ -99,7 +85,8 @@ export const routes: Routes = [
     { path: 'learning/t2-free-oscillations',   component: T2FreeOscillations,   title: 'Theorie: Freie Schwingung' },
     { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
     { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },
-    { path: 'learning/chaotic-behavior', component: ChaoticBehavior, title: 'Grundlagen nichtlineare Schwingung und Chaos'},
+    { path: 'learning/t-chaos',               component: TChaos,               title: 'Grundlagen nichtlineare Schwingung und Chaos' },
+    { path: 'learning/t-setup',               component: TSetup,               title: 'Versuchsaufbau: Der Pohlsche Resonator' },
 
 
     // decision pages
@@ -117,18 +104,12 @@ export const routes: Routes = [
     // simulation pages
     { path: 'simulation/sim-e-damped-osc', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
     { path: 'simulation/sim-e-driven-osc', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
+    { path: 'simulation/sim-t-undamped',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
+    { path: 'simulation/sim-t-damped',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
+    { path: 'simulation/sim-t-driven',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
+    { path: 'simulation/sim-t-driven-advanced', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
 
     // target pages
     { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },
-
-    // Theory simulation Angular components
-    { path: 'simulation/theory-undamped',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
-    { path: 'simulation/theory-damped',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
-    { path: 'simulation/theory-damped-driven',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
-    { path: 'simulation/theory-damped-driven-davanced', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
-    // { path: 'simulation/experiment-damped',               		canActivate: [sim('Simulation_11_Einstieg_damped_rot_20251107.html')],          component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung' },
-    // { path: 'simulation/damped-rot-advanced',         canActivate: [sim('Simulation_12_Vertiefung_damped_rot_20251107.html')],        component: SimulationRedirect, title: 'Simulation: Gedämpfte Drehschwingung (Vertiefung)' },
-    // 'simulation/experiment-damped' replaced by the sim-e-damped-oscillations component (see 'simulation/sim-e-damped-osc' above)
-    { path: 'simulation/experiment-damped-driven',     			canActivate: [sim('Simulation_13_Einleitung_damped_driven_rot_202511072.html')], component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Einleitung)' },
-    { path: 'simulation/experiment-damped-driven-advanced',  	canActivate: [sim('Simulation_14_Vertiefung_damped_driven_rot.html')],          component: SimulationRedirect, title: 'Simulation: Getriebene Drehschwingung (Vertiefung)' },
+    { path: 'target/tar-theory', component: TarTheory, title: 'Anleitung: Versuchsaufbau' },
 ];
