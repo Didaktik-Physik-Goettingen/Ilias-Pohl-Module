@@ -22,6 +22,7 @@ import { DirectiveMoment } from './features/glossary_features/directive-moment/d
 import { ResonanceFrequency } from './features/glossary_features/resonance-frequency/resonance-frequency';
 
 // learning features
+import { ChaoticBehavior } from './features/learning_features/chaotic-behavior/chaotic-behavior';
 import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
 import { E2DampedOscillation } from './features/learning_features/e2-damped-oscillation/e2-damped-oscillation';
 import { E3DrivenOscillations } from './features/learning_features/e3-driven-oscillations/e3-driven-oscillations';
@@ -98,6 +99,7 @@ export const routes: Routes = [
     { path: 'learning/t2-free-oscillations',   component: T2FreeOscillations,   title: 'Theorie: Freie Schwingung' },
     { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
     { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },
+    { path: 'learning/chaotic-behavior', component: ChaoticBehavior, title: 'Grundlagen nichtlineare Schwingung und Chaos'},
 
 
     // decision pages

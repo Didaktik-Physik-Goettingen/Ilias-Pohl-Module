@@ -1,0 +1,92 @@
+<div class="container">
+    <div class="card">
+        <h1>
+            @if (currentView === 'chaos_1') { <span>Grundlagen nichtlineare Schwingungen und Chaos (1/2)</span> }
+            @else if (currentView === 'chaos_2') { <span>Grundlagen nichtlineare Schwingungen und Chaos (2/2)</span> }
+            @else if (currentView === 'chaos_2') { <span>Versuchsübersicht</span> }
+            @else { <span>Versuchsanleitung</span> }
+        </h1>
+
+        <!-- Content sections -->
+        <div class="content">
+            @if (currentView === 'chaos_1') {
+                <div>
+                    <h1>Anharmonisches Potential durch Zusatzmasse</h1>
+                    <p>
+                        Die Grundlage für harmonische Schwingungen ist, dass die rücktreibende Kraft linear mit der Auslenkung aus der Gleichgewichtsposition.
+                        Bei einer solchen Kraft ist das zugrundeliegende Potential parabolisch.
+                    </p>
+                    <div class="text-image-container">
+                        <div class="image-content">
+                            <img src="assets/images/chaos/potential.png" alt="Potential mit angehängter Zusatzmasse">
+                        </div>
+                        <div class="text-content">
+                            <p [innerHTML]="AbschnittPotential"></p>
+                        </div>
+                    </div>
+                    <p>
+                        Die Bewegungsdynamik des Pendels hängt nun noch stärker von der <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> der Schwingung und der Dämpfung ab.   <br>
+                        Zwei Aspekte können wir bereits aus dem Potential ableiten:<br>
+                        Für kleine Auslenkungen aus einer der neuen Gleichgewichtslagen ist das Potential noch immer näherungsweise parabolisch 
+                        und die Schwingung ist harmonisch (s. untere Abbildung).
+                        Für größere Auslenkungen aus der Gleichgewichtslage erfährt das Schwungrad aber eine unsymmetrische Rückstellkraft.   <br><br>
+                        Welchen Einfluss hat die Dämpfung auf das System? Was geschieht bei einer starken Dämpfung? 
+                        Warum verändert sich das Verhalten, wenn die Dämpfung verringert wird?                  
+                    </p>
+
+                </div>
+            }
+
+            @if (currentView === 'chaos_2') {
+                <div>
+                    <h1>Angeregte Schwingung im anharmonischen Potential</h1>
+                    <p>
+                        Aufgrund des durch die Masse bewirkten Drehmoments lautet die gesamte Bewegungsgleichung für das gedämpfte, harmonisch getriebene System:
+                    </p>
+                    <p [innerHTML]="differentialgleichung"></p>
+                </div>
+            }
+
+            @if (currentView === 'chaos_3') {
+                <div>
+                    <div class="full-width-image-container">
+                        <img src="assets/images/intro_experiment/experiment_schematic_2.png" alt="Versuchsaufbau" class="full-width-image">
+                    </div>
+                    <div class="info-box">
+                        Hier noch ein paar Hinweise zum Aufbau: <br><br>
+                        Die <b>Feder</b> sorgt für ein rücktreibendes <a href="#glossary-angular-momentum">Drehmoment</a> und induziert daher eine Bewegung des Schwungrads,
+                        wenn dieses aus seiner Ruhelage ausgelenkt wird. 
+                        Die Feder ist in der Mitte mit dem Schwungrad verbunden und an ihrem anderen Ende mit dem Anreger.<br><br>
+                        Der <b>Anreger</b> wird durch einen Schrittmotor angetrieben, der wiederum über die Messsoftware gesteuert wird.<br><br>
+                        Die <b>Wirbelstrombremse</b> entspricht zwei Schuhmagneten, die über das Schwungrad geschoben werden können. 
+                        Wenn das Rad in Bewegung ist wird es durch die Wechselwirkung mit dem magnetischen Feld abgebremst (Stichwort: Induktion).
+                        Die Bremswirkung wird erhöht, indem der Überlapp zwischen Magnet und Schwungrad vergrößert wird.<br><br>
+                        Ihnen stehen im Versuch zudem <b>Zusatzmassen</b> zur Verfügung, die in der Skizze nicht gezeigt sind. 
+                        Die Zusatzmassen können am inneren Rand des Schwungsrads mit Schrauben befestigt werden.
+                    </div>
+                    <p>
+                        Im Versuch werden Sie die Theorie zu getriebenen und gedämpften Schwingungen am Beispiel eines Pohlschen Resonators untersuchen. 
+                        Um sich einen Überblick über den Versuchsaufbau zu verschaffen, 
+                        vergleichen Sie oben das Foto des Versuchsaufbaus mit der Skizze und versuchen Sie die unterschiedlichen Bauelemente zu identifizieren.
+                    </p>
+                </div>
+            }
+
+        </div>
+
+        <!-- navigation buttons -->
+        <div class="button-container">
+            @if (isFirstPage) {
+                <button routerLink="/" class="btn" [disabled]="!canGoBack">← Zurück zur Startseite</button>
+            } @else {
+                <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
+            }
+
+            @if (isLastPage) {
+                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter zum Test →</button>
+            } @else {
+                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter →</button>
+            }
+        </div>
+    </div>
+</div>
