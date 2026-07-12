@@ -159,7 +159,7 @@ export class TChaos implements OnInit, OnDestroy {
     // going back shows the previous subpage / home page
     goBack() {
         if (this.currentView === 'chaos_1') {
-            this.router.navigate(['/']);
+            this.router.navigate(['/test/t-driven-osc'], { queryParams: { page: '5' } });
             return;
         } else if (this.currentView === 'chaos_2') {
             this.currentView = 'chaos_1';
@@ -181,8 +181,8 @@ export class TChaos implements OnInit, OnDestroy {
                 this.currentView = 'chaos_3';
             } else if (this.currentView === 'chaos_3') {
                 this.currentView = 'chaos_4';
-            }  else if (this.currentView === 'chaos3') {
-                this.router.navigate(['abschlussseite']);
+            }  else if (this.currentView === 'chaos4') {
+                this.router.navigate(['/target/tar-chaos']);
                 return;
             }
             this.updateUrl();

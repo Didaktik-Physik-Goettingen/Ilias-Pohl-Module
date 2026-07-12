@@ -116,4 +116,6 @@ export const routes: Routes = [
     // target pages
     { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },
     { path: 'target/tar-theory', component: TarTheory, title: 'Anleitung: Versuchsaufbau' },
+    { path: 'target/tar-chaos', component: TarChaos, title: 'Anleitung: Chaos' },
+    { path: 'target/tar-simulation', component: TarSimulation, title: 'Anleitung: Simulation' },
 ];
