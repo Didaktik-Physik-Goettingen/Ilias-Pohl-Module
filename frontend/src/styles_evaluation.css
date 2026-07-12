@@ -67,7 +67,8 @@
     border-color: var(--uni-blau-4);
 }
 
-.evaluation-option input[type="checkbox"] {
+.evaluation-option input[type="checkbox"],
+.evaluation-option input[type="radio"] {
     width: 15px;
     height: 15px;
     margin-right: 1rem;
@@ -182,6 +183,7 @@
     background: var(--grau-20);
 }
 
-.evaluation-container.disabled input[type="checkbox"]:disabled {
+.evaluation-container.disabled input[type="checkbox"]:disabled,
+.evaluation-container.disabled input[type="radio"]:disabled {
     cursor: not-allowed;
 }

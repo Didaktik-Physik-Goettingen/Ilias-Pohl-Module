@@ -1,11 +1,11 @@
 <div class="test-container" [id]="containerId" [class.submitted]="isSubmitted">
     <div class="test-content">
-        <h3 class="test-question">{{ question }}</h3>
-        <p class="test-instruction" *ngIf="questionInstruction">{{ questionInstruction }}</p>
+        <h3 class="test-question" [innerHTML]="question"></h3>
+        <p class="test-instruction" *ngIf="questionInstruction" [innerHTML]="questionInstruction"></p>
 
         <div class="choice-options">
             <label 
-                *ngFor="let option of options" 
+                *ngFor="let option of shuffledOptions"
                 class="choice-option"
                 [class.selected]="isSelected(option.value)"
                 [class.correct]="isSubmitted && isCorrectAnswer(option.value)"

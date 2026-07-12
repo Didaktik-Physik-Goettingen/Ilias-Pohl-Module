@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 
 
@@ -47,6 +48,7 @@ export class ImageChoice implements OnInit {
     @Output() onCorrectAnswer = new EventEmitter<void>();
     @Output() onAnswerEvaluated = new EventEmitter<boolean>();
 
+    shuffledOptions: ImageOption[] = [];
     showResult = false;
     isCorrect = false;
     resultMessage: SafeHtml = '';
@@ -55,12 +57,14 @@ export class ImageChoice implements OnInit {
     constructor(
         private sanitizer: DomSanitizer,
         private trackingService: ResultsTracking,
+        private shuffleOrder: ShuffleOrder,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
 
     ngOnInit() {
-        // check if this question was already answered correctly in this session
+        const order = this.shuffleOrder.getOrCreate(this.questionId, this.options.length);
+        this.shuffledOptions = order.map(i => this.options[i]);
         this.restorePreviousAnswer();
     }
 
@@ -115,12 +119,21 @@ export class ImageChoice implements OnInit {
         this.isCorrect = allCorrectSelected && noIncorrectSelected;
         this.showResult = true;
 
-        // track the result
+        // track the result — use imageSrc when no label exists so images can be shown in summary
+        const selectedAnswerTexts = selectedAnswers.map(v => {
+            const opt = this.options.find(o => o.value === v);
+            return opt?.label ?? opt?.imageSrc ?? v;
+        });
+        const correctAnswerTexts = this.correctAnswers.map(v => {
+            const opt = this.options.find(o => o.value === v);
+            return opt?.label ?? opt?.imageSrc ?? v;
+        });
         this.trackingService.trackQuestionResult(
             this.questionId,
             this.isCorrect,
             selectedAnswers,
-            this.correctAnswers
+            this.correctAnswers,
+            { questionText: this.question, selectedAnswerTexts, correctAnswerTexts }
         );
 
         if (this.isCorrect) {

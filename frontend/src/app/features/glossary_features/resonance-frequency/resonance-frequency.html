@@ -1,0 +1,16 @@
+<div class="container">
+    <div class="card">
+        <!-- <h1>Amplitude</h1> -->
+        <div class="glossary-lamp">
+            <h1 class="glossary-lamp-title">Resonanzfrequenz</h1>
+            <p class="glossary-lamp-text" [innerHTML]="resonanceText"></p>
+        </div>
+        <div class="glossary-write">
+            <div class="glossary-text" [innerHTML]="resonancePropText"></div>
+        </div>
+        <!-- conditional back button -->
+        <div class="button-container" *ngIf="showBackButton">
+            <a routerLink="/glossary" class="btn">← Zurück zu den Begriffen</a>
+        </div>
+    </div>
+</div>

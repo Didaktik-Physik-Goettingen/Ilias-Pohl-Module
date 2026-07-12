@@ -7,7 +7,7 @@
         <h3 class="evaluation-question" [innerHTML]="question"></h3>
         
         <div class="evaluation-options">
-            <label class="evaluation-option" *ngFor="let option of options; let i = index">
+            <label class="evaluation-option" *ngFor="let option of shuffledOptions; let i = index">
                 <input 
                     type="checkbox" 
                     [name]="'element' + (i+1)" 

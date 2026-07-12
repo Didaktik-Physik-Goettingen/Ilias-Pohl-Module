@@ -1,0 +1,187 @@
+<div class="container">
+    <div class="card">
+        @if (currentView === 'intro_exp1') {
+            <h1>Einstieg Versuchsaufbau (1/4)</h1>
+        } @else if (currentView === 'intro_exp2') {
+            <h1>Einstieg Versuchsaufbau (2/4)</h1>
+        } @else if (currentView === 'intro_exp3') {
+            <h1>Einstieg Versuchsaufbau (3/4)</h1>
+        } @else {
+            <h1>Einstieg Versuchsaufbau (4/4)</h1>
+            <p class="page-subheadline">Eingangsfrage gedämpfter harmonischer Oszillator</p>
+        }
+
+        <!-- Content sections -->
+        <div class="content">
+            @if (currentView === 'intro_exp1') {
+                <div>
+                    <p>
+                        In diesem Versuch werden Sie Schwingungsphänomene (gedämpfte und getriebene Schwingungen) untersuchen und sich die Zusammenhänge
+                        zwischen unterschiedlichen experimentellen Parametern anschauen. Diese Phänome werden Sie mit einem sogenannten Pohlschen Rad untersuchen.
+                        Machen Sie sich hier zunächst mit dem Versuchsaufbau vertraut.
+                    </p>
+                    <div class="full-width-image-container">
+                        <img src="assets/images/e1_intro_experiment/experiment_schematic_1.png" alt="Versuchsaufbau" class="full-width-image">
+                        <p class="image-description">
+                            Vergleichendes Bild Aufbau und Skizze des Versuchsaufbaus
+                        </p>
+                    </div>
+                    <p>
+                        Mit diesem Versuchsaufbau können Sie unterschiedliche Schwingungsverhalten analysieren.
+                        Sie können den Einfluss der Dämpfung untersuchen, ebenso wie das Verhalten bei einem externen Antrieb.<br><br>
+
+                        Betrachten Sie den Versuchsaufbau und vergleichen Sie ihn mit der Skizze.<br>
+                        Überlegen und diskutieren Sie, wofür die unterschiedlichen Elemente des Versuchsaufbaus notwendig sind.
+                        Auf den nächsten Seiten werden diese Bauteile weiter spezifiziert und Ihnen werden hierzu Fragen gestellt.
+                    </p>
+                </div>
+            }
+
+            @if (currentView === 'intro_exp2') {
+                <div>
+                    <div class="full-width-image-container">
+                        <img src="assets/images/e1_intro_experiment/experiment_schematic_2.png" alt="Versuchsaufbau" class="full-width-image">
+                    </div>
+                    <p>
+                        Aus physikalischer Sicht essentielle Elemente des Versuchsaufbaus sind das Schwungrad, die Feder, die Wirbelstrombremse und der Anreger.<br><br>
+
+                        Wo sehen Sie diese Elemente im Aufbau?<br>
+                        Aus technischer und experimenteller Sicht sind darüber hinaus die Winkelskala, der Schrittmotor und weitere Mess- und Steuerungselemente,
+                        die in der Abbildung nicht explizit gezeigt sind, relevant.<br><br>
+
+                        Zur Erläuterung des Aufbaus:<br>
+                        Die Feder und das Schwungrad sind im Mittelpunkt des Rades miteinander verbunden.
+                        Am anderen Ende ist die Feder über den Anreger mit dem Schrittmotor verbunden.
+                        Ohne externen Antrieb dient der Anreger als fester Ankerpunkt der Feder (vergleichbar zu dem Aufhängungspunkt einer "klassischen" Feder).
+                    </p>
+
+                    <!-- first evaluation container: Schwungrad -->
+                    <app-multiple-choice-image
+                        [questionId]="question1.questionId"
+                        [imageSrc]="question1.imageSrc"
+                        [imageAlt]="question1.imageAlt"
+                        [question]="question1.question"
+                        [options]="question1.options"
+                        [correctAnswers]="question1.correctAnswers"
+                        [containerId]="question1.containerId"
+                        [successMessage]="question1.successMessage"
+                        [incompleteMessage]="question1.incompleteMessage"
+                        [incorrectMessage]="question1.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion1Answered($event)">
+                    </app-multiple-choice-image>
+
+                    <!-- second evaluation container: Feder -->
+                    <app-multiple-choice-image
+                        [questionId]="question2.questionId"
+                        [imageSrc]="question2.imageSrc"
+                        [imageAlt]="question2.imageAlt"
+                        [question]="question2.question"
+                        [options]="question2.options"
+                        [correctAnswers]="question2.correctAnswers"
+                        [containerId]="question2.containerId"
+                        [successMessage]="question2.successMessage"
+                        [incompleteMessage]="question2.incompleteMessage"
+                        [incorrectMessage]="question2.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion2Answered($event)">
+                    </app-multiple-choice-image>
+
+                    <!-- third evaluation container: Wirbelstrombremse -->
+                    <app-multiple-choice-image
+                        [questionId]="question3.questionId"
+                        [imageSrc]="question3.imageSrc"
+                        [imageAlt]="question3.imageAlt"
+                        [question]="question3.question"
+                        [options]="question3.options"
+                        [correctAnswers]="question3.correctAnswers"
+                        [containerId]="question3.containerId"
+                        [successMessage]="question3.successMessage"
+                        [incompleteMessage]="question3.incompleteMessage"
+                        [incorrectMessage]="question3.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion3Answered($event)">
+                    </app-multiple-choice-image>
+                </div>
+            }
+
+            @if (currentView === 'intro_exp3') {
+                <div>
+                    <!-- horizontal layout: text + image -->
+                    <div class="text-image-container">
+                        <div class="image-content">
+                            <img src="assets/images/e1_intro_experiment/schwungrad_3.png" alt="Schwungrad mit Massestück">
+                        </div>
+                        <div class="text-content">
+                            <p [innerHTML]="introExperimentText"></p>
+                        </div>
+                    </div>
+
+                    <app-multiple-choice
+                        [questionId]="question4.questionId"
+                        [question]="question4.question"
+                        [options]="question4.options"
+                        [correctAnswers]="question4.correctAnswers"
+                        [containerId]="question4.containerId"
+                        [successMessage]="question4.successMessage"
+                        [incompleteMessage]="question4.incompleteMessage"
+                        [incorrectMessage]="question4.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion4Answered($event)">
+                    </app-multiple-choice>
+
+                    <app-image-choice
+                        [questionId]="question5.questionId"
+                        [question]="question5.question"
+                        [options]="question5.options"
+                        [correctAnswers]="question5.correctAnswers"
+                        [containerId]="question5.containerId"
+                        [successMessage]="question5.successMessage"
+                        [incompleteMessage]="question5.incompleteMessage"
+                        [incorrectMessage]="question5.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion5Answered($event)">
+                    </app-image-choice>
+
+                    <p>
+                        Der Versuchsaufbau kann noch weiter charakterisiert werden.<br>
+                        Beispielsweise kann das
+                        <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
+                        des Schwungrads bestimmt oder die Wirkung der Wirbelstrombremse untersucht werden.<br>
+                        Beide Eigenschaften des Versuchsaufbaus beziehen sich auf das dynamische Verhalten des Systems.
+                        Daher setzen Sie sich auf den folgenden Seiten zunächst mit der Dynamik des gedämpften Systems auseinander,
+                        bevor Sie sich mit der Auswirkung des externen Motors beschäftigen.
+                    </p>
+                </div>
+            }
+
+            @if (currentView === 'intro_exp4') {
+                <div>
+                    <app-image-choice
+                        [questionId]="question6.questionId"
+                        [question]="question6.question"
+                        [options]="question6.options"
+                        [correctAnswers]="question6.correctAnswers"
+                        [containerId]="question6.containerId"
+                        [successMessage]="question6.successMessage"
+                        [incompleteMessage]="question6.incompleteMessage"
+                        [incorrectMessage]="question6.incorrectMessage"
+                        (onAnswerEvaluated)="onQuestion6Answered($event)">
+                    </app-image-choice>
+                </div>
+            }
+        </div>
+
+        <!-- navigation buttons -->
+        <div class="button-container">
+            @if (isFirstPage) {
+                @if (devMode.isEnabled) {
+                    <button routerLink="/" class="btn btn-back">← Zurück zur Startseite</button>
+                }
+            } @else {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+
+            @if (isLastPage) {
+                <button class="btn" (click)="goForward()">Weiter zu gedämpften Schwingungen →</button>
+            } @else {
+                <button class="btn" (click)="goForward()">Weiter →</button>
+            }
+        </div>
+    </div>
+</div>

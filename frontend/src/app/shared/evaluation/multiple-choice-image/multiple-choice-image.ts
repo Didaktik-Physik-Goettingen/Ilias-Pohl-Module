@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 
 
@@ -49,6 +50,7 @@ export class MultipleChoiceImage implements OnInit {
     @Output() onCorrectAnswer = new EventEmitter<void>();
     @Output() onAnswerEvaluated = new EventEmitter<boolean>();
 
+    shuffledOptions: QuestionOption[] = [];
     showResult = false;
     isCorrect = false;
     resultMessage: SafeHtml = '';
@@ -58,12 +60,14 @@ export class MultipleChoiceImage implements OnInit {
     constructor(
         private sanitizer: DomSanitizer,
         private trackingService: ResultsTracking,
+        private shuffleOrder: ShuffleOrder,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
 
     ngOnInit() {
-        // check if this question was already answered correctly in this session
+        const order = this.shuffleOrder.getOrCreate(this.questionId, this.options.length);
+        this.shuffledOptions = order.map(i => this.options[i]);
         this.restorePreviousAnswer();
     }
 
@@ -131,11 +135,14 @@ export class MultipleChoiceImage implements OnInit {
         this.showResult = true;
 
         // Track the result
+        const selectedAnswerTexts = selectedAnswers.map(v => this.options.find(o => o.value === v)?.label ?? v);
+        const correctAnswerTexts  = this.correctAnswers.map(v => this.options.find(o => o.value === v)?.label ?? v);
         this.trackingService.trackQuestionResult(
             this.questionId,
             this.isCorrect,
             selectedAnswers,
-            this.correctAnswers
+            this.correctAnswers,
+            { questionText: this.question, selectedAnswerTexts, correctAnswerTexts }
         );
 
         if (this.isCorrect) {

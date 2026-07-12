@@ -28,6 +28,7 @@
     --bg-primary: #f0f2f5;
     --bg-secondary: var(--altweiss);
     --text-primary: var(--uni-blau-1);
+    /* --text-primary: black; */
     --text-secondary: var(--uni-blau-2);
     --card-bg: #ffffff;
     --border-color: rgba(21, 50, 104, 0.08);
@@ -39,7 +40,12 @@
     --bg-footer: var(--uni-blau-2);
     --glossary-link-color: var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
-    --test-h1-color: var(--physik-gelb)
+    --test-h1-color: var(--physik-gelb);
+    --target-h1-color: var(--philo-purple);
+
+    /* formula coloring for MathJax \class{mjx-formula-hom/inhom}{} */
+    --formula-hom:   var(--forst-gruen);  /* homogeneous / transient term  */
+    --formula-inhom: var(--uni-blau-2);   /* inhomogeneous / stationary term */
 }
 
 /* global Reset & Base Styles */
@@ -65,7 +71,12 @@
     --bg-footer: var(--uni-blau-2);
     --glossary-link-color:     var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-4);
-    --test-h1-color:           var(--physik-gelb)
+    --test-h1-color:           var(--physik-gelb);
+    --target-h1-color:         #c084fc;
+
+    /* formula coloring — lighter/brighter variants for dark backgrounds */
+    --formula-hom:   #34c98a;             /* brightened forst-grün, ~7:1 on dark card */
+    --formula-inhom: var(--uni-blau-3);   /* #0091C8, ~5.5:1 on dark card */
 }
 
 html, body {
@@ -82,7 +93,7 @@ body {
     display: flex;
     flex-direction: column;
 	text-align: justify;
-	font-size: 0.8rem;
+	font-size: 1rem;
 }
 
 /* app container - full viewport height */
@@ -122,6 +133,15 @@ h2 {
     color: var(--uni-blau-2);
 }
 
+.page-subheadline {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-weight: 400;
+    margin-top: -1rem;
+    margin-bottom: 1rem;
+}
+
 /* Links */
 a {
     color: var(--uni-blau-2);
@@ -147,7 +167,7 @@ main {
 
 /* Container for page content */
 .container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     padding: 2rem;
     width: 100%;
@@ -170,6 +190,19 @@ main {
     align-items: center;
 }
 
+/* Forward button: anchors to right even when back button is absent. */
+.button-container > button:last-of-type {
+    margin-left: auto;
+}
+
+/* Back button: always anchors to left.
+   Uses button.btn-back (specificity 0,2,1) to win over button:last-of-type (also 0,2,1)
+   by source order, since this rule is declared after. */
+.button-container > button.btn-back {
+    margin-right: auto;
+    margin-left: 0;
+}
+
 /* individual button placed pn the right side */
 .button-container-right {
     display: flex;
@@ -186,7 +219,7 @@ button.btn {
     box-sizing: border-box;
     
     /* Size */
-    width: 25rem;
+    width: 30rem;
     padding: 0.75rem 1.5rem;
     
     /* Typography */
@@ -243,6 +276,90 @@ nav a {
     border-bottom: 2px solid transparent;
 }
 
+/* Expandable "spoiler" - optional/deep-dive content the reader can fold away */
+.spoiler {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid var(--grau-80);
+    border-radius: 12px;
+    background: var(--altweiss);
+    box-shadow: 0 8px 16px rgba(33, 150, 243, 0.2);
+    overflow: hidden;
+}
+
+.spoiler-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 1.25rem 2rem;
+    font-weight: 600;
+    color: var(--uni-blau-1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s ease;
+}
+
+.spoiler-summary::-webkit-details-marker {
+    display: none;
+}
+
+.spoiler-summary::after {
+    content: '▾';
+    font-size: 1.2rem;
+    color: var(--uni-blau-2);
+    margin-left: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.spoiler-summary:hover {
+    background: rgba(0, 0, 0, 0.03);
+}
+
+.spoiler[open] > .spoiler-summary::after {
+    transform: rotate(180deg);
+}
+
+.spoiler[open] > .spoiler-summary {
+    border-bottom: 1px solid var(--grau-20);
+}
+
+.spoiler-content {
+    padding: 1.5rem 2rem 2rem;
+    color: var(--uni-blau-1);
+    line-height: 1.7;
+}
+
+/* learning pages: formula/key-result highlight box — hardcoded yellow, theme-invariant */
+.learning-lamp {
+    position: relative;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 1rem 1.5rem 1rem 3.5rem;
+    background: linear-gradient(rgba(255, 197, 131, 0.15), rgba(255, 197, 131, 0.15)) #ffffff;
+    border: 2px solid rgb(255, 197, 131);
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(255, 197, 131, 0.35);
+    transition: all 0.3s ease;
+}
+
+.learning-lamp::before {
+    content: '💡';
+    position: absolute;
+    left: 0.75rem;
+    top: 0.9rem;
+    font-size: 1.4rem;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+}
+
+.learning-lamp-text {
+    color: var(--uni-blau-1);
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 500;
+}
+
 nav a:hover {
     border-bottom: 2px solid var(--sky-blue);
 }
@@ -250,6 +367,19 @@ nav a:hover {
 /* Utility classes */
 .text-center {
     text-align: center;
+}
+
+/* centred, width-capped image for learning-page figures */
+.img-center {
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 1rem auto;
+}
+
+.img-caption {
+    margin-bottom: 1rem;
 }
 
 /* ── Glossary overlay ─────────────────────────────────────────────────────── */
@@ -274,6 +404,13 @@ nav a:hover {
 .glossary-overlay-panel .button-container {
     display: none;
 }
+
+/* MathJax \class{mjx-formula-hom/inhom}{} — theme-aware formula term coloring */
+.mjx-formula-hom,
+.mjx-formula-hom * { color: var(--formula-hom) !important; }
+
+.mjx-formula-inhom,
+.mjx-formula-inhom * { color: var(--formula-inhom) !important; }
 
 /* inline glossary trigger links — works in both templates and sanitized strings */
 a.glossary-link {

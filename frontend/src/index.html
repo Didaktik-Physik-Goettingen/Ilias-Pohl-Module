@@ -10,9 +10,11 @@
 	<!-- MathJax Configuration -->
     <script>
         MathJax = {
+            loader: { load: ['[tex]/html'] },
             tex: {
                 inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                packages: { '[+]': ['html'] }
             }
         };
     </script>

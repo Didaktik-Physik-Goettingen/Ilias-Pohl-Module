@@ -1,0 +1,302 @@
+/* ── Summary / Lernpfad — global styles ──────────────────────────────────── */
+/* Used by app-tar-experiment.                                                */
+/* Colors are hardcoded so the panel stays light-mode regardless of theme.   */
+/* No !important needed: class selectors (0,1,0) beat element rules (0,0,1). */
+
+/* ── Header ──────────────────────────────────────────────────────────────── */
+.summary-header {
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--philo-purple);
+}
+
+.summary-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--philo-purple);
+    margin: 0 0 0.4rem;
+}
+
+.summary-meta {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* ── Sections ────────────────────────────────────────────────────────────── */
+.summary-section {
+    margin-bottom: 2.5rem;
+}
+
+.summary-section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--philo-purple);
+    margin: 0 0 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+/* ── Page-visits table ───────────────────────────────────────────────────── */
+.summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+
+.summary-table th,
+.summary-table td {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+    color: #1a202c;
+}
+
+.summary-table th {
+    font-weight: 600;
+    color: #6b7280;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.summary-col-duration {
+    width: 8rem;
+    text-align: right !important;
+    white-space: nowrap;
+}
+
+/* ── Module groups ───────────────────────────────────────────────────────── */
+.summary-module {
+    margin-bottom: 1.75rem;
+}
+
+.summary-module-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 0.75rem;
+}
+
+/* ── Individual questions ────────────────────────────────────────────────── */
+.summary-question {
+    display: flex;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.6rem;
+    border-radius: 6px;
+    border-left: 4px solid transparent;
+    background: #f8fafc;
+}
+
+.summary-question--correct  { border-left-color: #22c55e; background: #f0fdf4; }
+.summary-question--incorrect { border-left-color: #ef4444; background: #fef2f2; }
+
+.summary-q-indicator {
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    line-height: 1.5;
+}
+
+.summary-question--correct  .summary-q-indicator { color: #16a34a; }
+.summary-question--incorrect .summary-q-indicator { color: #dc2626; }
+
+.summary-q-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.summary-q-text {
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+    color: #1a202c;
+}
+
+.summary-q-answer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.4rem;
+    font-size: 0.88rem;
+}
+
+.summary-q-answer-label  { color: #6b7280; font-weight: 500; }
+.summary-q-answer-item   { color: #1a202c; }
+.summary-q-answer-empty  { color: #9ca3af; font-style: italic; }
+
+.summary-q-instruction {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.25rem;
+}
+
+.summary-q-answer-img {
+    display: block;
+    max-width: 160px;
+    max-height: 120px;
+    object-fit: contain;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    margin-top: 0.25rem;
+}
+
+.summary-q-answer-img--correct {
+    border-color: #86efac;
+}
+
+.summary-q-correct-answer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.4rem;
+    font-size: 0.88rem;
+    margin-top: 0.25rem;
+}
+
+.summary-q-answer-label--correct { color: #16a34a; font-weight: 600; }
+.summary-q-answer-item--correct  { color: #15803d; font-weight: 500; }
+
+.summary-q-meta {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-bottom: 0.3rem;
+}
+
+.summary-q-attempts {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 0.2rem;
+}
+
+/* ── Accordion ───────────────────────────────────────────────────────────── */
+.summary-accordion-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background: none;
+    border: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0 0 0.4rem;
+    margin-bottom: 0;
+    cursor: pointer;
+    text-align: left;
+    gap: 0.5rem;
+}
+
+.summary-accordion-btn .summary-section-title {
+    margin: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.summary-accordion-btn:hover .summary-section-title {
+    opacity: 0.75;
+}
+
+.summary-accordion-icon {
+    font-size: 0.75rem;
+    color: var(--philo-purple);
+    flex-shrink: 0;
+}
+
+.summary-accordion-body {
+    padding-top: 1rem;
+}
+
+/* ── Test scores ─────────────────────────────────────────────────────────── */
+.summary-test { margin-bottom: 1.75rem; }
+
+.summary-test-questions {
+    margin-top: 1rem;
+}
+
+.summary-test-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a202c;
+    margin: 0 0 0.5rem;
+}
+
+.summary-score {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.summary-score-bar {
+    flex: 1;
+    height: 10px;
+    border-radius: 5px;
+    background: #e2e8f0;
+    overflow: hidden;
+}
+
+.summary-score-fill {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.6s ease;
+}
+
+.summary-score-fill--low  { background: #ef4444; }
+.summary-score-fill--mid  { background: #f59e0b; }
+.summary-score-fill--high { background: #22c55e; }
+
+.summary-score-text {
+    white-space: nowrap;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1a202c;
+}
+
+/* ── Empty state ─────────────────────────────────────────────────────────── */
+.summary-empty {
+    padding: 2rem;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 0.95rem;
+}
+
+/* ── Print styles ────────────────────────────────────────────────────────── */
+@media print {
+    .no-print { display: none !important; }
+
+    @page {
+        margin: 1.5cm 2cm;
+        size: A4 portrait;
+    }
+
+    body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 10pt;
+        font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    .summary-question {
+        background: #fff !important;
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    /* Show all accordion bodies when printing */
+    .summary-accordion-body { display: block !important; }
+    .summary-accordion-icon { display: none !important; }
+
+    .summary-score-bar  { display: none !important; }
+    .summary-score-text { font-weight: 700; font-size: 11pt; }
+
+    .summary-section      { break-inside: avoid; page-break-inside: avoid; }
+    .summary-module       { break-inside: avoid; page-break-inside: avoid; }
+    .summary-test         { break-inside: avoid; page-break-inside: avoid; }
+    .summary-test-questions { break-inside: avoid; page-break-inside: avoid; }
+
+    .summary-q-answer-img {
+        max-width: 100px;
+        max-height: 80px;
+    }
+}

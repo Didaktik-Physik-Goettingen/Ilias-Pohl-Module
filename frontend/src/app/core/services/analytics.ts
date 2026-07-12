@@ -44,7 +44,13 @@ export class Analytics {
         private sessionService: Session
     ) {
         this.isBrowser = isPlatformBrowser(this.platformId);
+        this.loadFromLocalStorage();
         this.initTracking();
+    }
+
+
+    private get storageKey(): string {
+        return 'analyticsData_' + (this.sessionService.getSessionId() ?? 'unknown');
     }
 
 
@@ -90,24 +96,33 @@ export class Analytics {
             this.currentVisit.endTime = Date.now();
             this.currentVisit.duration = this.currentVisit.endTime - this.currentVisit.startTime;
             this.currentVisit.duration_s = this.currentVisit.duration / 1000;
-            
+
             this.visits.push({ ...this.currentVisit });
-            
+
             console.log(`${this.currentVisit.page} left after ${this.currentVisit.duration_s} seconds`);
             console.log('PATHLOG:', this.currentVisit);
-            
+
             this.currentVisit = null;
+            this.saveToLocalStorage();
         }
     }
 
 
     private saveToLocalStorage() {
         if (this.isBrowser) {
-            const existingData = localStorage.getItem('analyticsData');
-            const allVisits = existingData ? JSON.parse(existingData) : [];
-            allVisits.push(...this.visits);
-            localStorage.setItem('analyticsData', JSON.stringify(allVisits));
+            localStorage.setItem(this.storageKey, JSON.stringify(this.visits));
         }
+    }
+
+
+    private loadFromLocalStorage() {
+        if (!this.isBrowser) return;
+        try {
+            const stored = localStorage.getItem(this.storageKey);
+            if (stored) {
+                this.visits = JSON.parse(stored);
+            }
+        } catch { /* ignore corrupt data */ }
     }
 
 
@@ -156,7 +171,7 @@ export class Analytics {
         this.visits = [];
         this.currentVisit = null;
         if (this.isBrowser) {
-            localStorage.removeItem('analyticsData');
+            localStorage.removeItem(this.storageKey);
         }
     }
 }

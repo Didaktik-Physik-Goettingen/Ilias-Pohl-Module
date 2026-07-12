@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="card">
+        <h1>Gedämpfter harmonischer Oszillator</h1>
+
+        <p>
+            Diese Simulation illustriert das Verhalten eines gedämpften harmonischen Oszillators am Beispiel eines Pohlschen Rads.
+            Spielen Sie mit den unterschiedlichen Parametern, um zu beobachten, wie sich das Bewegungsverhalten des Rads verändert.<br>
+            Das Rad ist im Mittelpunkt mit der Feder verbunden, an dem roten Punkt ist die Feder fixiert - im Experiment ist sie an dieser Stelle mit dem Anreger verbunden und kann sich daher nicht frei bewegen.<br>
+            Um Veränderungen zwischen Bewegungen im Winkel-Zeit-Diagramm besser nachvollziehen zu können, wird jeweils der vorangegangene Durchgang in hellgrau angezeigt.<br>
+            Sollte Ihnen diese Vorstellung schwer fallen, können Sie sich zusätzlich ein Federpendel anzeigen lassen.<br><br>
+            <strong>Beobachtungsvorschläge:</strong><br>
+            1. Beobachten Sie, wie sich die Amplitude und die Frequenz ändern, wenn Sie die Anfangsauslenkung &phi;<sub>0</sub> variieren.<br>
+            2. Beobachten Sie, wie sich die Amplitude und die Frequenz der Schwingung verändern, wenn Sie die Dämpfungskonstante &beta; verändern.<br><br>
+            Beobachten Sie die Veränderung für mindestens 3 verschiedene Parameter, damit Sie am unteren Ende der Seite einen weiterführenden Link erhalten.
+        </p>
+
+        <div class="sim-canvas-container">
+            <canvas #canPend class="sim-canvas sim-canvas-narrow" width="200" height="400" [hidden]="!showPendulum"></canvas>
+            <canvas #canRotPend class="sim-canvas sim-canvas-square" width="400" height="400" [hidden]="!showRotPendulum"></canvas>
+            <canvas #canTime class="sim-canvas sim-canvas-square" width="400" height="400" [hidden]="!showTimeDiagram"></canvas>
+        </div>
+
+        <div class="sim-controls-panel">
+            <div class="sim-toolbar-panel">
+                <div class="sim-toolbar">
+                    <label><input type="checkbox" [(ngModel)]="showPendulum" (ngModelChange)="onToggleCanvas('pend')" [disabled]="!dynamicMode"> Pendel</label>
+                    <label><input type="checkbox" [(ngModel)]="showRotPendulum" (ngModelChange)="onToggleCanvas('rot')" [disabled]="!dynamicMode"> Rotationspendel</label>
+                    <label><input type="checkbox" [(ngModel)]="showTimeDiagram" (ngModelChange)="onToggleCanvas('time')"> Zeitdiagramm</label>
+                </div>
+                <div class="sim-switch-container">
+                    statisch
+                    <label class="sim-switch">
+                        <input type="checkbox" [(ngModel)]="dynamicMode" (ngModelChange)="onDynamicToggle()">
+                        <span></span>
+                    </label>
+                    dynamisch
+                </div>
+            </div>
+
+            <div class="sim-run-controls">
+                <button class="eval-btn" (click)="onStartClick()" [disabled]="!dynamicMode">{{ startButtonLabel }}</button>
+                <button class="eval-btn" (click)="onResetClick()" [disabled]="!dynamicMode">Reset</button>
+            </div>
+
+            <div class="sim-controls">
+                <div class="sim-controls-group">
+                    <h2>Systemvariablen</h2>
+                    <strong>Dämpfungskonstante $\beta$: </strong> <output>{{ dampingConstant.toFixed(2) }}</output><br>
+                    <input class="sim-slider" type="range" min="0" max="1" step="0.05" [(ngModel)]="dampingConstant" (ngModelChange)="onParameterChange()"><br>
+                    <strong>Federkonstante $k$: </strong> <output>{{ springConstant.toFixed(1) }}</output><br>
+                    <input class="sim-slider" type="range" min="0.5" max="5" step="0.1" [(ngModel)]="springConstant" (ngModelChange)="onParameterChange()">
+                </div>
+                <div class="sim-controls-group">
+                    <h2>Anfangsbedingungen</h2>
+                    <strong>Winkelauslenkung $\varphi_0$: </strong> <output>{{ initialAngle }}</output><br>
+                    <input class="sim-slider" type="range" min="0" max="120" step="5" [(ngModel)]="initialAngle" (ngModelChange)="onParameterChange()"><br>
+                    <strong>Winkelgeschwindigkeit $\dot&lbrace;\varphi&rbrace;_0$: </strong> <output>{{ initialVelocity.toFixed(1) }}</output><br>
+                    <input class="sim-slider" type="range" min="-100" max="100" step="0.5" [(ngModel)]="initialVelocity" (ngModelChange)="onParameterChange()">
+                </div>
+            </div>
+
+        </div>
+        <div class="button-container">
+            @if (devMode.isEnabled) {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+            @if (navigationFlow && interactionThresholdReached) {
+                <button class="btn" (click)="goForward()">
+                    {{ navigationFlow === 'sim-first' ? 'Weiter zum Lernmodul →' : 'Weiter zu getriebenen Schwingungen →' }}
+                </button>
+            }
+        </div>
+    </div>
+</div>

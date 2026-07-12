@@ -1,0 +1,184 @@
+/* ── Target pages — Versuchsanleitung ───────────────────────────────────── */
+
+.h1-target {
+    color: var(--target-h1-color);
+}
+
+/* Outer grid: wide card (E1+E2) spans 2 cols, E3 spans 1 */
+.target-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+/* Card base — always light background regardless of dark-mode */
+.target-option {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.75rem;
+    background: linear-gradient(135deg, #f8f4ff 0%, #efe8ff 100%);
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.target-option--wide {
+    grid-column: span 2;
+}
+
+.target-option:hover {
+    border-color: var(--philo-purple);
+    background: linear-gradient(135deg, #efe8ff 0%, #e3d5ff 100%);
+}
+
+/* Heading inside the card — always dark purple, independent of dark-mode theme variable */
+.target-option > h3 {
+    color: var(--philo-purple);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    padding-bottom: 0.6rem;
+    border-bottom: 2px solid var(--philo-purple);
+}
+
+/* Two-column internal layout for E1 + E2 within the wide card */
+.target-variants-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+    flex: 1;
+}
+
+.target-variant-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Subtle divider between E1 and E2 */
+.target-variant-col + .target-variant-col {
+    padding-left: 1.25rem;
+    border-left: 1px solid rgba(69, 25, 92, 0.2);
+}
+
+/* Sub-label distinguishing variants */
+.target-variant {
+    font-size: 0.8rem;
+    color: var(--grau-60);
+    font-style: italic;
+}
+
+.target-description {
+    font-size: 0.8rem;
+    color: var(--uni-blau-1);
+    font-weight: 500;
+    line-height: 1.6;
+    flex: 1; /* grows to push code + downloads toward the bottom */
+}
+
+/* Code row: "Kürzel: E3" */
+.target-code {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 5rem;
+    font-size: 0.8rem;
+    color: var(--grau-80);
+}
+
+.target-code-badge {
+    display: inline-block;
+    padding: 0.1rem 0.55rem;
+    background: var(--philo-purple);
+    color: white;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 0.06em;
+}
+
+/* Download buttons */
+.target-downloads {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.target-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 0.8rem;
+    background: var(--philo-purple);
+    color: white;
+    border: 2px solid var(--philo-purple);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.target-download-btn:hover {
+    background: white;
+    color: var(--philo-purple);
+    border-color: var(--philo-purple);
+    border-bottom: 2px solid var(--philo-purple);
+}
+
+.target-file-size {
+    font-size: 0.7rem;
+    opacity: 0.75;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+/* ── Dark mode — card background stays light; only buttons adapt ─────────── */
+[data-theme="dark"] .target-download-btn {
+    background: #7e22ce;
+    border-color: #7e22ce;
+}
+
+[data-theme="dark"] .target-download-btn:hover {
+    background: white;
+    color: var(--philo-purple);
+    border-color: var(--philo-purple);
+    border-bottom: 2px solid var(--philo-purple);
+}
+
+/* ── Lernpfad summary block on target page ───────────────────────────────── */
+.summary-container {
+    margin-top: 2rem;
+    padding: 1.75rem;
+    background: var(--card-background, #fff);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px var(--shadow-color, rgba(0,0,0,0.08));
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+    .target-options {
+        grid-template-columns: 1fr;
+    }
+
+    .target-option--wide {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 600px) {
+    .target-variants-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .target-variant-col + .target-variant-col {
+        padding-left: 0;
+        border-left: none;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(69, 25, 92, 0.2);
+    }
+}

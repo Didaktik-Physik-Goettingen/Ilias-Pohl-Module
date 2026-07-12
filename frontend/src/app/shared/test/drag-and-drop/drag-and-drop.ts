@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, Inject, 
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestTracking } from '../../../core/services/test-tracking';
+import { ShuffleOrder } from '../../../core/services/shuffle-order';
 
 declare global {
     interface Window {
@@ -54,21 +55,24 @@ export class TestDragDrop implements OnInit, AfterViewInit {
     pointsAwarded = 0;
     feedbackMessage = '';
     pointsBreakdown = '';
+    selectedForMove: DraggableAnswer | null = null;
+    selectedFromContainer: ResultContainer | null = null;
 
     constructor(
         private testTracking: TestTracking,
+        private shuffleOrder: ShuffleOrder,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
     ngOnInit() {
-        // Initialize containers and answers
         this.resultContainers = this.containers.map(c => ({
             ...c,
             assignedAnswerIds: []
         }));
-        this.availableAnswers = JSON.parse(JSON.stringify(this.answers));
-        
-        // Check if this question was already answered
+        const deep: DraggableAnswer[] = JSON.parse(JSON.stringify(this.answers));
+        const order = this.shuffleOrder.getOrCreate(this.questionId, deep.length);
+        this.availableAnswers = order.map(i => deep[i]);
+
         this.restorePreviousAnswer();
     }
 
@@ -209,6 +213,49 @@ export class TestDragDrop implements OnInit, AfterViewInit {
         }
 
         // Re-render MathJax after removal
+        setTimeout(() => this.renderMath(), 50);
+    }
+
+    // Click-to-move: first click selects, second click on target places
+    selectAnswer(answer: DraggableAnswer, fromContainer: ResultContainer | null, event: Event) {
+        event.stopPropagation();
+        if (this.isSubmitted) return;
+        if (this.selectedForMove?.id === answer.id) {
+            this.selectedForMove = null;
+            this.selectedFromContainer = null;
+        } else {
+            this.selectedForMove = answer;
+            this.selectedFromContainer = fromContainer;
+        }
+    }
+
+    clickPlaceInContainer(targetContainer: ResultContainer) {
+        if (!this.selectedForMove || this.isSubmitted) return;
+        if (this.selectedFromContainer?.id === targetContainer.id) {
+            this.selectedForMove = null;
+            this.selectedFromContainer = null;
+            return;
+        }
+        if (this.selectedFromContainer) {
+            const idx = this.selectedFromContainer.assignedAnswerIds.indexOf(this.selectedForMove.id);
+            if (idx !== -1) this.selectedFromContainer.assignedAnswerIds.splice(idx, 1);
+        } else {
+            const idx = this.availableAnswers.findIndex(a => a.id === this.selectedForMove!.id);
+            if (idx !== -1) this.availableAnswers.splice(idx, 1);
+        }
+        targetContainer.assignedAnswerIds.push(this.selectedForMove.id);
+        this.selectedForMove = null;
+        this.selectedFromContainer = null;
+        setTimeout(() => this.renderMath(), 50);
+    }
+
+    clickReturnToPool() {
+        if (!this.selectedForMove || this.isSubmitted || !this.selectedFromContainer) return;
+        const idx = this.selectedFromContainer.assignedAnswerIds.indexOf(this.selectedForMove.id);
+        if (idx !== -1) this.selectedFromContainer.assignedAnswerIds.splice(idx, 1);
+        this.availableAnswers.push(this.selectedForMove);
+        this.selectedForMove = null;
+        this.selectedFromContainer = null;
         setTimeout(() => this.renderMath(), 50);
     }
 

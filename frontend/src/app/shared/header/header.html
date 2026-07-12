@@ -1,7 +1,7 @@
 <div class="header-wrapper">
     <header>
         <div class="header-content">
-            <div class="header-title">Pohlscher Resonator</div>
+            <div class="header-title" [class.header-title--clickable]="devMode.isEnabled" (click)="devMode.isEnabled && router.navigate(['/'])">Pohlscher Resonator</div>
             <div class="header-subtitle">Praktikum zu Experimentalphysik I</div>
             <!-- Debug: Show session ID -->
             <div class="session-debug" *ngIf="sessionService.hasValidSession()">

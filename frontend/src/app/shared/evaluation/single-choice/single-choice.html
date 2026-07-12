@@ -1,1 +1,29 @@
-<p>single-choice works!</p>
+<div class="evaluation-container" [class]="containerId" [class.disabled]="isCorrect">
+    <div class="evaluation-content">
+        <h3 class="evaluation-question" [innerHTML]="question"></h3>
+
+        <div class="evaluation-options">
+            @for (option of shuffledOptions; track option.value) {
+                <label class="evaluation-option">
+                    <input
+                        type="radio"
+                        [name]="containerId"
+                        [value]="option.value"
+                        [disabled]="isCorrect">
+                    <span>{{ option.label }}</span>
+                </label>
+            }
+        </div>
+
+        <button class="eval-btn evaluation-submit-btn" (click)="evaluateAnswer()" [disabled]="isCorrect">
+            Auswerten
+        </button>
+
+        <div class="evaluation-result"
+             [class.show]="showResult"
+             [class.correct]="isCorrect"
+             [class.incorrect]="!isCorrect">
+            <p [innerHTML]="resultMessage"></p>
+        </div>
+    </div>
+</div>

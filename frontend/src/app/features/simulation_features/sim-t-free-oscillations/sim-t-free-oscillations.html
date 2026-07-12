@@ -1,0 +1,67 @@
+<div class="container">
+    <div class="card">
+        <h1>Harmonischer Oszillator</h1>
+
+        <p>
+            Diese Simulation zeigt den harmonischen Oszillator ohne Dämpfung und ohne Antrieb (freie Schwingung).
+            Verändern Sie die Parameter und beobachten Sie, wie sich Amplitude und Frequenz des Pendels verändern.<br>
+            Um Veränderungen zwischen Durchgängen im Zeit-Diagramm besser nachvollziehen zu können, wird jeweils der vorangegangene Durchgang in hellgrau angezeigt.<br><br>
+            <strong>Beobachtungsvorschläge:</strong><br>
+            1. Beobachten Sie, wie sich die Frequenz der Schwingung verändert, wenn Sie die Federkonstante $k$ variieren.<br>
+            2. Variieren Sie die Anfangsauslenkung $x_0$ und beobachten Sie, wie sich die Amplitude ändert.<br>
+            3. Schalten Sie den Phasenraum ein und beobachten Sie die Kurvenform bei verschiedenen Anfangsbedingungen.<br><br>
+            Beobachten Sie Veränderungen für mindestens 3 verschiedene Parameter, damit Sie am unteren Ende der Seite einen weiterführenden Link erhalten.
+        </p>
+
+        <div class="sim-canvas-container">
+            <canvas #canPend  class="sim-canvas sim-canvas-narrow" width="200" height="400"></canvas>
+            <canvas #canTime  class="sim-canvas sim-canvas-square" width="400" height="400"></canvas>
+            <canvas #canPhase class="sim-canvas sim-canvas-square" width="400" height="400" [hidden]="!showPhase"></canvas>
+        </div>
+
+        <div class="sim-controls-panel">
+            <div class="sim-toolbar-panel">
+                <div class="sim-toolbar">
+                    <label><input type="checkbox" [(ngModel)]="showPhase" (ngModelChange)="onTogglePhase()"> Phasenraum</label>
+                </div>
+                <div class="sim-switch-container">
+                    statisch
+                    <label class="sim-switch">
+                        <input type="checkbox" [(ngModel)]="dynamicMode" (ngModelChange)="onDynamicToggle()">
+                        <span></span>
+                    </label>
+                    dynamisch
+                </div>
+            </div>
+
+            <div class="sim-run-controls">
+                <button class="eval-btn" (click)="onStartClick()" [disabled]="!dynamicMode">{{ startButtonLabel }}</button>
+                <button class="eval-btn" (click)="onResetClick()" [disabled]="!dynamicMode">Reset</button>
+            </div>
+
+            <div class="sim-controls">
+                <div class="sim-controls-group">
+                    <h2>Systemvariablen</h2>
+                    <strong>Federkonstante $k$: </strong> <output>{{ springConstant.toFixed(1) }}</output><br>
+                    <input class="sim-slider" type="range" min="0.5" max="5" step="0.1" [(ngModel)]="springConstant" (ngModelChange)="onParameterChange()">
+                </div>
+                <div class="sim-controls-group">
+                    <h2>Anfangsbedingungen</h2>
+                    <strong>Auslenkung $x_0$: </strong> <output>{{ initialX }}</output><br>
+                    <input class="sim-slider" type="range" min="0" max="120" step="5" [(ngModel)]="initialX" (ngModelChange)="onParameterChange()"><br>
+                    <strong>Geschwindigkeit $\dot&lbrace;x&rbrace;_0$: </strong> <output>{{ initialVelocity.toFixed(1) }}</output><br>
+                    <input class="sim-slider" type="range" min="-100" max="100" step="0.5" [(ngModel)]="initialVelocity" (ngModelChange)="onParameterChange()">
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            @if (devMode.isEnabled) {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+            @if (interactionThresholdReached) {
+                <button class="btn" (click)="goForward()">Weiter →</button>
+            }
+        </div>
+    </div>
+</div>

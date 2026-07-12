@@ -1,0 +1,321 @@
+<div class="container">
+    <div class="card">
+        @if (currentView === 'driven_osc1') {
+            <h1>Getriebene Schwingungen (1/8)</h1>
+            <p class="page-subheadline">Getriebener harmonischer Oszillator</p>
+        } @else if (currentView === 'driven_osc2') {
+            <h1>Getriebene Schwingungen (2/8)</h1>
+            <p class="page-subheadline">DGL des Pohlschen Rads</p>
+        } @else if (currentView === 'driven_osc3') {
+            <h1>Getriebene Schwingungen (3/8)</h1>
+            <p class="page-subheadline">Komplexe Erweiterung der DGL</p>
+        } @else if (currentView === 'driven_osc4') {
+            <h1>Getriebene Schwingungen (4/8)</h1>
+            <p class="page-subheadline">Partikuläre Lösung</p>
+        } @else if (currentView === 'driven_osc5') {
+            <h1>Getriebene Schwingungen (5/8)</h1>
+            <p class="page-subheadline">Homogene Lösung</p>
+        } @else if (currentView === 'driven_osc6') {
+            <h1>Getriebene Schwingungen (6/8)</h1>
+            <p class="page-subheadline">Vollständige Lösung und Einschwingvorgang</p>
+        } @else if (currentView === 'driven_osc7') {
+            <h1>Getriebene Schwingungen (7/8)</h1>
+            <p class="page-subheadline">Amplitude</p>
+        } @else {
+            <h1>Getriebene Schwingungen (8/8)</h1>
+            <p class="page-subheadline">Phasenverschiebung</p>
+        }
+
+        <div class="content">
+
+            <!-- ── Page 1: Getriebener harmonischer Oszillator ── -->
+            @if (currentView === 'driven_osc1') {
+                <div class="text-content">
+                    <p [innerHTML]="t4Text1a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text1b"></div>
+                </div>
+                <div class="glossary-write">
+                    <div class="glossary-text" [innerHTML]="t4Text1c"></div>
+                </div>
+
+                <app-multiple-choice
+                    [questionId]="question1.questionId"
+                    [question]="question1.question"
+                    [options]="question1.options"
+                    [correctAnswers]="question1.correctAnswers"
+                    [containerId]="question1.containerId"
+                    [successMessage]="question1.successMessage"
+                    [incompleteMessage]="question1.incompleteMessage"
+                    [incorrectMessage]="question1.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion1Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 2: DGL des Pohlschen Rads ── -->
+            @if (currentView === 'driven_osc2') {
+                <div class="glossary-write">
+                    <div class="glossary-text" [innerHTML]="t4Text2a"></div>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text2b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text2c"></p>
+                </div>
+
+                <app-multiple-choice
+                    [questionId]="question2.questionId"
+                    [question]="question2.question"
+                    [options]="question2.options"
+                    [correctAnswers]="question2.correctAnswers"
+                    [containerId]="question2.containerId"
+                    [successMessage]="question2.successMessage"
+                    [incompleteMessage]="question2.incompleteMessage"
+                    [incorrectMessage]="question2.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion2Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question3.questionId"
+                    [question]="question3.question"
+                    [options]="question3.options"
+                    [correctAnswers]="question3.correctAnswers"
+                    [containerId]="question3.containerId"
+                    [successMessage]="question3.successMessage"
+                    [incompleteMessage]="question3.incompleteMessage"
+                    [incorrectMessage]="question3.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion3Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 3: Komplexe Erweiterung ── -->
+            @if (currentView === 'driven_osc3') {
+                <div class="text-content">
+                    <p [innerHTML]="t4Text3a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text3b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text3c"></p>
+                </div>
+            }
+
+            <!-- ── Page 4: Partikuläre Lösung ── -->
+            @if (currentView === 'driven_osc4') {
+                <div class="text-content">
+                    <p [innerHTML]="t4Text4a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text4b"></div>
+                </div>
+
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Detaillierte Herleitung der partikulären Lösung</summary>
+                    <div class="spoiler-content" [innerHTML]="t4Text4spoiler"></div>
+                </details>
+
+                <div class="text-content">
+                    <p [innerHTML]="t4Text4c"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text4d"></div>
+                </div>
+
+                <app-multiple-choice
+                    [questionId]="question4.questionId"
+                    [question]="question4.question"
+                    [options]="question4.options"
+                    [correctAnswers]="question4.correctAnswers"
+                    [containerId]="question4.containerId"
+                    [successMessage]="question4.successMessage"
+                    [incompleteMessage]="question4.incompleteMessage"
+                    [incorrectMessage]="question4.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion4Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question5.questionId"
+                    [question]="question5.question"
+                    [options]="question5.options"
+                    [correctAnswers]="question5.correctAnswers"
+                    [containerId]="question5.containerId"
+                    [successMessage]="question5.successMessage"
+                    [incompleteMessage]="question5.incompleteMessage"
+                    [incorrectMessage]="question5.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion5Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 5: Homogene Lösung ── -->
+            @if (currentView === 'driven_osc5') {
+                <div class="text-content">
+                    <p [innerHTML]="t4Text5a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text5b"></div>
+                </div>
+
+                <details class="spoiler">
+                    <summary class="spoiler-summary">EXKURS: Alle drei Dämpfungsfälle im Überblick</summary>
+                    <div class="spoiler-content" [innerHTML]="t4Text5spoiler"></div>
+                </details>
+
+                <div class="text-content">
+                    <p [innerHTML]="t4Text5c"></p>
+                </div>
+            }
+
+            <!-- ── Page 6: Vollständige Lösung und Einschwingvorgang ── -->
+            @if (currentView === 'driven_osc6') {
+                <div class="text-content">
+                    <p [innerHTML]="t4Text6a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text6b"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="t4Text6c"></p>
+                </div>
+
+                <app-image-choice
+                    [questionId]="question6.questionId"
+                    [question]="question6.question"
+                    [options]="question6.options"
+                    [correctAnswers]="question6.correctAnswers"
+                    [containerId]="question6.containerId"
+                    [successMessage]="question6.successMessage"
+                    [incompleteMessage]="question6.incompleteMessage"
+                    [incorrectMessage]="question6.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion6Answered($event)">
+                </app-image-choice>
+            }
+
+            <!-- ── Page 7: Amplitude ── -->
+            @if (currentView === 'driven_osc7') {
+                <div class="text-content">
+                    <p [innerHTML]="t4Text7a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text7b"></div>
+                </div>
+
+                <img src="assets/images/t4_driven_oscillations/amplitude_damping.png"
+                     alt="Normierte Amplitude für unterschiedliche Dämpfungen in Abhängigkeit von der Anregungsfrequenz"
+                     class="img-center img-md">
+                <p class="img-caption"><em>Normierte Amplitude für unterschiedliche Dämpfungen in Abhängigkeit von der Anregungsfrequenz. Die graue gestrichelte Kurve zeigt die normierte Amplitude bei der Resonanzfrequenz.</em></p>
+
+                <div class="text-content">
+                    <p [innerHTML]="t4Text7c"></p>
+                </div>
+
+                <app-multiple-choice
+                    [questionId]="question7.questionId"
+                    [question]="question7.question"
+                    [options]="question7.options"
+                    [correctAnswers]="question7.correctAnswers"
+                    [containerId]="question7.containerId"
+                    [successMessage]="question7.successMessage"
+                    [incompleteMessage]="question7.incompleteMessage"
+                    [incorrectMessage]="question7.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion7Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question8.questionId"
+                    [question]="question8.question"
+                    [options]="question8.options"
+                    [correctAnswers]="question8.correctAnswers"
+                    [containerId]="question8.containerId"
+                    [successMessage]="question8.successMessage"
+                    [incompleteMessage]="question8.incompleteMessage"
+                    [incorrectMessage]="question8.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion8Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question9.questionId"
+                    [question]="question9.question"
+                    [options]="question9.options"
+                    [correctAnswers]="question9.correctAnswers"
+                    [containerId]="question9.containerId"
+                    [successMessage]="question9.successMessage"
+                    [incompleteMessage]="question9.incompleteMessage"
+                    [incorrectMessage]="question9.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion9Answered($event)">
+                </app-multiple-choice>
+            }
+
+            <!-- ── Page 8: Phasenverschiebung ── -->
+            @if (currentView === 'driven_osc8') {
+                <div class="text-content">
+                    <p [innerHTML]="t4Text8a"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="t4Text8b"></div>
+                </div>
+
+                <div class="text-image-container">
+                    <div class="text-content">
+                        <p [innerHTML]="t4Text8c"></p>
+                    </div>
+                    <div class="image-content">
+                        <img src="assets/images/t4_driven_oscillations/25_phase.svg"
+                             alt="Phasenverschiebung in Abhängigkeit von der Anregungsfrequenz"
+                             class="img-center">
+                        <p class="img-caption"><em>Phasenverschiebung Φ(ω) für unterschiedliche Dämpfungskonstanten β. Bei ω = ω₀ gilt stets Φ = π/2.</em></p>
+                    </div>
+                </div>
+
+                <app-multiple-choice
+                    [questionId]="question10.questionId"
+                    [question]="question10.question"
+                    [options]="question10.options"
+                    [correctAnswers]="question10.correctAnswers"
+                    [containerId]="question10.containerId"
+                    [successMessage]="question10.successMessage"
+                    [incompleteMessage]="question10.incompleteMessage"
+                    [incorrectMessage]="question10.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion10Answered($event)">
+                </app-multiple-choice>
+
+                <app-multiple-choice
+                    [questionId]="question11.questionId"
+                    [question]="question11.question"
+                    [options]="question11.options"
+                    [correctAnswers]="question11.correctAnswers"
+                    [containerId]="question11.containerId"
+                    [successMessage]="question11.successMessage"
+                    [incompleteMessage]="question11.incompleteMessage"
+                    [incorrectMessage]="question11.incorrectMessage"
+                    (onAnswerEvaluated)="onQuestion11Answered($event)">
+                </app-multiple-choice>
+
+                <img src="assets/images/t4_driven_oscillations/35_illustration_zur_phasenverschiebung.svg"
+                     alt="Veranschaulichung der Phasenverschiebung zwischen Antrieb und Schwungrad"
+                     class="img-center img-lg">
+                <p class="img-caption"><em>Veranschaulichung der Phasenverschiebung: Der Antrieb eilt dem Schwungrad um die Phase Φ voraus.</em></p>
+            }
+
+        </div>
+
+        <div class="button-container">
+            @if (isFirstPage) {
+                @if (devMode.isEnabled) {
+                    <button routerLink="/decision/t-driven-oscillations" class="btn btn-back">← Zurück zur Entscheidungsseite</button>
+                }
+            } @else {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+            @if (isLastPage) {
+                <button class="btn" (click)="goForward()">
+                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zur Simulation →' }}
+                </button>
+            } @else {
+                <button class="btn" (click)="goForward()">Weiter →</button>
+            }
+        </div>
+    </div>
+</div>
