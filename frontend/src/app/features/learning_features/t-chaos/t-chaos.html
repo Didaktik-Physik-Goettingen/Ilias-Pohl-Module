@@ -1,49 +1,63 @@
 <div class="container">
     <div class="card">
         <h1>
-            @if (currentView === 'chaos_1') { <span>Grundlagen nichtlineare Schwingungen und Chaos (1/2)</span> }
-            @else if (currentView === 'chaos_2') { <span>Grundlagen nichtlineare Schwingungen und Chaos (2/2)</span> }
-            @else if (currentView === 'chaos_2') { <span>Versuchsübersicht</span> }
-            @else { <span>Versuchsanleitung</span> }
+            @if (currentView === 'chaos_1') { 
+                <h1>Grundlagen nichtlineare Schwingungen und Chaos (1/2)</h1>
+                <p class="page-subheadline">Anharmonisches Potential durch Zusatzmasse</p>
+            } @else if (currentView === 'chaos_2') { 
+                <h1>Grundlagen nichtlineare Schwingungen und Chaos (2/2)</h1>
+                <p class="page-subheadline">Angeregte Schwingung im anharmonischen Potential</p>
+            } @else if (currentView === 'chaos_3') { 
+                <h1>Versuchsübersicht</h1> 
+            } @else { 
+                <h1>Versuchsanleitung</h1>
+            }
         </h1>
 
         <!-- Content sections -->
         <div class="content">
             @if (currentView === 'chaos_1') {
                 <div>
-                    <h1>Anharmonisches Potential durch Zusatzmasse</h1>
-                    <p>
-                        Die Grundlage für harmonische Schwingungen ist, dass die rücktreibende Kraft linear mit der Auslenkung aus der Gleichgewichtsposition.
-                        Bei einer solchen Kraft ist das zugrundeliegende Potential parabolisch.
-                    </p>
+                    <div class="text-content">
+                        <p>
+                            Die Grundlage für harmonische Schwingungen ist, dass die rücktreibende Kraft linear mit der Auslenkung aus der Gleichgewichtsposition.
+                            Bei einer solchen Kraft ist das zugrundeliegende Potential parabolisch.
+                        </p>
+                    </div>
                     <div class="text-image-container">
                         <div class="image-content">
-                            <img src="assets/images/chaos/potential.png" alt="Potential mit angehängter Zusatzmasse">
+                            <img src="assets/images/t_chaos/potential.png" alt="Potential mit angehängter Zusatzmasse">
                         </div>
                         <div class="text-content">
                             <p [innerHTML]="AbschnittPotential"></p>
                         </div>
                     </div>
-                    <p>
-                        Die Bewegungsdynamik des Pendels hängt nun noch stärker von der <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> der Schwingung und der Dämpfung ab.   <br>
-                        Zwei Aspekte können wir bereits aus dem Potential ableiten:<br>
-                        Für kleine Auslenkungen aus einer der neuen Gleichgewichtslagen ist das Potential noch immer näherungsweise parabolisch 
-                        und die Schwingung ist harmonisch (s. untere Abbildung).
-                        Für größere Auslenkungen aus der Gleichgewichtslage erfährt das Schwungrad aber eine unsymmetrische Rückstellkraft.   <br><br>
-                        Welchen Einfluss hat die Dämpfung auf das System? Was geschieht bei einer starken Dämpfung? 
-                        Warum verändert sich das Verhalten, wenn die Dämpfung verringert wird?                  
-                    </p>
+                    <div class="text-content">
+                        <p>
+                            Die Bewegungsdynamik des Pendels hängt nun noch stärker von der <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> der Schwingung und der Dämpfung ab.   <br>
+                            Zwei Aspekte können wir bereits aus dem Potential ableiten:<br>
+                            Für kleine Auslenkungen aus einer der neuen Gleichgewichtslagen ist das Potential noch immer näherungsweise parabolisch 
+                            und die Schwingung ist harmonisch (s. untere Abbildung).
+                            Für größere Auslenkungen aus der Gleichgewichtslage erfährt das Schwungrad aber eine unsymmetrische Rückstellkraft.<br><br>
+                            Welchen Einfluss hat die Dämpfung auf das System? Was geschieht bei einer starken Dämpfung? 
+                            Warum verändert sich das Verhalten, wenn die Dämpfung verringert wird?                  
+                        </p>
+                    </div>
 
                 </div>
             }
 
             @if (currentView === 'chaos_2') {
                 <div>
-                    <h1>Angeregte Schwingung im anharmonischen Potential</h1>
                     <p>
                         Aufgrund des durch die Masse bewirkten Drehmoments lautet die gesamte Bewegungsgleichung für das gedämpfte, harmonisch getriebene System:
                     </p>
-                    <p [innerHTML]="differentialgleichung"></p>
+                </div>
+                <div class="learning-lamp">
+                    <div class="learning-lamp-text" [innerHTML]="differentialgleichung"></div>
+                </div>
+                <div class="text-content">
+                    <p [innerHTML]="differentialgleichung2"></p>
                 </div>
             }
 
@@ -77,13 +91,13 @@
         <!-- navigation buttons -->
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/" class="btn" [disabled]="!canGoBack">← Zurück zur Startseite</button>
+               <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück zum Testergebnis</button>
             } @else {
                 <button class="btn" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>
             }
 
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter zum Test →</button>
+                <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter zum Versuchsaufbau →</button>
             } @else {
                 <button class="btn" (click)="goForward()" [disabled]="!canProceed">Weiter →</button>
             }

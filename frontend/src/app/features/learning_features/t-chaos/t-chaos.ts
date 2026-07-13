@@ -13,13 +13,13 @@ declare global {
 }
 
 @Component({
-  selector: 'app-chaotic-behavior',
+  selector: 'app-t-chaos',
   imports: [CommonModule, RouterLink],
-  templateUrl: './chaotic-behavior.html',
-  styleUrl: './chaotic-behavior.css',
+  templateUrl: './t-chaos.html',
+  styleUrl: './t-chaos.css',
 })
 
-export class ChaoticBehavior implements OnInit, OnDestroy {
+export class TChaos implements OnInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -40,7 +40,8 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
     }
 
 	AbschnittPotential!: SafeHtml;
-  differentialgleichung!: SafeHtml;
+    differentialgleichung!: SafeHtml;
+    differentialgleichung2!: SafeHtml;
 
   ngOnInit() {
       // restore subpage from URL query param
@@ -50,7 +51,7 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
       }
 
       // start tracking this module
-      this.trackingService.startModule('chaotic-behavior');
+      this.trackingService.startModule('t-chaos');
 
       // sanitized string to enable LaTeX rendering
       this.AbschnittPotential = this.sanitizer.bypassSecurityTrustHtml(`
@@ -62,8 +63,12 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
           sondern $\\phi=0$ zu einem labilen Gleichgewichtspunkt wird, an dem kleine Änderungen des Auslenkwinkels die Dynamik entscheidend bestimmen.
           Stattdessen entstehen zwei neue, symmetrisch um den Ursprung verteilte Gleichgewichtslagen.
       `);
+
       this.differentialgleichung = this.sanitizer.bypassSecurityTrustHtml(`
           $$\\ddot{\\varphi} + 2\\tilde{\\beta} \\dot{\\varphi} + \\tilde{\\omega}_0^2\\phi + \\alpha\\sin{\\phi} = N\\cos{\\omega t} $$
+        `)
+
+      this.differentialgleichung2 = this.sanitizer.bypassSecurityTrustHtml(`
           Beachte, dass durch Tilden über den Variablen angezeigt werden soll, dass sich das aufgrund der Zusatzmassen das 
           <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a> geändert hat. 
           Zudem haben wir die Variable $\\alpha = \\frac{mgr}{\\Theta_1}$ mit dem neuen <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a><br>
@@ -114,7 +119,7 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
   	// +++ in-page navigation +++
 
     private updateUrl() {
-        const page = this.currentView.replace('chaotic-behavior', '');
+        const page = this.currentView.replace('chaos_', '');
         this.router.navigate([], {
             relativeTo: this.route,
             queryParams: { page },
@@ -129,7 +134,7 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
         return this.currentView === 'chaos_1';
     }
     get isLastPage(): boolean {
-        return this.currentView === 'chaos_4';
+        return this.currentView === 'chaos_2';
     }
 
 	// page completion tracking
@@ -159,7 +164,7 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
     // going back shows the previous subpage / home page
     goBack() {
         if (this.currentView === 'chaos_1') {
-            this.router.navigate(['/']);
+            this.router.navigate(['/test/t-driven-osc'], { queryParams: { page: '5' } });
             return;
         } else if (this.currentView === 'chaos_2') {
             this.currentView = 'chaos_1';
@@ -178,11 +183,12 @@ export class ChaoticBehavior implements OnInit, OnDestroy {
             if (this.currentView === 'chaos_1') {
                 this.currentView = 'chaos_2';
             } else if (this.currentView === 'chaos_2') {
-                this.currentView = 'chaos_3';
+                this.router.navigate(['/learning/t-setup'], { queryParams: { next: 'chaos' } });
+                return;
             } else if (this.currentView === 'chaos_3') {
                 this.currentView = 'chaos_4';
-            }  else if (this.currentView === 'chaos3') {
-                this.router.navigate(['abschlussseite']);
+            }  else if (this.currentView === 'chaos4') {
+                this.router.navigate(['/target/tar-chaos']);
                 return;
             }
             this.updateUrl();

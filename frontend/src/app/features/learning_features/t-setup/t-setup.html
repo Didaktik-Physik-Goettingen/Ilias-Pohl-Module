@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="card">
+        <h1>Versuchsaufbau</h1>
+        <!-- <p class="page-subheadline">Der Pohlsche Resonator</p> -->
+
+        <div class="full-width-image-container">
+            <img src="assets/images/target/Aufbau_Vergleich_Skizze_Bezeichnung_Theorie.png" alt="Versuchsaufbau" class="full-width-image">
+            <p class="image-description">
+                Im Versuch werden Sie die Theorie zu getriebenen und gedämpften Schwingungen
+                am Beispiel eines Pohlschen Resonators untersuchen. Um sich einen ersten Überblick über den Versuchsaufbau zu verschaffen, vergleichen Sie oben das Foto des Versuchsaufbaus mit der Skizze und versuchen Sie die
+                unterschiedlichen Bauelemente zu identifizieren.
+            </p>
+        </div>
+
+        <div class="glossary-write">
+            <div class="glossary-text">
+                Hier noch ein paar Hinweise zum Aufbau:
+                <ul>
+                    <li><strong>Die Feder</strong> sorgt für ein rücktreibendes Drehmoment und induziert daher
+                        eine Bewegung des Schwungrads, wenn dieses aus seiner Ruhelage ausgelenkt wird. Die Feder
+                        ist in der Mitte mit dem Schwungrad verbunden und an ihrem anderen Ende mit dem Anreger.</li>
+                    <li><strong>Der Anreger</strong> wird durch einen Schrittmotor angetrieben, der wiederum
+                        über die Messsoftware gesteuert wird.</li>
+                    <li><strong>Die Wirbelstrombremse</strong> entspricht zwei Schuhmagneten, die über das
+                        Schwungrad geschoben werden können. Wenn das Rad in Bewegung ist, wird es durch die
+                        Wechselwirkung mit dem magnetischen Feld abgebremst (Stichwort: Induktion). Die
+                        Bremswirkung wird erhöht, indem der Überlapp zwischen Magnet und Schwungrad vergrößert
+                        wird.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="button-container">
+            @if (devMode.isEnabled) {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
+            <button class="btn" (click)="goForward()">Weiter →</button>
+        </div>
+    </div>
+</div>

@@ -566,7 +566,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
                 sessionStorage.setItem('learning-done-t-driven', 'true');
                 this.router.navigate(['/decision/t-driven-oscillations']);
             } else {
-                this.router.navigate(['/simulation/theory-damped-driven']);
+                this.router.navigate(['/learning/t-setup']);
             }
             return;
         }

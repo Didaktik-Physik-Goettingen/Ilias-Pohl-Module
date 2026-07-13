@@ -14,7 +14,7 @@ import { TestTracking } from '../../../core/services/test-tracking';
 export class DecTDampedOscillations implements OnInit {
     learningModuleLink = '/learning/t3-damped-oscillations';
     testLink = '/test/t-damped-osc';
-    simulationLink = '/simulation/theory-damped';
+    simulationLink = '/simulation/sim-t-damped';
     nextLink = '/decision/t-driven-oscillations';
     testDisabled = false;
     learningCompleted = false;
@@ -34,8 +34,11 @@ export class DecTDampedOscillations implements OnInit {
     }
 
     navigateToSimulation() {
-        const flow = this.learningCompleted ? 'learning-first' : 'sim-first';
-        this.router.navigate([this.simulationLink], { queryParams: { flow } });
+        if (this.learningCompleted) {
+            this.router.navigate([this.simulationLink], { queryParams: { flow: 'learning-first' } });
+        } else {
+            this.router.navigate([this.simulationLink]);
+        }
     }
 
     navigateNext() {

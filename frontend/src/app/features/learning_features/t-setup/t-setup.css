@@ -1,0 +1,10 @@
+.full-width-image-container {
+    margin: 2rem 0;
+}
+
+.full-width-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}

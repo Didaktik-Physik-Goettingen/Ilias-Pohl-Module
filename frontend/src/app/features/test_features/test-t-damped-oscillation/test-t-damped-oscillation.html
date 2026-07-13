@@ -106,8 +106,8 @@
         <div class="button-container" [class]="getPerformanceClass()">
             @if (isFirstPage) {
                 @if (devMode.isEnabled) {
-                    <button [routerLink]="['/learning/e1-intro-experiment']" [queryParams]="{page: 4}"
-                            class="btn btn-back" [disabled]="!canGoBack">← Zurück zum Einstieg</button>
+                    <button [routerLink]="['/decision/t-damped-oscillations']"
+                            class="btn btn-back" [disabled]="!canGoBack">← Zurück zur Entscheidungsseite</button>
                 }
             } @else {
                 <button class="btn btn-back" (click)="goBack()" [disabled]="!canGoBack">← Zurück</button>

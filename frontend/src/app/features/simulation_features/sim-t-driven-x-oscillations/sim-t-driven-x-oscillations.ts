@@ -89,7 +89,13 @@ export class SimTDrivenXOscillations implements OnInit, AfterViewInit, OnDestroy
     ngOnDestroy() { if (this.raf) cancelAnimationFrame(this.raf); }
 
     goBack()    { this.location.back(); }
-    goForward() { this.router.navigate(['/']); }
+    goForward() {
+        if (this.navigationFlow === 'learning-first') {
+            this.router.navigate(['/learning/t-setup']);
+        } else {
+            this.router.navigate(['/learning/t4-driven-oscillations']);
+        }
+    }
 
     renderMath() {
         if (isPlatformBrowser(this.platformId)) {

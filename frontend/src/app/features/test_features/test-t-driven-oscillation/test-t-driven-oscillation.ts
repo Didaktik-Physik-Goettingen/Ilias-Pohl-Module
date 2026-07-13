@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -35,18 +35,20 @@ export class TestTDrivenOscillation implements OnInit, OnDestroy {
             maxPercentage: 79,
             level: 'low' as const,
             message: 'In Bezug auf getriebene Schwingungen fehlen Ihnen noch einige Aspekte. Entscheiden Sie selber, wie Sie fortfahren möchten. Sie können sich entweder zunächst mit den Bewegungsmustern anhand einer interaktiven Simulation vertraut machen, oder die theoretischen Grundlagen in einem interaktiven Lernmodul erarbeiten.',
-            continueLink: '/experiment/intro',
-            continueLinkText: 'Weiter zur Simulation',
-            continueLink2: '/learning/resonance',
-            continueLinkText2: 'Weiter zu den theoretischen Grundlagen'
+            continueLink: '/decision/t-driven-oscillations',
+            continueLinkText: 'Zurück zur Entscheidungsseite',
         },
         {
             minPercentage: 80,
             maxPercentage: 100,
             level: 'high' as const,
-            message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
-            continueLink: '/test/forced-oscillations',
-            continueLinkText: 'Weiter zur Entscheidung über die Ausrichtung des Versuchs'
+            message: `Sie haben ein gutes Grundlagenwissen zu getriebenen Schwingungen und können ihr Wissen nun mit
+            <a class="glossary-link" routerLink="/learning/t-chaos"><b>chaotischem Verhalten</b></a> 
+            oder
+            <a class="glossary-link" routerLink="/learning/t-simulation"><b>Python-Simulationen</b> </a> 
+            erweitern.`,
+            continueLink: '/learning/t-setup',
+            continueLinkText: 'Weiter zum Versuchsaufbau'
         }
     ];
 
@@ -189,18 +191,36 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
         private router: Router,
         private testTracking: TestTracking,
         public devMode: DevModeService
     ) {}
-	
-	
+
+
     ngOnInit() {
 		// start tracking this test
         this.testTracking.startTest('driven-oscillations', 4, 80); // 4 questions, 80 total points
-        
+
         // restore completion state from previous session
         this.restoreCompletionState();
+
+        // restore subpage from URL
+        const page = this.route.snapshot.queryParamMap.get('page');
+        if (page && ['1','2','3','4','5'].includes(page)) {
+            this.currentView = `driven_osc${page}`;
+            if (page === '5') this.calculateResults();
+        }
+    }
+
+    private updateUrl() {
+        const page = this.currentView.replace('driven_osc', '');
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page },
+            queryParamsHandling: 'merge',
+            replaceUrl: true,
+        });
     }
 	
 	
@@ -342,16 +362,16 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         } else if (this.currentView === 'driven_osc3') {
             this.currentView = 'driven_osc2';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         } else if (this.currentView === 'driven_osc4') {
             this.currentView = 'driven_osc3';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         } else if (this.currentView === 'driven_osc5') {
             this.currentView = 'driven_osc4';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         }
     }
 
@@ -371,7 +391,9 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 				this.currentView = 'driven_osc5';
 			} else if (this.currentView === 'driven_osc5') {
                 this.router.navigate([this.continueLink], { queryParams: this.continueQueryParams });
+                return;
 			}
+            this.updateUrl();
             this.renderMath();
         }
     }

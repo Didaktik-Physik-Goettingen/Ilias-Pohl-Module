@@ -64,15 +64,6 @@
     box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
 }
 
-.image-description {
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: var(--text-primary);
-    line-height: 1.7;
-    text-align: center;  /* or left, depending on your preference */
-    font-style: italic;  /* optional - makes it look more like a caption */
-}
-
 /* Text + Image horizontal layout */
 .text-image-container {
     display: flex;
@@ -94,18 +85,16 @@
 
 .image-content img {
     width: 100%;
-    max-width: 250px;
+    max-width: 350px;
     height: auto;
     border-radius: 8px;
-    /* box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); */
 }
 
-/* Responsive - stack on smaller screens */
 @media (max-width: 968px) {
     .text-image-container {
         flex-direction: column;
     }
-    
+
     .image-content {
         flex: 0 0 auto;
         width: 100%;
