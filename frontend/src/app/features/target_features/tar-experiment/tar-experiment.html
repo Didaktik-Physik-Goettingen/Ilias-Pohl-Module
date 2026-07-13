@@ -288,7 +288,23 @@
             <button class="target-download-btn" (click)="print()">
                 ↓ Lernpfad als PDF
             </button>
+            @if (canDownloadReport) {
+                <button class="target-download-btn" (click)="downloadLearningPath()"
+                        [disabled]="isGeneratingReport">
+                    ↓ {{ isGeneratingReport ? 'Wird erstellt …' : 'individuellen Lernpfad herunterladen' }}
+                </button>
+            }
         </div>
+        @if (isGeneratingReport) {
+            <p class="report-download-hint no-print">
+                Ihr Lernpfad wird zusammengestellt — dies kann einen Moment dauern.
+            </p>
+        }
+        @if (reportError) {
+            <p class="report-download-error no-print">
+                Der Download ist fehlgeschlagen. Bitte versuchen Sie es erneut.
+            </p>
+        }
 
     </div><!-- /summary-container -->
 

@@ -4,6 +4,7 @@ import { Session } from './session';
 import { Analytics, AnalyticsData } from './analytics';
 import { ResultsTracking, ModuleProgress } from './results-tracking';
 import { TestTracking, TestProgress } from './test-tracking';
+import { isPrintMode } from '../print-mode';
 
 
 
@@ -98,6 +99,7 @@ export class DataExport {
     // Saves all progress to the backend. Silently skips rogue users.
     async saveProgress(): Promise<void> {
         if (!isPlatformBrowser(this.platformId)) return;
+        if (isPrintMode()) return;  // report rendering must never write progress
         if (this.sessionService.isRogueUser()) {
             console.log('Rogue user — progress not saved to database.');
             return;

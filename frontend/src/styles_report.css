@@ -1,0 +1,54 @@
+/* Report / print styling.
+ *
+ * Applied whenever the page is rendered to print media — which is exactly what
+ * the headless-Chromium report generator (page.pdf()) does, and also what a user
+ * gets from Ctrl+P. Hides interactive chrome and navigation so only the learning
+ * content itself lands in the PDF. Content pixels are untouched.
+ *
+ * The existing `.no-print` convention (see styles_summary.css) is honoured here
+ * globally so any element already marked with it disappears in reports too.
+ */
+
+@media print {
+    /* App chrome and navigation — not part of the content the user "saw". */
+    app-header,
+    app-footer,
+    app-glossary-dialog,
+    .theme-toggle,
+    .session-debug,
+    .target-code-badge,
+    .button-container,
+    .image-button-container,
+    .linear-navigation,
+    .continue-action,
+    .no-print {
+        display: none !important;
+    }
+
+    /* Force the light palette regardless of any stored theme preference. */
+    html,
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    /* Remove layout padding meant for on-screen chrome so content uses the page. */
+    .main-content {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    /* Avoid awkward splits of self-contained blocks across PDF page breaks. */
+    .feedback-box,
+    .evaluation-container,
+    img,
+    canvas {
+        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    @page {
+        margin: 1.5cm 1.8cm;
+        size: A4 portrait;
+    }
+}

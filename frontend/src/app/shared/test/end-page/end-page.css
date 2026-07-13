@@ -96,6 +96,24 @@
 }
 
 
+/* Learning-path download */
+.download-action {
+    margin-top: 2rem;
+}
+
+.download-hint {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--grau-80);
+}
+
+.download-error {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: #c62828;
+}
+
+
 /* Responsive */
 @media (max-width: 768px) {
     .test-results-container {

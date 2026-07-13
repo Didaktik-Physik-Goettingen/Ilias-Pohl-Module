@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Location, isPlatformBrowser } from '@angular/common';
 import { DevModeService } from '../../../core/services/dev-mode';
 import { SummaryService, SummaryData, SummaryQuestion } from '../../../core/services/summary.service';
+import { ReportDownload } from '../../../core/services/report-download';
 
 
 
@@ -52,12 +53,37 @@ export class TarExperiment implements OnInit {
         return /^assets\//.test(s) || /\.(png|jpg|jpeg|gif|svg|webp)$/i.test(s);
     }
 
+    // Learning-path PDF download state
+    isGeneratingReport = false;
+    reportError = false;
+
     constructor(
         public devMode: DevModeService,
         private location: Location,
         private summaryService: SummaryService,
+        private reportDownload: ReportDownload,
         @Inject(PLATFORM_ID) private platformId: Object,
     ) {}
+
+    get canDownloadReport(): boolean {
+        return this.reportDownload.canDownload();
+    }
+
+    // Downloads the personalised learning-path PDF (server-side /report/:username).
+    async downloadLearningPath() {
+        if (this.isGeneratingReport) return;
+
+        this.isGeneratingReport = true;
+        this.reportError = false;
+        try {
+            await this.reportDownload.download();
+        } catch (err) {
+            console.error('Lernpfad-Download fehlgeschlagen:', err);
+            this.reportError = true;
+        } finally {
+            this.isGeneratingReport = false;
+        }
+    }
 
     ngOnInit() {
         if (isPlatformBrowser(this.platformId)) {

@@ -27,4 +27,24 @@
             {{ continueLinkText }}
         </a>
     </div> -->
+
+    <!-- Personalised learning-path PDF download -->
+    @if (canDownloadReport) {
+        <div class="download-action no-print">
+            <button type="button" class="btn btn-primary" (click)="downloadLearningPath()"
+                    [disabled]="isGeneratingReport">
+                {{ isGeneratingReport ? 'Wird erstellt …' : 'individuellen Lernpfad herunterladen' }}
+            </button>
+            @if (isGeneratingReport) {
+                <p class="download-hint">
+                    Ihr Lernpfad wird zusammengestellt — dies kann einen Moment dauern.
+                </p>
+            }
+            @if (reportError) {
+                <p class="download-error">
+                    Der Download ist fehlgeschlagen. Bitte versuchen Sie es erneut.
+                </p>
+            }
+        </div>
+    }
 </div>

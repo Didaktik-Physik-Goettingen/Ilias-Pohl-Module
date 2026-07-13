@@ -4,6 +4,19 @@
     color: var(--target-h1-color);
 }
 
+/* Learning-path (server-side PDF) download feedback */
+.report-download-hint {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--grau-80);
+}
+
+.report-download-error {
+    margin-top: 0.75rem;
+    font-size: 0.95rem;
+    color: #c62828;
+}
+
 /* Outer grid: wide card (E1+E2) spans 2 cols, E3 spans 1 */
 .target-options {
     display: grid;

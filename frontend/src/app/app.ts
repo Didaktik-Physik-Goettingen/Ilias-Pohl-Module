@@ -4,6 +4,7 @@ import { Header } from './shared/header/header';
 import { Footer } from './shared/footer/footer';
 import { Analytics } from './core/services/analytics';
 import { DataExport } from './core/services/data-export';
+import { isPrintMode } from './core/print-mode';
 
 
 
@@ -26,8 +27,10 @@ export class App implements OnInit {
     ) {}
 
     ngOnInit() {
+        // In print mode we still hydrate progress (so answers render), but must NOT
+        // auto-redirect to the last page — the report renders each URL explicitly.
         this.dataExport.loadProgress().then(lastPage => {
-            if (lastPage) this.router.navigateByUrl(lastPage);
+            if (lastPage && !isPrintMode()) this.router.navigateByUrl(lastPage);
         });
     }
 }

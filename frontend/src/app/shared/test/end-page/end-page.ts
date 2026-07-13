@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DataExport } from '../../../core/services/data-export';
+import { ReportDownload } from '../../../core/services/report-download';
 
 
 
@@ -67,14 +68,39 @@ export class EndPage implements OnInit {
     continueLink = '';
     continueLinkText = '';
 
+    // Learning-path PDF download state
+    isGeneratingReport = false;
+    reportError = false;
+
     constructor(
         private testTracking: TestTracking,
-        private dataExport: DataExport
+        private dataExport: DataExport,
+        private reportDownload: ReportDownload
     ) {}
 
     ngOnInit() {
         this.calculateResults();
         this.dataExport.saveProgress();
+    }
+
+    get canDownloadReport(): boolean {
+        return this.reportDownload.canDownload();
+    }
+
+    // Downloads the personalised learning-path PDF (server-side /report/:username).
+    async downloadLearningPath() {
+        if (this.isGeneratingReport) return;
+
+        this.isGeneratingReport = true;
+        this.reportError = false;
+        try {
+            await this.reportDownload.download();
+        } catch (err) {
+            console.error('Lernpfad-Download fehlgeschlagen:', err);
+            this.reportError = true;
+        } finally {
+            this.isGeneratingReport = false;
+        }
     }
 
     private calculateResults() {
