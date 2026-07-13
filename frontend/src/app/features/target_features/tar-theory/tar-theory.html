@@ -246,12 +246,18 @@
         </div>
         }
 
-        <!-- Print button -->
+        @if (canDownloadReport) {
         <div class="target-downloads no-print" style="margin-top: 1.5rem;">
-            <button class="target-download-btn" (click)="print()">
-                ↓ Lernpfad als PDF
+            <button class="target-download-btn"
+                    (click)="downloadReport()"
+                    [disabled]="isGeneratingReport">
+                {{ isGeneratingReport ? 'Wird erstellt …' : '↓ Lernpfad als PDF' }}
             </button>
+            @if (reportError) {
+                <p class="report-download-error">Download fehlgeschlagen. Bitte versuchen Sie es erneut.</p>
+            }
         </div>
+        }
 
     </div><!-- /summary-container -->
 

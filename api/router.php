@@ -10,6 +10,7 @@ $static = [
     'api/users/check'   => __DIR__ . '/users/check.php',
     'api/users/create'  => __DIR__ . '/users/create.php',
     'api/progress/save' => __DIR__ . '/progress/save.php',
+    'api/report'        => __DIR__ . '/report.php',
 ];
 
 if (isset($static[$path])) {
