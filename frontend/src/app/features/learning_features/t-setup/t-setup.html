@@ -31,7 +31,9 @@
         </div>
 
         <div class="button-container">
-            <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            @if (devMode.isEnabled) {
+                <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+            }
             <button class="btn" (click)="goForward()">Weiter →</button>
         </div>
     </div>

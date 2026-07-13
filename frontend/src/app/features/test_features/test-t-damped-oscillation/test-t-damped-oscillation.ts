@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -219,18 +219,36 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
         private router: Router,
         private testTracking: TestTracking,
         public devMode: DevModeService
     ) {}
-	
-	
+
+
     ngOnInit() {
 		// start tracking this test
         this.testTracking.startTest('t-damped-oscillations', 5, 150); // 5 questions, 150 total points
-        
+
         // restore completion state from previous session
         this.restoreCompletionState();
+
+        // restore subpage from URL
+        const page = this.route.snapshot.queryParamMap.get('page');
+        if (page && ['1','2','3','4','5','6'].includes(page)) {
+            this.currentView = `damped_osc${page}`;
+            if (page === '6') this.calculateResults();
+        }
+    }
+
+    private updateUrl() {
+        const page = this.currentView.replace('damped_osc', '');
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page },
+            queryParamsHandling: 'merge',
+            replaceUrl: true,
+        });
     }
 	
 	
@@ -390,19 +408,19 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         } else if (this.currentView === 'damped_osc3') {
             this.currentView = 'damped_osc2';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         } else if (this.currentView === 'damped_osc4') {
             this.currentView = 'damped_osc3';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         } else if (this.currentView === 'damped_osc5') {
             this.currentView = 'damped_osc4';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         } else if (this.currentView === 'damped_osc6') {
             this.currentView = 'damped_osc5';
-            this.renderMath();
+            this.updateUrl(); this.renderMath();
         }
     }
 
@@ -424,7 +442,9 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 				this.currentView = 'damped_osc6';
 			} else if (this.currentView === 'damped_osc6') {
                 this.router.navigate([this.continueLink]);
+                return;
 			}
+            this.updateUrl();
             this.renderMath();
         }
     }

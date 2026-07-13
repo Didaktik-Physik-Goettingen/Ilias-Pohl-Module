@@ -4,7 +4,7 @@
     <div class="card no-print">
         <h1 class="h1-target">Entscheidung zum Offenheitsgrad der Anleitung</h1>
 
-        <p style="margin-top: 1.5rem;">
+        <p>
             Sie haben das Lernmodul nun durchgearbeitet. Entscheiden Sie sich nun, wie konkret
             Sie bei der Versuchsdurchführung angeleitet werden wollen.
         </p>
@@ -256,10 +256,8 @@
     </div><!-- /summary-container -->
 
 
-    @if (devMode.isEnabled) {
-        <div class="button-container no-print">
-            <button class="btn btn-back" (click)="goBack()">← Zurück</button>
-        </div>
-    }
+    <div class="button-container no-print">
+        <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+    </div>
 
 </div>

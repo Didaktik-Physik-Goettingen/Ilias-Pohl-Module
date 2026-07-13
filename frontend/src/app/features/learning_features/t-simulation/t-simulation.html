@@ -1,1 +1,58 @@
-<p>t-simulation works!</p>
+<div class="container">
+    <div class="card">
+        <h1>Grundbausteine Simulation</h1>
+        <p class="page-subheadline">DGLs numerisch lösen</p>
+
+        <div class="content">
+            <p>
+                Für die Differentialgleichung des harmonischen Oszillators ist es möglich eine analytische Lösung herzuleiten.
+                Aber dies gilt natürlich nicht für alle Differentialgleichungen – in einigen Fällen ist eine numerische Lösung daher unabdingbar.
+            </p>
+
+            <p>                
+            <div class="glossary-write">
+                <div class="glossary-text" [innerHTML]="iterativeText"></div>
+            </div>
+            <p>
+                In diesem Versuch werden Sie ein Jupyter Notebook als Grundlage erhalten, um zwei unterschiedliche Methoden auszuprobieren:
+            </p>
+
+            <div class="method-cards">
+                <div class="method-card">
+                    <h3>Euler-Verfahren</h3>
+                    <p>Die simpelste Näherung, die auf dem Differenzenquotienten basiert.</p>
+                </div>
+                <div class="method-card">
+                    <h3>Runge-Kutta-Verfahren (RK4)</h3>
+                    <p>
+                        Dieses Verfahren nutzt zusätzliche Stützstellen, um den jeweils folgenden Punkt zu berechnen,
+                        und wird an vielen Stellen auch in wissenschaftlichen Kontexten verwendet.
+                    </p>
+                </div>
+            </div>
+
+            <p>
+                Weitere Informationen und Anleitungen zu den unterschiedlichen Verfahren finden Sie in dem Jupyter Notebook, dass Sie unten herunterladen können.
+                Sie können entweder jetzt einen Blick in das Notebook werfen, oder zunächst das Lernmodul abschließen
+                und sich anschließend mit dem Code beschäftigen.
+            </p>
+
+            <div class="notebook-download">
+                <!-- <h3>Jupyter Notebook zu Simulationen</h3> -->
+                <div class="target-downloads">
+                    <a class="target-download-btn"
+                       href="assets/target/HarmOsc_RK_lueckenskript.ipynb"
+                       download>
+                        ↓ HarmOsc_RK_lueckenskript.ipynb
+                        <span class="target-file-size">285.71 KB</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="button-container">
+            <button class="btn btn-back" (click)="goBack()">← Zurück zum Testergebnis</button>
+            <button class="btn" (click)="goForward()">Weiter zum Versuchsaufbau →</button>
+        </div>
+    </div>
+</div>

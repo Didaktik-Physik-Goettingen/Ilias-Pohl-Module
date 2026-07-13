@@ -1,1 +1,220 @@
-<p>tar-simulation works!</p>
+<div class="container">
+
+    <!-- Guide card — hidden in print -->
+    <div class="card no-print">
+        <h1 class="h1-target">Anleitung</h1>
+
+        <p>
+            Sie haben das Lernmodul zur Versuchsvorbereitung nun durchgearbeitet und erhalten nun Ihre persönliche Versuchsanleitung.
+            Laden Sie alle Dateien herunter und bringen Sie diese zum Versuch mit.
+            Notieren Sie sich außerdem das Kürzel ihrer Versuchsanleitung.
+        </p>
+
+        <div class="target-options">
+            <div class="target-option">
+                <h3>Anleitung und Notebook</h3>
+                <div class="target-code">
+                    Kürzel: <span class="target-code-badge">P</span>
+                </div>
+                <div class="target-downloads">
+                    <a class="target-download-btn" href="assets/target/Anleitung_P.pdf" download>
+                        ↓ Anleitung_P.pdf
+                        <span class="target-file-size">402.76 KB</span>
+                    </a>
+                    <a class="target-download-btn" href="assets/target/Analysehilfe_2.ipynb" download>
+                        ↓ Analysehilfe_2.ipynb
+                        <span class="target-file-size">63.34 KB</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div><!-- /card.no-print -->
+
+
+    <!-- ── Lernpfad summary ────────────────────────────────────────────── -->
+    <div class="summary-container">
+
+        <div class="summary-header">
+            <h2 class="summary-title">Ihr Lernpfad</h2>
+            @if (generatedAtLabel) {
+                <p class="summary-meta">Erstellt am {{ generatedAtLabel }}</p>
+            }
+        </div>
+
+        @if (summary.pageVisits.length > 0) {
+        <section class="summary-section">
+            <button class="summary-accordion-btn" (click)="toggleSection('pages')" [attr.aria-expanded]="openSections.pages">
+                <h3 class="summary-section-title">Besuchte Seiten</h3>
+                <span class="summary-accordion-icon">{{ openSections.pages ? '▲' : '▼' }}</span>
+            </button>
+            @if (openSections.pages) {
+            <div class="summary-accordion-body">
+                <table class="summary-table">
+                    <thead>
+                        <tr>
+                            <th>Seite</th>
+                            <th class="summary-col-duration">Verweildauer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (visit of summary.pageVisits; track visit.page + visit.durationSeconds) {
+                        <tr>
+                            <td>{{ visit.label }}</td>
+                            <td class="summary-col-duration">{{ formatDuration(visit.durationSeconds) }}</td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            }
+        </section>
+        }
+
+        @if (moduleGroups.length > 0) {
+        <section class="summary-section">
+            <button class="summary-accordion-btn" (click)="toggleSection('questions')" [attr.aria-expanded]="openSections.questions">
+                <h3 class="summary-section-title">Lernaufgaben</h3>
+                <span class="summary-accordion-icon">{{ openSections.questions ? '▲' : '▼' }}</span>
+            </button>
+            @if (openSections.questions) {
+            <div class="summary-accordion-body">
+                @for (group of moduleGroups; track group.moduleId) {
+                <div class="summary-module">
+                    <h4 class="summary-module-title">{{ group.moduleLabel }}</h4>
+                    @for (q of group.questions; track q.questionId) {
+                    <div class="summary-question"
+                         [class.summary-question--correct]="q.isCorrect"
+                         [class.summary-question--incorrect]="!q.isCorrect">
+                        <div class="summary-q-indicator">{{ q.isCorrect ? '✓' : '✗' }}</div>
+                        <div class="summary-q-body">
+                            <div class="summary-q-text" [innerHTML]="q.questionText"></div>
+                            <div class="summary-q-answer">
+                                <span class="summary-q-answer-label">Ihre Antwort:</span>
+                                @for (ans of q.selectedAnswerTexts; track ans) {
+                                    @if (isImagePath(ans)) {
+                                        <img class="summary-q-answer-img" [src]="ans" alt="">
+                                    } @else {
+                                        <span class="summary-q-answer-item" [innerHTML]="ans"></span>
+                                    }
+                                }
+                                @if (q.selectedAnswerTexts.length === 0) {
+                                    <span class="summary-q-answer-empty">Keine Antwort</span>
+                                }
+                            </div>
+                            @if (!q.isCorrect && q.correctAnswerTexts.length > 0) {
+                            <div class="summary-q-correct-answer">
+                                <span class="summary-q-answer-label summary-q-answer-label--correct">Richtige Antwort:</span>
+                                @for (ans of q.correctAnswerTexts; track ans) {
+                                    @if (isImagePath(ans)) {
+                                        <img class="summary-q-answer-img summary-q-answer-img--correct" [src]="ans" alt="">
+                                    } @else {
+                                        <span class="summary-q-answer-item summary-q-answer-item--correct" [innerHTML]="ans"></span>
+                                    }
+                                }
+                            </div>
+                            }
+                            @if (q.attemptCount > 1) {
+                                <div class="summary-q-attempts">{{ q.attemptCount }} Versuche</div>
+                            }
+                        </div>
+                    </div>
+                    }
+                </div>
+                }
+            </div>
+            }
+        </section>
+        }
+
+        @if (summary.tests.length > 0) {
+        <section class="summary-section">
+            <button class="summary-accordion-btn" (click)="toggleSection('tests')" [attr.aria-expanded]="openSections.tests">
+                <h3 class="summary-section-title">Testergebnisse</h3>
+                <span class="summary-accordion-icon">{{ openSections.tests ? '▲' : '▼' }}</span>
+            </button>
+            @if (openSections.tests) {
+            <div class="summary-accordion-body">
+                @for (test of summary.tests; track test.testId) {
+                <div class="summary-test">
+                    <h4 class="summary-test-title">{{ test.testLabel }}</h4>
+                    <div class="summary-score">
+                        <div class="summary-score-bar">
+                            <div class="summary-score-fill"
+                                 [style.width.%]="test.percentageScore"
+                                 [class.summary-score-fill--low]="test.percentageScore < 50"
+                                 [class.summary-score-fill--mid]="test.percentageScore >= 50 && test.percentageScore < 80"
+                                 [class.summary-score-fill--high]="test.percentageScore >= 80">
+                            </div>
+                        </div>
+                        <span class="summary-score-text">
+                            {{ test.pointsEarned }}&thinsp;/&thinsp;{{ test.maxPoints }} Punkte
+                            ({{ test.percentageScore.toFixed(0) }}&thinsp;%)
+                        </span>
+                    </div>
+                    @if (test.questions.length > 0) {
+                    <div class="summary-test-questions">
+                        @for (tq of test.questions; track tq.questionId; let i = $index) {
+                        <div class="summary-question"
+                             [class.summary-question--correct]="tq.isCorrect"
+                             [class.summary-question--incorrect]="!tq.isCorrect">
+                            <div class="summary-q-indicator">{{ tq.isCorrect ? '✓' : '✗' }}</div>
+                            <div class="summary-q-body">
+                                <div class="summary-q-instruction">{{ tq.questionInstruction }}</div>
+                                <div class="summary-q-text" [innerHTML]="tq.questionText"></div>
+                                <div class="summary-q-meta">{{ tq.pointsAwarded }}&thinsp;/&thinsp;{{ tq.maxPoints }} Punkte</div>
+                                @if (tq.userAnswerTexts.length > 0) {
+                                <div class="summary-q-answer">
+                                    <span class="summary-q-answer-label">Ihre Antwort:</span>
+                                    @for (ans of tq.userAnswerTexts; track ans) {
+                                        @if (isImagePath(ans)) {
+                                            <img class="summary-q-answer-img" [src]="ans" alt="">
+                                        } @else {
+                                            <span class="summary-q-answer-item" [innerHTML]="ans"></span>
+                                        }
+                                    }
+                                </div>
+                                }
+                                @if (!tq.isCorrect && tq.correctAnswerTexts.length > 0) {
+                                <div class="summary-q-correct-answer">
+                                    <span class="summary-q-answer-label summary-q-answer-label--correct">Richtige Antwort:</span>
+                                    @for (ans of tq.correctAnswerTexts; track ans) {
+                                        @if (isImagePath(ans)) {
+                                            <img class="summary-q-answer-img summary-q-answer-img--correct" [src]="ans" alt="">
+                                        } @else {
+                                            <span class="summary-q-answer-item summary-q-answer-item--correct" [innerHTML]="ans"></span>
+                                        }
+                                    }
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        }
+                    </div>
+                    }
+                </div>
+                }
+            </div>
+            }
+        </section>
+        }
+
+        @if (!hasData) {
+        <div class="summary-empty">
+            <p>Noch keine Daten für diese Sitzung. Bitte arbeiten Sie zunächst die Lerninhalte durch.</p>
+        </div>
+        }
+
+        <div class="target-downloads no-print" style="margin-top: 1.5rem;">
+            <button class="target-download-btn" (click)="print()">
+                ↓ Lernpfad als PDF
+            </button>
+        </div>
+
+    </div><!-- /summary-container -->
+
+
+    <div class="button-container no-print">
+        <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+    </div>
+
+</div>
