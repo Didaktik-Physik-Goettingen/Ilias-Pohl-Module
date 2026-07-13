@@ -14,7 +14,7 @@ declare global {
 
 @Component({
   selector: 'app-t-chaos',
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule],
   templateUrl: './t-chaos.html',
   styleUrl: './t-chaos.css',
 })

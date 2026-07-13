@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DevModeService } from '../../../core/services/dev-mode';
 import { SummaryService, SummaryData, SummaryQuestion } from '../../../core/services/summary.service';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
 
 
@@ -20,7 +20,7 @@ export interface ModuleGroup {
 
 @Component({
     selector: 'app-tar-experiment',
-    imports: [RouterLink],
+    imports: [],
     templateUrl: './tar-experiment.html',
     styleUrl: './tar-experiment.css',
 })

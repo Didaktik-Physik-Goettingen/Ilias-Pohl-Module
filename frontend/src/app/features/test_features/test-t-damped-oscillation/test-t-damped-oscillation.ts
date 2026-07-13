@@ -131,14 +131,14 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 				id: 'aperiodic', 
 				imageSrc: 'assets/images/test_e_damped_oscillations/aperiodisch.png', 
 				imageAlt: 'Spirale 1', 
-				correctAnswerIds: [ 'omega_sm_gamma', 'aperiod' ], 
+				correctAnswerIds: [ 'omega_eq_gamma', 'aperiod' ], 
 				assignedAnswerIds: [] 
 			},
             { 
 				id: 'kriechfall', 
 				imageSrc: 'assets/images/test_e_damped_oscillations/kriechfall.png', 
 				imageAlt: 'Spirale 2', 
-				correctAnswerIds: [ 'omega_eq_gamma', 'kriech' ],
+				correctAnswerIds: [ 'omega_sm_gamma', 'kriech' ],
 				assignedAnswerIds: [] 
 			},
             { 
