@@ -101,9 +101,7 @@
                 <button class="btn" (click)="goForward()" [disabled]="!canProceed">Test beenden →</button>
             }
             @if (currentView === 'driven_osc5' ) {
-                @if (devMode.isEnabled) {
-                    <button class="btn" (click)="goForward()" [disabled]="!canProceed">{{ continueLinkText }} →</button>
-                }
+                <button class="btn" (click)="goForward()" [disabled]="!canProceed">{{ continueLinkText }} →</button>
             }
         </div>
     </div>
