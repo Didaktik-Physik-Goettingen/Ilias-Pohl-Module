@@ -156,7 +156,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 			{ id: 'kriech', label: 'Kriechfall' },
 			{ id: 'schwing', label: 'Schwingfall' },
         ],
-        maxPoints: 60,
+        maxPoints: 45,
         containerId: 'test-question5-container'
     };
 
