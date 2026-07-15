@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { ShuffleOrder } from '../../../core/services/shuffle-order';
+import { isSolutionsMode } from '../../../core/report-mode';
 
 
 
@@ -65,7 +66,23 @@ export class ImageChoice implements OnInit {
     ngOnInit() {
         const order = this.shuffleOrder.getOrCreate(this.questionId, this.options.length);
         this.shuffledOptions = order.map(i => this.options[i]);
+        if (isSolutionsMode()) {
+            this.revealSolution();
+            return;
+        }
         this.restorePreviousAnswer();
+    }
+
+
+    // Renders the correct answers as if they had been chosen (report authoring).
+    // Does not record a result — purely presentational.
+    private revealSolution() {
+        this.isCorrect = true;
+        this.showResult = true;
+        this.selectedValues = new Set(this.correctAnswers);
+        this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.successMessage || '✓ Richtig!');
+        this.onAnswerEvaluated.emit(true);
+        setTimeout(() => this.renderMath(), 100);
     }
 
 

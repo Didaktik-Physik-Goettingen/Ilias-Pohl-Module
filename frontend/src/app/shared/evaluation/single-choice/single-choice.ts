@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { ShuffleOrder } from '../../../core/services/shuffle-order';
+import { isSolutionsMode } from '../../../core/report-mode';
 
 
 
@@ -60,7 +61,26 @@ export class SingleChoice implements OnInit {
     ngOnInit() {
         const order = this.shuffleOrder.getOrCreate(this.questionId, this.options.length);
         this.shuffledOptions = order.map(i => this.options[i]);
+        if (isSolutionsMode()) {
+            this.revealSolution();
+            return;
+        }
         this.restorePreviousAnswer();
+    }
+
+
+    // Renders the correct answer as if it had been chosen (report authoring).
+    // Does not record a result — purely presentational.
+    private revealSolution() {
+        this.isCorrect = true;
+        this.showResult = true;
+        this.selectedValue = this.correctAnswer;
+        this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.successMessage || '✓ Richtig!');
+        setTimeout(() => {
+            this.restoreSelectedAnswer(this.correctAnswer);
+            this.renderMath();
+        }, 100);
+        this.onAnswerEvaluated.emit(true);
     }
 
 
