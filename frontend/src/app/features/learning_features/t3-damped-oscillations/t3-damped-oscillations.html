@@ -106,6 +106,7 @@
                     class="img-center img-sm">
                 <p class="img-caption"><em>Aufeinanderfolgende Maxima nehmen mit dem Faktor e<sup>−γT</sup> ab.</em></p>
 
+                @if (false) {
                 <app-multiple-choice
                     [questionId]="question3.questionId"
                     [question]="question3.question"
@@ -117,7 +118,9 @@
                     [incorrectMessage]="question3.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion3Answered($event)">
                 </app-multiple-choice>
+                }
 
+                @if (false) {
                 <app-multiple-choice
                     [questionId]="question4.questionId"
                     [question]="question4.question"
@@ -129,6 +132,7 @@
                     [incorrectMessage]="question4.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion4Answered($event)">
                 </app-multiple-choice>
+                }
 
                 <app-multiple-choice
                     [questionId]="question5.questionId"
@@ -142,6 +146,7 @@
                     (onAnswerEvaluated)="onQuestion5Answered($event)">
                 </app-multiple-choice>
 
+                @if (false) {
                 <app-multiple-choice
                     [questionId]="question6.questionId"
                     [question]="question6.question"
@@ -153,6 +158,7 @@
                     [incorrectMessage]="question6.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion6Answered($event)">
                 </app-multiple-choice>
+                }
 
                 <app-multiple-choice
                     [questionId]="question7.questionId"

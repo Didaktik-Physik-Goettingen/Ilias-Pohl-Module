@@ -65,6 +65,7 @@
                     <p [innerHTML]="t4Text2c"></p>
                 </div>
 
+                @if (false) {
                 <app-multiple-choice
                     [questionId]="question2.questionId"
                     [question]="question2.question"
@@ -76,6 +77,7 @@
                     [incorrectMessage]="question2.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion2Answered($event)">
                 </app-multiple-choice>
+                }
 
                 <app-multiple-choice
                     [questionId]="question3.questionId"
@@ -136,6 +138,7 @@
                     (onAnswerEvaluated)="onQuestion4Answered($event)">
                 </app-multiple-choice>
 
+                @if (false) {
                 <app-multiple-choice
                     [questionId]="question5.questionId"
                     [question]="question5.question"
@@ -147,6 +150,7 @@
                     [incorrectMessage]="question5.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion5Answered($event)">
                 </app-multiple-choice>
+                }
             }
 
             <!-- ── Page 5: Homogene Lösung ── -->
@@ -180,6 +184,7 @@
                     <p [innerHTML]="t4Text6c"></p>
                 </div>
 
+                @if (false) {
                 <app-image-choice
                     [questionId]="question6.questionId"
                     [question]="question6.question"
@@ -191,6 +196,7 @@
                     [incorrectMessage]="question6.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion6Answered($event)">
                 </app-image-choice>
+                }
             }
 
             <!-- ── Page 7: Amplitude ── -->
@@ -235,6 +241,7 @@
                     (onAnswerEvaluated)="onQuestion8Answered($event)">
                 </app-multiple-choice>
 
+                @if (false) {
                 <app-multiple-choice
                     [questionId]="question9.questionId"
                     [question]="question9.question"
@@ -246,6 +253,7 @@
                     [incorrectMessage]="question9.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion9Answered($event)">
                 </app-multiple-choice>
+                }
             }
 
             <!-- ── Page 8: Phasenverschiebung ── -->
@@ -281,6 +289,7 @@
                     (onAnswerEvaluated)="onQuestion10Answered($event)">
                 </app-multiple-choice>
 
+                @if (false) {
                 <app-multiple-choice
                     [questionId]="question11.questionId"
                     [question]="question11.question"
@@ -292,6 +301,7 @@
                     [incorrectMessage]="question11.incorrectMessage"
                     (onAnswerEvaluated)="onQuestion11Answered($event)">
                 </app-multiple-choice>
+                }
 
                 <img src="assets/images/t4_driven_oscillations/35_illustration_zur_phasenverschiebung.svg"
                      alt="Veranschaulichung der Phasenverschiebung zwischen Antrieb und Schwungrad"

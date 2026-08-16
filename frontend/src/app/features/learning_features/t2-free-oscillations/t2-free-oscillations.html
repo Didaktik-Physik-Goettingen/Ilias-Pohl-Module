@@ -52,6 +52,7 @@
                     <summary class="spoiler-summary">EXKURS: Komplexe Lösungen bei reellen Gleichungen</summary>
                     <div class="spoiler-content">
                         <p [innerHTML]="freeOscText1h"></p>
+                        @if (false) {
                         <app-multiple-choice
                             [questionId]="question3.questionId"
                             [question]="question3.question"
@@ -63,6 +64,7 @@
                             [incorrectMessage]="question3.incorrectMessage"
                             (onAnswerEvaluated)="onQuestion3Answered($event)">
                         </app-multiple-choice>
+                        }
                     </div>
                 </details>
 
@@ -116,6 +118,7 @@
                     </app-multiple-choice>
                 </div>
 
+                @if (false) {
                 <div>
                     <app-multiple-choice
                         [questionId]="question5.questionId"
@@ -129,6 +132,7 @@
                         (onAnswerEvaluated)="onQuestion5Answered($event)">
                     </app-multiple-choice>
                 </div>
+                }
 
                 <details class="spoiler">
                     <summary class="spoiler-summary">EXKURS: Definition des Phasenraums</summary>
