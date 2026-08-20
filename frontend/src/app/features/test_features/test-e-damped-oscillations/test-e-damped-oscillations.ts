@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -29,6 +29,14 @@ declare global {
     styleUrl: './test-e-damped-oscillations.css'
 })
 export class TestEDampedOscillations implements OnInit, OnDestroy {
+    constructor(
+		private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
+        private router: Router,
+        private testTracking: TestTracking,
+        public devMode: DevModeService
+    ) {}
 
     // Custom thresholds for this test
     performanceThresholds = [
@@ -188,7 +196,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
     // calculate results directly when navigating to results page
     private calculateResults() {
-        const testProgress = this.testTracking.getTestResults('damped-oscillations');
+        const testProgress = this.testTracking.getTestResults('e-damped-oscillations');
         
         if (!testProgress) {
             console.warn('No test results found');
@@ -224,23 +232,23 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
         }
         return '';
     }
-
-	
-    constructor(
-		private sanitizer: DomSanitizer,
-        @Inject(PLATFORM_ID) private platformId: Object,
-        private router: Router,
-        private testTracking: TestTracking,
-        public devMode: DevModeService
-    ) {}
 	
 	
     ngOnInit() {
+        // restore subpage from URL
+        const page = this.route.snapshot.queryParamMap.get('page');
+        if (page && ['1','2','3','4','5','6'].includes(page)) {
+            this.currentView = `damped_osc${page}`;
+            // if (page === '6') this.calculateResults();
+        }
+
 		// start tracking this test
-        this.testTracking.startTest('damped-oscillations', 5, 150); // 5 questions, 150 total points
+        this.testTracking.startTest('e-damped-oscillations', 5, 150); // 5 questions, 150 total points
         
         // restore completion state from previous session
         this.restoreCompletionState();
+
+        this.renderMath();
     }
 	
 	
@@ -342,6 +350,16 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 	
 	
 	// +++ in-page navigation +++
+
+    private updateUrl() {
+        const page = this.currentView.replace('damped_osc', '');
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page },
+            queryParamsHandling: 'merge',
+            replaceUrl: true
+        });
+    }
 	
     // navigation helpers
 	currentView: string = 'damped_osc1';
@@ -400,20 +418,17 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc3') {
             this.currentView = 'damped_osc2';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc4') {
             this.currentView = 'damped_osc3';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc5') {
             this.currentView = 'damped_osc4';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc6') {
             this.currentView = 'damped_osc5';
-            this.renderMath();
         }
+        this.renderMath();
+        this.updateUrl();
     }
 
 
@@ -434,8 +449,10 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 				this.currentView = 'damped_osc6';
 			} else if (this.currentView === 'damped_osc6') {
                 this.router.navigate([this.continueLink]);
+                return;
 			}
             this.renderMath();
+            this.updateUrl();
         }
     }
 }

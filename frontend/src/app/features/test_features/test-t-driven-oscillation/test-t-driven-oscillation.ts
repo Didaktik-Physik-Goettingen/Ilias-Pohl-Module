@@ -27,6 +27,14 @@ declare global {
 })
 
 export class TestTDrivenOscillation implements OnInit, OnDestroy {
+    constructor(
+		private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
+        private router: Router,
+        private testTracking: TestTracking,
+        public devMode: DevModeService
+    ) {}
 
     // Custom thresholds for this test
     performanceThresholds = [
@@ -187,16 +195,6 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
         return '';
     }
 
-	
-    constructor(
-		private sanitizer: DomSanitizer,
-        @Inject(PLATFORM_ID) private platformId: Object,
-        private route: ActivatedRoute,
-        private router: Router,
-        private testTracking: TestTracking,
-        public devMode: DevModeService
-    ) {}
-
 
     ngOnInit() {
 		// start tracking this test
@@ -211,6 +209,8 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             this.currentView = `driven_osc${page}`;
             if (page === '5') this.calculateResults();
         }
+
+        this.renderMath();
     }
 
     private updateUrl() {

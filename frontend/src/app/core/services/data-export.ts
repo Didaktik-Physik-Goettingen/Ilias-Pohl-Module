@@ -38,7 +38,7 @@ export class DataExport {
 
 
     getCombinedData(): CombinedData {
-        const username = this.sessionService.getSessionId() || 'unknown';
+        const username = this.sessionService.sessionId() || 'unknown';
         return {
             username,
             sessionId: username,
@@ -61,7 +61,7 @@ export class DataExport {
         if (!isPlatformBrowser(this.platformId)) return null;
         if (this.sessionService.isRogueUser()) return null;
 
-        const username = this.sessionService.getSessionId();
+        const username = this.sessionService.sessionId();
         if (!username) return null;
 
         try {

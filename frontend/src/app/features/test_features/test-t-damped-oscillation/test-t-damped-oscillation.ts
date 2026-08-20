@@ -24,6 +24,15 @@ declare global {
   styleUrl: './test-t-damped-oscillation.css',
 })
 export class TestTDampedOscillation implements OnInit, OnDestroy  {
+    constructor(
+		private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
+        private router: Router,
+        private testTracking: TestTracking,
+        public devMode: DevModeService
+    ) {}
+
     // Custom thresholds for this test
     performanceThresholds = [
         {
@@ -215,15 +224,6 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
         return '';
     }
 
-	
-    constructor(
-		private sanitizer: DomSanitizer,
-        @Inject(PLATFORM_ID) private platformId: Object,
-        private route: ActivatedRoute,
-        private router: Router,
-        private testTracking: TestTracking,
-        public devMode: DevModeService
-    ) {}
 
 
     ngOnInit() {
@@ -239,6 +239,8 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
             this.currentView = `damped_osc${page}`;
             if (page === '6') this.calculateResults();
         }
+
+        this.renderMath();
     }
 
     private updateUrl() {

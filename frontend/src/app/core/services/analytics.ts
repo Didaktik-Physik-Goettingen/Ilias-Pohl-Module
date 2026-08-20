@@ -50,7 +50,7 @@ export class Analytics {
 
 
     private get storageKey(): string {
-        return 'analyticsData_' + (this.sessionService.getSessionId() ?? 'unknown');
+        return 'analyticsData_' + (this.sessionService.sessionId() ?? 'unknown');
     }
 
 
@@ -76,7 +76,7 @@ export class Analytics {
 
 
     private startNewVisit(page: string) {
-        const sessionId = this.sessionService.getSessionId();
+        const sessionId = this.sessionService.sessionId();
         if (!sessionId) {
             console.warn('No session ID available for analytics tracking');
             return;
@@ -129,7 +129,7 @@ export class Analytics {
     // Public API
     getSessionData(): AnalyticsData {
         return {
-            sessionId: this.sessionService.getSessionId() || 'unknown',
+            sessionId: this.sessionService.sessionId() || 'unknown',
             visits: this.visits,
             currentVisit: this.currentVisit
         };

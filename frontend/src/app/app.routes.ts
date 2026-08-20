@@ -89,7 +89,7 @@ export const routes: Routes = [
     { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
     { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },
     { path: 'learning/t-chaos',               component: TChaos,               title: 'Grundlagen nichtlineare Schwingung und Chaos' },
-     { path: 'learning/t-simulation',           component: TSimulation,               title: 'Grundbausteine Simulation' },
+    { path: 'learning/t-simulation',           component: TSimulation,               title: 'Grundbausteine Simulation' },
     { path: 'learning/t-setup',               component: TSetup,               title: 'Versuchsaufbau: Der Pohlsche Resonator' },
 
 

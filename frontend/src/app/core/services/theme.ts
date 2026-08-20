@@ -1,5 +1,5 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable, Inject, PLATFORM_ID, signal, computed } from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
 
 
@@ -9,10 +9,19 @@ import { isPlatformBrowser } from '@angular/common';
 
 
 export class ThemeService {
-    private darkMode = false;
+    private readonly darkMode = signal(false);
     private isBrowser: boolean;
+    
+    readonly isDarkMode = this.darkMode.asReadonly();
+    readonly themeIconPath = computed(() =>
+        this.darkMode() ? 'assets/icons/moon.svg' : 'assets/icons/sun.svg'
+    );
 
-    constructor(@Inject(PLATFORM_ID) platformId: Object) {
+
+    constructor(
+        @Inject(PLATFORM_ID) platformId: Object,
+        @Inject(DOCUMENT) private doc: Document
+    ) {
         this.isBrowser = isPlatformBrowser(platformId);
         
         if (this.isBrowser) {
@@ -25,31 +34,26 @@ export class ThemeService {
     }
 
     toggleTheme() {
-        this.darkMode = !this.darkMode;
-        if (this.darkMode) {
-            this.enableDarkMode();
-        } else {
+        if (this.darkMode()) {
             this.disableDarkMode();
+        } else {
+            this.enableDarkMode();
         }
     }
 
     private enableDarkMode() {
         if (this.isBrowser) {
-            document.documentElement.setAttribute('data-theme', 'dark');
+            this.doc.documentElement.setAttribute('data-theme', 'dark');
             localStorage.setItem('theme', 'dark');
         }
-        this.darkMode = true;
+        this.darkMode.set(true);
     }
 
     private disableDarkMode() {
         if (this.isBrowser) {
-            document.documentElement.removeAttribute('data-theme');
+            this.doc.documentElement.removeAttribute('data-theme');
             localStorage.setItem('theme', 'light');
         }
-        this.darkMode = false;
-    }
-
-    isDarkMode(): boolean {
-        return this.darkMode;
+        this.darkMode.set(false);
     }
 }
