@@ -278,7 +278,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         const page = this.route.snapshot.queryParamMap.get('page');
         if (page) this.currentView = `driven_osc${page}`;
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
-        this.trackingService.startModule('t4-driven-oscillations');
+        this.trackingService.startModule('t4-driven-oscillations-module');
         this.restoreCompletionState();
 
         // Page 1 — Getriebener harmonischer Oszillator

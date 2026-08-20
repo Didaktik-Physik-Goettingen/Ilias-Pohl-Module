@@ -84,7 +84,7 @@ export class T1IntroTheory implements AfterViewInit {
 	ngOnInit(): void {
 
         // start tracking this module
-        this.trackingService.startModule('intro_theory');
+        this.trackingService.startModule('t1-intro-theory-module');
 
 
         this.introTheoText1a = this.sanitizer.bypassSecurityTrustHtml(`

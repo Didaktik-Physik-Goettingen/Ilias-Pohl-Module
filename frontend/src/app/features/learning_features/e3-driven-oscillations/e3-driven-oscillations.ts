@@ -329,7 +329,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
 
         // start tracking this module
-        this.trackingService.startModule('driven_oscillations');
+        this.trackingService.startModule('e3-driven-oscillations-module');
 
         // restore completion states from previous session
         this.restoreCompletionState();

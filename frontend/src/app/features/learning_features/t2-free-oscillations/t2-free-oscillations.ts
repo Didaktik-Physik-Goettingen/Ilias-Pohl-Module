@@ -186,7 +186,7 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 			this.currentView = `free_osc${page}`;
 		}
 
-		this.trackingService.startModule('free_oscillations');
+		this.trackingService.startModule('t2-free-oscillations-module');
 		this.restoreCompletionState();
 
 		// ── Page 1: DGL und Exponentialansatz ────────────────────────────────

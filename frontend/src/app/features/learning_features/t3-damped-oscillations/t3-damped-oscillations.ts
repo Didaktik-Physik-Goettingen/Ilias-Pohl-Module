@@ -250,7 +250,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
         const page = this.route.snapshot.queryParamMap.get('page');
         if (page) this.currentView = `damped_osc${page}`;
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
-        this.trackingService.startModule('t3-damped-oscillations');
+        this.trackingService.startModule('t3-damped-oscillations-module');
         this.restoreCompletionState();
 
         // Page 1 — Exponentialansatz

@@ -26,7 +26,7 @@ export class TSetup implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.next = this.route.snapshot.queryParamMap.get('next') ?? '';
-        this.trackingService.startModule('t-setup');
+        this.trackingService.startModule('t-setup-module');
     }
 
     ngOnDestroy() {

@@ -28,7 +28,7 @@ export class TSimulation implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.trackingService.startModule('t-simulation');
+        this.trackingService.startModule('t-simulation-module');
         this.iterativeText = this.sanitizer.bypassSecurityTrustHtml(`
 			Es gibt unterschiedliche numerische Ansätze zum Lösen von Differentialgleichungen. Zwei wichtige Aspekte sind vielen dieser Methoden ähnlich:
 			<ul>

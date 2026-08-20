@@ -51,7 +51,7 @@ export class TChaos implements OnInit, OnDestroy {
       }
 
       // start tracking this module
-      this.trackingService.startModule('t-chaos');
+      this.trackingService.startModule('t-chaos-module');
 
       // sanitized string to enable LaTeX rendering
       this.AbschnittPotential = this.sanitizer.bypassSecurityTrustHtml(`

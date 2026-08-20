@@ -105,7 +105,7 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
 
         // start tracking this module
-        this.trackingService.startModule('damped_oscillations');
+        this.trackingService.startModule('e2-damped-oscillations-module');
 
         // restore completion states from previous session
         this.restoreCompletionState();

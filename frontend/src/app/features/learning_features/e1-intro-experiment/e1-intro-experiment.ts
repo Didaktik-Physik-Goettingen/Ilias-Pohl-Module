@@ -296,7 +296,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
         }
 
         // start tracking this module
-        this.trackingService.startModule('intro-experiment');
+        this.trackingService.startModule('e1-intro-experiment-module');
 
         // restore completion states from previous session
         this.restoreCompletionState();
