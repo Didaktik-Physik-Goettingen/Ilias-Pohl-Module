@@ -198,7 +198,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
     ngOnInit() {
 		// start tracking this test
-        this.testTracking.startTest('driven-oscillations', 4, 80); // 4 questions, 80 total points
+        this.testTracking.startTest('t-driven-oscillations-test', 4, 80); // 4 questions, 80 total points
 
         // restore completion state from previous session
         this.restoreCompletionState();

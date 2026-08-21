@@ -216,6 +216,13 @@
                 }
             </div>
         }
+        @if (hasData) {
+            <div class="target-downloads no-print" style="margin-top: 0.5rem;">
+                <button class="target-download-btn" (click)="downloadHtmlReport()">
+                    ↓ Lernpfad als HTML
+                </button>
+            </div>
+        }
 
     </div><!-- /summary-container -->
 

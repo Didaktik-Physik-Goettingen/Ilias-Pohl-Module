@@ -108,10 +108,10 @@ export const routes: Routes = [
     // simulation pages
     { path: 'simulation/sim-e-damped-osc', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
     { path: 'simulation/sim-e-driven-osc', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
-    { path: 'simulation/sim-t-undamped',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
-    { path: 'simulation/sim-t-damped',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
-    { path: 'simulation/sim-t-driven',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
-    { path: 'simulation/sim-t-driven-advanced', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
+    { path: 'simulation/sim-t-undamped-osc',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
+    { path: 'simulation/sim-t-damped-osc',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
+    { path: 'simulation/sim-t-driven-osc',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
+    { path: 'simulation/sim-t-driven-advanced-osc', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
 
     // target pages
     { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },

@@ -53,9 +53,6 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     question7 = e3Questions.question7;
     question8 = e3Questions.question8;
 
-
-	// track completion
-
 	// track completion
 	isCorrect1 = false;
 	isCorrect2 = false;
@@ -65,7 +62,6 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 	isCorrect6 = false;
 	isCorrect7 = false;
 	isCorrect8 = false;
-
 
 	// QA states
 	showResult1 = false;

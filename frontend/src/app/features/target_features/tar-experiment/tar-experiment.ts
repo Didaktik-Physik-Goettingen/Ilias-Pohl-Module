@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { DevModeService } from '../../../core/services/dev-mode';
 import { SummaryService, SummaryData, SummaryQuestion } from '../../../core/services/summary.service';
 import { Session } from '../../../core/services/session';
+import { HtmlReportService } from '../../../core/services/html-report.service';
 import { Router } from '@angular/router';
 
 
@@ -62,11 +63,16 @@ export class TarExperiment implements OnInit {
         private router: Router,
         private summaryService: SummaryService,
         private sessionService: Session,
+        private htmlReportService: HtmlReportService,
         @Inject(PLATFORM_ID) private platformId: Object,
     ) {}
 
     get canDownloadReport(): boolean {
         return this.sessionService.hasValidSession() && !this.sessionService.isRogueUser();
+    }
+
+    async downloadHtmlReport(): Promise<void> {
+        await this.htmlReportService.download(this.summary);
     }
 
     async downloadReport(): Promise<void> {

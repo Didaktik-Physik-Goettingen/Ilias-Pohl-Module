@@ -243,7 +243,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
         }
 
 		// start tracking this test
-        this.testTracking.startTest('e-damped-oscillations', 5, 150); // 5 questions, 150 total points
+        this.testTracking.startTest('e-damped-oscillations-test', 5, 150); // 5 questions, 150 total points
         
         // restore completion state from previous session
         this.restoreCompletionState();

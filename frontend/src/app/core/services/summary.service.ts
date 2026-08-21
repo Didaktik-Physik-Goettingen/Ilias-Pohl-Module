@@ -116,11 +116,13 @@ export class SummaryService {
         '/test/e-driven-osc':                                       '[E] Test: Getriebene Schwingungen',
         '/test/t-damped-osc':                                       '[T] Test: Gedämpfte Schwingungen',
         '/test/t-driven-osc':                                       '[T] Test: Getriebene Schwingungen',
-
+        
         '/simulation/sim-e-damped-osc':                             '[E] Simulation: Gedämpfte Schwingungen',
         '/simulation/sim-e-driven-osc':                             '[E] Simulation: Getriebene Schwingungen',
+        '/simulation/sim-t-undamped-osc':                           '[T] Simalation: Freie Schwingungen',
         '/simulation/sim-t-damped-osc':                             '[T] Simulation: Gedämpfte Schwingungen',
         '/simulation/sim-t-driven-osc':                             '[T] Simulation: Getriebene Schwingungen',
+        'simulation/sim-t-driven-advanced-osc':                     '[T] Simulation: Getriebene Schwingungen (erweitert)',
 
         '/target/tar-experiment':                                   '[E] Anleitung Experimentalpfad',
         '/target/tar-theory':                                       '[T] Anleitung Theoriepfad',
