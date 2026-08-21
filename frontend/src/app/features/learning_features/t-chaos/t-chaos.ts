@@ -5,6 +5,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
+import * as chaosContent from './t-chaos-content';
 
 declare global {
 	interface Window {
@@ -39,9 +40,13 @@ export class TChaos implements OnInit, OnDestroy {
         this.glossaryOverlay.open(term);
     }
 
-	AbschnittPotential!: SafeHtml;
-    differentialgleichung!: SafeHtml;
-    differentialgleichung2!: SafeHtml;
+    chaosText1a!: SafeHtml;
+    chaosText1b!: SafeHtml;
+    chaosText1c!: SafeHtml;
+    chaosText2a!: SafeHtml;
+    chaosText2b!: SafeHtml;
+    chaosText2c!: SafeHtml;
+    chaosText3a!: SafeHtml;
 
   ngOnInit() {
       // restore subpage from URL query param
@@ -53,45 +58,14 @@ export class TChaos implements OnInit, OnDestroy {
       // start tracking this module
       this.trackingService.startModule('t-chaos-module');
 
-      // sanitized string to enable LaTeX rendering
-      this.AbschnittPotential = this.sanitizer.bypassSecurityTrustHtml(`
-          Wenn man allerdings eine zusätzliche Masse an das Schwungrad anbringt, bewirkt diese ein zusätzliches cosinus-förmiges Potential
-          ($V\_{\\text{Zusatzmasse}}(\\phi) = mgR\\cos(\\phi)$).
-          Aus der Überlagerung des quadratischen und des cosinus-förmingen Potentials resultiert, wie die obere Abbildung zeigt, 
-          ein Potential mit zwei lokalen Minima im relevanten Winkelbereich. Ein solches Potential wird häufig als "W-Potential" bezeichnet.<br>
-          Eine zusätzliche Masse bewirkt somit, dass es keinen stabilen Gleichgewichtspunkt des Rades mehr in der Ausgangsposition gibt, 
-          sondern $\\phi=0$ zu einem labilen Gleichgewichtspunkt wird, an dem kleine Änderungen des Auslenkwinkels die Dynamik entscheidend bestimmen.
-          Stattdessen entstehen zwei neue, symmetrisch um den Ursprung verteilte Gleichgewichtslagen.
-      `);
-
-      this.differentialgleichung = this.sanitizer.bypassSecurityTrustHtml(`
-          $$\\ddot{\\varphi} + 2\\tilde{\\beta} \\dot{\\varphi} + \\tilde{\\omega}_0^2\\phi + \\alpha\\sin{\\phi} = N\\cos{\\omega t} $$
-        `)
-
-      this.differentialgleichung2 = this.sanitizer.bypassSecurityTrustHtml(`
-          Beachte, dass durch Tilden über den Variablen angezeigt werden soll, dass sich das aufgrund der Zusatzmassen das 
-          <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a> geändert hat. 
-          Zudem haben wir die Variable $\\alpha = \\frac{mgr}{\\Theta_1}$ mit dem neuen <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a><br>
-          Für sehr kleine Nichtlinearitäten, können wir bei kleinen Auslenkungen die Sinusfunktion in erster Näherung betrachten: 
-          $\\sin(\\phi) \\approx \\phi$, wodurch sich wieder eine lineare Schwingungsgleichung ergibt:
-          $$\\ddot{\\varphi} + 2\\tilde{\\beta} \\dot{\\varphi} +( \\tilde{\\omega}_0^2+\\alpha)\\phi = N\\cos{\\omega t} $$<br>
-          Diese Gleichung kann wie gewohnt gelöst werden und es zeigt sich, dass die zusätzliche Masse lediglich eine Änderung der
-          <a href="#glossary-angular-frequency" class="glossary-link">Eigenschwingfrequenz</a> bewirkt.<br>
-          Für größere Auslenkungen müssen weitere Terme der Taylorentwicklung berücksichtigt werden, die zu einer Verzerrung (zu höheren Frequenzen) der Resonanzfrequenz-Kurve führen.<br><br>
-          Im Versuch werden Sie sich mit Nicht-Linearitäten beschäftigen, die zur Ausbildung neuer Ruhelagen führen. Um das Schwingungsverhalten in diesem Fall für kleine Auslenkungen zu betrachten, 
-          können wir in ähnlicher Weise vorgehen, wie soeben beschrieben, wobei wir die Entwicklung des Sinus um eine der neuen Gleichgewichtspositionen betrachten, also um 
-          $\\phi_0 \\neq 0$. Eine solche Rechnung zeigt ebenfalls, dass die zusätzliche Masse zu einer Verschiebung der 
-          <a href="#glossary-resonance-frequency" class="glossary-link">Resonanzfrequenz</a> führt, wobei die Verzerrung hin zu kleineren Frequenzen ist.<br><br>
-          Verringert man die Dämpfung in einem System mit ausgeprägten Nichtlinearitäten, tritt zunächst eine sogenannte <b>Bifurkation</b> auf. 
-          Dabei spaltet sich die ursprünglich einfache Grundamplitude auf. Das Pendel schwingt dann nicht mehr mit nur einer Frequenz, 
-          sondern zeigt eine <b>Überlagerung aus zwei verschiedenen Frequenzen</b>, also höheren Harmonischen der Grundfrequenz.
-          Im Phasenraumdiagramm erkennt man dies daran, dass die Bewegung nicht mehr einer einzigen Ellipse entspricht, sondern als <b>zwei ineinander übergehende Ellipsen</b> erscheint.<br><br>
-          Reduziert man die Dämpfung weitere, so kann die Bewegung zunächst noch durch die weitere Überlagerung mit Schwingungen höherer Frequenzen beschrieben werden, 
-          geht dann aber in ein chaotisches Verhalten über. 
-          Selbst wenn man die Bewegung über einen längeren Zeitraum hinweg betrachtet, lässt sich keine Periodizität ausmachen. 
-          Im Phasenraum lässt sich ein solches deterministisches Chaos darin erkennen, dass die Trajektorie nicht wieder in sich selbst übergeht, 
-          sondern immer weitere Bereiche des Phasenraums überdeckt werden.
-        `)
+      // sanitized strings to enable LaTeX rendering
+      this.chaosText1a = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText1a);
+      this.chaosText1b = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText1b);
+      this.chaosText1c = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText1c);
+      this.chaosText2a = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText2a);
+      this.chaosText2b = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText2b);
+      this.chaosText2c = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText2c);
+      this.chaosText3a = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText3a);
 
       this.renderMath();
   }

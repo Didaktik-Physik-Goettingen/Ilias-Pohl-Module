@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
+import * as simContent from './t-simulation-content';
 
 declare global {
     interface Window { MathJax: any; }
@@ -17,7 +18,12 @@ declare global {
     styleUrl: './t-simulation.css',
 })
 export class TSimulation implements OnInit, OnDestroy {
-    iterativeText!: SafeHtml;
+    simText1a!: SafeHtml;
+    simText1b!: SafeHtml;
+    simText1c!: SafeHtml;
+    simText1d!: SafeHtml;
+    simText1e!: SafeHtml;
+    simText1f!: SafeHtml;
 
     constructor(
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -29,19 +35,12 @@ export class TSimulation implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.trackingService.startModule('t-simulation-module');
-        this.iterativeText = this.sanitizer.bypassSecurityTrustHtml(`
-			Es gibt unterschiedliche numerische Ansätze zum Lösen von Differentialgleichungen. Zwei wichtige Aspekte sind vielen dieser Methoden ähnlich:
-			<ul>
-				<li>
-					Hierbei wird iterativ verfahren, das heißt ausgehend von einem Startwert wird der jeweils folgende Wert 	berechnet: ` +
-            		`Wenn \\(\\phi(t_i)\\) bekannt ist, dann definieren die unterschiedlichen Methoden eine Regel, um hieraus \\(\\phi(t_{i+1})\\) zu berechnen.
-				</li>
-                <li>
-                    In der Regel beziehen sich die Lösungsverfahren auf Differentialgleichungen erster Ordnung -
-                    DGLs höherer Ordnung müssen daher zunächst in ein System aus Differentialgleichungen erster Ordnung überführt werden.
-                </li>
-			`
-        );
+        this.simText1a = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1a);
+        this.simText1b = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1b);
+        this.simText1c = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1c);
+        this.simText1d = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1d);
+        this.simText1e = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1e);
+        this.simText1f = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1f);
         this.renderMath();
     }
 

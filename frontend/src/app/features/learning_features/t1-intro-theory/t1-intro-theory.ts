@@ -7,6 +7,8 @@ import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multi
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
+import * as t1Questions from './t1-intro-theory-questions';
+import * as t1Content from './t1-intro-theory-content';
 
 
 
@@ -39,25 +41,9 @@ export class T1IntroTheory implements AfterViewInit {
         const term = link.getAttribute('href')!.replace('#glossary-', '');
         this.glossaryOverlay.open(term);
     }
+	// +++ QA data +++
+    question1 = t1Questions.question1;
 
-	// ── Question data ────────────────────────────────────────────────────────
-
-	question1 = {
-		questionId: 't1-q1-dgl-solutions',
-		question: 'Welche der folgenden Gleichungen sind allgemeine Lösungen der Differentialgleichung des harmonischen Oszillators? Beachten Sie, dass alle Variablen als konstant angenommen werden sollen.',
-		options: [
-			{ value: 'answer1', label: '\\( x(t) = A\\cos(\\omega_0t) + \\sin(\\phi) \\)' },
-			{ value: 'answer2', label: '\\( x(t) = c_1\\left(e^{i\\omega_0t} + e^{-i\\omega_0t}\\right) \\)' },
-			{ value: 'answer3', label: '\\( x(t) = c_1e^{i\\omega_0t} + c_2e^{-i\\omega_0t} \\)' },
-			{ value: 'answer4', label: '\\( x(t) = A\\cos(\\omega_0t + \\phi) \\)' }
-		],
-		correctAnswers: ['answer3', 'answer4'],
-		containerId: 't1-q1-container',
-		successMessage: `✓ Völlig richtig.<br><br>
-			Wenn Sie mögen, können Sie die nächsten Seiten überspringen, um direkt zum Test zu gedämpften Schwingungen zu gelangen.`,
-		incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Lösungen fehlen. Prüfen Sie, ob die Gleichung genügend freie Konstanten enthält.`,
-		incorrectMessage: `✗ Das ist noch nicht ganz richtig. Prüfen Sie, ob die Gleichung genügend freie Konstanten enthält.`
-	};
 
 	// track completion
 	isCorrect1 = false;
@@ -87,40 +73,14 @@ export class T1IntroTheory implements AfterViewInit {
         this.trackingService.startModule('t1-intro-theory-module');
 
 
-        this.introTheoText1a = this.sanitizer.bypassSecurityTrustHtml(`
-			Wenn ein Körper aus seiner Ruhelage ausgelenkt wird und durch eine Kraft
-			$\\vec{F}$, die linear mit dem Abstand von der Ruhelage zunimmt,
-			in Bewegung versetzt wird, dann sprechen wir von einer harmonischen Schwingung.<br><br>
-
-			Die Bewegung des Körpers kann mit der 
-			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a> 
-			$m\\frac{d^2x}{dt^2} = -Dx$
-			beschrieben werden. Dabei wird $D$ als 
-			<a href="#glossary-spring-constant" class="glossary-link">Federkonstante</a>  
-			bezeichnet
-			und gibt die Stärke der rücktreibenden Kraft an.<br><br>
-
-			Üblicherweise ersetzt man hierbei
-			$\\omega_0^2 = \\frac{D}{m}$
-			und erhält dadurch die klassische Schwingungsgleichung:
-        `);
+        this.introTheoText1a = this.sanitizer.bypassSecurityTrustHtml(t1Content.introTheoText1a);
 
 
-		this.introTheoText1b = this.sanitizer.bypassSecurityTrustHtml(`
-			$$\\frac{d^2x}{dt^2} + \\omega_0^2 x = 0$$
-        `);
+		this.introTheoText1b = this.sanitizer.bypassSecurityTrustHtml(t1Content.introTheoText1b);
 
-		this.introTheoText1c = this.sanitizer.bypassSecurityTrustHtml(`
-			Die Kreisfrequenz der Schwingung ist mit $\\omega_0$ angegeben.
-			Sie beschreibt, wie häufig der Körper die Ruhelage durchschreitet.
-			Sie hängt mit der Schwingungsdauer über
-			$T = \\frac{2\\pi}{\\omega_0}$ zusammen.
-        `);
+		this.introTheoText1c = this.sanitizer.bypassSecurityTrustHtml(t1Content.introTheoText1c);
 
-		this.introTheoText1d = this.sanitizer.bypassSecurityTrustHtml(`
-			Der folgende Graph zeigt die Schwingung eines Körpers bei einer Anfangsauslenkung
-			und mit der Anfangsgeschwindigkeit $v_0=0$.
-        `);
+		this.introTheoText1d = this.sanitizer.bypassSecurityTrustHtml(t1Content.introTheoText1d);
 	}
 
 
