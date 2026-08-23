@@ -61,7 +61,7 @@ export class ResultsTracking {
 
     // Module tracking
     startModule(moduleId: string) {
-        const sessionId = this.sessionService.getSessionId();
+        const sessionId = this.sessionService.sessionId();
         if (!sessionId) {
             console.warn('No session ID available for results tracking');
             return;
@@ -117,7 +117,7 @@ export class ResultsTracking {
             return;
         }
 
-        const sessionId = this.sessionService.getSessionId();
+        const sessionId = this.sessionService.sessionId();
         if (!sessionId) {
             console.warn('No session ID available');
             return;
@@ -207,7 +207,7 @@ export class ResultsTracking {
 
 
     getSessionResults(): ModuleProgress[] {
-        const currentSessionId = this.sessionService.getSessionId();
+        const currentSessionId = this.sessionService.sessionId();
         if (!currentSessionId) return [];
 
         return Array.from(this.results.values())
@@ -254,7 +254,7 @@ export class ResultsTracking {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    sessionId: this.sessionService.getSessionId(),
+                    sessionId: this.sessionService.sessionId(),
                     results: this.getAllResults(),
                     timestamp: new Date().toISOString()
                 })

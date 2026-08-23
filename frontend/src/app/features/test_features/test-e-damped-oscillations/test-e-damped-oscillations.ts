@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -29,6 +29,14 @@ declare global {
     styleUrl: './test-e-damped-oscillations.css'
 })
 export class TestEDampedOscillations implements OnInit, OnDestroy {
+    constructor(
+		private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
+        private router: Router,
+        private testTracking: TestTracking,
+        public devMode: DevModeService
+    ) {}
 
     // Custom thresholds for this test
     performanceThresholds = [
@@ -53,7 +61,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 	
 	// question 1 data
     question1 = {
-		questionId: 'damped-osc-1-daempfungsstaerke',
+		questionId: 'test-e-damped-osc-1-daempfungsstaerke',
         question: `Bei dem Versuch können Sie die Dämpfung darüber anpassen, dass Sie den Überlappbereich zwischen einem Magneten (eines Magnetfelds) und der Schwungscheibe variieren.
 			Ziehen Sie die Bilder in die richtige Reihenfolge (stärkste Dämpfung oben, schwächste unten).`,
 		questionInstruction: 'Frage 1 von 5 (30 Punkte): Sortierung Dämpfungskonstante',
@@ -70,7 +78,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 2 data
     question2 = {
-		questionId: 'damped-osc-2-federkonstante',
+		questionId: 'test-e-damped-osc-2-federkonstante',
         question: `Im Versuch ist eine feste Feder eingebaut, die Federkonstante kann also nicht varriert werden. Was würde aber passieren, wenn man die Federkonstante variieren könnte?
 			Sortieren Sie die Graphen nach der Größe der Federkonstante. 
 			Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante nach oben einsortieren (andere Variablen sind konstant gehalten).`,
@@ -88,7 +96,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 3 data
     question3 = {
-		questionId: 'damped-osc-3-frequency-damping',
+		questionId: 'test-e-damped-osc-3-frequency-damping',
         question: `Sie haben in einer ersten Messung einer gedämpften Schwingung gesehen, dass das Schwungrad mit einer Frequenz von $\\omega_1=0.3$ Hz geschwungen ist.
 			Nun hat ihr*e Praktikumspartner*in die Wirbelstrombremse weiter über das Schwungrad bewegt - sie erwarten also eine größere Dämpfung.
 			Mit welcher Frequenz $\\omega_2$ erwarten Sie nun das Schwungrad zu schwingen?`,
@@ -106,7 +114,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 4 data
     question4 = {
-		questionId: 'damped-osc-4-log-decrement',
+		questionId: 'test-e-damped-osc-4-log-decrement',
         question: `Das logarithmische Dekrement $\\Lambda$ ist eine Hilfsgröße, die man zur Beschreibung gedämpfter Schwingungen verwendet.
 			Das logarithmische Dekrement ergibt sich hierbei in folgender Weise aus dem Verhältnis zwischen Amplituden einer gedämpften Schwingung, die zeitlich genau eine Schwingung auseinanderliegen: 
 			$$\\Lambda = \\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right).$$
@@ -127,7 +135,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 5 data
     question5 = {
-        questionId: 'damped-osc-5-phase-space',
+        questionId: 'test-e-damped-osc-5-phase-space',
         question: `Der Phasenraum beschreibt mögliche Zustände, die ein System annehmen kann über die Angabe der Raum- und einer Geschwindigkeitskoordinate. 
 		Für das Pohlsche Rad kann die Bewegung des Schwungrads angegeben werden über den Auslenkwinkel $\\phi$ und die Winkelgeschwindigkeit $\\dot{\\phi}$.
 
@@ -188,7 +196,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
     // calculate results directly when navigating to results page
     private calculateResults() {
-        const testProgress = this.testTracking.getTestResults('damped-oscillations');
+        const testProgress = this.testTracking.getTestResults('e-damped-oscillations-test');
         
         if (!testProgress) {
             console.warn('No test results found');
@@ -224,23 +232,23 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
         }
         return '';
     }
-
-	
-    constructor(
-		private sanitizer: DomSanitizer,
-        @Inject(PLATFORM_ID) private platformId: Object,
-        private router: Router,
-        private testTracking: TestTracking,
-        public devMode: DevModeService
-    ) {}
 	
 	
     ngOnInit() {
+        // restore subpage from URL
+        const page = this.route.snapshot.queryParamMap.get('page');
+        if (page && ['1','2','3','4','5','6'].includes(page)) {
+            this.currentView = `damped_osc${page}`;
+            // if (page === '6') this.calculateResults();
+        }
+
 		// start tracking this test
-        this.testTracking.startTest('damped-oscillations', 5, 150); // 5 questions, 150 total points
+        this.testTracking.startTest('e-damped-oscillations-test', 5, 150); // 5 questions, 150 total points
         
         // restore completion state from previous session
         this.restoreCompletionState();
+
+        this.renderMath();
     }
 	
 	
@@ -342,6 +350,16 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 	
 	
 	// +++ in-page navigation +++
+
+    private updateUrl() {
+        const page = this.currentView.replace('damped_osc', '');
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { page },
+            queryParamsHandling: 'merge',
+            replaceUrl: true
+        });
+    }
 	
     // navigation helpers
 	currentView: string = 'damped_osc1';
@@ -400,20 +418,17 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc3') {
             this.currentView = 'damped_osc2';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc4') {
             this.currentView = 'damped_osc3';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc5') {
             this.currentView = 'damped_osc4';
-            this.renderMath();
         } else if (this.currentView === 'damped_osc6') {
             this.currentView = 'damped_osc5';
-            this.renderMath();
         }
+        this.renderMath();
+        this.updateUrl();
     }
 
 
@@ -434,8 +449,10 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 				this.currentView = 'damped_osc6';
 			} else if (this.currentView === 'damped_osc6') {
                 this.router.navigate([this.continueLink]);
+                return;
 			}
             this.renderMath();
+            this.updateUrl();
         }
     }
 }

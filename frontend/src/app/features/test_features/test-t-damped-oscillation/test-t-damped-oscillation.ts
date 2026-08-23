@@ -24,6 +24,15 @@ declare global {
   styleUrl: './test-t-damped-oscillation.css',
 })
 export class TestTDampedOscillation implements OnInit, OnDestroy  {
+    constructor(
+		private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
+        private router: Router,
+        private testTracking: TestTracking,
+        public devMode: DevModeService
+    ) {}
+
     // Custom thresholds for this test
     performanceThresholds = [
         {
@@ -49,7 +58,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 1 data
     question1 = {
-		questionId: 'damped-osc-1-daempfungsstaerke',
+		questionId: 'test-t-damped-osc-1-daempfungsstaerke',
         question: `Sortieren Sie die drei Graphen entsprechend der Größe der Dämpfungskonstante. Beginnen Sie oben mit der niedrigsten Dämpfungskonstante.`,
 		questionInstruction: 'Frage 1 von 5 (30 Punkte): Sortierung Dämpfungskonstante',
         images: [
@@ -65,7 +74,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 2 data
     question2 = {
-		questionId: 'damped-osc-2-federkonstante',
+		questionId: 'test-t-damped-osc-2-federkonstante',
         question: `Welchen Einfluss hat die Federkonstante auf eine Schwingung?<br>
 			  Sortieren Sie die Graphen nach der Größe der Federkonstante. 
 			  Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante nach oben einsortieren (andere Variablen sind konstant gehalten).`,
@@ -83,7 +92,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 3 data
     question3 = {
-		questionId: 'damped-osc-3-frequency-damping',
+		questionId: 'test-t-damped-osc-3-frequency-damping',
         question: `Welchen Einfluss hat eine größere Dämpfung auf die Frequenz der Schwingung?<br>
       Sei $\\omega_1$ die Schwingungsfrequenz bei einer niedrigen Dämpfung und $\\omega_2$ die Schwingungsfrequenz bei einer stärkeren Dämpfung.
       Was gilt dann für das Verhältnis zwischen den beiden Schwingungsfrequenzen?`,
@@ -101,7 +110,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 4 data
     question4 = {
-		questionId: 'damped-osc-4-log-decrement',
+		questionId: 'test-t-damped-osc-4-log-decrement',
         question: `Das logarithmische Dekrement $\\Lambda$ ist eine Hilfsgröße, die man zur Beschreibung gedämpfter Schwingungen verwendet.
 			Das logarithmische Dekrement ergibt sich hierbei in folgender Weise aus dem Verhältnis zwischen Amplituden einer gedämpften Schwingung, die zeitlich genau eine Schwingung auseinanderliegen: 
 			$$\\Lambda = \\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right).$$
@@ -122,7 +131,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 5 data
     question5 = {
-        questionId: 'damped-osc-5-phase-space',
+        questionId: 'test-t-damped-osc-5-phase-space',
         question: `Man unterscheidet bei Schwingungen zwischen qualitativ unterschiedlichen Formen: dem Schwingfall, dem aperiodischen Grenzfall und dem Kriechfall.<br>
         Ordnen Sie die Bezeichnungen und die Bedingungen für das Verhältnis von Eigenschwingfrequenz $\\omega_0$ und Dämpfungskonstante $\\gamma$ den entsprechenden Graphen zu.`,
         questionInstruction: 'Frage 5 von 5 (60 Punkte): Zuordnung Bewegungsformen mit Dämpfung',
@@ -178,7 +187,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
     // calculate results directly when navigating to results page
     private calculateResults() {
-        const testProgress = this.testTracking.getTestResults('t-damped-oscillations');
+        const testProgress = this.testTracking.getTestResults('t-damped-oscillations-test');
         
         if (!testProgress) {
             console.warn('No test results found');
@@ -215,20 +224,11 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
         return '';
     }
 
-	
-    constructor(
-		private sanitizer: DomSanitizer,
-        @Inject(PLATFORM_ID) private platformId: Object,
-        private route: ActivatedRoute,
-        private router: Router,
-        private testTracking: TestTracking,
-        public devMode: DevModeService
-    ) {}
 
 
     ngOnInit() {
 		// start tracking this test
-        this.testTracking.startTest('t-damped-oscillations', 5, 150); // 5 questions, 150 total points
+        this.testTracking.startTest('t-damped-oscillations-test', 5, 150); // 5 questions, 150 total points
 
         // restore completion state from previous session
         this.restoreCompletionState();
@@ -239,6 +239,8 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
             this.currentView = `damped_osc${page}`;
             if (page === '6') this.calculateResults();
         }
+
+        this.renderMath();
     }
 
     private updateUrl() {

@@ -21,9 +21,6 @@ README.md
 │       module.php                              // resolves MODULE_NAME → modules.id
 │       router.php                              // local dev router (php -S only)
 │       schema.sql                              // database schema (run once to initialise)
-│       report.php                              // POST /api/report — generates Lernpfad PDF (FPDF)
-│       composer.json                           // PHP dependencies (FPDF)
-│       vendor/                                 // FPDF library — run `composer install`, then upload
 │       │
 │       ├── users/
 │       │       check.php                       // POST /api/users/check
@@ -63,7 +60,10 @@ README.md
 │           │           results-tracking.ts     // learning module answer logging
 │           │           test-tracking.ts        // test answer logging (single-submission)
 │           │           data-export.ts          // aggregates all tracking; saves to / loads from API
-│           │           summary.service.ts      // builds SummaryData for Lernpfad display + PDF
+│           │           summary.service.ts      // builds SummaryData for Lernpfad display
+│           │           html-report.service.ts  // generates HTML Lernpfad report (browser download)
+│           │           learning-report-registry.ts  // maps page routes → ordered content blocks
+│           │           report-mode.ts          // utility: isSolutionsMode() for dev ?solutions=1
 │           │           dev-mode.ts             // developer mode toggle (Shift+Alt+D)
 │           │           shuffle-order.ts        // utility: randomises answer order
 │           │
@@ -110,12 +110,10 @@ README.md
 
 ## Running Locally
 
-**First-time setup** — copy and fill in the API config, then install PHP dependencies:
+**First-time setup** — copy and fill in the API config:
 ```bash
 cp api/config.example.php api/config.php
 # edit api/config.php with your local DB credentials
-
-cd api && composer install && cd ..
 ```
 
 Three processes must be running simultaneously, each in its own terminal:
@@ -142,21 +140,18 @@ The Angular app is also accessible directly at **`http://localhost:4200`** (rogu
 
 ## Deploying to the Server
 
-1. Install PHP dependencies locally and build the Angular app:
+1. Build the Angular app:
    ```bash
-   cd api && composer install && cd ..
    cd frontend && ng build --base-href "https://interapt.uni-goettingen.de/pohl/"
    ```
 2. Upload to the server:
    - `frontend/dist/.../browser/` → server base path (static files), rename `browser/` to `pohl/` and upload to server
-   - `api/` → server base path `/api/` (including the `vendor/` folder)
+   - `api/` → server base path `/api/`
    - `ilias_bridge.html` → server base path
    - `.htaccess` → server base path
 3. Create `api/config.php` on the server (from `config.example.php`) with production credentials.
 4. Set `RewriteBase` in `.htaccess` to match the server sub-path.
 <!-- 5. Run `api/schema.sql` once in phpMyAdmin to create the tables. -->
-
-> **Note:** SSH is not available on the deployment server. Run `composer install` locally and upload the resulting `api/vendor/` folder via SFTP. Only needs to be repeated if `composer.json` changes.
 
 The final structure on the server is supposed to look like this:
 
@@ -169,9 +164,6 @@ pohl/                        ← your base path
 └── api/
     ├── db.php
     ├── module.php
-    ├── report.php           ← POST /api/report (PDF generation)
-    ├── composer.json
-    ├── vendor/              ← FPDF library (upload after composer install)
     ├── users/
     │   ├── check.php
     │   └── create.php
@@ -189,7 +181,6 @@ pohl/                        ← your base path
 | POST | `/api/users/create` | `users/create.php` | Register a new user |
 | POST | `/api/progress/save` | `progress/save.php` | Save analytics, module results, and test results |
 | GET | `/api/progress/{username}` | `progress/load.php` | Load all saved progress for a user |
-| POST | `/api/report` | `report.php` | Accept `SummaryData` JSON; return a formatted Lernpfad PDF |
 
 
 ## Database Schema
@@ -222,7 +213,10 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **results-tracking.ts:** logs learning question answers; allows retries, increments `attemptCount`
 - **test-tracking.ts:** logs test question answers; blocks re-submission of the same question
 - **data-export.ts:** aggregates all three tracking services; calls `saveProgress()` on test completion and on `beforeunload`; calls `loadProgress()` on app startup to restore previous session; silently skips rogue users
-- **summary.service.ts:** builds a `SummaryData` object from the in-memory tracking state (page visits with human-readable labels, learning questions grouped by module, test results with per-question breakdown); consumed by all target pages to render the Lernpfad summary and generate the PDF
+- **summary.service.ts:** builds a `SummaryData` object from the in-memory tracking state (page visits with human-readable labels, learning questions grouped by module, test results with per-question breakdown); consumed by all target pages to render the Lernpfad summary
+- **html-report.service.ts:** generates a self-contained HTML Lernpfad report and triggers a browser download; embeds images as base64 data URIs, renders page content in registry order, and inlines question answers with correct/incorrect feedback; MathJax CDN is included for LaTeX rendering
+- **learning-report-registry.ts:** maps every content page route + page number to an ordered list of `ReportBlock[]` entries (text, image, question, spoiler); used by `html-report.service.ts` to produce the report in the correct page-by-page order; also exposes `PAGE_LOOKUP` as a `Map<string, PageDefinition>` for O(1) lookups
+- **report-mode.ts:** utility function `isSolutionsMode()` — returns `true` when running in Angular dev mode with `?solutions=1` in the URL; used to gate answer reveals during development
 - **shuffle-order.ts:** utility that randomises answer order for evaluation and test components
 - **dev-mode.ts:** developer mode toggle; press `Shift+Alt+D` anywhere to enable/disable; state persists in `sessionStorage` across SPA navigation; when active, shows an amber badge and reveals gated back-navigation buttons on decision, simulation, learning, test, and target pages; SSR-safe
 
@@ -272,42 +266,114 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 
 ### Learning Features
 
+Question IDs follow the convention `{module}-{n}-{description}` for learning questions and `test-{strand}-{module}-{n}-{description}` for test questions.
+
 **Experimental strand (e-):**
 
 - **e1-intro-experiment** → `/learning/e1-intro-experiment` — Einstieg: Versuchsaufbau
-    - *intro-exp-1-schwungrad*
-    - *intro-exp-2-feder*
-    - *intro-exp-3-wirbelstrombremse*
-    - *intro-exp-4-direktionsmoment*
-    - *intro-exp-5-winkel-drehmoment*
-    - *intro-exp-6-winkel-zeit*
+
+<details>
+<summary>Questions (6)</summary>
+
+  - `e1-intro-exp-1-schwungrad`
+  - `e1-intro-exp-2-feder`
+  - `e1-intro-exp-3-wirbelstrombremse`
+  - `e1-intro-exp-4-direktionsmoment`
+  - `e1-intro-exp-5-winkel-drehmoment`
+  - `e1-intro-exp-6-winkel-zeit`
+
+</details>
 
 - **e2-damped-oscillation** → `/learning/e2-damped-oscillations` — Experiment: Gedämpfte Schwingungen
-    - *damped-osc1*
-    - *damped-osc2*
-    - *damped-osc3*
+
+<details>
+<summary>Questions (1)</summary>
+
+  - `e2-damped-osc-1-schwungrad`
+
+</details>
 
 - **e3-driven-oscillations** → `/learning/e3-driven-oscillations` — Experiment: Getriebene Schwingungen
-    - *driven-osc1* … *driven-osc7*
+
+<details>
+<summary>Questions (8)</summary>
+
+  - `e3-driven-osc-1-dgl-loesen`
+  - `e3-driven-osc-2-inhom-dgl`
+  - `e3-driven-osc-3-swinging-process`
+  - `e3-driven-osc-4-max-amp`
+  - `e3-driven-osc-5-damping-resonance-freq`
+  - `e3-driven-osc-6-damping-resonance-freq-exp`
+  - `e3-driven-osc-7-exciting-frequency`
+  - `e3-driven-osc-8-measure-time-delta`
+
+</details>
 
 **Theory strand (t-):**
 
-- **t1-intro-theory** → `/learning/t1-intro-theory` — Einstieg Theoriepfad (single page)
+- **t1-intro-theory** → `/learning/t1-intro-theory` — Einstieg Theoriepfad
+
+<details>
+<summary>Questions (1)</summary>
+
+  - `t1-1-dgl-solutions`
+
+</details>
 
 - **t2-free-oscillations** → `/learning/t2-free-oscillations` — Theorie: Freie Schwingung
-    - *free_osc1*
-    - *free_osc2*
+
+<details>
+<summary>Questions (6)</summary>
+
+  - `t2-1-oscillator`
+  - `t2-2-reality`
+  - `t2-3-dgl-matching`
+  - `t2-4-phase`
+  - `t2-5-phase-matching`
+  - `t2-6-pohl`
+
+</details>
 
 - **t3-damped-oscillations** → `/learning/t3-damped-oscillations` — Theorie: Gedämpfte Schwingung
-    - *damped_osc1* … *damped_osc5*
+
+<details>
+<summary>Questions (10)</summary>
+
+  - `t3-1-exp-ansatz`
+  - `t3-2-gen-solution`
+  - `t3-3-schwingfall-condition`
+  - `t3-4-schwingfall-matching`
+  - `t3-5-exp-factor`
+  - `t3-6-amplitude-ratio`
+  - `t3-7-log-dekrement`
+  - `t3-8-aper-grenzfall`
+  - `t3-9-summary-matching`
+  - `t3-10-gebaude`
+
+</details>
 
 - **t4-driven-oscillations** → `/learning/t4-driven-oscillations` — Theorie: Getriebene Schwingung
-    - *driven_osc1* … *driven_osc8*
 
-- **t-chaos** → `/learning/t-chaos` — Nichtlineare Schwingungen und Chaos
-    - *chaos_1* … *chaos_4* (URL-restorable via `?page=`)
+<details>
+<summary>Questions (11)</summary>
 
-- **t-simulation** → `/learning/t-simulation` — Grundbausteine Simulation: DGLs numerisch lösen (single page; Jupyter Notebook download)
+  - `t4-1-driven-oscillator`
+  - `t4-2-pohl-term`
+  - `t4-3-gesamtloesung`
+  - `t4-4-partikular-ansatz`
+  - `t4-5-partikular-loesung`
+  - `t4-6-einschwing`
+  - `t4-7-amplitude-params`
+  - `t4-8-damping-amplitude`
+  - `t4-9-versuch`
+  - `t4-10-resonanz-phase`
+  - `t4-11-messung`
+
+</details>
+
+- **t-chaos** → `/learning/t-chaos` — Nichtlineare Schwingungen und Chaos (2 pages; no questions)
+
+- **t-simulation** → `/learning/t-simulation` — Grundbausteine Simulation: DGLs numerisch lösen (single page; Jupyter Notebook download; no questions)
 
 - **t-setup** → `/learning/t-setup` — Versuchsaufbau: Der Pohlsche Resonator (single page; shared intermediate stop for three paths — routes to `tar-theory`, `tar-chaos`, or `tar-simulation` depending on `?next=` query param)
 
@@ -327,17 +393,62 @@ Decision pages present the user with a choice between the conventional learning 
 
 ### Test Features
 
-Tests use single-submission question formats. The `e-` prefix denotes the experimental strand (reached after the experiment learning modules), the `t-` prefix the theoretical strand (reached after the theory modules).
+Tests use single-submission question formats. The `e-` prefix denotes the experimental strand, the `t-` prefix the theoretical strand.
 
-- **test-e-damped-oscillations** → `/test/e-damped-osc` — Test: Gedämpfte Schwingungen (5 questions + results)
-- **test-e-driven-oscillations** → `/test/e-driven-osc` — Test: Getriebene Schwingungen (4 questions + results)
-- **test-t-damped-oscillation** → `/test/t-damped-osc` — Test: Gedämpfte Schwingungen — Theorie (6 questions + results; URL-restorable via `?page=`)
-- **test-t-driven-oscillation** → `/test/t-driven-osc` — Test: Getriebene Schwingungen — Theorie (5 questions + results; URL-restorable via `?page=`)
+- **test-e-damped-oscillations** → `/test/e-damped-osc` — Test: Gedämpfte Schwingungen
+
+<details>
+<summary>Questions (5)</summary>
+
+  - `test-e-damped-osc-1-daempfungsstaerke`
+  - `test-e-damped-osc-2-federkonstante`
+  - `test-e-damped-osc-3-frequency-damping`
+  - `test-e-damped-osc-4-log-decrement`
+  - `test-e-damped-osc-5-phase-space`
+
+</details>
+
+- **test-e-driven-oscillations** → `/test/e-driven-osc` — Test: Getriebene Schwingungen
+
+<details>
+<summary>Questions (4)</summary>
+
+  - `test-e-driven-osc-1-gesamtgleichung`
+  - `test-e-driven-osc-2-einschwingen`
+  - `test-e-driven-osc-3-resonance-freq`
+  - `test-e-driven-osc-4-resonance-damping`
+
+</details>
+
+- **test-t-damped-oscillation** → `/test/t-damped-osc` — Test: Gedämpfte Schwingungen — Theorie (URL-restorable via `?page=`)
+
+<details>
+<summary>Questions (5)</summary>
+
+  - `test-t-damped-osc-1-daempfungsstaerke`
+  - `test-t-damped-osc-2-federkonstante`
+  - `test-t-damped-osc-3-frequency-damping`
+  - `test-t-damped-osc-4-log-decrement`
+  - `test-t-damped-osc-5-phase-space`
+
+</details>
+
+- **test-t-driven-oscillation** → `/test/t-driven-osc` — Test: Getriebene Schwingungen — Theorie (URL-restorable via `?page=`)
+
+<details>
+<summary>Questions (4)</summary>
+
+  - `test-t-driven-osc-1-gesamtgleichung`
+  - `test-t-driven-osc-2-einschwingen`
+  - `test-t-driven-osc-3-resonance-freq`
+  - `test-t-driven-osc-4-resonance-damping`
+
+</details>
 
 
 ### Target Features
 
-Target pages are reached at the end of a module strand. They offer downloadable experiment guides tailored to the student's earlier choice of focus and openness level, followed by an expandable **Lernpfad summary** (visited pages, learning questions with answers, test results). Authenticated users (non-rogue sessions) can download the full Lernpfad as a PDF via `POST /api/report`.
+Target pages are reached at the end of a module strand. They offer downloadable experiment guides tailored to the student's earlier choice of focus and openness level, followed by an expandable **Lernpfad summary** (visited pages, learning questions with answers, test results). All users can download the full Lernpfad as a self-contained HTML file.
 
 - **tar-experiment** → `/target/tar-experiment` — Anleitung: Versuchsdurchführung (Experimentalpfad)
     - Guide E1: Fokus Charakterisierung des Aufbaus (konkretere Angaben) — `Anleitung_E1.pdf`
@@ -359,9 +470,6 @@ Target pages are reached at the end of a module strand. They offer downloadable 
     - Analysis notebook — `Analysehilfe_2.ipynb`
 
 
-### Sidepath Features
-
-
 ### Simulation Features
 
 Angular components (interactive, use canvas / MathJax — served client-side):
@@ -375,12 +483,3 @@ Angular components (interactive, use canvas / MathJax — served client-side):
 - **sim-t-damped** → `/simulation/sim-t-damped` — Simulation: Gedämpfte Schwingung
 - **sim-t-driven** → `/simulation/sim-t-driven` — Simulation: Gedämpfte getriebene Schwingung
 - **sim-t-driven-advanced** → `/simulation/sim-t-driven-advanced` — Simulation: Gedämpfte getriebene Drehschwingung
-
-Standalone HTML pages (static files in `frontend/public/simulations/`, served via redirect guard):
-
-- `/simulation/theory-undamped` — Ungedämpfte Schwingung (Einstieg)
-- `/simulation/theory-damped` — Gedämpfte Schwingung (Einstieg)
-- `/simulation/theory-damped-driven` — Gedämpfte getriebene Schwingung (Einstieg)
-- `/simulation/theory-damped-driven-advanced` — Gedämpfte getriebene Drehschwingung (Vertiefung)
-- `/simulation/experiment-damped-driven` — Getriebene Drehschwingung (Einleitung)
-- `/simulation/experiment-damped-driven-advanced` — Getriebene Drehschwingung (Vertiefung)

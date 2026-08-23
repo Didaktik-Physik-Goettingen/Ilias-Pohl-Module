@@ -89,7 +89,7 @@ export const routes: Routes = [
     { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
     { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },
     { path: 'learning/t-chaos',               component: TChaos,               title: 'Grundlagen nichtlineare Schwingung und Chaos' },
-     { path: 'learning/t-simulation',           component: TSimulation,               title: 'Grundbausteine Simulation' },
+    { path: 'learning/t-simulation',           component: TSimulation,               title: 'Grundbausteine Simulation' },
     { path: 'learning/t-setup',               component: TSetup,               title: 'Versuchsaufbau: Der Pohlsche Resonator' },
 
 
@@ -108,10 +108,10 @@ export const routes: Routes = [
     // simulation pages
     { path: 'simulation/sim-e-damped-osc', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
     { path: 'simulation/sim-e-driven-osc', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
-    { path: 'simulation/sim-t-undamped',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
-    { path: 'simulation/sim-t-damped',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
-    { path: 'simulation/sim-t-driven',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
-    { path: 'simulation/sim-t-driven-advanced', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
+    { path: 'simulation/sim-t-undamped-osc',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
+    { path: 'simulation/sim-t-damped-osc',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
+    { path: 'simulation/sim-t-driven-osc',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
+    { path: 'simulation/sim-t-driven-advanced-osc', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
 
     // target pages
     { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },

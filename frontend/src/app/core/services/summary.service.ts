@@ -57,43 +57,77 @@ export interface SummaryData {
 })
 export class SummaryService {
     private readonly MODULE_LABELS: Record<string, string> = {
-        'intro-experiment':   'E1: Einführung in den Versuchsaufbau',
-        'damped_oscillations': 'E2: Gedämpfte Schwingungen',
-        'driven_oscillations': 'E3: Getriebene Schwingungen',
+        'e1-intro-experiment-module':           '[E-1] Einstieg Experimentalpfad',
+        'e2-damped-oscillations-module':        '[E-2] Gedämpfte Schwingungen',
+        'e3-driven-oscillations-module':        '[E-3] Getriebene Schwingungen',
+
+        't1-intro-theory-module':               '[T-1] Einstieg Theoriepfad',
+        't2-free-oscillations-module':          '[T-2] Freie Schwingungen',
+        't3-damped-oscillations-module':        '[T-3] Gedämpfte Schwingungen',
+        't4-driven-oscillations-module':        '[T-4] Getriebene Schwingungen',
+
+        't-setup-module':                       '[T] Versuchsaufbau',
+        't-simulation-module':                  '[T] Simulation',
+        't-chaos-module':                       '[T] Chaos',
+
     };
 
     private readonly TEST_LABELS: Record<string, string> = {
-        'damped-oscillations':   'Test: Gedämpfte Schwingungen',
-        'e-driven-oscillations': 'Test: Getriebene Schwingungen',
+        'e-damped-oscillations':    '[E] Test: Gedämpfte Schwingungen',
+        'e-driven-oscillations':    '[E] Test: Getriebene Schwingungen',
+        't-damped-oscillations':    '[T] Test: Gedämpfte Schwingungen',
+        't-driven-oscillations':    '[T] Test: Getriebene Schwingungen',
     };
 
     private readonly PAGE_TOTALS: Record<string, number> = {
-        '/learning/e1-intro-experiment':  4,
-        '/learning/e2-damped-oscillations': 3,
-        '/learning/e3-driven-oscillations': 7,
-        '/test/e-driven-osc':             5,
+        '/learning/e1-intro-experiment':        4,
+        '/learning/e2-damped-oscillations':     3,
+        '/learning/e3-driven-oscillations':     7,
+        '/learning/t1-intro-theory':            1,
+        '/learning/t2-free-oscillations':       2,
+        '/learning/t3-damped-oscillations':     5,
+        '/learning/t4-driven-oscillations':     8,
+
+        '/test/e-damped-osc':                   6,
+        '/test/e-driven-osc':                   5,
+        '/test/t-damped-osc':                   6,
+        '/test/t-driven-osc':                   5,
     };
 
     private readonly PAGE_LABELS: Record<string, string> = {
-        '/':                                                       'Startseite: Pohlsches Rad',
-        '/learning/e1-intro-experiment':                           '[E] Einstieg Experimentalpfad',
-        '/learning/e2-damped-oscillations':                        '[E] Gedämpfte Schwingungen',
-        '/learning/e3-driven-oscillations':                        '[E] Getriebene Schwingungen',
-        '/decision/e-damped-oscillations':                         '[E] Entscheidung: Gedämpfte Schwingungen',
-        '/decision/e-driven-oscillations':                         '[E] Entscheidung: Getriebene Schwingungen',
-        '/test/e-damped-osc':                                      '[E] Test: Gedämpfte Schwingungen',
-        '/test/e-driven-osc':                                      '[E] Test: Getriebene Schwingungen',
-        '/test/t-damped-osc':                                      '[T] Test: Gedämpfte Schwingungen',
-        '/test/t-driven-osc':                                      '[T] Test: Getriebene Schwingungen',
-        '/simulation/sim-e-damped-osc':                            '[E] Simulation: Gedämpfte Schwingungen',
-        '/simulation/sim-e-driven-osc':                            '[E] Simulation: Getriebene Schwingungen',
-        '/target/tar-experiment':                                  '[E] Anleitung Experimentalpfad',
-        // '/simulation/theory-undamped':                             'Simulation: Ungedämpfte Schwingung',
-        // '/simulation/theory-damped':                               'Simulation: Gedämpfte Schwingung',
-        // '/simulation/theory-damped-driven':                        'Simulation: Gedämpfte getriebene Schwingung',
-        // '/simulation/theory-damped-driven-davanced':               'Simulation: Gedämpfte getriebene Drehschwingung',
-        // '/simulation/experiment-damped-driven':                    'Simulation: Getriebene Drehschwingung (Einleitung)',
-        // '/simulation/experiment-damped-driven-advanced':           'Simulation: Getriebene Drehschwingung (Vertiefung)',
+        '/':                                                        'Startseite: Pohlsches Rad',
+        '/learning/e1-intro-experiment':                            '[E-1] Einstieg Experimentalpfad',
+        '/learning/e2-damped-oscillations':                         '[E-2] Gedämpfte Schwingungen',
+        '/learning/e3-driven-oscillations':                         '[E-3] Getriebene Schwingungen',
+        '/learning/t1-intro-theory':                                '[T-1] Einstieg Theoriepfad',
+        '/learning/t2-free-oscillations':                           '[T-2] Freie Schwingungen',
+        '/learning/t3-damped-oscillations':                         '[T-3] Gedämpfte Schwingungen',
+        '/learning/t4-driven-oscillations':                         '[T-4] Getriebene Schwingungen',
+        '/learning/t-chaos':                                        '[T] Chaos',
+        '/learning/t-simulation':                                   '[T] Simulation',
+        '/learning/t-setup':                                        '[T] Versuchsaufbau',
+
+        '/decision/e-damped-oscillations':                          '[E] Entscheidung: Gedämpfte Schwingungen',
+        '/decision/e-driven-oscillations':                          '[E] Entscheidung: Getriebene Schwingungen',
+        '/decision/t-damped-oscillations':                          '[T] Entscheidung: Gedämpfte Schwingungen',
+        '/decision/t-driven-oscillations':                          '[T] Entscheidung: Getriebene Schwingungen',
+
+        '/test/e-damped-osc':                                       '[E] Test: Gedämpfte Schwingungen',
+        '/test/e-driven-osc':                                       '[E] Test: Getriebene Schwingungen',
+        '/test/t-damped-osc':                                       '[T] Test: Gedämpfte Schwingungen',
+        '/test/t-driven-osc':                                       '[T] Test: Getriebene Schwingungen',
+        
+        '/simulation/sim-e-damped-osc':                             '[E] Simulation: Gedämpfte Schwingungen',
+        '/simulation/sim-e-driven-osc':                             '[E] Simulation: Getriebene Schwingungen',
+        '/simulation/sim-t-undamped-osc':                           '[T] Simalation: Freie Schwingungen',
+        '/simulation/sim-t-damped-osc':                             '[T] Simulation: Gedämpfte Schwingungen',
+        '/simulation/sim-t-driven-osc':                             '[T] Simulation: Getriebene Schwingungen',
+        'simulation/sim-t-driven-advanced-osc':                     '[T] Simulation: Getriebene Schwingungen (erweitert)',
+
+        '/target/tar-experiment':                                   '[E] Anleitung Experimentalpfad',
+        '/target/tar-theory':                                       '[T] Anleitung Theoriepfad',
+        '/target/tar-chaos':                                        '[T] Anleitung Chaos',
+        '/target/tar-simulation':                                   '[T] Anleitung Simulation',
     };
 
     constructor(

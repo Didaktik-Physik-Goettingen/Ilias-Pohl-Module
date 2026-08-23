@@ -63,7 +63,7 @@
             }
             @if (navigationFlow && interactionThresholdReached) {
                 <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'sim-first' ? 'Weiter zum Lernmodul →' : 'Weiter zu getriebenen Schwingungen →' }}
+                    {{ navigationFlow === 'learning-first' ? 'Weiter zu getriebenen Schwingungen →' : 'Weiter zum Lernmodul →' }}
                 </button>
             }
         </div>

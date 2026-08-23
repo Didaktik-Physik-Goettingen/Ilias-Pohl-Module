@@ -19,29 +19,18 @@
             @if (currentView === 'chaos_1') {
                 <div>
                     <div class="text-content">
-                        <p>
-                            Die Grundlage für harmonische Schwingungen ist, dass die rücktreibende Kraft linear mit der Auslenkung aus der Gleichgewichtsposition.
-                            Bei einer solchen Kraft ist das zugrundeliegende Potential parabolisch.
-                        </p>
+                        <p [innerHTML]="chaosText1a"></p>
                     </div>
                     <div class="text-image-container">
                         <div class="image-content">
                             <img src="assets/images/t_chaos/potential.png" alt="Potential mit angehängter Zusatzmasse">
                         </div>
                         <div class="text-content">
-                            <p [innerHTML]="AbschnittPotential"></p>
+                            <p [innerHTML]="chaosText1b"></p>
                         </div>
                     </div>
                     <div class="text-content">
-                        <p>
-                            Die Bewegungsdynamik des Pendels hängt nun noch stärker von der <a href="#glossary-amplitude" class="glossary-link">Amplitude</a> der Schwingung und der Dämpfung ab.   <br>
-                            Zwei Aspekte können wir bereits aus dem Potential ableiten:<br>
-                            Für kleine Auslenkungen aus einer der neuen Gleichgewichtslagen ist das Potential noch immer näherungsweise parabolisch 
-                            und die Schwingung ist harmonisch (s. untere Abbildung).
-                            Für größere Auslenkungen aus der Gleichgewichtslage erfährt das Schwungrad aber eine unsymmetrische Rückstellkraft.<br><br>
-                            Welchen Einfluss hat die Dämpfung auf das System? Was geschieht bei einer starken Dämpfung? 
-                            Warum verändert sich das Verhalten, wenn die Dämpfung verringert wird?                  
-                        </p>
+                        <p [innerHTML]="chaosText1c"></p>
                     </div>
 
                 </div>
@@ -49,15 +38,13 @@
 
             @if (currentView === 'chaos_2') {
                 <div>
-                    <p>
-                        Aufgrund des durch die Masse bewirkten Drehmoments lautet die gesamte Bewegungsgleichung für das gedämpfte, harmonisch getriebene System:
-                    </p>
+                    <p [innerHTML]="chaosText2a"></p>
                 </div>
                 <div class="learning-lamp">
-                    <div class="learning-lamp-text" [innerHTML]="differentialgleichung"></div>
+                    <div class="learning-lamp-text" [innerHTML]="chaosText2b"></div>
                 </div>
                 <div class="text-content">
-                    <p [innerHTML]="differentialgleichung2"></p>
+                    <p [innerHTML]="chaosText2c"></p>
                 </div>
             }
 
@@ -78,11 +65,7 @@
                         Ihnen stehen im Versuch zudem <b>Zusatzmassen</b> zur Verfügung, die in der Skizze nicht gezeigt sind. 
                         Die Zusatzmassen können am inneren Rand des Schwungsrads mit Schrauben befestigt werden.
                     </div>
-                    <p>
-                        Im Versuch werden Sie die Theorie zu getriebenen und gedämpften Schwingungen am Beispiel eines Pohlschen Resonators untersuchen. 
-                        Um sich einen Überblick über den Versuchsaufbau zu verschaffen, 
-                        vergleichen Sie oben das Foto des Versuchsaufbaus mit der Skizze und versuchen Sie die unterschiedlichen Bauelemente zu identifizieren.
-                    </p>
+                    <p [innerHTML]="chaosText3a"></p>
                 </div>
             }
 

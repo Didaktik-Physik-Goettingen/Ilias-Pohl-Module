@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { DevModeService } from '../../../core/services/dev-mode';
 import { SummaryService, SummaryData, SummaryQuestion } from '../../../core/services/summary.service';
-import { Session } from '../../../core/services/session';
+import { HtmlReportService } from '../../../core/services/html-report.service';
 import { Router } from '@angular/router';
 
 
@@ -54,46 +54,16 @@ export class TarExperiment implements OnInit {
         return /^assets\//.test(s) || /\.(png|jpg|jpeg|gif|svg|webp)$/i.test(s);
     }
 
-    isGeneratingReport = false;
-    reportError = false;
-
     constructor(
         public devMode: DevModeService,
         private router: Router,
         private summaryService: SummaryService,
-        private sessionService: Session,
+        private htmlReportService: HtmlReportService,
         @Inject(PLATFORM_ID) private platformId: Object,
     ) {}
 
-    get canDownloadReport(): boolean {
-        return this.sessionService.hasValidSession() && !this.sessionService.isRogueUser();
-    }
-
-    async downloadReport(): Promise<void> {
-        if (this.isGeneratingReport) return;
-        this.isGeneratingReport = true;
-        this.reportError = false;
-        try {
-            const url = new URL('api/report', document.baseURI).href;
-            const res = await fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(this.summary),
-            });
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            const blob = await res.blob();
-            const objectUrl = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = objectUrl;
-            link.download = `lernpfad-${this.summary.sessionId || 'export'}.pdf`;
-            link.click();
-            URL.revokeObjectURL(objectUrl);
-        } catch (err) {
-            console.error('Lernpfad-Download fehlgeschlagen:', err);
-            this.reportError = true;
-        } finally {
-            this.isGeneratingReport = false;
-        }
+    async downloadHtmlReport(): Promise<void> {
+        await this.htmlReportService.download(this.summary);
     }
 
     ngOnInit() {

@@ -64,7 +64,7 @@ export class TestTracking {
 
     // Start tracking a test
     startTest(testId: string, totalQuestions: number, maxPoints: number) {
-        const sessionId = this.sessionService.getSessionId();
+        const sessionId = this.sessionService.sessionId();
         if (!sessionId) {
             console.warn('No session ID available for test tracking');
             return;
@@ -105,7 +105,7 @@ export class TestTracking {
             return;
         }
 
-        const sessionId = this.sessionService.getSessionId();
+        const sessionId = this.sessionService.sessionId();
         if (!sessionId) {
             console.warn('No session ID available');
             return;
@@ -203,7 +203,7 @@ export class TestTracking {
 
 
     getSessionTests(): TestProgress[] {
-        const currentSessionId = this.sessionService.getSessionId();
+        const currentSessionId = this.sessionService.sessionId();
         if (!currentSessionId) return [];
 
         return Array.from(this.tests.values())
@@ -249,7 +249,7 @@ export class TestTracking {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    sessionId: this.sessionService.getSessionId(),
+                    sessionId: this.sessionService.sessionId(),
                     tests: this.getAllTests(),
                     timestamp: new Date().toISOString()
                 })

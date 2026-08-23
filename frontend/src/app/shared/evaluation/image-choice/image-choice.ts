@@ -5,6 +5,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { ShuffleOrder } from '../../../core/services/shuffle-order';
 import { isSolutionsMode } from '../../../core/services/report-mode';
+import { ImageOption } from '../question.types';
 
 
 
@@ -12,14 +13,6 @@ declare global {
 	interface Window {
 		MathJax: any;
     }
-}
-
-
-
-interface ImageOption {
-    value: string;
-    imageSrc: string;
-    label?: string;
 }
 
 

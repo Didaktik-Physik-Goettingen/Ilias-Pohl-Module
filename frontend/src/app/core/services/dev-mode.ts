@@ -16,7 +16,9 @@ export class DevModeService {
 
     isEnabled: boolean;
 
-    constructor(@Inject(DOCUMENT) private doc: Document) {
+    constructor(
+        @Inject(DOCUMENT) private doc: Document
+    ) {
         const win = this.doc.defaultView;
         this.isEnabled = win?.sessionStorage?.getItem(this.KEY) === 'true';
 

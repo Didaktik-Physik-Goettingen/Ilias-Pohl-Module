@@ -27,6 +27,14 @@ declare global {
 })
 
 export class TestTDrivenOscillation implements OnInit, OnDestroy {
+    constructor(
+		private sanitizer: DomSanitizer,
+        @Inject(PLATFORM_ID) private platformId: Object,
+        private route: ActivatedRoute,
+        private router: Router,
+        private testTracking: TestTracking,
+        public devMode: DevModeService
+    ) {}
 
     // Custom thresholds for this test
     performanceThresholds = [
@@ -55,7 +63,7 @@ export class TestTDrivenOscillation implements OnInit, OnDestroy {
 	
 	// question 1 data
     question1 = {
-		questionId: 'driven-osc-t-1-gesamtgleichung',
+		questionId: 'test-t-driven-osc-1-gesamtgleichung',
         question: `Die Gesamtlösung für den getriebenen, gedämpften harmonischen Oszillator kann in folgender Weise geschrieben werden:<br><br>
     \$\\varphi(t) = {\\varphi_0 \\cos(\\omega_e t + \\Phi) \\mathrm{e}^{-\\beta t}}+ { \\frac{N}{\\sqrt{(\\omega_0^2 - \\omega^2)^2 + 4\\beta^2\\omega^2}} \\cos\\left(\\omega t - \\arctan\\left(\\frac{2\\beta\\omega}{\\omega_0^2 - \\omega^2}\\right) \\right)} ,\$<br><br>
     wobei $\\varphi(t)$ die Winkelauslenkung, $\\omega_0$ bzw. $\\omega_e$ die Eigenfrequenz des ungedämpften bzw. gedämpften Oszillators, $\\beta$ die Dämpfungskonstante, $N$ und $\\omega$ die Amplitude und Frequenz des Antriebs beschreiben. $\\varphi_0\$ und $\\Phi\$ sind Hilfsgrößen, die sich aus den Anfangsbedingungen ergeben.<br><br>
@@ -78,7 +86,7 @@ export class TestTDrivenOscillation implements OnInit, OnDestroy {
 
 	// question 2 data
     question2 = {
-		questionId: 'driven-osc-t-1-einschwingen',
+		questionId: 'test-t-driven-osc-2-einschwingen',
         question: `Bei einer gedämpften, getriebenen Schwingung, gibt es zunächst eine sogenannte Einschwingphase, bevor sich eine stationäre Schwingung stabilisiert. Wann die Einschwingphase abgeschlossen ist, kann man sehr gut an der Phasenraumdarstellung ablesen.
 Im folgenden sind vier Phasenraumdiagramme für unterschiedliche Anfangsbedingungen und Einstellungen gezeigt. Der erste Messwert ist jeweils mit einem grauen, der letzte mit einem roten Kreuz markiert.<br><br>
 Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
@@ -96,7 +104,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
 	// question 3 data
     question3 = {
-		questionId: 'driven-osc-t-1-resonance_freq',
+		questionId: 'test-t-driven-osc-3-resonance-freq',
         question: `Die folgenden Graphen zeigen "Resonanzkurven" für die Amplitude der Schwingung (nach dem Einschwingvorgang).
         Sie zeigen hierbei das Ergebnis mehrerer Messungen. Bei den Messungen wird jeweils die Frequenz verändert und die Amplitude des Schwungkörpers nach dem Einschwingvorgang gemessen.
         Die Amplitude des Antriebs und die Dämpfung sind über die Messungen konstant gehalten.<br><br>
@@ -115,7 +123,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
 	// question 4 data
     question4 = {
-        questionId: 'driven-osc-t-1-resonance_damping',
+        questionId: 'test-t-driven-osc-4-resonance-damping',
         question: `Wie verändert sich die Messung, wenn Sie die Dämpfung des Systems vergrößern? <br>
         Überlegen Sie was passiert, wenn man nur die Dämpfung ändert und alle anderen konstant hält.<br><br>
         Welche der folgenden Aussagen sind korrekt?<br><br>
@@ -150,7 +158,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
     // calculate results directly when navigating to results page
     private calculateResults() {
-        const testProgress = this.testTracking.getTestResults('driven-oscillations');
+        const testProgress = this.testTracking.getTestResults('t-driven-oscillations-test');
         
         if (!testProgress) {
             console.warn('No test results found');
@@ -187,20 +195,10 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
         return '';
     }
 
-	
-    constructor(
-		private sanitizer: DomSanitizer,
-        @Inject(PLATFORM_ID) private platformId: Object,
-        private route: ActivatedRoute,
-        private router: Router,
-        private testTracking: TestTracking,
-        public devMode: DevModeService
-    ) {}
-
 
     ngOnInit() {
 		// start tracking this test
-        this.testTracking.startTest('driven-oscillations', 4, 80); // 4 questions, 80 total points
+        this.testTracking.startTest('t-driven-oscillations-test', 4, 80); // 4 questions, 80 total points
 
         // restore completion state from previous session
         this.restoreCompletionState();
@@ -211,6 +209,8 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
             this.currentView = `driven_osc${page}`;
             if (page === '5') this.calculateResults();
         }
+
+        this.renderMath();
     }
 
     private updateUrl() {

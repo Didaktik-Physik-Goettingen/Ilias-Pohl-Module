@@ -15,25 +15,12 @@
         <div class="content">
             @if (currentView === 'intro_exp1') {
                 <div>
-                    <p>
-                        In diesem Versuch werden Sie Schwingungsphänomene (gedämpfte und getriebene Schwingungen) untersuchen und sich die Zusammenhänge
-                        zwischen unterschiedlichen experimentellen Parametern anschauen. Diese Phänome werden Sie mit einem sogenannten Pohlschen Rad untersuchen.
-                        Machen Sie sich hier zunächst mit dem Versuchsaufbau vertraut.
-                    </p>
+                    <p [innerHTML]="introExpText1a"></p>
                     <div class="full-width-image-container">
                         <img src="assets/images/e1_intro_experiment/experiment_schematic_1.png" alt="Versuchsaufbau" class="full-width-image">
-                        <p class="image-description">
-                            Vergleichendes Bild Aufbau und Skizze des Versuchsaufbaus
-                        </p>
+                        <p class="image-description" [innerHTML]="introExpText1b"></p>
                     </div>
-                    <p>
-                        Mit diesem Versuchsaufbau können Sie unterschiedliche Schwingungsverhalten analysieren.
-                        Sie können den Einfluss der Dämpfung untersuchen, ebenso wie das Verhalten bei einem externen Antrieb.<br><br>
-
-                        Betrachten Sie den Versuchsaufbau und vergleichen Sie ihn mit der Skizze.<br>
-                        Überlegen und diskutieren Sie, wofür die unterschiedlichen Elemente des Versuchsaufbaus notwendig sind.
-                        Auf den nächsten Seiten werden diese Bauteile weiter spezifiziert und Ihnen werden hierzu Fragen gestellt.
-                    </p>
+                    <p [innerHTML]="introExpText1c"></p>
                 </div>
             }
 
@@ -42,18 +29,7 @@
                     <div class="full-width-image-container">
                         <img src="assets/images/e1_intro_experiment/experiment_schematic_2.png" alt="Versuchsaufbau" class="full-width-image">
                     </div>
-                    <p>
-                        Aus physikalischer Sicht essentielle Elemente des Versuchsaufbaus sind das Schwungrad, die Feder, die Wirbelstrombremse und der Anreger.<br><br>
-
-                        Wo sehen Sie diese Elemente im Aufbau?<br>
-                        Aus technischer und experimenteller Sicht sind darüber hinaus die Winkelskala, der Schrittmotor und weitere Mess- und Steuerungselemente,
-                        die in der Abbildung nicht explizit gezeigt sind, relevant.<br><br>
-
-                        Zur Erläuterung des Aufbaus:<br>
-                        Die Feder und das Schwungrad sind im Mittelpunkt des Rades miteinander verbunden.
-                        Am anderen Ende ist die Feder über den Anreger mit dem Schrittmotor verbunden.
-                        Ohne externen Antrieb dient der Anreger als fester Ankerpunkt der Feder (vergleichbar zu dem Aufhängungspunkt einer "klassischen" Feder).
-                    </p>
+                    <p [innerHTML]="introExpText2a"></p>
 
                     <!-- first evaluation container: Schwungrad -->
                     <app-multiple-choice-image
@@ -110,7 +86,7 @@
                             <img src="assets/images/e1_intro_experiment/schwungrad_3.png" alt="Schwungrad mit Massestück">
                         </div>
                         <div class="text-content">
-                            <p [innerHTML]="introExperimentText"></p>
+                            <p [innerHTML]="introExpText3a"></p>
                         </div>
                     </div>
 
@@ -138,15 +114,7 @@
                         (onAnswerEvaluated)="onQuestion5Answered($event)">
                     </app-image-choice>
 
-                    <p>
-                        Der Versuchsaufbau kann noch weiter charakterisiert werden.<br>
-                        Beispielsweise kann das
-                        <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
-                        des Schwungrads bestimmt oder die Wirkung der Wirbelstrombremse untersucht werden.<br>
-                        Beide Eigenschaften des Versuchsaufbaus beziehen sich auf das dynamische Verhalten des Systems.
-                        Daher setzen Sie sich auf den folgenden Seiten zunächst mit der Dynamik des gedämpften Systems auseinander,
-                        bevor Sie sich mit der Auswirkung des externen Motors beschäftigen.
-                    </p>
+                    <p [innerHTML]="introExpText3b"></p>
                 </div>
             }
 

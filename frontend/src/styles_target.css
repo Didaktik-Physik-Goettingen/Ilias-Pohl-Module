@@ -160,12 +160,6 @@
     color: var(--text-secondary);
 }
 
-.report-download-error {
-    margin-top: 0.5rem;
-    font-size: 0.9rem;
-    color: #c62828;
-}
-
 /* ── Lernpfad summary block on target page ───────────────────────────────── */
 .summary-container {
     margin-top: 2rem;
