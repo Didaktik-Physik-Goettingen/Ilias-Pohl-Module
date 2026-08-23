@@ -204,20 +204,8 @@
         </div>
         }
 
-        @if (canDownloadReport || devMode.isEnabled) {
-            <div class="target-downloads no-print" style="margin-top: 1.5rem;">
-                <button class="target-download-btn"
-                        (click)="downloadReport()"
-                        [disabled]="isGeneratingReport">
-                    {{ isGeneratingReport ? 'Wird erstellt …' : '↓ Lernpfad als PDF' }}
-                </button>
-                @if (reportError) {
-                    <p class="report-download-error">Download fehlgeschlagen. Bitte versuchen Sie es erneut.</p>
-                }
-            </div>
-        }
         @if (hasData) {
-            <div class="target-downloads no-print" style="margin-top: 0.5rem;">
+            <div class="target-downloads no-print" style="margin-top: 1.5rem;">
                 <button class="target-download-btn" (click)="downloadHtmlReport()">
                     ↓ Lernpfad als HTML
                 </button>

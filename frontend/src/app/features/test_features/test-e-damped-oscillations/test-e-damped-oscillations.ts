@@ -196,7 +196,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
     // calculate results directly when navigating to results page
     private calculateResults() {
-        const testProgress = this.testTracking.getTestResults('e-damped-oscillations');
+        const testProgress = this.testTracking.getTestResults('e-damped-oscillations-test');
         
         if (!testProgress) {
             console.warn('No test results found');

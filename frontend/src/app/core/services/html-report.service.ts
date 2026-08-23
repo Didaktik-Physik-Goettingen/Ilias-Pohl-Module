@@ -25,8 +25,16 @@ export class HtmlReportService {
         imageCache: Map<string, string>,
     ): string {
         const date = new Date(data.generatedAt).toLocaleString('de-DE');
+        const seen = new Set<string>();
         const pageSections = data.pageVisits
-            .filter(v => !v.page.startsWith('/test/'))
+            .filter(v => {
+                if (v.page.startsWith('/test/')) return false;
+                const { basePath, pageNum } = this.parsePage(v.page);
+                const key = `${basePath}:${pageNum}`;
+                if (!PAGE_LOOKUP.has(key) || seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            })
             .map(v => this.renderPageVisit(v.page, v.label, v.durationSeconds, questionMap, imageCache))
             .join('\n');
 
@@ -67,7 +75,7 @@ ${testSection}
 
     private renderPageVisit(
         pageUrl: string,
-        label: string,
+        _label: string,
         durationSeconds: number,
         questionMap: Map<string, SummaryQuestion>,
         imageCache: Map<string, string>,
@@ -77,11 +85,7 @@ ${testSection}
         const def = PAGE_LOOKUP.get(key);
 
         const durationStr = this.formatDuration(durationSeconds);
-        if (!def) {
-            return `<section class="report-section page-section">
-<div class="page-header"><span class="page-title">${this.esc(label)}</span><span class="page-duration">${this.esc(durationStr)}</span></div>
-</section>`;
-        }
+        if (!def) return '';
         const subtitle = def.subtitle ? ` – ${this.esc(def.subtitle)}` : '';
         const blocksHtml = def.blocks.map(b => this.renderBlock(b, questionMap, imageCache)).join('\n');
         return `<section class="report-section page-section">
@@ -315,6 +319,14 @@ main { max-width: 800px; margin: 0 auto; }
 .page-title    { font-weight: 600; font-size: 0.95rem; }
 .page-duration { font-size: 0.78rem; opacity: 0.8; white-space: nowrap; }
 .page-content  { padding: 1rem 1.25rem; display: flex; flex-direction: column; gap: 0.9rem; }
+
+/* Glossary links — blue colour kept, but not clickable */
+.block-text a, .block-lamp a, .block-glossary a, .block-spoiler a, .q-text a {
+    color: #15326a;
+    text-decoration: none;
+    pointer-events: none;
+    cursor: default;
+}
 
 /* Text blocks */
 .block-text    { }

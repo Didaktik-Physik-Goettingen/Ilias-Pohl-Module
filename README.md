@@ -359,9 +359,6 @@ Target pages are reached at the end of a module strand. They offer downloadable 
     - Analysis notebook — `Analysehilfe_2.ipynb`
 
 
-### Sidepath Features
-
-
 ### Simulation Features
 
 Angular components (interactive, use canvas / MathJax — served client-side):

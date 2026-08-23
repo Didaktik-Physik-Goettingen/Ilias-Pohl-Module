@@ -158,7 +158,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
     // calculate results directly when navigating to results page
     private calculateResults() {
-        const testProgress = this.testTracking.getTestResults('driven-oscillations');
+        const testProgress = this.testTracking.getTestResults('t-driven-oscillations-test');
         
         if (!testProgress) {
             console.warn('No test results found');
