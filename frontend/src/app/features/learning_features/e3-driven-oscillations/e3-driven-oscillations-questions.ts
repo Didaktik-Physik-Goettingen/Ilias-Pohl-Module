@@ -1,7 +1,7 @@
 import { SingleChoiceQuestion, MultipleChoiceQuestion, ImageChoiceQuestion } from '../../../shared/evaluation/question.types';
 
 export const question1: SingleChoiceQuestion = {
-    questionId: 'driven_osc-1-dgl-loesen',
+    questionId: 'e3-driven-osc-1-dgl-loesen',
     question: 'Welcher Grundgedanke hilft weiter, um diese Differentialgleichung zu lösen?',
     options: [
         { value: 'answer1', label: '$\\varphi_\\mathrm{gesamt}(t)=\\varphi_\\mathrm{homogen}(t)+\\varphi_\\mathrm{spezial}(t)$' },
@@ -32,7 +32,7 @@ export const question1: SingleChoiceQuestion = {
 };
 
 export const question2: MultipleChoiceQuestion = {
-    questionId: 'driven_osc-2-inhom-dgl',
+    questionId: 'e3-driven-osc-2-inhom-dgl',
     question: 'Welche der folgenden Aussagen sind korrekt?',
     options: [
         { value: 'answer1', label: 'Aufgrund des äußeren Antriebs ist die Schwingung zu allen Zeiten gleichmäßig und periodisch.' },
@@ -57,7 +57,7 @@ export const question2: MultipleChoiceQuestion = {
 };
 
 export const question3: ImageChoiceQuestion = {
-    questionId: 'driven_osc-3-swinging-process',
+    questionId: 'e3-driven-osc-3-swinging-process',
     question: `Woran kann man im Phasenraumdiagramm erkennen, dass der Einschwingvorgang abgeschlossen ist?<br>
             Bei welcher der folgenden Abbildungen kann der Einschwingvorgang als abgeschlossen angesehen werden?
             Überlegen Sie auf Basis der obigen Gleichung.<br>
@@ -77,7 +77,7 @@ export const question3: ImageChoiceQuestion = {
 };
 
 export const question4: MultipleChoiceQuestion = {
-    questionId: 'driven_osc-4-max-amp',
+    questionId: 'e3-driven-osc-4-max-amp',
     question: 'Welche Parameter des System beeinflussen die maximale Amplitude des stationär schwingenden (gedämpften) Systems?',
     options: [
         { value: 'answer1', label: 'Trägheitsmoment des Schwungkörpers $\\theta$' },
@@ -101,7 +101,7 @@ export const question4: MultipleChoiceQuestion = {
 };
 
 export const question5: SingleChoiceQuestion = {
-    questionId: 'driven_osc-5-damping-resonance-freq',
+    questionId: 'e3-driven-osc-5-damping-resonance-freq',
     question: 'Je stärker die Dämpfung, desto...',
     options: [
         { value: 'answer1', label: '... größer die Resonanzfrequenz.' },
@@ -123,7 +123,7 @@ export const question5: SingleChoiceQuestion = {
 };
 
 export const question6: SingleChoiceQuestion = {
-    questionId: 'driven_osc-6-damping-resonance-freq-exp',
+    questionId: 'e3-driven-osc-6-damping-resonance-freq-exp',
     question: `Überlegen Sie, was diese Beobachtung für Konsequenzen für die Versuchsdurchführung hat:
             Je größer die Dämpfung, desto...`,
     options: [
@@ -149,7 +149,7 @@ export const question6: SingleChoiceQuestion = {
 };
 
 export const question7: SingleChoiceQuestion = {
-    questionId: 'driven_osc-7-exciting-frequency',
+    questionId: 'e3-driven-osc-7-exciting-frequency',
     question: `Entspricht die Anregungsfrequenz gerade der Resonanzfrequenz $\\omega_r$, so...`,
     options: [
         { value: 'answer1', label: '... ist die Phasenverschiebung kleiner als $\\pi/2$.' },
@@ -164,7 +164,7 @@ export const question7: SingleChoiceQuestion = {
 };
 
 export const question8: SingleChoiceQuestion = {
-    questionId: 'driven_osc-8-measure-time-delta',
+    questionId: 'e3-driven-osc-8-measure-time-delta',
     question: `Sie vermessen die Reaktion eines gedämpften Schwungrads bei zwei unterschiedlichen Frequenzen,       $\\omega_1=200\\,\\mathrm{mHz}$ und $\\omega_2=400\\,\\mathrm{mHz}$.
             Bei der ersten Messung ist der zeitliche Abstand zwischen dem Nulldurchgang des Anregers und dem Nulldurchgang des Rads $\\Delta t=0{,}25\\,\\mathrm{s}$, bei der zweiten Messung ist der entsprechende Abstand $\\Delta t=1{,}4\\,\\mathrm{s}$.
             Was können Sie aus dieser Messung über die Größe der Resonanzfrequenz des Systems aussagen?`,

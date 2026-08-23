@@ -58,7 +58,7 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
 	
 	// question 1 data
     question1 = {
-		questionId: 'driven-osc-e-1-gesamtgleichung',
+		questionId: 'test-e-driven-osc-1-gesamtgleichung',
         question: `Die Gesamtlösung für den getriebenen, gedämpften harmonischen Oszillator kann in folgender Weise geschrieben werden: <br><br> \$\\varphi(t) = {\\varphi_0 \\cos(\\omega_e t + \\Phi) \\mathrm{e}^{-\\beta t}}+ {\\frac{N}{\\sqrt{(\\omega_0^2 - \\omega^2)^2 + 4\\beta^2\\omega^2}} \\cos\\left(\\omega t - \\arctan\\left(\\frac{2\\beta\\omega}{\\omega_0^2 - \\omega^2}\\right) \\right)}\$<br><br>
         wobei $\\varphi(t)$ die Winkelauslenkung, $\\omega_0$ bzw. $\\omega_e$ die Eigenfrequenz des ungedämpften bzw. gedämpften Oszillators, $\\beta$ die Dämpfungskonstante, $N$ und $\\omega$ die Amplitude und Frequenz des Antriebs beschreiben. $\\varphi_0$ und $\\Phi$ sind Hilfsgrößen, die sich aus den Anfangsbedingungen ergeben.<br><br>
         Welche der Aussagen zu dieser Gesamtlösung sind korrekt? `,
@@ -80,7 +80,7 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
 
 	// question 2 data
     question2 = {
-		questionId: 'driven-osc-e-2-einschwingen',
+		questionId: 'test-e-driven-osc-2-einschwingen',
         question: `Bei einer gedämpften, getriebenen Schwingung, gibt es zunächst eine sogenannte Einschwingphase, bevor sich eine stationäre Schwingung stabilisiert. Wann die Einschwingphase abgeschlossen ist, kann man sehr gut an der Phasenraumdarstellung ablesen.
 Im folgenden sind vier Phasenraumdiagramme für unterschiedliche Anfangsbedingungen und Einstellungen gezeigt. Der erste Messwert ist jeweils mit einem grauen, der letzte mit einem roten Kreuz markiert.<br><br>
 Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
@@ -98,7 +98,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
 	// question 3 data
     question3 = {
-		questionId: 'driven-osc-e-3-resonance_freq',
+		questionId: 'test-e-driven-osc-3-resonance-freq',
         question: `Die folgenden Graphen zeigen "Resonanzkurven" für die Amplitude der Schwingung (nach dem Einschwingvorgang).
         Sie zeigen hierbei das Ergebnis mehrerer Messungen. Bei den Messungen wird jeweils die Frequenz verändert und die Amplitude des Schwungkörpers nach dem Einschwingvorgang gemessen.
         Die Amplitude des Antriebs und die Dämpfung sind über die Messungen konstant gehalten.<br><br>
@@ -117,7 +117,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
 
 	// question 4 data
     question4 = {
-        questionId: 'driven-osc-e-4-resonance_damping',
+        questionId: 'test-e-driven-osc-4-resonance-damping',
         question: `Wie verändert sich die Messung, wenn Sie den Überlapp zwischen dem Magneten (Wirbelstrombremse) und dem Schwungrad vergrößern? <br>
         Überlegen Sie was passiert, wenn Sie nur diese Einstellung am Aufbau ändern und alle anderen konstant halten.<br><br>
         Welche der folgenden Aussagen sind korrekt?

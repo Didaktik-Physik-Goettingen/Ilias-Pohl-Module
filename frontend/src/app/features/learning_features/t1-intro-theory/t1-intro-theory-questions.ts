@@ -1,7 +1,7 @@
 import { MultipleChoiceQuestion } from '../../../shared/evaluation/question.types';
 
 export const question1: MultipleChoiceQuestion = {
-    questionId: 't1-q1-dgl-solutions',
+    questionId: 't1-1-dgl-solutions',
     question: 'Welche der folgenden Gleichungen sind allgemeine Lösungen der Differentialgleichung des harmonischen Oszillators? Beachten Sie, dass alle Variablen als konstant angenommen werden sollen.',
     options: [
         { value: 'answer1', label: '\\( x(t) = A\\cos(\\omega_0t) + \\sin(\\phi) \\)' },
@@ -10,7 +10,7 @@ export const question1: MultipleChoiceQuestion = {
         { value: 'answer4', label: '\\( x(t) = A\\cos(\\omega_0t + \\phi) \\)' }
     ],
     correctAnswers: ['answer3', 'answer4'],
-    containerId: 't1-q1-container',
+    containerId: 't1-1-container',
     successMessage: `✓ Völlig richtig.<br><br>
 		Wenn Sie mögen, können Sie die nächsten Seiten überspringen, um direkt zum Test zu gedämpften Schwingungen zu gelangen.`,
     incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Lösungen fehlen. Prüfen Sie, ob die Gleichung genügend freie Konstanten enthält.`,

@@ -61,7 +61,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 	
 	// question 1 data
     question1 = {
-		questionId: 'damped-osc-1-daempfungsstaerke',
+		questionId: 'test-e-damped-osc-1-daempfungsstaerke',
         question: `Bei dem Versuch können Sie die Dämpfung darüber anpassen, dass Sie den Überlappbereich zwischen einem Magneten (eines Magnetfelds) und der Schwungscheibe variieren.
 			Ziehen Sie die Bilder in die richtige Reihenfolge (stärkste Dämpfung oben, schwächste unten).`,
 		questionInstruction: 'Frage 1 von 5 (30 Punkte): Sortierung Dämpfungskonstante',
@@ -78,7 +78,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 2 data
     question2 = {
-		questionId: 'damped-osc-2-federkonstante',
+		questionId: 'test-e-damped-osc-2-federkonstante',
         question: `Im Versuch ist eine feste Feder eingebaut, die Federkonstante kann also nicht varriert werden. Was würde aber passieren, wenn man die Federkonstante variieren könnte?
 			Sortieren Sie die Graphen nach der Größe der Federkonstante. 
 			Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante nach oben einsortieren (andere Variablen sind konstant gehalten).`,
@@ -96,7 +96,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 3 data
     question3 = {
-		questionId: 'damped-osc-3-frequency-damping',
+		questionId: 'test-e-damped-osc-3-frequency-damping',
         question: `Sie haben in einer ersten Messung einer gedämpften Schwingung gesehen, dass das Schwungrad mit einer Frequenz von $\\omega_1=0.3$ Hz geschwungen ist.
 			Nun hat ihr*e Praktikumspartner*in die Wirbelstrombremse weiter über das Schwungrad bewegt - sie erwarten also eine größere Dämpfung.
 			Mit welcher Frequenz $\\omega_2$ erwarten Sie nun das Schwungrad zu schwingen?`,
@@ -114,7 +114,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 4 data
     question4 = {
-		questionId: 'damped-osc-4-log-decrement',
+		questionId: 'test-e-damped-osc-4-log-decrement',
         question: `Das logarithmische Dekrement $\\Lambda$ ist eine Hilfsgröße, die man zur Beschreibung gedämpfter Schwingungen verwendet.
 			Das logarithmische Dekrement ergibt sich hierbei in folgender Weise aus dem Verhältnis zwischen Amplituden einer gedämpften Schwingung, die zeitlich genau eine Schwingung auseinanderliegen: 
 			$$\\Lambda = \\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right).$$
@@ -135,7 +135,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
 
 	// question 5 data
     question5 = {
-        questionId: 'damped-osc-5-phase-space',
+        questionId: 'test-e-damped-osc-5-phase-space',
         question: `Der Phasenraum beschreibt mögliche Zustände, die ein System annehmen kann über die Angabe der Raum- und einer Geschwindigkeitskoordinate. 
 		Für das Pohlsche Rad kann die Bewegung des Schwungrads angegeben werden über den Auslenkwinkel $\\phi$ und die Winkelgeschwindigkeit $\\dot{\\phi}$.
 

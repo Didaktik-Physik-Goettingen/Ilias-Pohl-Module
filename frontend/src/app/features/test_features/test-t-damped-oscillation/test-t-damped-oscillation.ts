@@ -58,7 +58,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 1 data
     question1 = {
-		questionId: 'damped-osc-1-daempfungsstaerke',
+		questionId: 'test-t-damped-osc-1-daempfungsstaerke',
         question: `Sortieren Sie die drei Graphen entsprechend der Größe der Dämpfungskonstante. Beginnen Sie oben mit der niedrigsten Dämpfungskonstante.`,
 		questionInstruction: 'Frage 1 von 5 (30 Punkte): Sortierung Dämpfungskonstante',
         images: [
@@ -74,7 +74,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 2 data
     question2 = {
-		questionId: 'damped-osc-2-federkonstante',
+		questionId: 'test-t-damped-osc-2-federkonstante',
         question: `Welchen Einfluss hat die Federkonstante auf eine Schwingung?<br>
 			  Sortieren Sie die Graphen nach der Größe der Federkonstante. 
 			  Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante nach oben einsortieren (andere Variablen sind konstant gehalten).`,
@@ -92,7 +92,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 3 data
     question3 = {
-		questionId: 'damped-osc-3-frequency-damping',
+		questionId: 'test-t-damped-osc-3-frequency-damping',
         question: `Welchen Einfluss hat eine größere Dämpfung auf die Frequenz der Schwingung?<br>
       Sei $\\omega_1$ die Schwingungsfrequenz bei einer niedrigen Dämpfung und $\\omega_2$ die Schwingungsfrequenz bei einer stärkeren Dämpfung.
       Was gilt dann für das Verhältnis zwischen den beiden Schwingungsfrequenzen?`,
@@ -110,7 +110,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 4 data
     question4 = {
-		questionId: 'damped-osc-4-log-decrement',
+		questionId: 'test-t-damped-osc-4-log-decrement',
         question: `Das logarithmische Dekrement $\\Lambda$ ist eine Hilfsgröße, die man zur Beschreibung gedämpfter Schwingungen verwendet.
 			Das logarithmische Dekrement ergibt sich hierbei in folgender Weise aus dem Verhältnis zwischen Amplituden einer gedämpften Schwingung, die zeitlich genau eine Schwingung auseinanderliegen: 
 			$$\\Lambda = \\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right).$$
@@ -131,7 +131,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
 	// question 5 data
     question5 = {
-        questionId: 'damped-osc-5-phase-space',
+        questionId: 'test-t-damped-osc-5-phase-space',
         question: `Man unterscheidet bei Schwingungen zwischen qualitativ unterschiedlichen Formen: dem Schwingfall, dem aperiodischen Grenzfall und dem Kriechfall.<br>
         Ordnen Sie die Bezeichnungen und die Bedingungen für das Verhältnis von Eigenschwingfrequenz $\\omega_0$ und Dämpfungskonstante $\\gamma$ den entsprechenden Graphen zu.`,
         questionInstruction: 'Frage 5 von 5 (60 Punkte): Zuordnung Bewegungsformen mit Dämpfung',

@@ -1,7 +1,7 @@
 import { MultipleChoiceQuestion } from '../../../shared/evaluation/question.types';
 
 export const question1: MultipleChoiceQuestion = {
-    questionId: 'damped_osc-1-schwungrad',
+    questionId: 'e2-damped-osc-1-schwungrad',
     question: 'Welche der folgenden Aussagen trifft auf das schwingfende Rad zu?',
     options: [
         { value: 'answer1', label: 'Die Resonanzfrequenz ist kleiner als $\\omega_1=200\\,\\mathrm{mHz}$.' },
