@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import katex from 'katex';
 import { SummaryData, SummaryQuestion, SummaryTestResult } from './summary.service';
 import { PAGE_LOOKUP, PageDefinition, ReportBlock } from './learning-report-registry';
 
@@ -48,22 +49,20 @@ export class HtmlReportService {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Lernpfad-Export</title>
-<script>
-MathJax = {
-    tex: {
-        inlineMath:  [['$', '$'], ['\\\\(', '\\\\)']],
-        displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']],
-    },
-    options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
-};
-</script>
-<script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 <style>${CSS}</style>
 </head>
 <body>
 <header class="report-header">
-    <h1 class="report-title">Persönlicher Lernpfad</h1>
-    <p class="report-meta">Erstellt am ${this.esc(date)}</p>
+    <div class="report-header-row">
+        <div>
+            <h1 class="report-title">Persönlicher Lernpfad</h1>
+            <p class="report-meta">Erstellt am ${this.esc(date)}</p>
+        </div>
+        <button class="print-btn" onclick="window.print()">
+            Als PDF speichern
+            <span class="print-btn-hint">Drucken → Ziel: Als PDF speichern</span>
+        </button>
+    </div>
 </header>
 <main>
 ${pageSections}
@@ -107,7 +106,7 @@ ${blocksHtml}
         switch (block.type) {
             case 'text': {
                 const cls = block.style === 'lamp' ? 'block-lamp' : block.style === 'glossary' ? 'block-glossary' : 'block-text';
-                return `<div class="${cls}">${block.html}</div>`;
+                return `<div class="${cls}">${this.renderLatex(block.html)}</div>`;
             }
             case 'image': {
                 const src = imageCache.get(block.src) ?? block.src;
@@ -115,7 +114,7 @@ ${blocksHtml}
                 return `<figure class="block-image"><img src="${src}" alt="${this.esc(block.alt)}">${captionHtml}</figure>`;
             }
             case 'spoiler': {
-                return `<div class="block-spoiler"><div class="spoiler-label">Exkurs: ${this.esc(block.label.replace(/^EXKURS:\s*/i, ''))}</div><div class="spoiler-body">${block.html}</div></div>`;
+                return `<div class="block-spoiler"><div class="spoiler-label">Exkurs: ${this.esc(block.label.replace(/^EXKURS:\s*/i, ''))}</div><div class="spoiler-body">${this.renderLatex(block.html)}</div></div>`;
             }
             case 'question': {
                 const q = questionMap.get(block.questionId);
@@ -148,7 +147,7 @@ ${blocksHtml}
         return `<div class="block-question ${cls}">
 <div class="q-indicator">${indicator}</div>
 <div class="q-body">
-<div class="q-text">${q.questionText}</div>
+<div class="q-text">${this.renderLatex(q.questionText)}</div>
 <div class="q-user-answer"><span class="q-answer-label">Ihre Antwort:</span>${selectedHtml}</div>
 ${correctHtml}${attemptsHtml}
 </div>
@@ -160,7 +159,7 @@ ${correctHtml}${attemptsHtml}
             const src = imageCache.get(ans) ?? ans;
             return `<img class="q-answer-img" src="${src}" alt="Auswahlbild">`;
         }
-        return `<span class="q-answer-item">${ans}</span>`;
+        return `<span class="q-answer-item">${this.renderLatex(ans)}</span>`;
     }
 
     private renderTest(test: SummaryTestResult, imageCache: Map<string, string>): string {
@@ -177,7 +176,7 @@ ${correctHtml}${attemptsHtml}
 <div class="q-indicator">${indicator}</div>
 <div class="q-body">
 <div class="q-instruction">${this.esc(tq.questionInstruction)}</div>
-<div class="q-text">${tq.questionText}</div>
+<div class="q-text">${this.renderLatex(tq.questionText)}</div>
 <div class="q-meta">${tq.pointsAwarded}&thinsp;/&thinsp;${tq.maxPoints} Punkte</div>
 ${tq.userAnswerTexts.length > 0 ? `<div class="q-user-answer"><span class="q-answer-label">Ihre Antwort:</span>${userHtml}</div>` : ''}
 ${correctHtml}
@@ -276,6 +275,26 @@ ${questionsHtml}
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    private renderLatex(text: string): string {
+        let result = text;
+        // Display math first so inline regex does not match inside $$...$$
+        result = result.replace(/\$\$([\s\S]+?)\$\$/g, (_, formula) => {
+            try {
+                return katex.renderToString(formula.trim(), { output: 'mathml', displayMode: true, throwOnError: false });
+            } catch {
+                return `$$${formula}$$`;
+            }
+        });
+        result = result.replace(/\$([^$\n]+?)\$/g, (_, formula) => {
+            try {
+                return katex.renderToString(formula.trim(), { output: 'mathml', displayMode: false, throwOnError: false });
+            } catch {
+                return `$${formula}$`;
+            }
+        });
+        return result;
+    }
+
     private formatDuration(seconds: number): string {
         if (seconds < 60) return `${seconds} s`;
         const mins = Math.floor(seconds / 60);
@@ -298,8 +317,20 @@ body {
     max-width: 800px; margin: 0 auto 2rem;
     border-bottom: 3px solid #15326a; padding-bottom: 0.75rem;
 }
+.report-header-row {
+    display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem;
+}
 .report-title { font-size: 1.6rem; color: #15326a; }
 .report-meta  { color: #666; font-size: 0.85rem; margin-top: 0.25rem; }
+.print-btn {
+    flex-shrink: 0;
+    background: #15326a; color: #fff; border: none; border-radius: 6px;
+    padding: 0.55rem 1rem; cursor: pointer; font-size: 0.88rem; font-weight: 600;
+    display: flex; flex-direction: column; align-items: center; gap: 0.15rem;
+    line-height: 1.2;
+}
+.print-btn:hover { background: #1a3f85; }
+.print-btn-hint { font-size: 0.72rem; font-weight: 400; opacity: 0.85; }
 main { max-width: 800px; margin: 0 auto; }
 
 /* Page sections */
@@ -398,8 +429,18 @@ main { max-width: 800px; margin: 0 auto; }
 .score-text { font-size: 0.88rem; font-weight: 600; white-space: nowrap; }
 
 @media print {
-    body { background: #fff; padding: 0; font-size: 12pt; }
-    .page-header { background: #15326a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    @page { size: A4 portrait; margin: 1.5cm 2cm; }
+    body { background: #fff !important; padding: 0; font-size: 11pt; }
+    main, .report-header { max-width: 100%; }
+    .print-btn { display: none; }
+    .page-header {
+        background: #15326a !important;
+        -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+    .score-fill { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     .block-lamp, .block-glossary, .block-spoiler, .block-question { break-inside: avoid; }
+    .page-section { break-inside: auto; }
+    .block-image img { max-width: 100%; }
+    a { text-decoration: none; }
 }
 `;

@@ -73,10 +73,10 @@ export class SummaryService {
     };
 
     private readonly TEST_LABELS: Record<string, string> = {
-        'e-damped-oscillations-test':    '[E] Test: Gedämpfte Schwingungen',
-        'e-driven-oscillations-test':    '[E] Test: Getriebene Schwingungen',
-        't-damped-oscillations-test':    '[T] Test: Gedämpfte Schwingungen',
-        't-driven-oscillations-test':    '[T] Test: Getriebene Schwingungen',
+        'e-damped-oscillations-test':    '[E-Test] Test: Gedämpfte Schwingungen',
+        'e-driven-oscillations-test':    '[E-Test] Test: Getriebene Schwingungen',
+        't-damped-oscillations-test':    '[T-Test] Test: Gedämpfte Schwingungen',
+        't-driven-oscillations-test':    '[T-Test] Test: Getriebene Schwingungen',
     };
 
     private readonly PAGE_TOTALS: Record<string, number> = {
@@ -107,27 +107,27 @@ export class SummaryService {
         '/learning/t-simulation':                                       '[T] Simulation',
         '/learning/t-setup':                                            '[T] Versuchsaufbau',
 
-        '/decision/dec-e-damped':                                       '[E] Entscheidung: Gedämpfte Schwingungen',
-        '/decision/dec-e-driven':                                       '[E] Entscheidung: Getriebene Schwingungen',
-        '/decision/dec-t-damped':                                       '[T] Entscheidung: Gedämpfte Schwingungen',
-        '/decision/dec-t-driven':                                       '[T] Entscheidung: Getriebene Schwingungen',
+        '/decision/dec-e-damped':                                       '[E-Dec] Entscheidung: Gedämpfte Schwingungen',
+        '/decision/dec-e-driven':                                       '[E-Dec] Entscheidung: Getriebene Schwingungen',
+        '/decision/dec-t-damped':                                       '[T-Dec] Entscheidung: Gedämpfte Schwingungen',
+        '/decision/dec-t-driven':                                       '[T-Dec] Entscheidung: Getriebene Schwingungen',
 
-        '/test/test-e-damped':                                          '[E] Test: Gedämpfte Schwingungen',
-        '/test/test-e-driven':                                          '[E] Test: Getriebene Schwingungen',
-        '/test/test-t-damped':                                          '[T] Test: Gedämpfte Schwingungen',
-        '/test/test-t-driven':                                          '[T] Test: Getriebene Schwingungen',
+        '/test/test-e-damped':                                          '[E-Test] Test: Gedämpfte Schwingungen',
+        '/test/test-e-driven':                                          '[E-Test] Test: Getriebene Schwingungen',
+        '/test/test-t-damped':                                          '[T-Test] Test: Gedämpfte Schwingungen',
+        '/test/test-t-driven':                                          '[T-Test] Test: Getriebene Schwingungen',
         
-        '/simulation/sim-e-damped':                                     '[E] Simulation: Gedämpfte Schwingungen',
-        '/simulation/sim-e-driven':                                     '[E] Simulation: Getriebene Schwingungen',
-        '/simulation/sim-t-undamped':                                   '[T] Simalation: Freie Schwingungen',
-        '/simulation/sim-t-damped':                                     '[T] Simulation: Gedämpfte Schwingungen',
-        '/simulation/sim-t-driven':                                     '[T] Simulation: Getriebene Schwingungen',
-        '/simulation/sim-t-driven-advanced':                            '[T] Simulation: Getriebene Schwingungen (erweitert)',
+        '/simulation/sim-e-damped':                                     '[E-Sim] Simulation: Gedämpfte Schwingungen',
+        '/simulation/sim-e-driven':                                     '[E-Sim] Simulation: Getriebene Schwingungen',
+        '/simulation/sim-t-undamped':                                   '[T-Sim] Simalation: Freie Schwingungen',
+        '/simulation/sim-t-damped':                                     '[T-Sim] Simulation: Gedämpfte Schwingungen',
+        '/simulation/sim-t-driven':                                     '[T-Sim] Simulation: Getriebene Schwingungen',
+        '/simulation/sim-t-driven-advanced':                            '[T-Sim] Simulation: Getriebene Schwingungen (erweitert)',
 
-        '/target/tar-experiment':                                       '[E] Anleitung Experimentalpfad',
-        '/target/tar-theory':                                           '[T] Anleitung Theoriepfad',
-        '/target/tar-chaos':                                            '[T] Anleitung Chaos',
-        '/target/tar-simulation':                                       '[T] Anleitung Simulation',
+        '/target/tar-experiment':                                       '[E-Tar] Anleitung Experimentalpfad',
+        '/target/tar-theory':                                           '[T-Tar] Anleitung Theoriepfad',
+        '/target/tar-chaos':                                            '[T-Tar] Anleitung Chaos',
+        '/target/tar-simulation':                                       '[T-Tar] Anleitung Simulation',
     };
 
     constructor(

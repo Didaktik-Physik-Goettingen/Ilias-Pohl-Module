@@ -316,7 +316,7 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 <details>
 <summary>Questions (1)</summary>
 
-  - `t1-1-dgl-solutions`
+  - `t1-intro-theory-1-dgl-solutions`
 
 </details>
 
@@ -325,12 +325,12 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 <details>
 <summary>Questions (6)</summary>
 
-  - `t2-1-oscillator`
-  - `t2-2-reality`
-  - `t2-3-dgl-matching`
-  - `t2-4-phase`
-  - `t2-5-phase-matching`
-  - `t2-6-pohl`
+  - `t2-free-osc-1-oscillator`
+  - `t2-free-osc-2-reality`
+  - `t2-free-osc-3-dgl-matching`
+  - `t2-free-osc-4-phase`
+  - `t2-free-osc-5-phase-matching`
+  - `t2-free-osc-6-pohl`
 
 </details>
 
@@ -339,16 +339,16 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 <details>
 <summary>Questions (10)</summary>
 
-  - `t3-1-exp-ansatz`
-  - `t3-2-gen-solution`
-  - `t3-3-schwingfall-condition`
-  - `t3-4-schwingfall-matching`
-  - `t3-5-exp-factor`
-  - `t3-6-amplitude-ratio`
-  - `t3-7-log-dekrement`
-  - `t3-8-aper-grenzfall`
-  - `t3-9-summary-matching`
-  - `t3-10-gebaude`
+  - `t3-damped-osc-1-exp-ansatz`
+  - `t3-damped-osc-2-gen-solution`
+  - `t3-damped-osc-3-schwingfall-condition`
+  - `t3-damped-osc-4-schwingfall-matching`
+  - `t3-damped-osc-5-exp-factor`
+  - `t3-damped-osc-6-amplitude-ratio`
+  - `t3-damped-osc-7-log-dekrement`
+  - `t3-damped-osc-8-aper-grenzfall`
+  - `t3-damped-osc-9-summary-matching`
+  - `t3-damped-osc-10-gebaude`
 
 </details>
 
@@ -357,17 +357,17 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 <details>
 <summary>Questions (11)</summary>
 
-  - `t4-1-driven-oscillator`
-  - `t4-2-pohl-term`
-  - `t4-3-gesamtloesung`
-  - `t4-4-partikular-ansatz`
-  - `t4-5-partikular-loesung`
-  - `t4-6-einschwing`
-  - `t4-7-amplitude-params`
-  - `t4-8-damping-amplitude`
-  - `t4-9-versuch`
-  - `t4-10-resonanz-phase`
-  - `t4-11-messung`
+  - `t4-driven-osc-1-driven-oscillator`
+  - `t4-driven-osc-2-pohl-term`
+  - `t4-driven-osc-3-gesamtloesung`
+  - `t4-driven-osc-4-partikular-ansatz`
+  - `t4-driven-osc-5-partikular-loesung`
+  - `t4-driven-osc-6-einschwing`
+  - `t4-driven-osc-7-amplitude-params`
+  - `t4-driven-osc-8-damping-amplitude`
+  - `t4-driven-osc-9-versuch`
+  - `t4-driven-osc-10-resonanz-phase`
+  - `t4-driven-osc-11-messung`
 
 </details>
 
