@@ -224,7 +224,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'driven_osc1') {
-            this.router.navigate(["/decision/e-driven-oscillations"]);
+            this.router.navigate(["/decision/dec-e-driven"]);
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';
@@ -262,7 +262,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'driven_osc7') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-e-driven', 'true');
-                this.router.navigate(['/decision/e-driven-oscillations']);
+                this.router.navigate(['/decision/dec-e-driven']);
             } else {
                 this.router.navigate(['/target/tar-experiment']);
             }

@@ -180,7 +180,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'damped_osc1') {
-            this.router.navigate(['/decision/t-damped-oscillations']); return;
+            this.router.navigate(['/decision/dec-t-damped']); return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';
         } else if (this.currentView === 'damped_osc3') {
@@ -206,7 +206,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'damped_osc5') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-t-damped', 'true');
-                this.router.navigate(['/decision/t-damped-oscillations']);
+                this.router.navigate(['/decision/dec-t-damped']);
             } else {
                 this.router.navigate(['/learning/t4-driven-oscillations']);
             }

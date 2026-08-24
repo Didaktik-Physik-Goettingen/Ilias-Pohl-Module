@@ -223,7 +223,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'intro_exp3') {
             this.currentView = 'intro_exp4';
         } else if (this.currentView === 'intro_exp4') {
-            this.router.navigate(['/decision/e-damped-oscillations']);
+            this.router.navigate(['/decision/dec-e-damped']);
             return;
         }
         this.updateUrl();

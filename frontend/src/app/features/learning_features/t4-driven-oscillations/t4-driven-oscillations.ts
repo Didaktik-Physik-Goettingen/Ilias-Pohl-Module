@@ -216,7 +216,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'driven_osc1') {
-            this.router.navigate(['/decision/t-driven-oscillations']); return;
+            this.router.navigate(['/decision/dec-t-driven']); return;
         } else if (this.currentView === 'driven_osc2') { 
             this.currentView = 'driven_osc1';
         } else if (this.currentView === 'driven_osc3') { 
@@ -254,7 +254,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'driven_osc8') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-t-driven', 'true');
-                this.router.navigate(['/decision/t-driven-oscillations']);
+                this.router.navigate(['/decision/dec-t-driven']);
             } else {
                 this.router.navigate(['/learning/t-setup']);
             }

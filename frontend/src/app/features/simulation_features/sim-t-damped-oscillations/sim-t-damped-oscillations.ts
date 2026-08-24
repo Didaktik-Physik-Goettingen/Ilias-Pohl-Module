@@ -89,7 +89,7 @@ export class SimTDampedOscillations implements OnInit, AfterViewInit, OnDestroy 
         if (this.navigationFlow !== 'learning-first') {
             this.router.navigate(['/learning/t3-damped-oscillations']);
         } else {
-            this.router.navigate(['/decision/t-driven-oscillations']);
+            this.router.navigate(['/decision/dec-t-driven']);
         }
     }
 

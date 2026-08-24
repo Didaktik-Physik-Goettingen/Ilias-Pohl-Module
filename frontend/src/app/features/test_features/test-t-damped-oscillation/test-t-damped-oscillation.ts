@@ -43,7 +43,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
             Entscheiden Sie selber, wie Sie fortfahren möchten.
             Sie können sich entweder zunächst mit den Bewegungsmustern anhand einer interaktiven Simulation vertraut machen,
             oder die theoretischen Grundlagen in einem interaktiven Lernmodul erarbeiten.`,
-            continueLink: '/decision/t-damped-oscillations',
+            continueLink: '/decision/dec-t-damped',
             continueLinkText: 'Zurück zur Entscheidungsseite',
         },
         {
@@ -51,7 +51,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
             maxPercentage: 100,
             level: 'high' as const,
             message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
-            continueLink: '/test/t-driven-osc',
+            continueLink: '/test/test-t-driven',
             continueLinkText: 'Weiter zum Test'
         }
     ];
@@ -228,7 +228,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
     ngOnInit() {
 		// start tracking this test
-        this.testTracking.startTest('t-damped-oscillations-test', 5, 150); // 5 questions, 150 total points
+        this.testTracking.startTest('t-damped-oscillations-test', 5, 135); // 5 questions, 150 total points
 
         // restore completion state from previous session
         this.restoreCompletionState();
@@ -406,7 +406,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'damped_osc1') {
-            this.router.navigate(['/decision/t-damped-oscillations'], { queryParams: { page: 4 } });
+            this.router.navigate(['/decision/dec-t-damped'], { queryParams: { page: 4 } });
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';

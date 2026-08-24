@@ -42,7 +42,7 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
             maxPercentage: 79,
             level: 'low' as const,
             message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu getriebenen, gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
-            continueLink: '/decision/e-driven-oscillations',
+            continueLink: '/decision/dec-e-driven',
             continueLinkText: 'Zurück zur Entscheidungsseite',
         },
         {
@@ -351,7 +351,7 @@ Bei welcher der Graphen ist der Einschwingvorgang abgeschlossen?`,
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'driven_osc1') {
-            this.router.navigate(['/decision/e-driven-oscillations'], { queryParams: { page: 4 } });
+            this.router.navigate(['/decision/dec-e-driven'], { queryParams: { page: 4 } });
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';

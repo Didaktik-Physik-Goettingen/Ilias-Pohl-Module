@@ -138,7 +138,7 @@ export class TChaos implements OnInit, OnDestroy {
     // going back shows the previous subpage / home page
     goBack() {
         if (this.currentView === 'chaos_1') {
-            this.router.navigate(['/test/t-driven-osc'], { queryParams: { page: '5' } });
+            this.router.navigate(['/test/test-t-driven'], { queryParams: { page: '5' } });
             return;
         } else if (this.currentView === 'chaos_2') {
             this.currentView = 'chaos_1';

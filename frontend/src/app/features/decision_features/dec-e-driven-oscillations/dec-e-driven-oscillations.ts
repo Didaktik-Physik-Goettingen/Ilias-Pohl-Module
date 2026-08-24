@@ -13,8 +13,8 @@ import { TestTracking } from '../../../core/services/test-tracking';
 })
 export class DecEDrivenOscillations implements OnInit {
     learningModuleLink = '/learning/e3-driven-oscillations';
-    testLink = '/test/e-driven-osc';
-    simulationLink = '/simulation/sim-e-driven-osc';
+    testLink = '/test/test-e-driven';
+    simulationLink = '/simulation/sim-e-driven';
     nextLink = '/target/tar-experiment';
     testDisabled = false;
     learningCompleted = false;
@@ -22,7 +22,7 @@ export class DecEDrivenOscillations implements OnInit {
     constructor(public router: Router, public devMode: DevModeService, private testTracking: TestTracking) {}
 
     ngOnInit() {
-        const result = this.testTracking.getTestResults('e-driven-oscillations');
+        const result = this.testTracking.getTestResults('e-driven-oscillations-test');
         if (result?.percentageScore !== undefined && result.percentageScore < 80) {
             this.testDisabled = true;
         }

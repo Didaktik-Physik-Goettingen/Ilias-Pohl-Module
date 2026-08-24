@@ -45,7 +45,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             maxPercentage: 79,
             level: 'low' as const,
             message: 'Sie werden sich nun zurück zur Entscheidungsseite geleitet um sich noch einmal die <b>theoretischen Grundlagen zu gedämpften Schwingungen</b> zu erarbeiten oder sich eine <b>interaktive Simulation</b> anzuschauen.',
-            continueLink: '/decision/e-damped-oscillations',
+            continueLink: '/decision/dec-e-damped',
             continueLinkText: 'Zurück zur Entscheidungsseite',
         },
         {
@@ -53,7 +53,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
             maxPercentage: 100,
             level: 'high' as const,
             message: 'Sie haben ein gutes Grundlagenwissen zu gedämpften Schwingungen und werden nun mit einem <b>Test zu getriebenen Schwingungen</b> fortfahren.',
-            continueLink: '/test/e-driven-osc',
+            continueLink: '/test/test-e-driven',
             continueLinkText: 'Weiter zum Test',
         }
     ];
@@ -414,7 +414,7 @@ export class TestEDampedOscillations implements OnInit, OnDestroy {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'damped_osc1') {
-            this.router.navigate(['/decision/e-damped-oscillations'], { queryParams: { page: 4 } });
+            this.router.navigate(['/decision/dec-e-damped'], { queryParams: { page: 4 } });
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';

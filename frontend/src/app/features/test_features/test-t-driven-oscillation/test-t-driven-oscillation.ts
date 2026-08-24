@@ -43,7 +43,7 @@ export class TestTDrivenOscillation implements OnInit, OnDestroy {
             maxPercentage: 79,
             level: 'low' as const,
             message: 'In Bezug auf getriebene Schwingungen fehlen Ihnen noch einige Aspekte. Entscheiden Sie selber, wie Sie fortfahren möchten. Sie können sich entweder zunächst mit den Bewegungsmustern anhand einer interaktiven Simulation vertraut machen, oder die theoretischen Grundlagen in einem interaktiven Lernmodul erarbeiten.',
-            continueLink: '/decision/t-driven-oscillations',
+            continueLink: '/decision/dec-t-driven',
             continueLinkText: 'Zurück zur Entscheidungsseite',
         },
         {

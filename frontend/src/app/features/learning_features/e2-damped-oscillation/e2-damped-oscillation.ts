@@ -173,7 +173,7 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'damped_osc1') {
-            this.router.navigate(["/decision/e-damped-oscillations"]);
+            this.router.navigate(["/decision/dec-e-damped"]);
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';
@@ -195,9 +195,9 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'damped_osc3') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-e-damped', 'true');
-                this.router.navigate(['/decision/e-damped-oscillations']);
+                this.router.navigate(['/decision/dec-e-damped']);
             } else {
-                this.router.navigate(['/decision/e-driven-oscillations']);
+                this.router.navigate(['/decision/dec-e-driven']);
             }
             return;
         }
