@@ -1,0 +1,214 @@
+/* ── Sidebar container ─────────────────────────────────────────────────── */
+.nav-bar {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 2px 16px var(--shadow-color);
+    border: 1px solid var(--border-color);
+
+    width: 400px;
+    flex-shrink: 0;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border-color);
+    padding: 0.75rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    max-height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+}
+
+/* ── Startseite / Anleitung endpoints ──────────────────────────────────── */
+.nav-endpoint-btn {
+    width: 100%;
+    padding: 0.45rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+.nav-endpoint-btn:hover {
+    background: var(--uni-blau-4);
+    color: white;
+}
+
+.nav-endpoint-active {
+    background: var(--uni-blau-1) !important;
+    color: white !important;
+    border-color: var(--uni-blau-1) !important;
+}
+
+.nav-endpoint-grayed {
+    opacity: 0.4;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* ── Strand section ────────────────────────────────────────────────────── */
+.strand-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.strand-headers {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.15rem 0;
+}
+
+.strand-header-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--uni-blau-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: opacity 0.3s;
+    flex: 1;
+    text-align: center;
+}
+
+.strand-faded {
+    opacity: 0.3;
+}
+
+/* ── Two-column layout ─────────────────────────────────────────────────── */
+.strand-columns {
+    display: flex;
+    gap: 0.25rem;
+    align-items: flex-start;
+}
+
+.strand-col {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    transition: opacity 0.3s;
+}
+
+.strand-col-faded {
+    opacity: 0.28;
+    pointer-events: none;
+}
+
+/* ── Segment buttons ───────────────────────────────────────────────────── */
+.seg-btn {
+    width: 100%;
+    padding: 0.35rem 0.25rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    font-size: 0.68rem;
+    font-weight: 500;
+    text-align: center;
+    cursor: default;
+    pointer-events: none;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Active segment */
+.seg-active {
+    background: var(--uni-blau-1);
+    color: white;
+    border-color: var(--uni-blau-1);
+    font-weight: 700;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* Non-active within chosen strand */
+.seg-grayed {
+    opacity: 0.5;
+}
+
+/* Dev mode: all segments are clickable */
+.seg-dev {
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0.8;
+}
+
+.seg-dev:hover {
+    background: var(--uni-blau-3);
+    color: white;
+    border-color: var(--uni-blau-3);
+    opacity: 1;
+}
+
+/* ── Dropdown ──────────────────────────────────────────────────────────── */
+.seg-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.2rem 0 0.2rem 0.35rem;
+    border-left: 2px solid var(--uni-blau-3);
+    margin-left: 0.15rem;
+}
+
+.sub-btn {
+    width: 100%;
+    padding: 0.28rem 0.4rem;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 0.63rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sub-btn:hover {
+    background: var(--uni-blau-4);
+    color: white;
+}
+
+.sub-btn-active {
+    background: var(--uni-blau-3);
+    color: white;
+    font-weight: 600;
+}
+
+/* Normal mode: dropdown is display-only */
+.seg-dropdown-locked .sub-btn {
+    cursor: default;
+    pointer-events: none;
+}
+.seg-dropdown-locked .sub-btn:not(.sub-btn-active) {
+    opacity: 0.65;
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .seg-btn {
+        border-color: var(--border-color);
+    }
+}
+
+/* ── Responsive: hide sidebar on small screens ─────────────────────────── */
+@media (max-width: 768px) {
+    .nav-bar {
+        display: none;
+    }
+}

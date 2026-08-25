@@ -103,9 +103,17 @@ body {
     min-height: 104vh; /* Minimum full viewport height */
 }
 
+/* sidebar + main wrapper */
+.page-body {
+    display: flex;
+    flex: 1;
+    align-items: stretch;
+}
+
 /* main content - grows to fill space */
 .main-content {
     flex: 1;                        /* Takes up remaining space */
+    min-width: 0;                   /* Allow shrinking below content size */
     padding-bottom: 2rem;           /* Space before footer */
 }
 

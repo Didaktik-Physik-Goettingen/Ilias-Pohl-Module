@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, HostL
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoiceImage } from '../../../shared/evaluation/multiple-choice-image/multiple-choice-image';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
@@ -41,6 +42,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+    private pageSub: Subscription | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
@@ -114,11 +116,12 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
     introExpText3b!: SafeHtml;
 
     ngOnInit() {
-        // restore subpage from URL query param
-        const page = this.route.snapshot.queryParamMap.get('page');
-        if (page && ['1','2','3','4'].includes(page)) {
-            this.currentView = `intro_exp${page}`;
-        }
+        // restore subpage from URL — subscribing (not snapshot) so nav-bar jumps also update the view
+        this.pageSub = this.route.queryParams.subscribe(params => {
+            const page = params['page'];
+            if (page && ['1','2','3','4'].includes(page))
+                this.currentView = `intro_exp${page}`;
+        });
 
         // start tracking this module
         this.trackingService.startModule('e1-intro-experiment-module');
@@ -142,6 +145,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnDestroy() {
+        this.pageSub?.unsubscribe();
         if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }
