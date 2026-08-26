@@ -240,7 +240,9 @@ export class NavBar implements OnInit, OnDestroy {
         const path = url.split('?')[0];
         if (path !== sub.route) return false;
         if (sub.queryParams?.['page']) {
-            return url.includes(`page=${sub.queryParams['page']}`);
+            const match = url.match(/[?&]page=([^&]*)/);
+            const activePage = match ? match[1] : '1'; // no param → component defaults to page 1
+            return activePage === sub.queryParams['page'];
         }
         return true;
     }
@@ -257,6 +259,7 @@ export class NavBar implements OnInit, OnDestroy {
     }
 
     goHome() {
+        if (!this.devMode.isEnabled) return;
         this.router.navigate(['/']);
     }
 

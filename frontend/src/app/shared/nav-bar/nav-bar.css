@@ -1,51 +1,54 @@
 /* ── Sidebar container ─────────────────────────────────────────────────── */
-.nav-bar {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 2px 16px var(--shadow-color);
-    border: 1px solid var(--border-color);
 
-    width: 400px;
-    flex-shrink: 0;
-    background: var(--bg-secondary);
-    border-right: 1px solid var(--border-color);
-    padding: 0.75rem 0.5rem;
+/* sticky viewport-height box; background extended to full page via .page-body gradient */
+.nav-bar {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    align-self: flex-start;
+    overflow-y: auto;
+    background: var(--bg-primary);
+    border-right: 2px solid var(--border-color);
+    z-index: 100;
+}
+
+/* inner wrapper: flex column, padding only */
+.nav-bar-container {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    position: sticky;
-    top: 0;
-    align-self: flex-start;
-    max-height: 100vh;
-    overflow-y: auto;
-    z-index: 100;
+    padding: 2rem;
 }
 
 /* ── Startseite / Anleitung endpoints ──────────────────────────────────── */
 .nav-endpoint-btn {
     width: 100%;
-    padding: 0.45rem 0.5rem;
+    padding: 1rem 0.5rem;
     border: 1px solid var(--border-color);
     border-radius: 6px;
     background: var(--card-bg);
     color: var(--text-primary);
     cursor: pointer;
-    font-size: 0.75rem;
+    font-size: 1.25rem;
     font-weight: 600;
     text-align: center;
     transition: background 0.2s, color 0.2s;
 }
 
 .nav-endpoint-btn:hover {
-    background: var(--uni-blau-4);
-    color: white;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+    opacity: 1;
 }
 
 .nav-endpoint-active {
-    background: var(--uni-blau-1) !important;
-    color: white !important;
-    border-color: var(--uni-blau-1) !important;
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-weight: 700;
+    cursor: default;
+    pointer-events: none;
 }
 
 .nav-endpoint-grayed {
@@ -56,7 +59,6 @@
 
 /* ── Strand section ────────────────────────────────────────────────────── */
 .strand-section {
-    flex: 1;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -65,13 +67,13 @@
 .strand-headers {
     display: flex;
     justify-content: space-around;
-    padding: 0.15rem 0;
+    padding: 1rem 0;
 }
 
 .strand-header-label {
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: 700;
-    color: var(--uni-blau-2);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     transition: opacity 0.3s;
@@ -107,12 +109,12 @@
 /* ── Segment buttons ───────────────────────────────────────────────────── */
 .seg-btn {
     width: 100%;
-    padding: 0.35rem 0.25rem;
+    padding: 0.75rem 0.25rem;
     border: 1px solid var(--border-color);
     border-radius: 5px;
-    background: var(--card-bg);
+    background: var(--bg-primary);
     color: var(--text-primary);
-    font-size: 0.68rem;
+    font-size: 0.9rem;
     font-weight: 500;
     text-align: center;
     cursor: default;
@@ -126,9 +128,9 @@
 
 /* Active segment */
 .seg-active {
-    background: var(--uni-blau-1);
-    color: white;
-    border-color: var(--uni-blau-1);
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg-primary);
     font-weight: 700;
     cursor: default;
     pointer-events: none;
@@ -147,9 +149,9 @@
 }
 
 .seg-dev:hover {
-    background: var(--uni-blau-3);
-    color: white;
-    border-color: var(--uni-blau-3);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
     opacity: 1;
 }
 
@@ -159,7 +161,7 @@
     flex-direction: column;
     gap: 0.1rem;
     padding: 0.2rem 0 0.2rem 0.35rem;
-    border-left: 2px solid var(--uni-blau-3);
+    border-left: 2px solid var(--text-primary);
     margin-left: 0.15rem;
 }
 
@@ -170,7 +172,7 @@
     border-radius: 4px;
     background: transparent;
     color: var(--text-primary);
-    font-size: 0.63rem;
+    font-size: 0.75rem;
     text-align: left;
     cursor: pointer;
     transition: background 0.12s, color 0.12s;
@@ -180,13 +182,14 @@
 }
 
 .sub-btn:hover {
-    background: var(--uni-blau-4);
-    color: white;
+    background: var(--text-primary);
+    color: var(--card-bg);
 }
 
 .sub-btn-active {
-    background: var(--uni-blau-3);
-    color: white;
+    /* background: var(--uni-blau-3); */
+    border: 2px solid var(--button-border-color);
+    color: var(--text-primary);
     font-weight: 600;
 }
 

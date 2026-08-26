@@ -119,8 +119,10 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
         // restore subpage from URL — subscribing (not snapshot) so nav-bar jumps also update the view
         this.pageSub = this.route.queryParams.subscribe(params => {
             const page = params['page'];
-            if (page && ['1','2','3','4'].includes(page))
+            if (page && ['1','2','3','4'].includes(page)) {
                 this.currentView = `intro_exp${page}`;
+                this.renderMath();
+            }
         });
 
         // start tracking this module

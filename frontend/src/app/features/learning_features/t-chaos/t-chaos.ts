@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
@@ -54,8 +54,10 @@ export class TChaos implements OnInit, OnDestroy {
   ngOnInit() {
       this.pageSub = this.route.queryParams.subscribe(params => {
           const page = params['page'];
-          if (page && ['1','2','3','4'].includes(page))
+          if (page && ['1','2','3','4'].includes(page)) {
               this.currentView = `chaos_${page}`;
+              this.renderMath();
+          }
       });
 
       // start tracking this module

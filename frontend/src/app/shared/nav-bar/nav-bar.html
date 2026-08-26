@@ -1,55 +1,33 @@
 <nav class="nav-bar">
+    <div class="nav-bar-container">
 
-    <!-- Startseite -->
-    <button class="nav-endpoint-btn"
-        [class.nav-endpoint-active]="activeSegment === 'home'"
-        (click)="goHome()">
-        Startseite
-    </button>
+        <!-- Startseite -->
+        <button class="nav-endpoint-btn"
+            [class.nav-endpoint-active]="activeSegment === 'home'"
+            [class.nav-endpoint-grayed]="!devMode.isEnabled"
+            (click)="goHome()">
+            Startseite
+        </button>
 
-    <!-- Strand section -->
-    <div class="strand-section">
-        <div class="strand-headers">
-            <span class="strand-header-label"
-                [class.strand-faded]="chosenStrand === 't' && !devMode.isEnabled">
-                Fokus Experiment
-            </span>
-            <span class="strand-header-label"
-                [class.strand-faded]="chosenStrand === 'e' && !devMode.isEnabled">
-                Fokus Theorie
-            </span>
-        </div>
-
-        <div class="strand-columns">
-
-            <!-- Experimental column -->
-            <div class="strand-col"
-                [class.strand-col-faded]="chosenStrand === 't' && !devMode.isEnabled">
-                @for (seg of eSegments; track seg.id) {
-                    <button class="seg-btn"
-                        [ngClass]="getSegmentClass(seg)"
-                        (click)="onSegmentClick(seg)">
-                        {{ seg.label }}
-                    </button>
-                    @if (activeSegment === seg.id) {
-                        <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
-                            @for (sub of seg.subpages; track sub.route + (sub.queryParams?.['page'] ?? '')) {
-                                <button class="sub-btn"
-                                    [class.sub-btn-active]="isSubpageActive(sub)"
-                                    (click)="navigateToSubpage(sub)">
-                                    {{ sub.label }}
-                                </button>
-                            }
-                        </div>
-                    }
-                }
+        <!-- Strand section -->
+        <div class="strand-section">
+            <div class="strand-headers">
+                <span class="strand-header-label"
+                    [class.strand-faded]="chosenStrand === 't' && !devMode.isEnabled">
+                    Fokus Experiment
+                </span>
+                <span class="strand-header-label"
+                    [class.strand-faded]="chosenStrand === 'e' && !devMode.isEnabled">
+                    Fokus Theorie
+                </span>
             </div>
 
-            <!-- Theory column -->
-            <div class="strand-col"
-                [class.strand-col-faded]="chosenStrand === 'e' && !devMode.isEnabled">
-                @for (seg of tSegments; track seg.id) {
-                    @if (isSegmentVisible(seg)) {
+            <div class="strand-columns">
+
+                <!-- Experimental column -->
+                <div class="strand-col"
+                    [class.strand-col-faded]="chosenStrand === 't' && !devMode.isEnabled">
+                    @for (seg of eSegments; track seg.id) {
                         <button class="seg-btn"
                             [ngClass]="getSegmentClass(seg)"
                             (click)="onSegmentClick(seg)">
@@ -67,18 +45,43 @@
                             </div>
                         }
                     }
-                }
+                </div>
+
+                <!-- Theory column -->
+                <div class="strand-col"
+                    [class.strand-col-faded]="chosenStrand === 'e' && !devMode.isEnabled">
+                    @for (seg of tSegments; track seg.id) {
+                        @if (isSegmentVisible(seg)) {
+                            <button class="seg-btn"
+                                [ngClass]="getSegmentClass(seg)"
+                                (click)="onSegmentClick(seg)">
+                                {{ seg.label }}
+                            </button>
+                            @if (activeSegment === seg.id) {
+                                <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
+                                    @for (sub of seg.subpages; track sub.route + (sub.queryParams?.['page'] ?? '')) {
+                                        <button class="sub-btn"
+                                            [class.sub-btn-active]="isSubpageActive(sub)"
+                                            (click)="navigateToSubpage(sub)">
+                                            {{ sub.label }}
+                                        </button>
+                                    }
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+
             </div>
-
         </div>
+
+        <!-- Anleitung -->
+        <button class="nav-endpoint-btn"
+            [class.nav-endpoint-active]="activeSegment === 'anleitung'"
+            [class.nav-endpoint-grayed]="!isAnleitungClickable"
+            (click)="goAnleitung()">
+            Anleitung
+        </button>
+
     </div>
-
-    <!-- Anleitung -->
-    <button class="nav-endpoint-btn"
-        [class.nav-endpoint-active]="activeSegment === 'anleitung'"
-        [class.nav-endpoint-grayed]="!isAnleitungClickable"
-        (click)="goAnleitung()">
-        Anleitung
-    </button>
-
-</nav>
+</nav> 

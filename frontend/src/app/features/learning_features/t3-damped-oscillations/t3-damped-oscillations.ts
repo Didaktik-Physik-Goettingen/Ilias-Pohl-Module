@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
@@ -14,7 +15,7 @@ declare global { interface Window { MathJax: any; } }
 
 @Component({
     selector: 'app-t3-damped-oscillations',
-    imports: [CommonModule, RouterLink, MultipleChoice],
+    imports: [CommonModule, MultipleChoice],
     templateUrl: './t3-damped-oscillations.html',
     styleUrl: './t3-damped-oscillations.css',
 })
@@ -30,6 +31,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+    private pageSub: Subscription | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
@@ -98,8 +100,13 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
     // +++ Lifecycle +++
 
     ngOnInit(): void {
-        const page = this.route.snapshot.queryParamMap.get('page');
-        if (page) this.currentView = `damped_osc${page}`;
+        this.pageSub = this.route.queryParams.subscribe(params => {
+            const page = params['page'];
+            if (page && ['1','2','3','4','5'].includes(page)) {
+                this.currentView = `damped_osc${page}`;
+                this.renderMath();
+            }
+        });
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
         this.trackingService.startModule('t3-damped-oscillations-module');
         this.restoreCompletionState();
@@ -148,6 +155,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit(): void { this.renderMath(); }
 
     ngOnDestroy(): void {
+        this.pageSub?.unsubscribe();
         if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }

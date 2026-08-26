@@ -92,8 +92,10 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 	ngOnInit() {
 		this.pageSub = this.route.queryParams.subscribe(params => {
 			const page = params['page'];
-			if (page && ['1', '2'].includes(page))
+			if (page && ['1', '2'].includes(page)) {
 				this.currentView = `free_osc${page}`;
+				this.renderMath();
+			}
 		});
 
 		this.trackingService.startModule('t2-free-oscillations-module');
