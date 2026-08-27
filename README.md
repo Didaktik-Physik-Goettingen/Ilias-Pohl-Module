@@ -70,6 +70,7 @@ README.md
 │           └── shared/
 │           │   └── footer/                     // footer component
 │           │   └── header/                     // header component
+│           │   └── nav-bar/                    // sticky sidebar navigation
 │           │   └── glossary-overlay/           // inline glossary panel (triggered by anchor links)
 │           │   │
 │           │   └── evaluation/                 // Q+A types for learning pages (retryable)
@@ -223,7 +224,17 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 
 ### Shared Components
 
-- **glossary-overlay:** inline glossary panel triggered by `<a href="#glossary-{term}">` links anywhere in the app; handled via a `@HostListener('click')` on the host component that intercepts these anchors and opens the overlay without a full navigation
+- **nav-bar:** sticky sidebar navigation rendered on every route inside `.page-body`. Layout uses a two-div pattern — the outer `.nav-bar` shell is `position: sticky; height: 100vh` with no overflow (overflow on a sticky element breaks stickiness in most browsers), and the inner `.nav-bar-container` has `height: 100%; overflow-y: auto` for scrollable content when many sub-pages are expanded. The sidebar is hidden (`visibility: hidden`) on the home route in normal mode, preserving the grid column so content stays centred.
+
+  **Strand switcher:** a segmented tab control showing the two learning strands (Fokus Experiment / Fokus Theorie). The active tab fills the available width and shows the full label; the inactive tab collapses to an abbreviation (EXP / THEO). In dev-mode the inactive tab is clickable and navigates to the first sub-page of the target strand. The chosen strand is persisted in `localStorage` and restored on reload.
+
+  **Segment list:** only the segments of the active strand are rendered. Non-active segments show a hover highlight (visual feedback without navigation); the cursor distinguishes clickability — `cursor: pointer` in dev-mode, `cursor: default` otherwise. Clicking a non-active segment (dev-mode only) navigates to its first sub-page. The active segment expands a sub-page dropdown; sub-page buttons are always visible but only navigable in dev-mode. The active sub-page is highlighted using URL matching (`router.url` with `?page=` query param, defaulting to page 1 when the param is absent).
+
+  **Conditional segments** (`t-chaos`, `t-simulation`, `t-setup`) are hidden on the theory strand until the user has visited them at least once; the set of visited IDs is persisted in `localStorage`.
+
+  **Startseite / Anleitung endpoints:** always rendered but only clickable (`cursor: pointer`, `goHome()` / `goAnleitung()` guards) in dev-mode, or when the user is already on the Anleitung page.
+
+- **glossary-overlay:** inline glossary panel triggered by `<a data-glossary="{term}" class="glossary-link">` links in content strings and templates; a `@HostListener('click')` on each learning component intercepts these anchors (using `closest('a[data-glossary]')`) and opens the overlay without navigation. The `data-glossary` attribute (rather than `href="#glossary-"`) prevents the browser from offering "Open in new tab" in the context menu.
 
 
 ### Evaluation Formats (Learning Pages)

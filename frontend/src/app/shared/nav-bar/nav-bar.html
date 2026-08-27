@@ -8,6 +8,15 @@
             (click)="goHome()">
             Startseite
         </button>
+        @if (devMode.isEnabled) {
+        <!-- Glossary access in dev-mode -->
+        <button class="nav-endpoint-btn"
+            [class.nav-endpoint-active]="activeSegment === 'glossary'"
+            [class.nav-endpoint-dev]="devMode.isEnabled"
+            (click)="goGlossary()">
+            Glossar
+        </button>   
+        }
 
         <!-- Strand section -->
         <div class="strand-section">

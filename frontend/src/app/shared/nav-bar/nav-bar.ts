@@ -191,6 +191,7 @@ export class NavBar implements OnInit, OnDestroy {
     segmentFromUrl(url: string): string | null {
         const path = url.split('?')[0];
         if (path === '/' || path === '') return 'home';
+        if (path.includes('/glossary')) return 'glossary';
         // Experimental strand
         if (path.startsWith('/learning/e1')) return 'e1-intro';
         if (path.startsWith('/learning/e2') || path === '/decision/dec-e-damped' ||
@@ -268,6 +269,11 @@ export class NavBar implements OnInit, OnDestroy {
     goHome() {
         if (!this.devMode.isEnabled) return;
         this.router.navigate(['/']);
+    }
+
+    goGlossary() {
+        if (!this.devMode.isEnabled) return;
+        this.router.navigate(['/glossary']);
     }
 
     get anleitungRoute(): string {
