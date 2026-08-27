@@ -60,7 +60,7 @@ export class TSimulation implements OnInit, OnDestroy {
 
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.router.navigate(['/test/t-driven-osc'], { queryParams: { page: '5' } });
+        this.router.navigate(['/test/test-t-driven'], { queryParams: { page: '5' } });
     }
 
     goForward(): void {

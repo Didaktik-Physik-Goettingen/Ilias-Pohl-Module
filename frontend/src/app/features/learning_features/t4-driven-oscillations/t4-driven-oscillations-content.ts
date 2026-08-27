@@ -13,7 +13,7 @@ export const t4Text1b = `
 
 export const t4Text1c = `
             Diese
-            <a href="#glossary-inhom-dgl" class="glossary-link">Differentialgleichung</a>
+            <a data-glossary="inhom-dgl" class="glossary-link">Differentialgleichung</a>
             nennt man:
             <ul>
                 <li><strong>gedämpft</strong>, weil eine zur Geschwindigkeit proportionale Reibungskraft wirkt,</li>
@@ -27,13 +27,13 @@ export const t4Text1c = `
 export const t4Text2a = `
             Beim Pohlschen Rad betrachten wir eine <strong>Rotationsbewegung</strong>. Die DGL ergibt
             sich aus der Bilanz der
-            <a href="#glossary-angular-momentum" class="glossary-link">Drehmomente</a>
+            <a data-glossary="angular-momentum" class="glossary-link">Drehmomente</a>
             $\\Theta\\ddot{\\varphi} = \\sum_i M_i$ mit dem
-            <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
+            <a data-glossary="moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
             $\\Theta$:
             <ul>
                 <li>Rückstellmoment: $-D^*\\varphi$ mit dem
-                    <a href="#glossary-directive-moment" class="glossary-link">Richtmoment</a> $D^*$</li>
+                    <a data-glossary="directive-moment" class="glossary-link">Richtmoment</a> $D^*$</li>
                 <li>Dämpfungsmoment: $-\\rho\\dot{\\varphi}$ mit dem Reibungskoeffizienten $\\rho$</li>
                 <li>Antriebsmoment: $M\\cos(\\omega t)$</li>
             </ul>
@@ -49,7 +49,7 @@ export const t4Text2c = `
             Diese Gleichung ist formal identisch mit der Normalform des linearen Falls --- lediglich die
             Auslenkung $x$ wird durch den Winkel $\\varphi$ ersetzt und $\\gamma$ durch $\\beta$.<br><br>
             Zur Lösung der
-            <a href="#glossary-inhom-dgl" class="glossary-link"><strong>inhomogenen</strong> Differentialgleichung</a>
+            <a data-glossary="inhom-dgl" class="glossary-link"><strong>inhomogenen</strong> Differentialgleichung</a>
             addiert man die Lösungen des homogenen
             und partikulären Anteils:
             $$\\varphi(t) = \\varphi_h(t) + \\varphi_p(t)$$
@@ -57,7 +57,7 @@ export const t4Text2c = `
 
 export const t4Text3a = `
             Um die
-            <a href="#glossary-inhom-dgl" class="glossary-link">inhomogene Differentialgleichung</a>
+            <a data-glossary="inhom-dgl" class="glossary-link">inhomogene Differentialgleichung</a>
             zu lösen, nutzt man einen eleganten Trick: Die reelle Inhomogenität
             $N\\cos(\\omega t)$ wird als Realteil einer komplexen Exponentialfunktion geschrieben:
             $$N\\cos(\\omega t) = \\operatorname{Re}\\!\\left[N e^{i\\omega t}\\right]$$
@@ -79,7 +79,7 @@ export const t4Text3c = `
 
 export const t4Text4a = `
             Zur Lösung der komplexen
-            <a href="#glossary-inhom-dgl" class="glossary-link">inhomogenen Differentialgleichung</a>
+            <a data-glossary="inhom-dgl" class="glossary-link">inhomogenen Differentialgleichung</a>
             wählt man einen Ansatz, dessen Struktur der
             Inhomogenität ähnelt - also eine komplexe Exponentialfunktion mit der <em>gleichen</em>
             Frequenz $\\omega$ wie die Anregung:
@@ -190,7 +190,7 @@ export const t4Text8b = `
 
 export const t4Text8c = `
             Besonders charakteristisch: Wenn die Anregungsfrequenz genau der
-            <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a>
+            <a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>
             $\\omega_0$ entspricht, gilt stets
             $\\Phi(\\omega_0) = \\pi/2$ - unabhängig von der Dämpfung. Diese Eigenschaft
             lässt sich im Experiment nutzen, um $\\omega_0$ zu bestimmen.<br><br>

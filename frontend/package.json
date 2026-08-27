@@ -33,7 +33,9 @@
     "@angular/platform-server": "^21.1.0",
     "@angular/router": "^21.1.0",
     "@angular/ssr": "^21.1.4",
+    "@types/katex": "^0.16.8",
     "express": "^5.1.0",
+    "katex": "^0.18.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

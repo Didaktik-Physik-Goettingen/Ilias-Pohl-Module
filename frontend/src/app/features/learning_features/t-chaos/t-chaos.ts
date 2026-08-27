@@ -1,7 +1,8 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
@@ -33,12 +34,14 @@ export class TChaos implements OnInit, OnDestroy {
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
         const link = (event.target as HTMLElement)
-            ?.closest('a[href^="#glossary-"]') as HTMLAnchorElement | null;
+            ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;
-        event.preventDefault();
-        const term = link.getAttribute('href')!.replace('#glossary-', '');
+        
+        const term = link.getAttribute('data-glossary')!;
         this.glossaryOverlay.open(term);
     }
+
+    private pageSub: Subscription | null = null;
 
     chaosText1a!: SafeHtml;
     chaosText1b!: SafeHtml;
@@ -49,11 +52,13 @@ export class TChaos implements OnInit, OnDestroy {
     chaosText3a!: SafeHtml;
 
   ngOnInit() {
-      // restore subpage from URL query param
-      const page = this.route.snapshot.queryParamMap.get('page');
-      if (page && ['1','2','3','4'].includes(page)) {
-          this.currentView = `chaos_${page}`;
-      }
+      this.pageSub = this.route.queryParams.subscribe(params => {
+          const page = params['page'];
+          if (page && ['1','2','3','4'].includes(page)) {
+              this.currentView = `chaos_${page}`;
+              this.renderMath();
+          }
+      });
 
       // start tracking this module
       this.trackingService.startModule('t-chaos-module');
@@ -71,7 +76,7 @@ export class TChaos implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-      // End tracking when leaving the module
+      this.pageSub?.unsubscribe();
       this.trackingService.endModule();
   }
 
@@ -138,14 +143,10 @@ export class TChaos implements OnInit, OnDestroy {
     // going back shows the previous subpage / home page
     goBack() {
         if (this.currentView === 'chaos_1') {
-            this.router.navigate(['/test/t-driven-osc'], { queryParams: { page: '5' } });
+            this.router.navigate(['/test/test-t-driven'], { queryParams: { page: '5' } });
             return;
         } else if (this.currentView === 'chaos_2') {
             this.currentView = 'chaos_1';
-        } else if (this.currentView === 'chaos_3') {
-            this.currentView = 'chaos_2';
-        }else if (this.currentView === 'chaos_4') {
-            this.currentView = 'chaos_3';
         }
         this.updateUrl();
         this.renderMath();
@@ -158,11 +159,6 @@ export class TChaos implements OnInit, OnDestroy {
                 this.currentView = 'chaos_2';
             } else if (this.currentView === 'chaos_2') {
                 this.router.navigate(['/learning/t-setup'], { queryParams: { next: 'chaos' } });
-                return;
-            } else if (this.currentView === 'chaos_3') {
-                this.currentView = 'chaos_4';
-            }  else if (this.currentView === 'chaos4') {
-                this.router.navigate(['/target/tar-chaos']);
                 return;
             }
             this.updateUrl();

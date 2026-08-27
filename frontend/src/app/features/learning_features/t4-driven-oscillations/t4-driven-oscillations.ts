@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choice';
@@ -13,7 +14,7 @@ import * as t4Content from './t4-driven-oscillations-content';
 
 @Component({
     selector: 'app-t4-driven-oscillations',
-    imports: [CommonModule, RouterLink, MultipleChoice, ImageChoice],
+    imports: [CommonModule, MultipleChoice, ImageChoice],
     templateUrl: './t4-driven-oscillations.html',
     styleUrl: './t4-driven-oscillations.css',
 })
@@ -29,14 +30,15 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+    private pageSub: Subscription | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
         const link = (event.target as HTMLElement)
-            ?.closest('a[href^="#glossary-"]') as HTMLAnchorElement | null;
+            ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;
-        event.preventDefault();
-        const term = link.getAttribute('href')!.replace('#glossary-', '');
+        
+        const term = link.getAttribute('data-glossary')!;
         this.glossaryOverlay.open(term);
     }
 
@@ -111,8 +113,13 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     // +++ Lifecycle +++
 
     ngOnInit(): void {
-        const page = this.route.snapshot.queryParamMap.get('page');
-        if (page) this.currentView = `driven_osc${page}`;
+        this.pageSub = this.route.queryParams.subscribe(params => {
+            const page = params['page'];
+            if (page && ['1','2','3','4','5','6','7','8'].includes(page)) {
+                this.currentView = `driven_osc${page}`;
+                this.renderMath();
+            }
+        });
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
         this.trackingService.startModule('t4-driven-oscillations-module');
         this.restoreCompletionState();
@@ -183,6 +190,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     ngAfterViewInit(): void { this.renderMath(); }
 
     ngOnDestroy(): void {
+        this.pageSub?.unsubscribe();
         if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }
@@ -216,7 +224,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'driven_osc1') {
-            this.router.navigate(['/decision/t-driven-oscillations']); return;
+            this.router.navigate(['/decision/dec-t-driven']); return;
         } else if (this.currentView === 'driven_osc2') { 
             this.currentView = 'driven_osc1';
         } else if (this.currentView === 'driven_osc3') { 
@@ -254,7 +262,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'driven_osc8') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-t-driven', 'true');
-                this.router.navigate(['/decision/t-driven-oscillations']);
+                this.router.navigate(['/decision/dec-t-driven']);
             } else {
                 this.router.navigate(['/learning/t-setup']);
             }

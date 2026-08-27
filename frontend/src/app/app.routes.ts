@@ -94,24 +94,24 @@ export const routes: Routes = [
 
 
     // decision pages
-    { path: 'decision/e-damped-oscillations', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
-    { path: 'decision/e-driven-oscillations', component: DecEDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
-    { path: 'decision/t-damped-oscillations', component: DecTDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
-    { path: 'decision/t-driven-oscillations', component: DecTDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
+    { path: 'decision/dec-e-damped', component: DecEDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
+    { path: 'decision/dec-e-driven', component: DecEDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
+    { path: 'decision/dec-t-damped', component: DecTDampedOscillations, title: 'Entscheidung: Gedämpfte Schwingungen' },
+    { path: 'decision/dec-t-driven', component: DecTDrivenOscillations, title: 'Entscheidung: Getriebene Schwingungen' },
 
     // test pages
-    { path: 'test/e-damped-osc', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
-    { path: 'test/e-driven-osc', component: TestEDrivenOscillations, title: 'Test: Getriebene Schwingungen'},
-    { path: 'test/t-damped-osc', component: TestTDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
-    { path: 'test/t-driven-osc', component: TestTDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
+    { path: 'test/test-e-damped', component: TestEDampedOscillations, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'test/test-e-driven', component: TestEDrivenOscillations, title: 'Test: Getriebene Schwingungen'},
+    { path: 'test/test-t-damped', component: TestTDampedOscillation, title: 'Test: Gedämpfte Schwingungen' },
+    { path: 'test/test-t-driven', component: TestTDrivenOscillation, title: 'Test: Getriebene Schwingungen'},
 
     // simulation pages
-    { path: 'simulation/sim-e-damped-osc', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
-    { path: 'simulation/sim-e-driven-osc', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
-    { path: 'simulation/sim-t-undamped-osc',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
-    { path: 'simulation/sim-t-damped-osc',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
-    { path: 'simulation/sim-t-driven-osc',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
-    { path: 'simulation/sim-t-driven-advanced-osc', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
+    { path: 'simulation/sim-e-damped', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
+    { path: 'simulation/sim-e-driven', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
+    { path: 'simulation/sim-t-undamped',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
+    { path: 'simulation/sim-t-damped',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
+    { path: 'simulation/sim-t-driven',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
+    { path: 'simulation/sim-t-driven-advanced', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
 
     // target pages
     { path: 'target/tar-experiment', component: TarExperiment, title: 'Anleitung: Versuchsdurchführung' },

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, HostL
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
@@ -31,14 +32,15 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 	) {}
 
 	private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+	private pageSub: Subscription | null = null;
 
 	@HostListener('click', ['$event'])
 	onGlossaryLink(event: MouseEvent) {
 		const link = (event.target as HTMLElement)
-			?.closest('a[href^="#glossary-"]') as HTMLAnchorElement | null;
+			?.closest('a[data-glossary]') as HTMLAnchorElement | null;
 		if (!link) return;
-		event.preventDefault();
-		const term = link.getAttribute('href')!.replace('#glossary-', '');
+		
+		const term = link.getAttribute('data-glossary')!;
 		this.glossaryOverlay.open(term);
 	}
 	// +++ QA data +++
@@ -88,10 +90,13 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 	// ── Lifecycle ────────────────────────────────────────────────────────────
 
 	ngOnInit() {
-		const page = this.route.snapshot.queryParamMap.get('page');
-		if (page && ['1', '2'].includes(page)) {
-			this.currentView = `free_osc${page}`;
-		}
+		this.pageSub = this.route.queryParams.subscribe(params => {
+			const page = params['page'];
+			if (page && ['1', '2'].includes(page)) {
+				this.currentView = `free_osc${page}`;
+				this.renderMath();
+			}
+		});
 
 		this.trackingService.startModule('t2-free-oscillations-module');
 		this.restoreCompletionState();
@@ -132,6 +137,7 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 
 
 	ngOnDestroy() {
+		this.pageSub?.unsubscribe();
 		if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
 		this.trackingService.endModule();
 	}
@@ -201,7 +207,7 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 		if (this.currentView === 'free_osc1') {
 			this.currentView = 'free_osc2';
 		} else if (this.currentView === 'free_osc2') {
-			this.router.navigate(['/decision/t-damped-oscillations']);
+			this.router.navigate(['/decision/dec-t-damped']);
 			return;
 		}
 		this.updateUrl();

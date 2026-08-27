@@ -4,10 +4,10 @@ export const introTheoText1a = `
 			in Bewegung versetzt wird, dann sprechen wir von einer harmonischen Schwingung.<br><br>
 
 			Die Bewegung des Körpers kann mit der
-			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 			$m\\frac{d^2x}{dt^2} = -Dx$
 			beschrieben werden. Dabei wird $D$ als
-			<a href="#glossary-spring-constant" class="glossary-link">Federkonstante</a>
+			<a data-glossary="spring-constant" class="glossary-link">Federkonstante</a>
 			bezeichnet
 			und gibt die Stärke der rücktreibenden Kraft an.<br><br>
 

@@ -1,0 +1,228 @@
+/* ── Sidebar container ─────────────────────────────────────────────────── */
+
+/* outer: sticky shell — must NOT have overflow or stickiness breaks */
+.nav-bar {
+    position: sticky;
+    top: 1.5rem;
+    height: 100vh;
+    align-self: flex-start;
+    background: var(--bg-primary);
+    border-right: 2px solid var(--border-color);
+    z-index: 100;
+}
+
+/* inner: handles overflow so nav content can scroll when it exceeds 100vh */
+.nav-bar-container {
+    height: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 2rem;
+}
+
+/* ── Startseite / Anleitung endpoints ──────────────────────────────────── */
+.nav-endpoint-btn {
+    width: 100%;
+    padding: 1rem 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    cursor: default;
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-align: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.nav-endpoint-btn:hover {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+.nav-endpoint-active {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-weight: 700;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* cursor: pointer only when the endpoint is actually navigable */
+.nav-endpoint-dev {
+    cursor: pointer;
+}
+
+/* ── Strand section ────────────────────────────────────────────────────── */
+.strand-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+/* ── Strand switcher ───────────────────────────────────────────────────── */
+.strand-switcher {
+    display: flex;
+    gap: 0px;
+    background: var(--card-bg);
+    border: 3px solid var(--button-border-color);
+    border-radius: 5px;
+    /* padding: 1px; */
+    margin: 2rem 3rem 2rem 3rem;
+}
+
+.strand-tab {
+    border: none;
+    border-radius: 5px;
+    padding: 0.45rem 0.5rem;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    cursor: default;
+    text-align: center;
+    transition: background 0.2s, color 0.2s;
+}
+
+/* active tab: fills remaining space, inverted colours matching the seg-active palette */
+.strand-tab-active {
+    flex: 1;
+    background: var(--uni-blau-4);
+    color: var(--bg-primary);
+}
+
+/* inactive tab: collapses to a letter, barely there */
+.strand-tab-inactive {
+    width: 4rem;
+    flex-shrink: 0;
+    background: transparent;
+    color: var(--text-secondary);
+    opacity: 0.45;
+}
+
+/* in dev-mode the inactive tab becomes clickable */
+.strand-tab-dev {
+    cursor: pointer;
+    opacity: 1;
+}
+
+.strand-tab.strand-tab-dev:hover {
+    background: var(--border-color);
+    color: var(--text-primary);
+}
+
+/* ── Segment column ────────────────────────────────────────────────────── */
+.strand-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+/* ── Segment buttons ───────────────────────────────────────────────────── */
+.seg-btn {
+    width: 100%;
+    padding: 1rem 0.25rem 1rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    font-weight: 500;
+    text-align: left;
+    cursor: default;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* margin-top: 2rem; */
+}
+
+/* hover always visible — cursor is the signal that the item is/isn't clickable */
+.seg-btn:hover {
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
+}
+
+/* active segment: inverted, non-interactive */
+.seg-active {
+    background: var(--text-primary);
+    border-color: var(--text-primary);
+    color: var(--bg-primary);
+    font-weight: 700;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* dev-mode non-active: pointer cursor (hover already applies to all) */
+.seg-dev {
+    cursor: pointer;
+}
+
+/* ── Dropdown ──────────────────────────────────────────────────────────── */
+.seg-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding: 0.2rem 0 0.2rem 0.35rem;
+    border-left: 2px solid var(--text-primary);
+    margin-left: 0.15rem;
+    margin-bottom: 2rem;
+}
+
+.sub-btn {
+    width: 100%;
+    padding: 0.28rem 0.4rem 0.28rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    background: transparent;
+    color: var(--text-primary);
+    font-size: 1rem;
+    text-align: left;
+    cursor: default;
+    transition: background 0.12s, color 0.12s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* hover always visible */
+.sub-btn:hover {
+    background: var(--text-primary);
+    color: var(--card-bg);
+}
+
+.sub-btn-active {
+    border: 2px solid var(--button-border-color);
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* active sub-btn stays stable on hover */
+.sub-btn-active:hover {
+    background: transparent;
+    color: var(--text-primary);
+}
+
+/* dev-mode: unlocked dropdown gets pointer cursor */
+.seg-dropdown:not(.seg-dropdown-locked) .sub-btn {
+    cursor: pointer;
+}
+
+/* ── Dark mode ─────────────────────────────────────────────────────────── */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .seg-btn {
+        border-color: var(--border-color);
+    }
+}
+
+/* ── Responsive: hide sidebar on small screens ─────────────────────────── */
+@media (max-width: 768px) {
+    .nav-bar {
+        display: none;
+    }
+}

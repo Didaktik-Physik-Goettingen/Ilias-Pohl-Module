@@ -273,7 +273,7 @@
         <div class="button-container">
             @if (isFirstPage) {
                 @if (devMode.isEnabled) {
-                    <button routerLink="/decision/t-damped-oscillations" class="btn btn-back">← Zurück zur Entscheidungsseite</button>
+                    <button class="btn btn-back" (click)="goBack()">← Zurück zur Entscheidungsseite</button>
                 }
             } @else {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>

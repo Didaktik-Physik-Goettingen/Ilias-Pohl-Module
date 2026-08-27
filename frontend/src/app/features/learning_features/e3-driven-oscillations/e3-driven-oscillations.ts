@@ -1,7 +1,8 @@
 import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choice';
 import { SingleChoice } from '../../../shared/evaluation/single-choice/single-choice';
@@ -16,7 +17,7 @@ import * as e3Content from './e3-driven-oscillations-content';
 
 @Component({
 	selector: 'app-e3-driven-oscillations',
-	imports: [CommonModule, RouterLink, SingleChoice, ImageChoice, MultipleChoice],
+	imports: [CommonModule, SingleChoice, ImageChoice, MultipleChoice],
 	templateUrl: './e3-driven-oscillations.html',
 	styleUrl: './e3-driven-oscillations.css',
 })
@@ -32,14 +33,15 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+    private pageSub: Subscription | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
         const link = (event.target as HTMLElement)
-            ?.closest('a[href^="#glossary-"]') as HTMLAnchorElement | null;
+            ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;
-        event.preventDefault();
-        const term = link.getAttribute('href')!.replace('#glossary-', '');
+        
+        const term = link.getAttribute('data-glossary')!;
         this.glossaryOverlay.open(term);
     }
 
@@ -125,11 +127,14 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnInit() {
-        // restore subpage from URL query param
-        const page = this.route.snapshot.queryParamMap.get('page');
-        if (page && ['1','2','3', '4', '5', '6', '7'].includes(page)) {
-            this.currentView = `driven_osc${page}`;
-        }
+        // subscribe to page param so nav-bar jumps update the view reactively
+        this.pageSub = this.route.queryParams.subscribe(params => {
+            const page = params['page'];
+            if (page && ['1','2','3','4','5','6','7'].includes(page)) {
+                this.currentView = `driven_osc${page}`;
+                this.renderMath();
+            }
+        });
 
         // read entry-flow so continue button can navigate correctly
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
@@ -163,6 +168,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
 
    ngOnDestroy() {
+        this.pageSub?.unsubscribe();
         if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }
@@ -224,7 +230,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'driven_osc1') {
-            this.router.navigate(["/decision/e-driven-oscillations"]);
+            this.router.navigate(["/decision/dec-e-driven"]);
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';
@@ -262,7 +268,7 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'driven_osc7') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-e-driven', 'true');
-                this.router.navigate(['/decision/e-driven-oscillations']);
+                this.router.navigate(['/decision/dec-e-driven']);
             } else {
                 this.router.navigate(['/target/tar-experiment']);
             }

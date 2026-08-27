@@ -1,0 +1,89 @@
+<nav class="nav-bar">
+    <div class="nav-bar-container">
+
+        <!-- Startseite -->
+        <button class="nav-endpoint-btn"
+            [class.nav-endpoint-active]="activeSegment === 'home'"
+            [class.nav-endpoint-dev]="devMode.isEnabled"
+            (click)="goHome()">
+            Startseite
+        </button>
+
+        <!-- Strand section -->
+        <div class="strand-section">
+
+            <!-- Strand switcher: always visible; inactive tab clickable only in dev-mode -->
+            <div class="strand-switcher">
+                <button class="strand-tab"
+                    [class.strand-tab-active]="chosenStrand === 'e'"
+                    [class.strand-tab-inactive]="chosenStrand !== 'e'"
+                    [class.strand-tab-dev]="devMode.isEnabled && chosenStrand !== 'e'"
+                    (click)="switchStrand('e')">
+                    {{ chosenStrand === 'e' ? 'Struktur Experiment' : 'EXP' }}
+                </button>
+                <button class="strand-tab"
+                    [class.strand-tab-active]="chosenStrand === 't'"
+                    [class.strand-tab-inactive]="chosenStrand !== 't'"
+                    [class.strand-tab-dev]="devMode.isEnabled && chosenStrand !== 't'"
+                    (click)="switchStrand('t')">
+                    {{ chosenStrand === 't' ? 'Struktur Theorie' : 'THEO' }}
+                </button>
+            </div>
+
+            <!-- Active strand segments only -->
+            <div class="strand-col">
+                @if (chosenStrand === 'e') {
+                    @for (seg of eSegments; track seg.id) {
+                        <button class="seg-btn"
+                            [ngClass]="getSegmentClass(seg)"
+                            (click)="onSegmentClick(seg)">
+                            {{ seg.label }}
+                        </button>
+                        @if (activeSegment === seg.id) {
+                            <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
+                                @for (sub of seg.subpages; track sub.route + (sub.queryParams?.['page'] ?? '')) {
+                                    <button class="sub-btn"
+                                        [class.sub-btn-active]="isSubpageActive(sub)"
+                                        (click)="navigateToSubpage(sub)">
+                                        {{ sub.label }}
+                                    </button>
+                                }
+                            </div>
+                        }
+                    }
+                }
+                @if (chosenStrand === 't') {
+                    @for (seg of tSegments; track seg.id) {
+                        @if (isSegmentVisible(seg)) {
+                            <button class="seg-btn"
+                                [ngClass]="getSegmentClass(seg)"
+                                (click)="onSegmentClick(seg)">
+                                {{ seg.label }}
+                            </button>
+                            @if (activeSegment === seg.id) {
+                                <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
+                                    @for (sub of seg.subpages; track sub.route + (sub.queryParams?.['page'] ?? '')) {
+                                        <button class="sub-btn"
+                                            [class.sub-btn-active]="isSubpageActive(sub)"
+                                            (click)="navigateToSubpage(sub)">
+                                            {{ sub.label }}
+                                        </button>
+                                    }
+                                </div>
+                            }
+                        }
+                    }
+                }
+            </div>
+        </div>
+
+        <!-- Anleitung -->
+        <button class="nav-endpoint-btn"
+            [class.nav-endpoint-active]="activeSegment === 'anleitung'"
+            [class.nav-endpoint-dev]="isAnleitungClickable"
+            (click)="goAnleitung()">
+            Anleitung
+        </button>
+
+    </div>
+</nav>

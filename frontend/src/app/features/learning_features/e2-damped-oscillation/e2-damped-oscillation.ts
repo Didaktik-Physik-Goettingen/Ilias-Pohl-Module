@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, HostL
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
 import { ResultsTracking } from '../../../core/services/results-tracking';
@@ -30,14 +31,15 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
+    private pageSub: Subscription | null = null;
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
         const link = (event.target as HTMLElement)
-            ?.closest('a[href^="#glossary-"]') as HTMLAnchorElement | null;
+            ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;
-        event.preventDefault();
-        const term = link.getAttribute('href')!.replace('#glossary-', '');
+        
+        const term = link.getAttribute('data-glossary')!;
         this.glossaryOverlay.open(term);
     }
 
@@ -79,11 +81,14 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnInit() {
-        // restore subpage from URL query param
-        const page = this.route.snapshot.queryParamMap.get('page');
-        if (page && ['1','2','3'].includes(page)) {
-            this.currentView = `damped_osc${page}`;
-        }
+        // subscribe to page param so nav-bar jumps update the view reactively
+        this.pageSub = this.route.queryParams.subscribe(params => {
+            const page = params['page'];
+            if (page && ['1','2','3'].includes(page)) {
+                this.currentView = `damped_osc${page}`;
+                this.renderMath();
+            }
+        });
 
         // read entry-flow so continue button can navigate correctly
         this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? '';
@@ -119,6 +124,7 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
 
 
     ngOnDestroy() {
+        this.pageSub?.unsubscribe();
         if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
         this.trackingService.endModule();
     }
@@ -173,7 +179,7 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.currentView === 'damped_osc1') {
-            this.router.navigate(["/decision/e-damped-oscillations"]);
+            this.router.navigate(["/decision/dec-e-damped"]);
             return;
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc1';
@@ -195,9 +201,9 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'damped_osc3') {
             if (this.navigationFlow === 'learning-first') {
                 sessionStorage.setItem('learning-done-e-damped', 'true');
-                this.router.navigate(['/decision/e-damped-oscillations']);
+                this.router.navigate(['/decision/dec-e-damped']);
             } else {
-                this.router.navigate(['/decision/e-driven-oscillations']);
+                this.router.navigate(['/decision/dec-e-driven']);
             }
             return;
         }

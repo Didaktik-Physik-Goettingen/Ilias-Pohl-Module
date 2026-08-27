@@ -13,16 +13,16 @@ import { TestTracking } from '../../../core/services/test-tracking';
 })
 export class DecEDampedOscillations implements OnInit {
     learningModuleLink = '/learning/e2-damped-oscillations';
-    testLink = '/test/e-damped-osc';
-    simulationLink = '/simulation/sim-e-damped-osc';
-    nextLink = '/decision/e-driven-oscillations';
+    testLink = '/test/test-e-damped';
+    simulationLink = '/simulation/sim-e-damped';
+    nextLink = '/decision/dec-e-driven';
     testDisabled = false;
     learningCompleted = false;
 
     constructor(public router: Router, public devMode: DevModeService, private testTracking: TestTracking) {}
 
     ngOnInit() {
-        const result = this.testTracking.getTestResults('damped-oscillations');
+        const result = this.testTracking.getTestResults('e-damped-oscillations-test');
         if (result?.percentageScore !== undefined && result.percentageScore < 80) {
             this.testDisabled = true;
         }
