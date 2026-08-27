@@ -40,7 +40,7 @@
     --button-text-color-hover: var(--uni-blau-1);
     --bg-footer: var(--uni-blau-2);
     --glossary-link-color: var(--uni-blau-3);
-    --glossary-link-color-hover: var(--uni-blau-4);
+    --glossary-link-color-hover: var(--uni-blau-3);
     --test-h1-color: var(--physik-gelb);
     --target-h1-color: var(--philo-purple);
 
@@ -71,7 +71,7 @@
     --button-text-color:       white;
     --button-text-color-hover: white;
     --bg-footer: var(--uni-blau-2);
-    --glossary-link-color:     var(--uni-blau-3);
+    --glossary-link-color:     var(--uni-blau-4);
     --glossary-link-color-hover: var(--uni-blau-4);
     --test-h1-color:           var(--physik-gelb);
     --target-h1-color:         #c084fc;
@@ -111,8 +111,6 @@ body {
     grid-template-columns: 500px 1fr 500px;
     flex: 1;                        /* grows inside .app-container flex column */
     align-items: stretch;           /* main + phantom columns fill the page height */
-    /* extends the nav background colour below the sticky 100vh box */
-    background: linear-gradient(to right, var(--bg-secondary) 500px, var(--bg-primary) 500px);
 }
 
 /* phantom right column mirrors the nav width so margin:auto centers correctly */
@@ -424,7 +422,8 @@ button.btn {
 .mjx-formula-inhom,
 .mjx-formula-inhom * { color: var(--formula-inhom) !important; }
 
-/* inline glossary trigger links — works in both templates and sanitized strings */
+/* inline glossary trigger links — works in both templates and sanitized strings.
+   No href: prevents browser "Open in new tab" while keeping the pointer cursor. */
 a.glossary-link {
     color: var(--glossary-link-color);
     border-bottom: 2px solid transparent;

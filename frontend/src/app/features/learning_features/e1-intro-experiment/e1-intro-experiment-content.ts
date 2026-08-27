@@ -31,28 +31,28 @@ export const introExpText2a = `
 export const introExpText3a = `
     Das Schwungrad ist in dem Versuch im Schwerpunkt aufgehängt. Durch das Anbringen zusätzliche
     Massestücke wirkt ein zusätzliches
-    <a href="#glossary-angular-momentum" class="glossary-link">Drehmoment</a>,
+    <a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>,
     über das die Feder näher charakterisiert werden kann.
     Um diesen Zusammenhang nachzuvollziehen, betrachten wir zunächst das Schwungrad ohne den zusätzlichen
     Antrieb (s. Abbildung).
     <br><br>
     Auf ein zusätzliches Massestück mit der Masse $m_{zm}$ wirkt die Kraft $\\vec{F}_{zm} = m_{zm}\\vec{g}$,
     wodurch auf das Schwungrad das
-    <a href="#glossary-angular-momentum" class="glossary-link">Drehmoment</a>
+    <a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>
     $\\vec{M}_{zm} = \\vec{r} \\times \\vec{F}_{zm}$, bzw.
     $|\\vec{M}_{zm}| = m_{zm}gR\\sin(\\varphi)$ wirkt.
     <br><br>
     Im stationären Fall gleichen sich das zusätzliche
-    <a href="#glossary-angular-momentum" class="glossary-link">Drehmoment</a>
+    <a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>
     und das rücktreibende
-    <a href="#glossary-angular-momentum" class="glossary-link">Drehmoment</a>  der
+    <a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>  der
     Feder aus: $(M_{\\text{Feder}} = -D\\varphi)$.
 `;
 
 export const introExpText3b = `
     Der Versuchsaufbau kann noch weiter charakterisiert werden.<br>
     Beispielsweise kann das
-    <a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
+    <a data-glossary="moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
     des Schwungrads bestimmt oder die Wirkung der Wirbelstrombremse untersucht werden.<br>
     Beide Eigenschaften des Versuchsaufbaus beziehen sich auf das dynamische Verhalten des Systems.
     Daher setzen Sie sich auf den folgenden Seiten zunächst mit der Dynamik des gedämpften Systems auseinander,

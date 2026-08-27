@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choice';
@@ -17,7 +17,7 @@ import * as e3Content from './e3-driven-oscillations-content';
 
 @Component({
 	selector: 'app-e3-driven-oscillations',
-	imports: [CommonModule, RouterLink, SingleChoice, ImageChoice, MultipleChoice],
+	imports: [CommonModule, SingleChoice, ImageChoice, MultipleChoice],
 	templateUrl: './e3-driven-oscillations.html',
 	styleUrl: './e3-driven-oscillations.css',
 })
@@ -38,10 +38,10 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
         const link = (event.target as HTMLElement)
-            ?.closest('a[href^="#glossary-"]') as HTMLAnchorElement | null;
+            ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;
-        event.preventDefault();
-        const term = link.getAttribute('href')!.replace('#glossary-', '');
+        
+        const term = link.getAttribute('data-glossary')!;
         this.glossaryOverlay.open(term);
     }
 

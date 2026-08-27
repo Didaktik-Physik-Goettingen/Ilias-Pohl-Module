@@ -24,9 +24,9 @@ export const question1: SingleChoiceQuestion = {
 			Auf der nächsten Seite finden Sie einen kurzen Überblick, wie die soeben aufgestellte Differentialgleichung gelöst werden kann.<br><br>
 
 			Hier erhalten Sie einen allgemeineren Einblick in das Lösen von
-			<a href="#glossary-hom-dgl" class="glossary-link">homogenen</a>
+			<a data-glossary="hom-dgl" class="glossary-link">homogenen</a>
 			oder
-			<a href="#glossary-inhom-dgl" class="glossary-link">inhomogenen Differentialgleichungen</a>
+			<a data-glossary="inhom-dgl" class="glossary-link">inhomogenen Differentialgleichungen</a>
 			.
 			`
 };

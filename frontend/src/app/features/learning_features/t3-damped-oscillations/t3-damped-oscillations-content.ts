@@ -10,18 +10,18 @@ export const t3Text1b = `
 
 export const t3Text1c = `
             mit den Abkürzungen $\\omega_0^2 := D/m$ (ungedämpfte
-            <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a>)
+            <a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>)
             und $2\\gamma := b/m$ ($\\gamma > 0$:
-            <a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>).
+            <a data-glossary="damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>).
             Der Faktor 2 in $2\\gamma$ erweist sich in der Lösung als rechnerisch günstig.<br><br>
 
             Diese Gleichung nennt man <strong>gedämpft</strong>, weil die Reibungskraft proportional zur
             Geschwindigkeit ist, und <strong>frei</strong>, weil keine äußere Anregung wirkt (
-			<a href="#glossary-hom-dgl" class="glossary-link">homogene Differentialgleichung</a>
+			<a data-glossary="hom-dgl" class="glossary-link">homogene Differentialgleichung</a>
 			).<br><br>
 
             Zur Lösung verwendet man den
-            <a href="#glossary-exponential-ansatz" class="glossary-link">Exponentialansatz</a>
+            <a data-glossary="exponential-ansatz" class="glossary-link">Exponentialansatz</a>
             $x(t) = c\\,e^{\\lambda t}$ ($c \\neq 0$). Da $e^{\\lambda t}$ beim Ableiten nur mit konstanten
             Faktoren multipliziert wird, lassen sich alle Terme nach dem Einsetzen durch $e^{\\lambda t}$
             kürzen. Man erhält die <strong>Bestimmungsgleichung</strong>:
@@ -35,7 +35,7 @@ export const t3Text1d = `
 
 export const t3Text1e = `
             Mit der gedämpften
-			<a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a>
+			<a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>
 			$\\omega_e := \\sqrt{\\omega_0^2 - \\gamma^2}$ lautet die
             allgemeine Lösung:
             $$x(t) = e^{-\\gamma t}\\!\\left(c_1\\,e^{-i\\omega_e t} + c_2\\,e^{i\\omega_e t}\\right)$$

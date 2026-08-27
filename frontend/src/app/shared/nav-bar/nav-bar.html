@@ -4,29 +4,35 @@
         <!-- Startseite -->
         <button class="nav-endpoint-btn"
             [class.nav-endpoint-active]="activeSegment === 'home'"
-            [class.nav-endpoint-grayed]="!devMode.isEnabled"
+            [class.nav-endpoint-dev]="devMode.isEnabled"
             (click)="goHome()">
             Startseite
         </button>
 
         <!-- Strand section -->
         <div class="strand-section">
-            <div class="strand-headers">
-                <span class="strand-header-label"
-                    [class.strand-faded]="chosenStrand === 't' && !devMode.isEnabled">
-                    Fokus Experiment
-                </span>
-                <span class="strand-header-label"
-                    [class.strand-faded]="chosenStrand === 'e' && !devMode.isEnabled">
-                    Fokus Theorie
-                </span>
+
+            <!-- Strand switcher: always visible; inactive tab clickable only in dev-mode -->
+            <div class="strand-switcher">
+                <button class="strand-tab"
+                    [class.strand-tab-active]="chosenStrand === 'e'"
+                    [class.strand-tab-inactive]="chosenStrand !== 'e'"
+                    [class.strand-tab-dev]="devMode.isEnabled && chosenStrand !== 'e'"
+                    (click)="switchStrand('e')">
+                    {{ chosenStrand === 'e' ? 'Struktur Experiment' : 'EXP' }}
+                </button>
+                <button class="strand-tab"
+                    [class.strand-tab-active]="chosenStrand === 't'"
+                    [class.strand-tab-inactive]="chosenStrand !== 't'"
+                    [class.strand-tab-dev]="devMode.isEnabled && chosenStrand !== 't'"
+                    (click)="switchStrand('t')">
+                    {{ chosenStrand === 't' ? 'Struktur Theorie' : 'THEO' }}
+                </button>
             </div>
 
-            <div class="strand-columns">
-
-                <!-- Experimental column -->
-                <div class="strand-col"
-                    [class.strand-col-faded]="chosenStrand === 't' && !devMode.isEnabled">
+            <!-- Active strand segments only -->
+            <div class="strand-col">
+                @if (chosenStrand === 'e') {
                     @for (seg of eSegments; track seg.id) {
                         <button class="seg-btn"
                             [ngClass]="getSegmentClass(seg)"
@@ -45,11 +51,8 @@
                             </div>
                         }
                     }
-                </div>
-
-                <!-- Theory column -->
-                <div class="strand-col"
-                    [class.strand-col-faded]="chosenStrand === 'e' && !devMode.isEnabled">
+                }
+                @if (chosenStrand === 't') {
                     @for (seg of tSegments; track seg.id) {
                         @if (isSegmentVisible(seg)) {
                             <button class="seg-btn"
@@ -70,18 +73,17 @@
                             }
                         }
                     }
-                </div>
-
+                }
             </div>
         </div>
 
         <!-- Anleitung -->
         <button class="nav-endpoint-btn"
             [class.nav-endpoint-active]="activeSegment === 'anleitung'"
-            [class.nav-endpoint-grayed]="!isAnleitungClickable"
+            [class.nav-endpoint-dev]="isAnleitungClickable"
             (click)="goAnleitung()">
             Anleitung
         </button>
 
     </div>
-</nav> 
+</nav>

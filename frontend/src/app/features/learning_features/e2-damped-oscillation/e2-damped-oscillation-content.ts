@@ -2,10 +2,10 @@ export const dampedOscText1a = `
 		Sie haben sich bereits mit drei wichtigen physikalischen Bauelementen des Versuchs vertraut gemacht, dem Schwungrad, der Feder und der Wirbelstrombremse. In diesem Abschnitt werden Sie sich damit auseinandersetzen, wie man den Einfluss dieser unterschiedlichen Bauelemente auf die Dynamik des Schwungrads modellieren kann.<br><br>
 
         Wie Sie bereits gelesen haben, wirken sowohl die Feder, als auch (indirekt) die Wirbelstrombremse ein
-		<a href="#glossary-angular-momentum" class="glossary-link">Drehmoment</a>
+		<a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>
 		auf das Schwungrad aus.
         Die Wirkung der Feder hängt hierbei vom Winkel $\\varphi$ ab --- $M = -D\\varphi$ mit dem
-		<a href="#glossary-directive-moment" class="glossary-link">Richtmoment</a>
+		<a data-glossary="directive-moment" class="glossary-link">Richtmoment</a>
 		$D$ ---
         die Wirkung der Wirbelstrombremse hängt von der Winkelgeschwindigkeit $\\dot{\\varphi}$ ab --- $M = -\\rho\\dot{\\varphi}$ mit dem Reibungskoeffizienten $\\rho$.
         <br><br>
@@ -14,7 +14,7 @@ export const dampedOscText1a = `
         Für Rotationsbewegungen gilt im Allgemeinen, dass
         $$\\Theta\\ddot{\\varphi} = \\sum_i M_i,$$
         wobei $\\Theta$ das
-		<a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
+		<a data-glossary="moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
 		ist.<br><br>
 `;
 
@@ -24,11 +24,11 @@ export const dampedOscText1b = `
 
 export const dampedOscText1c = `
 		Die
-		<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+		<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 		für die Bewegung des Schwungrads lautet also
 		$$\\Theta\\ddot{\\varphi}+\\rho\\dot{\\varphi}+D\\varphi=0$$
 		Häufig verwendet man die sogenannte "Normalform", also die Form, in der kein zusätzlicher Faktor in dem Term mit der höchsten Ableitung steht. In dieser Form lautet die
-		<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+		<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 		:
 `;
 
@@ -38,21 +38,21 @@ export const dampedOscText1d = `
 
 export const dampedOscText1e = `
 		mit den Abkürzungen $2\\beta:=\\rho/\\Theta$ ($\\beta$:
-		<a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>;
+		<a data-glossary="damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>;
 		die Wahl des Faktor 2 ist hier zunächst beliebig, es zeigt sich in der Lösung der Gleichung, dass diese Wahl geschickt ist) und  $\\omega_0^2:=D/\\Theta$ ($\\omega_0$:
-		<a href="#glossary-natural-frequency" class="glossary-link">ungedämpfte Eigenfrequenz</a>
+		<a data-glossary="natural-frequency" class="glossary-link">ungedämpfte Eigenfrequenz</a>
 		).
 `;
 
 export const dampedOscText2a = `
 		Diese
-		<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+		<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 		beschreibt, bis auf Anfangsbedingungen, das System vollständig, die Lösung der Gleichung gibt aber einen deutlich besseren Einblick darein, wie die Bewegung möglicherweise aussieht.<br><br>
 
 		Zur Lösung der
-		<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+		<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 		kann der sogenannte
-		<a href="#glossary-exponential-ansatz" class="glossary-link">Exponentialansatz</a>
+		<a data-glossary="exponential-ansatz" class="glossary-link">Exponentialansatz</a>
 		verwendet werden.
 		Dieser Ansatz bietet sich bei vielen Bewegungsgleichungen an und die grundsätzliche Idee ist, dass man annimmt die Lösung sei von der Form $\\varphi(t)=exp(\\lambda t)$ und dann durch Einsetzen schaut, für welche $\\lambda$ dieser Ansatz gerechtfertigt ist.
 `;
@@ -87,7 +87,7 @@ export const dampedOscText2b = `
 `;
 
 export const dampedOscText2c = `
-		Für den <b>Schwingfall</b> ($\\omega_0^2>\\beta^2$), wenn also die Dämpfung klein im Vergleich zur <a href="#glossary-natural-frequency" class="glossary-link">Eigenfrequenz</a>
+		Für den <b>Schwingfall</b> ($\\omega_0^2>\\beta^2$), wenn also die Dämpfung klein im Vergleich zur <a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>
 		des Systems ist, kann die Lösung in zwei äquivalenten Weisen angegeben werden:
 `;
 
@@ -100,21 +100,21 @@ export const dampedOscText2d = `
 
 export const dampedOscText2e = `
 		Zur Erinnerung: $\\beta$ ist der
-		<a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>
+		<a data-glossary="damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>
 		und $\\omega_0$ die
-		<a href="#glossary-natural-frequency" class="glossary-link">ungedämpfte Eigenfrequenz</a>
+		<a data-glossary="natural-frequency" class="glossary-link">ungedämpfte Eigenfrequenz</a>
 		, die durch
-		<a href="#glossary-directive-moment" class="glossary-link">Richtmoment</a>
+		<a data-glossary="directive-moment" class="glossary-link">Richtmoment</a>
 		und
-		<a href="#glossary-moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
+		<a data-glossary="moment-of-inertia" class="glossary-link">Trägheitsmoment</a>
 		bestimmt ist.
 		<br><br>
 		Die Variablen $a$ und $b$ in der obigen Gleichung sowie $\\varphi_0$ (
-		<a href="#glossary-amplitude" class="glossary-link">Maximalamplitude</a>
+		<a data-glossary="amplitude" class="glossary-link">Maximalamplitude</a>
 		) und $\\phi$ (Phasenverschiebung) in der unteren Gleichung ergeben sich aus den Anfangsbedingungen (Anfangsauslenkung und -geschwindigkeit).
 		<br><br>
 		Die
-		<a href="#glossary-natural-frequency" class="glossary-link">gedämpfte Eigenfrequenz</a>
+		<a data-glossary="natural-frequency" class="glossary-link">gedämpfte Eigenfrequenz</a>
 		kann im Experiment aus der Periodenlänge $T=\\frac{1}{\\omega_e}$ bestimmt werden.
 `;
 
@@ -122,19 +122,19 @@ export const dampedOscText3a = `
 		In der linken Abbildung ist exemplarisch der zeitliche Verlauf der Winkelauslenkung eines gedämpften Systems dargestellt, wobei die Anfangsauslenkung $x_0>0$ und die Anfangsgeschwindigkeit $v_0=0$ sind.<br><br>
 
 		Die blaue Kurve zeigt jeweils die Winkelauslenkung des Rades über die Zeit, die rote gestrichelte Kurve deutet die abnehmende
-		<a href="#glossary-amplitude" class="glossary-link">Amplitude</a>
+		<a data-glossary="amplitude" class="glossary-link">Amplitude</a>
 		über die Zeit an — sie wird auch Einhüllende genannt.<br><br>
 
 		Je stärker der Überlapp zwischen Magnet und Schwungrad, desto schneller nimmt die
-		<a href="#glossary-amplitude" class="glossary-link">Amplitude</a>
+		<a data-glossary="amplitude" class="glossary-link">Amplitude</a>
 		des Systems ab. In den Abbildungen links nimmt die Dämpfung von oben nach unten zu, in der untersten Abbildung zeichnet sich bereits der Übergang zum
-		<a href="#glossary-critical-damping" class="glossary-link">aperischen Grenzfall</a>
+		<a data-glossary="critical-damping" class="glossary-link">aperischen Grenzfall</a>
 		ab.<br><br>
 
 		Kennt man den zeitlichen Verlauf, so kann das Verhältnis der
-		<a href="#glossary-amplitude" class="glossary-link">Amplituden</a>
+		<a data-glossary="amplitude" class="glossary-link">Amplituden</a>
 		in Kombination mit der Periodendauer $T$ genutzt werden, um den
-		<a href="#glossary-damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>
+		<a data-glossary="damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>
 		$\\beta$ zu bestimmen.<br><br>
 
 		Als zusätzliche Hilfsgröße zur Analyse der Dämpfung wird hierfür das „logarithmische Dekrement" $\\Lambda$, das sich explizit auf das Verhältnis benachbarter Maxima (zeitlicher Abstand = Periodendauer $T$) bezieht:

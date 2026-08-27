@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, HostBinding } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -227,10 +227,8 @@ export class NavBar implements OnInit, OnDestroy {
 
     getSegmentClass(seg: SegmentDef): Record<string, boolean> {
         const isActive = this.activeSegment === seg.id;
-        const isOtherStrand = !!this.chosenStrand && seg.strand !== this.chosenStrand && !this.devMode.isEnabled;
         return {
             'seg-active': isActive,
-            'seg-grayed': !isActive && !this.devMode.isEnabled && !isOtherStrand,
             'seg-dev': this.devMode.isEnabled && !isActive,
         };
     }
@@ -258,6 +256,15 @@ export class NavBar implements OnInit, OnDestroy {
         if (first) this.navigateToSubpage(first);
     }
 
+    switchStrand(strand: 'e' | 't') {
+        if (!this.devMode.isEnabled) return;
+        const segments = strand === 'e'
+            ? this.eSegments
+            : this.tSegments.filter(s => this.isSegmentVisible(s));
+        const firstSub = segments[0]?.subpages[0];
+        if (firstSub) this.navigateToSubpage(firstSub);
+    }
+
     goHome() {
         if (!this.devMode.isEnabled) return;
         this.router.navigate(['/']);
@@ -265,6 +272,11 @@ export class NavBar implements OnInit, OnDestroy {
 
     get anleitungRoute(): string {
         return this.chosenStrand === 't' ? '/target/tar-theory' : '/target/tar-experiment';
+    }
+
+    @HostBinding('style.visibility')
+    get hostVisibility(): string {
+        return (!this.devMode.isEnabled && this.activeSegment === 'home') ? 'hidden' : '';
     }
 
     get isAnleitungClickable(): boolean {

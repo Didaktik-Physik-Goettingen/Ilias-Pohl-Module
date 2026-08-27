@@ -1,6 +1,6 @@
 export const freeOscText1a = `
 			Die
-			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 			des ungedämpften harmonischen Oszillators lautet:
 		`;
 
@@ -10,14 +10,14 @@ export const freeOscText1b = `
 
 export const freeOscText1c = `
 			Mit der Abkürzung $\\omega_0^2 = \\frac{D}{m}$ für die Masse $m$ und die
-			<a href="#glossary-spring-constant" class="glossary-link">Federkonstante</a>
+			<a data-glossary="spring-constant" class="glossary-link">Federkonstante</a>
 			$D$ nennt man diese Gleichung:
 			<ul>
 				<li><strong>ungedämpft</strong>, weil keinerlei Dämpung betrachtet wird,</li>
 				<li><strong>frei</strong>, weil keinerlei äußere Anregung existiert. Die rechte Seite der
-				<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+				<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 				ist null. Deshalb heißt die Gleichung auch
-				<a href="#glossary-hom-dgl" class="glossary-link">homogene Differentialgleichung</a>,
+				<a data-glossary="hom-dgl" class="glossary-link">homogene Differentialgleichung</a>,
 				</li>
 				<li><strong>harmonisch</strong>, weil die akustische Überlagerung von den entstehenden „reinen" Sinustönen als harmonisch empfunden wird.</li>
 			</ul>
@@ -27,16 +27,16 @@ export const freeOscText1c = `
 
 export const freeOscText1d = `
 			Gelöst werden kann die
-			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 			nun mit einem
-			<a href="#glossary-exponential-ansatz" class="glossary-link">Exponentialansatz </a>
+			<a data-glossary="exponential-ansatz" class="glossary-link">Exponentialansatz </a>
 			gelöst werden:
 			$$x(t) = c \\cdot e^{\\lambda t}, \\quad c \\neq 0$$
 			Dazu bestimmen wir die zeitlichen Ableitungen:
 			$$\\dot{x}(t) = c\\lambda \\cdot e^{\\lambda t}$$
 			$$\\ddot{x}(t) = c\\lambda^2 \\cdot e^{\\lambda t}$$
 			Nun setzen wir den Ansatz und die zweite Ableitung in die
-			<a href="#glossary-hom-dgl" class="glossary-link">Differentialgleichung</a>
+			<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
 			ein:
 			$$c\\lambda^2e^{\\lambda t} + c\\omega_0^2e^{\\lambda t} = ce^{\\lambda t}(\\lambda^2 + \\omega_0^2) = 0$$
 			Da der Faktor vor der Klammer nicht für alle Zeiten null wird, muss die Klammer selbst null werden. Dadurch ergibt sich die Bestimmungsgleichung:

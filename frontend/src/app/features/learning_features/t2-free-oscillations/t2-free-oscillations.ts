@@ -37,10 +37,10 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 	@HostListener('click', ['$event'])
 	onGlossaryLink(event: MouseEvent) {
 		const link = (event.target as HTMLElement)
-			?.closest('a[href^="#glossary-"]') as HTMLAnchorElement | null;
+			?.closest('a[data-glossary]') as HTMLAnchorElement | null;
 		if (!link) return;
-		event.preventDefault();
-		const term = link.getAttribute('href')!.replace('#glossary-', '');
+		
+		const term = link.getAttribute('data-glossary')!;
 		this.glossaryOverlay.open(term);
 	}
 	// +++ QA data +++
