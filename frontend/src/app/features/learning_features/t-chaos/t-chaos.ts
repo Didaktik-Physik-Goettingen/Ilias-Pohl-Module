@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnInit, AfterViewInit, Inject, PLATFORM_ID, OnDestroy, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -21,7 +21,7 @@ declare global {
   styleUrl: './t-chaos.css',
 })
 
-export class TChaos implements OnInit, OnDestroy {
+export class TChaos implements OnInit, AfterViewInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -42,6 +42,7 @@ export class TChaos implements OnInit, OnDestroy {
     }
 
     private pageSub: Subscription | null = null;
+    private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
 
     chaosText1a!: SafeHtml;
     chaosText1b!: SafeHtml;
@@ -54,7 +55,7 @@ export class TChaos implements OnInit, OnDestroy {
   ngOnInit() {
       this.pageSub = this.route.queryParams.subscribe(params => {
           const page = params['page'];
-          if (page && ['1','2','3','4'].includes(page)) {
+          if (page && ['1','2'].includes(page)) {
               this.currentView = `chaos_${page}`;
               this.renderMath();
           }
@@ -72,28 +73,27 @@ export class TChaos implements OnInit, OnDestroy {
       this.chaosText2c = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText2c);
       this.chaosText3a = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText3a);
 
+  }
+
+  ngAfterViewInit(): void {
       this.renderMath();
   }
 
   ngOnDestroy() {
       this.pageSub?.unsubscribe();
+      if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
       this.trackingService.endModule();
   }
 
-  // trigger MathJax rendering
-	renderMath() {
-		if (isPlatformBrowser(this.platformId)) {
-			setTimeout(() => {
-				if (window.MathJax) {
-					// Clear all previous MathJax processing
-					const elements = document.querySelectorAll('.MathJax');
-					elements.forEach(el => el.remove());
-					
-					window.MathJax.typesetPromise();
-				}
-			}, 100);
-		}
-	}
+  renderMath(): void {
+      if (isPlatformBrowser(this.platformId)) {
+          if (this.mathJaxTimeout !== null) clearTimeout(this.mathJaxTimeout);
+          this.mathJaxTimeout = setTimeout(() => {
+              this.mathJaxTimeout = null;
+              if (window.MathJax?.typesetPromise) window.MathJax.typesetPromise();
+          }, 100);
+      }
+  }
 
   	// +++ in-page navigation +++
 

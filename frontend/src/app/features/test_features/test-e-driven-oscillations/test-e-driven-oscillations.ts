@@ -55,7 +55,8 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
             minPercentage: 80,
             maxPercentage: 100,
             level: 'high' as const,
-            message: 'Sie haben ein gutes Grundlagenwissen zu getriebenen, gedämpften Schwingungen und bekommen nun ihre <b>Versuchsanleitung</b>.',
+            message: `Sie haben ein gutes Grundlagenwissen zu getriebenen, gedämpften Schwingungen und können ihr Wissen nun mit
+            <a class="glossary-link" routerLink="/learning/t-chaos"><b>chaotischem Verhalten</b></a> erweitern oder direkt ihre <b>Versuchsanleitung bekommen.</b>.`,
             continueLink: '/target/tar-experiment',
             continueLinkText: 'Weiter zur Anleitung',
         }
