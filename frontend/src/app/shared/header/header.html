@@ -1,3 +1,15 @@
+@if (showBridgeConfirm) {
+    <div class="bridge-overlay" (click)="closeBridgeConfirm()">
+        <div class="bridge-dialog" (click)="$event.stopPropagation()">
+            <button class="bridge-dialog-close" (click)="closeBridgeConfirm()">✕</button>
+            <p class="bridge-dialog-text">Sie werden nun Ihre jetzige Session verlassen um sich zu verifizieren.</p>
+            <div class="bridge-dialog-actions">
+                <button class="bridge-dialog-confirm" (click)="confirmBridge()">Weiter zur Verifikation</button>
+            </div>
+        </div>
+    </div>
+}
+
 <div class="header-wrapper">
     <header>
         <div class="header-content">
@@ -5,9 +17,15 @@
             <div class="header-subtitle">Praktikum zu Experimentalphysik I</div>
             <!-- Debug: Show session ID -->
             @if (sessionService.hasValidSession()) {
-                <div class="session-debug">
-                    Session: {{ sessionService.sessionId() }}
-                </div>
+                @if (sessionService.isRogueUser()) {
+                    <div class="session-debug session-debug--bridge" (click)="goToBridge()">
+                        Session: {{ sessionService.sessionId() }}
+                    </div>
+                } @else {
+                    <div class="session-debug">
+                        Session: {{ sessionService.sessionId() }}
+                    </div>
+                }
             }
             <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="themeService.isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
                 <img [src]="themeService.themeIconPath()" [alt]="themeService.isDarkMode() ? 'Dark mode' : 'Light mode'">

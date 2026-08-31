@@ -16,6 +16,7 @@ import { DevModeService } from '../../core/services/dev-mode';
 })
 export class Header implements OnInit {
     isScrolled = false;
+    showBridgeConfirm = false;
 
 
     constructor(
@@ -50,5 +51,22 @@ export class Header implements OnInit {
 
     toggleTheme() {
         this.themeService.toggleTheme();
+    }
+
+    goToBridge() {
+        this.showBridgeConfirm = true;
+    }
+
+    closeBridgeConfirm() {
+        this.showBridgeConfirm = false;
+    }
+
+    confirmBridge() {
+        if (isPlatformBrowser(this.platformId)) {
+            const bridgeUrl = window.location.port === '4200'
+                ? 'http://localhost:8000/ilias_bridge.html'
+                : new URL('ilias_bridge.html', document.baseURI).href;
+            window.location.href = bridgeUrl;
+        }
     }
 }

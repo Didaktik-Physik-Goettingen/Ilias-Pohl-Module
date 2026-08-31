@@ -115,7 +115,89 @@ header {
 }
 
 .session-debug {
-    /* color: var(--jura-rot); */
     color: var(--physik-gelb);
-    /* background-color: white; */
+}
+
+.session-debug--bridge {
+    cursor: pointer;
+    text-decoration: underline dotted;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+}
+
+.session-debug--bridge:hover {
+    opacity: 1;
+}
+
+/* Bridge confirmation overlay */
+.bridge-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bridge-dialog {
+    background: #ffffff;
+    color: rgb(21, 50, 104);
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.bridge-dialog-close {
+    position: absolute;
+    top: 0.9rem;
+    right: 0.9rem;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    line-height: 1;
+    padding: 0.25rem;
+    cursor: pointer;
+    color: rgb(21, 50, 104);
+    opacity: 0.6;
+    transition: opacity 0.15s;
+}
+
+.bridge-dialog-close:hover {
+    opacity: 1;
+}
+
+.bridge-dialog-text {
+    color: rgb(21, 50, 104);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    padding-right: 1.5rem;
+}
+
+.bridge-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.bridge-dialog-confirm {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    background: #f0f2f5;
+    color: rgb(21, 50, 104);
+    border: 3px solid rgb(21, 50, 104);
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(21, 50, 104, 0.12);
+    transition: all 0.3s ease;
+}
+
+.bridge-dialog-confirm:hover {
+    background: #ffffff;
+    color: rgb(21, 50, 104);
 }

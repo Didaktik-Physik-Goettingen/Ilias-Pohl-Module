@@ -1,5 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DataExport } from '../../../core/services/data-export';
 
@@ -63,11 +65,22 @@ export class EndPage implements OnInit {
     maxPoints = 0;
     percentage = 0;
     performanceLevel: 'low' | 'medium' | 'high' = 'low';
-    performanceMessage = '';
+    performanceMessage: SafeHtml = '';
     continueLink = '';
     continueLinkText = '';
 
+    @HostListener('click', ['$event'])
+    onInlineRouteLink(event: MouseEvent) {
+        const link = (event.target as HTMLElement)?.closest('a[data-route]') as HTMLAnchorElement | null;
+        if (!link) return;
+        event.preventDefault();
+        const route = link.getAttribute('data-route')!;
+        this.router.navigate([route]);
+    }
+
     constructor(
+        private router: Router,
+        private sanitizer: DomSanitizer,
         private testTracking: TestTracking,
         private dataExport: DataExport
     ) {}
@@ -96,7 +109,7 @@ export class EndPage implements OnInit {
 
         if (threshold) {
             this.performanceLevel = threshold.level;
-            this.performanceMessage = threshold.message;
+            this.performanceMessage = this.sanitizer.bypassSecurityTrustHtml(threshold.message);
             this.continueLink = threshold.continueLink;
             this.continueLinkText = threshold.continueLinkText;
             this.resultsCalculated.emit({

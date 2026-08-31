@@ -162,6 +162,25 @@
         .user-check-result.new     { background: #e8f0fb; color: rgb(21, 50, 104); }
         .user-check-result.error   { background: #fdecea; color: #d93025; }
         .user-check-result.hidden  { visibility: hidden; }
+
+        .btn-rogue {
+            width: 100%;
+            margin-top: 10px;
+            padding: 11px;
+            background: transparent;
+            color: rgb(135, 135, 134);
+            border: 1.5px solid rgb(217, 218, 218);
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+        }
+
+        .btn-rogue:hover {
+            background: rgb(236, 236, 237);
+            border-color: rgb(135, 135, 134);
+        }
     </style>
 </head>
 <body>
@@ -208,6 +227,7 @@
         <div class="user-check-result hidden" id="user-check-result"></div>
 
         <button class="btn" id="submit-btn" onclick="handleSubmit()" disabled>Weiter</button>
+        <button class="btn-rogue" onclick="handleRogueSubmit()">Weiter als unverifizierter Benutzer</button>
 
         <div class="status hidden" id="status">
             <div class="spinner" id="spinner" style="display:none"></div>
@@ -304,6 +324,11 @@
                 console.error('Check error:', err);
                 setStatus('error', 'Verbindung zum Server fehlgeschlagen.');
             }
+        }
+
+        function handleRogueSubmit() {
+            const rogueId = 'rogue_user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+            window.location.href = `${MODULE_URL}?session_id=${encodeURIComponent(rogueId)}`;
         }
 
         // "Weiter" only runs after the check has already passed.

@@ -177,15 +177,6 @@ export class NavBar implements OnInit, OnDestroy {
                 localStorage.setItem(this.STRAND_KEY, strand);
             }
         }
-        // record individual conditional routes when first reached
-        const CONDITIONAL = ['t-chaos', 't-simulation', 't-setup'];
-        if (this.activeSegment && CONDITIONAL.includes(this.activeSegment)) {
-            this.visitedConditionalT.add(this.activeSegment);
-            if (isPlatformBrowser(this.platformId)) {
-                localStorage.setItem(this.VISITED_CONDITIONAL_KEY,
-                    JSON.stringify([...this.visitedConditionalT]));
-            }
-        }
     }
 
     segmentFromUrl(url: string): string | null {
@@ -223,7 +214,7 @@ export class NavBar implements OnInit, OnDestroy {
     isSegmentVisible(seg: SegmentDef): boolean {
         if (!seg.conditional) return true;
         if (this.devMode.isEnabled) return true;
-        return this.visitedConditionalT.has(seg.id) || this.activeSegment === seg.id;
+        return this.activeSegment === seg.id;
     }
 
     getSegmentClass(seg: SegmentDef): Record<string, boolean> {

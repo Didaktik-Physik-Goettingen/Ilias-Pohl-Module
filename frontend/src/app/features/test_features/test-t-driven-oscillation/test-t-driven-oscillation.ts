@@ -57,9 +57,9 @@ export class TestTDrivenOscillation implements OnInit, OnDestroy {
             maxPercentage: 100,
             level: 'high' as const,
             message: `Sie haben ein gutes Grundlagenwissen zu getriebenen Schwingungen und können ihr Wissen nun mit
-            <a class="glossary-link" routerLink="/learning/t-chaos"><b>chaotischem Verhalten</b></a> 
+            <a class="glossary-link" data-route="/learning/t-chaos"><b>chaotischem Verhalten</b></a>
             oder
-            <a class="glossary-link" routerLink="/learning/t-simulation"><b>Python-Simulationen</b> </a> 
+            <a class="glossary-link" data-route="/learning/t-simulation"><b>Python-Simulationen</b></a>
             erweitern.`,
             continueLink: '/learning/t-setup',
             continueLinkText: 'Weiter zum Versuchsaufbau'
