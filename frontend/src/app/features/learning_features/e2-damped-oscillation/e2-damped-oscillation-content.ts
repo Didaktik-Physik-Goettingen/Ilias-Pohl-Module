@@ -4,10 +4,13 @@ export const dampedOscText1a = `
         Wie Sie bereits gelesen haben, wirken sowohl die Feder, als auch (indirekt) die Wirbelstrombremse ein
 		<a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>
 		auf das Schwungrad aus.
-        Die Wirkung der Feder hängt hierbei vom Winkel $\\varphi$ ab --- $M = -D\\varphi$ mit dem
+        Die Wirkung der Feder hängt hierbei vom Winkel $\\varphi$ ab, mit dem
 		<a data-glossary="directive-moment" class="glossary-link">Richtmoment</a>
-		$D$ ---
-        die Wirkung der Wirbelstrombremse hängt von der Winkelgeschwindigkeit $\\dot{\\varphi}$ ab --- $M = -\\rho\\dot{\\varphi}$ mit dem Reibungskoeffizienten $\\rho$.
+		$D$ gilt
+		$M = -D\\varphi.$
+        Die Wirkung der Wirbelstrombremse wiederum hängt von der Winkelgeschwindigkeit $\\dot{\\varphi}$ ab, 
+		$M = -\\rho\\dot{\\varphi},$  
+		mit dem Reibungskoeffizienten $\\rho$.
         <br><br>
         Mit diesen Annahmen können wir die Bewegungsgleichung für die Rotationsbewegung aufstellen.
         <br><br>
@@ -128,7 +131,7 @@ export const dampedOscText3a = `
 		Je stärker der Überlapp zwischen Magnet und Schwungrad, desto schneller nimmt die
 		<a data-glossary="amplitude" class="glossary-link">Amplitude</a>
 		des Systems ab. In den Abbildungen links nimmt die Dämpfung von oben nach unten zu, in der untersten Abbildung zeichnet sich bereits der Übergang zum
-		<a data-glossary="critical-damping" class="glossary-link">aperischen Grenzfall</a>
+		<a data-glossary="critical-damping" class="glossary-link">aperiodischen Grenzfall</a>
 		ab.<br><br>
 
 		Kennt man den zeitlichen Verlauf, so kann das Verhältnis der

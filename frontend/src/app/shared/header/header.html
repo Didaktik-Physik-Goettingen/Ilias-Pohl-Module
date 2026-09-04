@@ -2,7 +2,7 @@
     <div class="bridge-overlay" (click)="closeBridgeConfirm()">
         <div class="bridge-dialog" (click)="$event.stopPropagation()">
             <button class="bridge-dialog-close" (click)="closeBridgeConfirm()">✕</button>
-            <p class="bridge-dialog-text">Sie werden nun Ihre jetzige Session verlassen um sich zu verifizieren.</p>
+            <p class="bridge-dialog-text">Sie werden zur Verifikation nun Ihre jetzige Session verlassen.</p>
             <div class="bridge-dialog-actions">
                 <button class="bridge-dialog-confirm" (click)="confirmBridge()">Weiter zur Verifikation</button>
             </div>
@@ -13,13 +13,15 @@
 <div class="header-wrapper">
     <header>
         <div class="header-content">
-            <div class="header-title" [class.header-title--clickable]="devMode.isEnabled" (click)="devMode.isEnabled && router.navigate(['/'])">Pohlscher Resonator</div>
+            <div class="header-title">
+                <span [class.header-title--clickable]="devMode.isEnabled" (click)="devMode.isEnabled && router.navigate(['/'])">Pohlscher Resonator</span>
+            </div>
             <div class="header-subtitle">Praktikum zu Experimentalphysik I</div>
             <!-- Debug: Show session ID -->
             @if (sessionService.hasValidSession()) {
                 @if (sessionService.isRogueUser()) {
-                    <div class="session-debug session-debug--bridge" (click)="goToBridge()">
-                        Session: {{ sessionService.sessionId() }}
+                    <div class="session-debug">
+                        <span class="session-debug--bridge" (click)="goToBridge()">Session: {{ sessionService.sessionId() }}</span>
                     </div>
                 } @else {
                     <div class="session-debug">

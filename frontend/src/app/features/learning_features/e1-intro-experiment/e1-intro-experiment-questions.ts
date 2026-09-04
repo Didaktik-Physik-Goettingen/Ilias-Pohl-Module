@@ -142,6 +142,6 @@ export const question6: ImageChoiceQuestion = {
     correctAnswers: ['answer3', 'answer4', 'answer6'],
     containerId: 'question6-container',
     successMessage: `Sehr gut! Das gedämpfte Schwungrad schwingt mit einer festen Frequenz und hat eine abnehmende Amplitude. Das war ein guter Start.`,
-    incompleteMessage: `✗ Einige der von die ausgewählten Bewegungsformen entsprechen nicht dem, was man aus einem Experiment erwarten würde.`,
+    incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.`,
     incorrectMessage: `✗ Einige der von die ausgewählten Bewegungsformen entsprechen nicht dem, was man aus einem Experiment erwarten würde.`
 };

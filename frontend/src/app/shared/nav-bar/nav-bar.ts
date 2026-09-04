@@ -34,9 +34,9 @@ const E_SEGMENTS: SegmentDef[] = [
     {
         id: 'e2-damped', label: 'Gedämpfte Schwingungen', strand: 'e',
         subpages: [
-            { label: '(1/4) - Grundlagen', route: '/learning/e2-damped-oscillations', queryParams: { page: '1' } },
-            { label: '(2/4) - Lösung der Differentialgleichung', route: '/learning/e2-damped-oscillations', queryParams: { page: '2' } },
-            { label: '(3/4) - Logarithmisches Dekrement', route: '/learning/e2-damped-oscillations', queryParams: { page: '3' } },
+            { label: '(1/3) - Grundlagen', route: '/learning/e2-damped-oscillations', queryParams: { page: '1' } },
+            { label: '(2/3) - Lösung der Differentialgleichung', route: '/learning/e2-damped-oscillations', queryParams: { page: '2' } },
+            { label: '(3/3) - Logarithmisches Dekrement', route: '/learning/e2-damped-oscillations', queryParams: { page: '3' } },
             { label: 'Simulation', route: '/simulation/sim-e-damped' },
             { label: 'Test', route: '/test/test-e-damped' },
         ]
