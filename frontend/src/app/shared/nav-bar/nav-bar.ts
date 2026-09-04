@@ -23,7 +23,7 @@ interface SegmentDef {
 
 const E_SEGMENTS: SegmentDef[] = [
     {
-        id: 'e1-intro', label: 'Einstieg Versuchaufbau', strand: 'e',
+        id: 'e1-intro', label: '1. Einstieg Versuchaufbau', strand: 'e',
         subpages: [
             { label: '(1/4) - Einführung', route: '/learning/e1-intro-experiment', queryParams: { page: '1' } },
             { label: '(2/4) - Komponenten', route: '/learning/e1-intro-experiment', queryParams: { page: '2' } },
@@ -32,7 +32,7 @@ const E_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 'e2-damped', label: 'Gedämpfte Schwingungen', strand: 'e',
+        id: 'e2-damped', label: '2. Gedämpfte Schwingungen', strand: 'e',
         subpages: [
             { label: '(1/3) - Grundlagen', route: '/learning/e2-damped-oscillations', queryParams: { page: '1' } },
             { label: '(2/3) - Lösung der Differentialgleichung', route: '/learning/e2-damped-oscillations', queryParams: { page: '2' } },
@@ -42,7 +42,7 @@ const E_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 'e3-driven', label: 'Getriebene Schwingungen', strand: 'e',
+        id: 'e3-driven', label: '3. Getriebene Schwingungen', strand: 'e',
         subpages: [
             { label: '(1/7) - Versuchsaufbau', route: '/learning/e3-driven-oscillations', queryParams: { page: '1' } },
             { label: '(2/7) - Lösungsansatz', route: '/learning/e3-driven-oscillations', queryParams: { page: '2' } },
@@ -59,13 +59,13 @@ const E_SEGMENTS: SegmentDef[] = [
 
 const T_SEGMENTS: SegmentDef[] = [
     {
-        id: 't1-intro', label: 'Einstieg Theorie', strand: 't',
+        id: 't1-intro', label: '1. Einstieg Theorie', strand: 't',
         subpages: [
             { label: '(1/1) - Grundlagen', route: '/learning/t1-intro-theory' },
         ]
     },
     {
-        id: 't2-free', label: 'Freie Schwingungen', strand: 't',
+        id: 't2-free', label: '2. Freie Schwingungen', strand: 't',
         subpages: [
             { label: '(1/2) - Differentialgleichung und Lösungsansatz', route: '/learning/t2-free-oscillations', queryParams: { page: '1' } },
             { label: '(2/2) - Phasenraum', route: '/learning/t2-free-oscillations', queryParams: { page: '2' } },
@@ -73,7 +73,7 @@ const T_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 't3-damped', label: 'Gedämpfte Schwingungen', strand: 't',
+        id: 't3-damped', label: '3. Gedämpfte Schwingungen', strand: 't',
         subpages: [
             { label: '(1/5) - Exponentialansatz', route: '/learning/t3-damped-oscillations', queryParams: { page: '1' } },
             { label: '(2/5) - Schwingfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '2' } },
@@ -85,7 +85,7 @@ const T_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 't4-driven', label: 'Getriebene Schwingungen', strand: 't',
+        id: 't4-driven', label: '4. Getriebene Schwingungen', strand: 't',
         subpages: [
             { label: '(1/8) - Differentialgleichung', route: '/learning/t4-driven-oscillations', queryParams: { page: '1' } },
             { label: '(2/8) - Gesamtlösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '2' } },

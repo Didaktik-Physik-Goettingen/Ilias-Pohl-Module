@@ -36,10 +36,16 @@
     transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
-.nav-endpoint-btn:hover {
+.nav-endpoint-btn-dev:hover {
     background: var(--card-bg);
     color: var(--text-primary);
     border-color: var(--text-primary);
+}
+
+.nav-endpoint-btn-dev:active {
+    transform: scalex(0.98);
+    transition: none; /* snaps down instantly */
+    touch-action: manipulation;
 }
 
 .nav-endpoint-active {
@@ -142,10 +148,16 @@
 }
 
 /* hover always visible — cursor is the signal that the item is/isn't clickable */
-.seg-btn:hover {
+.seg-btn-dev:hover {
     background: var(--card-bg);
     color: var(--text-primary);
     border-color: var(--text-primary);
+}
+
+.seg-btn-dev:active {
+    transform: scalex(0.98);
+    transition: none; /* snaps down instantly */
+    touch-action: manipulation;
 }
 
 /* active segment: inverted, non-interactive */
@@ -191,9 +203,15 @@
 }
 
 /* hover always visible */
-.sub-btn:hover {
+.sub-btn-dev:hover {
     background: var(--text-primary);
     color: var(--card-bg);
+}
+
+.sub-btn-dev:active {
+    transform: scalex(0.98);
+    transition: none; /* snaps down instantly */
+    touch-action: manipulation;
 }
 
 .sub-btn-active {
