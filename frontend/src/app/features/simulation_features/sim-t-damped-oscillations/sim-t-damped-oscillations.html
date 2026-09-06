@@ -61,7 +61,7 @@
             @if (devMode.isEnabled) {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
-            @if (navigationFlow && interactionThresholdReached) {
+            @if (interactionThresholdReached) {
                 <button class="btn" (click)="goForward()">
                     {{ navigationFlow === 'learning-first' ? 'Weiter zu getriebenen Schwingungen →' : 'Weiter zum Lernmodul →' }}
                 </button>

@@ -58,6 +58,12 @@
     border: 2px solid var(--physik-gelb);
 }
 
+.test-btn:active {
+    transform: scalex(0.98);
+    transition: none; /* snaps down instantly */
+    touch-action: manipulation;
+}
+
 .test-btn:disabled {
     background: var(--grau-60);
     border: 2px solid var(--grau-60);

@@ -24,7 +24,7 @@ export class T1IntroTheory implements AfterViewInit {
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
         private route: ActivatedRoute,
-        private router: Router,
+        public router: Router,
 		private trackingService: ResultsTracking,
         public glossaryOverlay: GlossaryOverlay,
         public devMode: DevModeService
@@ -34,6 +34,13 @@ export class T1IntroTheory implements AfterViewInit {
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
+        const routeLink = (event.target as HTMLElement)
+            ?.closest('a[data-route]') as HTMLAnchorElement | null;
+        if (routeLink) {
+            event.preventDefault();
+            this.router.navigate([routeLink.getAttribute('data-route')!]);
+            return;
+        }
         const link = (event.target as HTMLElement)
             ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;

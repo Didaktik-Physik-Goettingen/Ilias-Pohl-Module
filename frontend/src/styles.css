@@ -273,6 +273,12 @@ button.btn {
     box-shadow: 0 2px 8px var(--shadow-color);
 }
 
+.btn:active {
+    transform: scalex(0.98);
+    transition: none; /* snaps down instantly */
+    touch-action: manipulation;
+}
+
 .btn:disabled {
     background: var(--grau-60);
     color: white;
