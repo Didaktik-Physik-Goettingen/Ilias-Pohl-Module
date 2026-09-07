@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, AfterViewInit, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CdkDragDrop, DragDropModule, moveItemInArray } from '@angular/cdk/drag-drop';
 import { TestTracking } from '../../../core/services/test-tracking';
@@ -214,6 +214,12 @@ export class TestDragDrop implements OnInit, AfterViewInit {
 
         // Re-render MathJax after removal
         setTimeout(() => this.renderMath(), 50);
+    }
+
+    @HostListener('document:click')
+    clearSelection() {
+        this.selectedForMove = null;
+        this.selectedFromContainer = null;
     }
 
     // Click-to-move: first click selects, second click on target places

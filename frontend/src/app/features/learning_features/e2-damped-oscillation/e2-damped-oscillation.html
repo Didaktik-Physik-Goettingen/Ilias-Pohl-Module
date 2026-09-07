@@ -78,6 +78,12 @@
                     <summary class="spoiler-summary">EXKURS: Erläuterung der Rechnung zum logarithmischen Dekrement</summary>
                     <div class="spoiler-content" [innerHTML]="dampedOscText3b"></div>
                 </details>
+
+                @if (navigationFlow === 'learning-first') {
+                    <p>Sie können nun ihr Wissen zu gedämpften Schwungungen noch einmal an einer 
+                    <a class="glossary-link" data-route="/simulation/sim-e-damped" data-query="flow=learning-first">interaktiven Simulation</a>
+                    anwenden oder direkt mit getriebenen Schwingungen fortfahren.</p>
+                }
             }
 
         </div>
@@ -86,16 +92,14 @@
         <div class="button-container">
             @if (isFirstPage) {
                 @if (devMode.isEnabled) {
-                    <button routerLink="/decision/e-damped-oscillations" class="btn btn-back">← Zurück zur Entscheidungsseite</button>
+                    <button class="btn btn-back" (click)="goBack()">← Zurück zur Entscheidungsseite</button>
                 }
             } @else {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
 
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zu getriebenen Schwingungen →' }}
-                </button>
+                <button class="btn" (click)="goForward()"> Weiter zu getriebenen Schwingungen →</button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>
             }

@@ -16,8 +16,9 @@
                         <input 
                             type="checkbox" 
                             [checked]="isSelected(option.value)"
-                            [disabled]="isCorrect"
-                            (click)="$event.stopPropagation()">
+                            >
+                            <!-- [disabled]="isCorrect"
+                            (click)="toggleSelection(option.value)" -->
                     </div>
                 </div>
                 

@@ -118,6 +118,20 @@ export class MultipleChoice implements OnInit {
         });
     }
 
+    toggleSelection(value: string) {
+        if (this.isCorrect) return; // Disable if already correct
+        
+        if (this.selectedValues.has(value)) {
+            this.selectedValues.delete(value);
+        } else {
+            this.selectedValues.add(value);
+        }
+    }
+
+    isSelected(value: string): boolean {
+        return this.selectedValues.has(value);
+    }
+
 
     evaluateAnswer() {
         const checkboxes = document.querySelectorAll(

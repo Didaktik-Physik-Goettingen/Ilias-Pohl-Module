@@ -158,7 +158,7 @@
 
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/learning/t1-intro-theory" class="btn btn-back">← Zurück</button>
+                <button class="btn btn-back" (click)="goBack()">← Zurück zum Einstieg</button>
             } @else {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
