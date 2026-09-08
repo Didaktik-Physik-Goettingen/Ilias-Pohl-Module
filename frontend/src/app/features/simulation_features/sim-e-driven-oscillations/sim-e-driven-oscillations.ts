@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -92,7 +92,8 @@ export class SimEDrivenOscillations implements OnInit, AfterViewInit, OnDestroy 
         private location: Location,
         private route: ActivatedRoute,
         private router: Router,
-        public devMode: DevModeService
+        public devMode: DevModeService,
+        private cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit() {
@@ -314,7 +315,7 @@ export class SimEDrivenOscillations implements OnInit, AfterViewInit, OnDestroy 
             this.isRunning = false;
             this.firstRun  = true;
             this.savePrev();
-            this.startButtonLabel = 'Restart';
+            this.startButtonLabel = 'Restart'; this.cdr.detectChanges();
         }
     };
 

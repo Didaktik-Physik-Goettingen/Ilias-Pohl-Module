@@ -69,7 +69,7 @@ export const question4: MultipleChoiceQuestion = {
 
 export const question5: MultipleChoiceQuestion = {
     questionId: 't2-free-osc-5-phase-matching',
-    question: 'Ordnen Sie zu: Welche der folgenden Zuordnungen zwischen Begriff und Beschreibung sind korrekt?',
+    question: 'Welche der folgenden Zuordnungen zwischen Begriff und Beschreibung sind korrekt?',
     options: [
         { value: 'answer1', label: 'Phasenraumzustand → Ein einzelnes Wertepaar aus Ort und Geschwindigkeit zu einem bestimmten Zeitpunkt' },
         { value: 'answer2', label: 'Energiegleichung des freien Oszillators → $m\\dot{x}^2/2 + Dx^2/2 = E$' },

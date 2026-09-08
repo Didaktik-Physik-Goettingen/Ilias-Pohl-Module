@@ -119,7 +119,7 @@ export class SummaryService {
         
         '/simulation/sim-e-damped':                                     '[E-Sim] Simulation: Gedämpfte Schwingungen',
         '/simulation/sim-e-driven':                                     '[E-Sim] Simulation: Getriebene Schwingungen',
-        '/simulation/sim-t-undamped':                                   '[T-Sim] Simalation: Freie Schwingungen',
+        '/simulation/sim-t-free':                                       '[T-Sim] Simalation: Freie Schwingungen',
         '/simulation/sim-t-damped':                                     '[T-Sim] Simulation: Gedämpfte Schwingungen',
         '/simulation/sim-t-driven':                                     '[T-Sim] Simulation: Getriebene Schwingungen',
         '/simulation/sim-t-driven-advanced':                            '[T-Sim] Simulation: Getriebene Schwingungen (erweitert)',

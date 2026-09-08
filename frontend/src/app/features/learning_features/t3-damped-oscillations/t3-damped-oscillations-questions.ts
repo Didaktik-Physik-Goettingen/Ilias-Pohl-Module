@@ -50,7 +50,7 @@ export const question3: MultipleChoiceQuestion = {
 
 export const question4: MultipleChoiceQuestion = {
     questionId: 't3-damped-osc-4-schwingfall-matching',
-    question: 'Ordnen Sie zu: Welche der folgenden Zuordnungen zwischen Ausdruck und Bedeutung sind korrekt?',
+    question: 'Welche der folgenden Zuordnungen zwischen Ausdruck und Bedeutung sind korrekt?',
     options: [
         { value: 'answer1', label: 'Gedämpfter Schwingungsanteil → $\\cos(\\omega_e t)$' },
         { value: 'answer2', label: 'Exponentieller Abfall der Amplitude → $e^{-\\gamma t}$' },

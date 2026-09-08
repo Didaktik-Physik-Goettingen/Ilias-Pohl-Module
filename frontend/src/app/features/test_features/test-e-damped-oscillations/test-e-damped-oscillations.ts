@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -31,7 +31,7 @@ declare global {
 @Component({
     selector: 'app-test-e-damped-oscillations',
     standalone: true,
-    imports: [CommonModule, RouterLink, TestOrderImages, TestSingleChoice, TestMultipleChoice, TestDragDrop, EndPage],
+    imports: [CommonModule, TestOrderImages, TestSingleChoice, TestMultipleChoice, TestDragDrop, EndPage],
     templateUrl: './test-e-damped-oscillations.html',
     styleUrl: './test-e-damped-oscillations.css'
 })
