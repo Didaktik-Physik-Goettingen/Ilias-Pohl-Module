@@ -3,12 +3,15 @@
         <h3 class="evaluation-question" [innerHTML]="question"></h3>
         
         <div class="evaluation-options">
-            <label class="evaluation-option" *ngFor="let option of shuffledOptions; let i = index">
+            <label class="evaluation-option" 
+                *ngFor="let option of shuffledOptions; let i = index"
+                [class.selected]="isSelected(option.value)">
                 <input 
                     type="checkbox" 
                     [name]="'element' + (i+1)" 
                     [value]="option.value"
-                    [disabled]="isCorrect">
+                    [disabled]="isCorrect"
+                    (change)="toggleSelection(option.value)">
                 <span>{{ option.label }}</span>
             </label>
         </div>

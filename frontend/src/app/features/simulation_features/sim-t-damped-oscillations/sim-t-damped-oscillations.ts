@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, ElementRef, Inject, PLATFORM_ID, ChangeDetectorRef } from '@angular/core';
 import { isPlatformBrowser, Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -59,6 +59,7 @@ export class SimTDampedOscillations implements OnInit, AfterViewInit, OnDestroy 
         private route: ActivatedRoute,
         private router: Router,
         public devMode: DevModeService,
+        private cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit() { this.navigationFlow = this.route.snapshot.queryParamMap.get('flow') ?? ''; }
@@ -194,7 +195,7 @@ export class SimTDampedOscillations implements OnInit, AfterViewInit, OnDestroy 
             this.state.t += this.state.dt;
             this.raf = requestAnimationFrame(this.step);
         } else {
-            this.isRunning = false; this.firstRun = true; this.savePrev(); this.startButtonLabel = 'Restart';
+            this.isRunning = false; this.firstRun = true; this.savePrev(); this.startButtonLabel = 'Restart'; this.cdr.detectChanges();
         }
     };
 

@@ -108,9 +108,9 @@ export const routes: Routes = [
     // simulation pages
     { path: 'simulation/sim-e-damped', component: SimEDampedOscillations, title: 'Simulation: Gedämpfte Schwingungen' },
     { path: 'simulation/sim-e-driven', component: SimEDrivenOscillations, title: 'Simulation: Getriebene Schwingungen' },
-    { path: 'simulation/sim-t-undamped',               component: SimTFreeOscillations,       title: 'Simulation: Ungedämpfte Schwingung' },
-    { path: 'simulation/sim-t-damped',                 component: SimTDampedOscillations,     title: 'Simulation: Gedämpfte Schwingung' },
-    { path: 'simulation/sim-t-driven',          component: SimTDrivenXOscillations,    title: 'Simulation: Gedämpfte getriebene Schwingung' },
+    { path: 'simulation/sim-t-free', component: SimTFreeOscillations, title: 'Simulation: Ungedämpfte Schwingungen' },
+    { path: 'simulation/sim-t-damped', component: SimTDampedOscillations, title: 'Simulation: Gedämpfte Schwingung' },
+    { path: 'simulation/sim-t-driven', component: SimTDrivenXOscillations, title: 'Simulation: Gedämpfte getriebene Schwingung' },
     { path: 'simulation/sim-t-driven-advanced', component: SimTDrivenPhiOscillations,  title: 'Simulation: Gedämpfte getriebene Drehschwingung' },
 
     // target pages

@@ -202,6 +202,12 @@
                         (onAnswerEvaluated)="onQuestion8Answered($event)">
                     </app-single-choice>
                 </div>
+
+                @if (navigationFlow === 'learning-first') {
+                    <p>Sie können nun ihr Wissen zu getriebenen Schwungungen noch einmal an einer 
+                    <a class="glossary-link" data-route="/simulation/sim-e-driven" data-query="flow=learning-first">interaktiven Simulation</a>
+                    anwenden oder direkt ihre Versuchsanleitung erhalten.</p>
+                }
             }
 
         </div>
@@ -217,8 +223,7 @@
             }
 
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zur Anleitung →' }}
+                <button class="btn" (click)="goForward()">Weiter zur Anleitung →
                 </button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>

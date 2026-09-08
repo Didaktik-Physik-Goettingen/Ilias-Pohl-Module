@@ -34,10 +34,22 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
+        const routeLink = (event.target as HTMLElement)
+            ?.closest('a[data-route]') as HTMLAnchorElement | null;
+        if (routeLink) {
+            event.preventDefault();
+            const rawQuery = routeLink.getAttribute('data-query');
+            const queryParams = rawQuery
+                ? Object.fromEntries(new URLSearchParams(rawQuery))
+                : undefined;
+            this.router.navigate([routeLink.getAttribute('data-route')!], { queryParams });
+            return;
+        }
+
         const link = (event.target as HTMLElement)
             ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;
-        
+
         const term = link.getAttribute('data-glossary')!;
         this.glossaryOverlay.open(term);
     }

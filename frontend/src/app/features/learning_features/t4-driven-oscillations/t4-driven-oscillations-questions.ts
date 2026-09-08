@@ -105,7 +105,7 @@ export const question7: MultipleChoiceQuestion = {
         { value: 'answer3', label: 'Anfangsauslenkung $\\varphi(t=0)$' },
         { value: 'answer4', label: 'Anfangsgeschwindigkeit $\\dot{\\varphi}(t=0)$' },
         { value: 'answer5', label: 'Stärke der Dämpfung $\\beta$' },
-        { value: 'answer6', label: 'Dämpfung (Wirbelstrombremse &amp; Reibungsverluste) $\\rho$' },
+        { value: 'answer6', label: 'Dämpfung (Wirbelstrombremse; Reibungsverluste) $\\rho$' },
     ],
     correctAnswers: ['answer1', 'answer2', 'answer5', 'answer6'],
     containerId: 't4-driven-osc-7-container',

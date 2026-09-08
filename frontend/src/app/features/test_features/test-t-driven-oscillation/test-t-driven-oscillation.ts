@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { TestTracking } from '../../../core/services/test-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
@@ -27,7 +27,7 @@ declare global {
 
 @Component({
   selector: 'app-test-t-driven-oscillation',
-  imports: [TestTrueFalse, TestImageChoice, EndPage, RouterLink],
+  imports: [TestTrueFalse, TestImageChoice, EndPage],
   templateUrl: './test-t-driven-oscillation.html',
   styleUrl: './test-t-driven-oscillation.css',
 })

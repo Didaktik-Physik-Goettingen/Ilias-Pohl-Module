@@ -12,6 +12,6 @@
     cursor: not-allowed;
 }
 
-/* .choice-option.selected {
+.choice-option.selected {
     border-color: var(--uni-blau-2);
-} */
+}

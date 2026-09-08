@@ -307,6 +307,12 @@
                      alt="Veranschaulichung der Phasenverschiebung zwischen Antrieb und Schwungrad"
                      class="img-center img-lg">
                 <p class="img-caption"><em>Veranschaulichung der Phasenverschiebung: Der Antrieb eilt dem Schwungrad um die Phase Φ voraus.</em></p>
+
+                @if (navigationFlow === 'learning-first') {
+                    <p>Sie können nun ihr Wissen zu getriebenen Schwungungen noch einmal an einer 
+                    <a class="glossary-link" data-route="/simulation/sim-t-driven" data-query="flow=learning-first">interaktiven Simulation</a>
+                    anwenden oder direkt ihre Versuchsanleitung erhalten.</p>
+                }
             }
 
         </div>
@@ -320,9 +326,7 @@
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
             @if (isLastPage) {
-                <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter →' : 'Weiter zum Versuchsaufbau →' }}
-                </button>
+                <button class="btn" (click)="goForward()">Weiter zum Versuchsaufbau →</button>
             } @else {
                 <button class="btn" (click)="goForward()">Weiter →</button>
             }

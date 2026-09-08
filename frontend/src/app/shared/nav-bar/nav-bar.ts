@@ -25,34 +25,34 @@ const E_SEGMENTS: SegmentDef[] = [
     {
         id: 'e1-intro', label: '1. Einstieg Versuchaufbau', strand: 'e',
         subpages: [
-            { label: '(1/4) - Einführung', route: '/learning/e1-intro-experiment', queryParams: { page: '1' } },
-            { label: '(2/4) - Komponenten', route: '/learning/e1-intro-experiment', queryParams: { page: '2' } },
-            { label: '(3/4) - Direktionsmoment', route: '/learning/e1-intro-experiment', queryParams: { page: '3' } },
-            { label: '(4/4) - Winkel-Zeit', route: '/learning/e1-intro-experiment', queryParams: { page: '4' } },
+            { label: '(1/4) - Einführung', route: '/learning/e1-intro-experiment', queryParams: { page: '1', path: 'learn' } },
+            { label: '(2/4) - Komponenten', route: '/learning/e1-intro-experiment', queryParams: { page: '2', path: 'learn' } },
+            { label: '(3/4) - Direktionsmoment', route: '/learning/e1-intro-experiment', queryParams: { page: '3', path: 'learn' } },
+            { label: '(4/4) - Winkel-Zeit', route: '/learning/e1-intro-experiment', queryParams: { page: '4', path: 'learn' } },
         ]
     },
     {
         id: 'e2-damped', label: '2. Gedämpfte Schwingungen', strand: 'e',
         subpages: [
-            { label: '(1/3) - Grundlagen', route: '/learning/e2-damped-oscillations', queryParams: { page: '1' } },
-            { label: '(2/3) - Lösung der Differentialgleichung', route: '/learning/e2-damped-oscillations', queryParams: { page: '2' } },
-            { label: '(3/3) - Logarithmisches Dekrement', route: '/learning/e2-damped-oscillations', queryParams: { page: '3' } },
-            { label: 'Simulation', route: '/simulation/sim-e-damped' },
-            { label: 'Test', route: '/test/test-e-damped' },
+            { label: '(1/3) - Grundlagen', route: '/learning/e2-damped-oscillations', queryParams: { page: '1', path: 'learn' } },
+            { label: '(2/3) - Lösung der Differentialgleichung', route: '/learning/e2-damped-oscillations', queryParams: { page: '2', path: 'learn' } },
+            { label: '(3/3) - Logarithmisches Dekrement', route: '/learning/e2-damped-oscillations', queryParams: { page: '3', path: 'learn' } },
+            { label: 'Simulation', route: '/simulation/sim-e-damped', queryParams: { path: 'sim' } },
+            { label: 'Test', route: '/test/test-e-damped', queryParams: { path: 'test' } },
         ]
     },
     {
         id: 'e3-driven', label: '3. Getriebene Schwingungen', strand: 'e',
         subpages: [
-            { label: '(1/7) - Versuchsaufbau', route: '/learning/e3-driven-oscillations', queryParams: { page: '1' } },
-            { label: '(2/7) - Lösungsansatz', route: '/learning/e3-driven-oscillations', queryParams: { page: '2' } },
-            { label: '(3/7) - Einschwingvorgang', route: '/learning/e3-driven-oscillations', queryParams: { page: '3' } },
-            { label: '(4/7) - Amplitude im Stationärzustand', route: '/learning/e3-driven-oscillations', queryParams: { page: '4' } },
-            { label: '(5/7) - Resonanz', route: '/learning/e3-driven-oscillations', queryParams: { page: '5' } },
-            { label: '(6/7) - Vorbereitung', route: '/learning/e3-driven-oscillations', queryParams: { page: '6' } },
-            { label: '(7/7) - Phasenverschiebung', route: '/learning/e3-driven-oscillations', queryParams: { page: '7' } },
-            { label: 'Simulation', route: '/simulation/sim-e-driven' },
-            { label: 'Test', route: '/test/test-e-driven' },
+            { label: '(1/7) - Versuchsaufbau', route: '/learning/e3-driven-oscillations', queryParams: { page: '1', path: 'learn' } },
+            { label: '(2/7) - Lösungsansatz', route: '/learning/e3-driven-oscillations', queryParams: { page: '2', path: 'learn' } },
+            { label: '(3/7) - Einschwingvorgang', route: '/learning/e3-driven-oscillations', queryParams: { page: '3', path: 'learn' } },
+            { label: '(4/7) - Amplitude im Stationärzustand', route: '/learning/e3-driven-oscillations', queryParams: { page: '4', path: 'learn' } },
+            { label: '(5/7) - Resonanz', route: '/learning/e3-driven-oscillations', queryParams: { page: '5', path: 'learn' } },
+            { label: '(6/7) - Vorbereitung', route: '/learning/e3-driven-oscillations', queryParams: { page: '6', path: 'learn' } },
+            { label: '(7/7) - Phasenverschiebung', route: '/learning/e3-driven-oscillations', queryParams: { page: '7', path: 'learn' } },
+            { label: 'Simulation', route: '/simulation/sim-e-driven', queryParams: { path: 'sim' } },
+            { label: 'Test', route: '/test/test-e-driven', queryParams: { path: 'test' } },
         ]
     },
 ];
@@ -69,41 +69,41 @@ const T_SEGMENTS: SegmentDef[] = [
         subpages: [
             { label: '(1/2) - Differentialgleichung und Lösungsansatz', route: '/learning/t2-free-oscillations', queryParams: { page: '1' } },
             { label: '(2/2) - Phasenraum', route: '/learning/t2-free-oscillations', queryParams: { page: '2' } },
-            { label: 'Simulation', route: '/simulation/sim-t-undamped' },
+            { label: 'Simulation', route: '/simulation/sim-t-free' },
         ]
     },
     {
         id: 't3-damped', label: '3. Gedämpfte Schwingungen', strand: 't',
         subpages: [
-            { label: '(1/5) - Exponentialansatz', route: '/learning/t3-damped-oscillations', queryParams: { page: '1' } },
-            { label: '(2/5) - Schwingfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '2' } },
-            { label: '(3/5) - Kriechfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '3' } },
-            { label: '(4/5) - Aperiodischer Grenzfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '4' } },
-            { label: '(5/5) - Zusammenfassung', route: '/learning/t3-damped-oscillations', queryParams: { page: '5' } },
-            { label: 'Simulation', route: '/simulation/sim-t-damped' },
-            { label: 'Test', route: '/test/test-t-damped' },
+            { label: '(1/5) - Exponentialansatz', route: '/learning/t3-damped-oscillations', queryParams: { page: '1', path: 'learn' } },
+            { label: '(2/5) - Schwingfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '2', path: 'learn' } },
+            { label: '(3/5) - Kriechfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '3', path: 'learn' } },
+            { label: '(4/5) - Aperiodischer Grenzfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '4', path: 'learn' } },
+            { label: '(5/5) - Zusammenfassung', route: '/learning/t3-damped-oscillations', queryParams: { page: '5', path: 'learn' } },
+            { label: 'Simulation', route: '/simulation/sim-t-damped', queryParams: { path: 'sim' } },
+            { label: 'Test', route: '/test/test-t-damped', queryParams: { path: 'test' } },
         ]
     },
     {
         id: 't4-driven', label: '4. Getriebene Schwingungen', strand: 't',
         subpages: [
-            { label: '(1/8) - Differentialgleichung', route: '/learning/t4-driven-oscillations', queryParams: { page: '1' } },
-            { label: '(2/8) - Gesamtlösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '2' } },
-            { label: '(3/8) - Stationäre Lösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '3' } },
-            { label: '(4/8) - Partikuläre Lösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '4' } },
-            { label: '(5/8) - Dämpfungsfälle', route: '/learning/t4-driven-oscillations', queryParams: { page: '5' } },
-            { label: '(6/8) - Einschwingvorgang', route: '/learning/t4-driven-oscillations', queryParams: { page: '6' } },
-            { label: '(7/8) - Resonanzamplitude', route: '/learning/t4-driven-oscillations', queryParams: { page: '7' } },
-            { label: '(8/8) - Phasenverschiebung', route: '/learning/t4-driven-oscillations', queryParams: { page: '8' } },
-            { label: 'Simulation', route: '/simulation/sim-t-driven' },
-            { label: 'Test', route: '/test/test-t-driven' },
+            { label: '(1/8) - Differentialgleichung', route: '/learning/t4-driven-oscillations', queryParams: { page: '1', path: 'learn' } },
+            { label: '(2/8) - Gesamtlösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '2', path: 'learn' } },
+            { label: '(3/8) - Stationäre Lösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '3', path: 'learn' } },
+            { label: '(4/8) - Partikuläre Lösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '4', path: 'learn' } },
+            { label: '(5/8) - Dämpfungsfälle', route: '/learning/t4-driven-oscillations', queryParams: { page: '5', path: 'learn' } },
+            { label: '(6/8) - Einschwingvorgang', route: '/learning/t4-driven-oscillations', queryParams: { page: '6', path: 'learn' } },
+            { label: '(7/8) - Resonanzamplitude', route: '/learning/t4-driven-oscillations', queryParams: { page: '7', path: 'learn' } },
+            { label: '(8/8) - Phasenverschiebung', route: '/learning/t4-driven-oscillations', queryParams: { page: '8', path: 'learn' } },
+            { label: 'Simulation', route: '/simulation/sim-t-driven', queryParams: { path: 'sim' } },
+            { label: 'Test', route: '/test/test-t-driven', queryParams: { path: 'test' } },
         ]
     },
     {
         id: 't-chaos', label: 'Chaos', strand: 't', conditional: true,
         subpages: [
-            { label: '(1/2) - Nichtlineares Pendel', route: '/learning/t-chaos', queryParams: { page: '1' } },
-            { label: '(2/2) - Bewegungsgleichung', route: '/learning/t-chaos', queryParams: { page: '2' } },
+            { label: '(1/2) - Nichtlineares Pendel', route: '/learning/t-chaos', queryParams: { page: '1', path: 'learn' } },
+            { label: '(2/2) - Bewegungsgleichung', route: '/learning/t-chaos', queryParams: { page: '2', path: 'learn' } },
         ]
     },
     {
@@ -132,6 +132,8 @@ export class NavBar implements OnInit, OnDestroy {
     activeSegment: string | null = null;
     chosenStrand: 'e' | 't' | null = null;
     visitedConditionalT: Set<string> = new Set();
+    private segmentFlow: Map<string, 'learn' | 'sim' | 'test'> = new Map();
+    private previousUrl: string = '';
 
     readonly eSegments = E_SEGMENTS;
     readonly tSegments = T_SEGMENTS;
@@ -169,7 +171,22 @@ export class NavBar implements OnInit, OnDestroy {
     }
 
     private updateFromUrl(url: string) {
+        const prevPath = this.previousUrl.split('?')[0];
         this.activeSegment = this.segmentFromUrl(url);
+        this.previousUrl = url;
+
+        const currentPath = url.split('?')[0];
+        let flow: 'learn' | 'sim' | 'test' | undefined;
+        if (currentPath.startsWith('/simulation/')) flow = 'sim';
+        else if (currentPath.startsWith('/test/')) flow = 'test';
+        else if (currentPath.startsWith('/learning/')) flow = 'learn';
+
+        const cameFromDecision = prevPath.startsWith('/decision/');
+        const isFirstVisit = this.activeSegment !== null && !this.segmentFlow.has(this.activeSegment);
+        if (this.activeSegment && flow && (cameFromDecision || isFirstVisit)) {
+            this.segmentFlow.set(this.activeSegment, flow);
+        }
+
         const strand = this.strandFromSegment(this.activeSegment);
         if (strand) {
             this.chosenStrand = strand;
@@ -191,7 +208,7 @@ export class NavBar implements OnInit, OnDestroy {
             path === '/test/test-e-driven' || path === '/simulation/sim-e-driven') return 'e3-driven';
         // Theory strand
         if (path.startsWith('/learning/t1')) return 't1-intro';
-        if (path.startsWith('/learning/t2') || path === '/simulation/sim-t-undamped') return 't2-free';
+        if (path.startsWith('/learning/t2') || path === '/simulation/sim-t-free') return 't2-free';
         if (path.startsWith('/learning/t3') || path === '/decision/dec-t-damped' ||
             path === '/test/test-t-damped' || path === '/simulation/sim-t-damped') return 't3-damped';
         if (path.startsWith('/learning/t4') || path === '/decision/dec-t-driven' ||
@@ -209,6 +226,21 @@ export class NavBar implements OnInit, OnDestroy {
         if (seg.startsWith('e')) return 'e';
         if (seg.startsWith('t')) return 't';
         return null;
+    }
+
+    getVisibleSubpages(seg: SegmentDef): SubpageItem[] {
+        if (this.devMode.isEnabled) return seg.subpages;
+        const flow = this.segmentFlow.get(seg.id) ?? 'learn';
+        if (flow === 'test') {
+            return seg.subpages.filter(s => s.queryParams?.['path'] === 'test');
+        }
+        if (flow === 'sim') {
+            const sim   = seg.subpages.filter(s => s.queryParams?.['path'] === 'sim');
+            const learn = seg.subpages.filter(s => s.queryParams?.['path'] !== 'sim' && s.queryParams?.['path'] !== 'test');
+            return [...sim, ...learn];
+        }
+        // 'learn' (default): learn + sim items, no test
+        return seg.subpages.filter(s => s.queryParams?.['path'] !== 'test');
     }
 
     isSegmentVisible(seg: SegmentDef): boolean {
@@ -265,6 +297,10 @@ export class NavBar implements OnInit, OnDestroy {
     goGlossary() {
         if (!this.devMode.isEnabled) return;
         this.router.navigate(['/glossary']);
+    }
+
+    get isOnDecisionPage(): boolean {
+        return this.router.url.split('?')[0].startsWith('/decision/');
     }
 
     get anleitungRoute(): string {

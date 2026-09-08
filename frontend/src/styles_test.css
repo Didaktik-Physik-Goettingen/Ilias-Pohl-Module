@@ -59,7 +59,7 @@
 }
 
 .test-btn:active {
-    transform: scalex(0.98);
+    transform: scale(0.98);
     transition: none; /* snaps down instantly */
     touch-action: manipulation;
 }
@@ -69,19 +69,6 @@
     border: 2px solid var(--grau-60);
     cursor: not-allowed;
     opacity: 0.5;
-}
-
-.test-btn-submit {
-    width: 100%;
-    background: var(--button-color);
-    color: white;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
 }
 
 /* Test-specific button for true-false-Test - no conflict with .btn */

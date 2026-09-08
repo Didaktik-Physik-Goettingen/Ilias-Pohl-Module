@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
@@ -16,7 +16,7 @@ import * as t2Content from './t2-free-oscillations-content';
 @Component({
 	selector: 'app-t2-free-oscillations',
 	standalone: true,
-	imports: [CommonModule, RouterLink, MultipleChoice],
+	imports: [CommonModule, MultipleChoice],
 	templateUrl: './t2-free-oscillations.html',
 	styleUrl: './t2-free-oscillations.css',
 })
@@ -36,10 +36,18 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 
 	@HostListener('click', ['$event'])
 	onGlossaryLink(event: MouseEvent) {
+		const routeLink = (event.target as HTMLElement)
+			?.closest('a[data-route]') as HTMLAnchorElement | null;
+		if (routeLink) {
+			event.preventDefault();
+			this.router.navigate([routeLink.getAttribute('data-route')!]);
+			return;
+		}
+
 		const link = (event.target as HTMLElement)
 			?.closest('a[data-glossary]') as HTMLAnchorElement | null;
 		if (!link) return;
-		
+
 		const term = link.getAttribute('data-glossary')!;
 		this.glossaryOverlay.open(term);
 	}

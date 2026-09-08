@@ -69,7 +69,7 @@ export const freeOscText1g = `
 			Mit $c = a + ib$, $a,b \\in \\mathbb{R}$ ergibt sich:
 			$$x(t) = ce^{i\\omega_0t} + c^*e^{-i\\omega_0t}$$
 			Beispielsweise können die Randbedingungen durch die Geschwindigkeit beim Nulldurchgang gegeben sein:
-			$$x(t=0) := 0, \\quad \\dot{x}(t=0) = v_0 \\implies x(t) = \\frac{v_0}{\\omega_0}\\sin(\\omega_0t)$$
+			$$x(t=0) = 0, \\quad \\dot{x}(t=0) = v_0 \\implies x(t) = \\frac{v_0}{\\omega_0}\\sin(\\omega_0t)$$
 		`;
 
 export const freeOscText1h = `

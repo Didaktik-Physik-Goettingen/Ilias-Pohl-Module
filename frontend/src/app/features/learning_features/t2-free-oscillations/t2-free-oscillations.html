@@ -152,13 +152,17 @@
                         (onAnswerEvaluated)="onQuestion6Answered($event)">
                     </app-multiple-choice>
                 </div>
+
+                <p>Sie können nun ihr Wissen zu freien Schwungungen noch einmal an einer 
+                <a class="glossary-link" data-route="/simulation/sim-t-free">interaktiven Simulation</a>
+                anwenden oder direkt mit gedämpften Schwingungen fortfahren.</p>
             }
 
         </div>
 
         <div class="button-container">
             @if (isFirstPage) {
-                <button routerLink="/learning/t1-intro-theory" class="btn btn-back">← Zurück</button>
+                <button class="btn btn-back" (click)="goBack()">← Zurück zum Einstieg</button>
             } @else {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }

@@ -1,7 +1,7 @@
 /* evaluation container */
 .evaluation-container {
     display: flex;
-    gap: 3rem;
+    gap: 2rem;
     background: white;
     border-radius: 12px;
     padding: 3rem;
@@ -35,7 +35,7 @@
 }
 
 .evaluation-question {
-    font-size: 1.rem;
+    font-size: 1.1rem;
     color: var(--uni-blau-1);
     margin-bottom: 1.2rem;
     font-weight: 600;
@@ -66,6 +66,11 @@
     background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
     border-color: var(--uni-blau-4);
 }
+
+.evaluation-option.selected {
+    border-color: var(--uni-blau-2);
+}
+
 
 .evaluation-option input[type="checkbox"],
 .evaluation-option input[type="radio"] {
@@ -104,7 +109,7 @@
 }
 
 .eval-btn:active {
-    transform: scalex(0.98);
+    transform: scale(0.98);
     transition: none; /* snaps down instantly */
     touch-action: manipulation;
 }

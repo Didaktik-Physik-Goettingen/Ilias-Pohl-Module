@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, Inject, PLATFORM_ID, HostListener } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multiple-choice';
@@ -15,7 +15,7 @@ import * as e2Content from './e2-damped-oscillation-content';
 
 @Component({
 	selector: 'app-e2-damped-oscillation',
-	imports: [CommonModule, RouterLink, MultipleChoice],
+	imports: [CommonModule, MultipleChoice],
 	templateUrl: './e2-damped-oscillation.html',
 	styleUrl: './e2-damped-oscillation.css',
 })
@@ -35,10 +35,22 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
 
     @HostListener('click', ['$event'])
     onGlossaryLink(event: MouseEvent) {
+        const routeLink = (event.target as HTMLElement)
+            ?.closest('a[data-route]') as HTMLAnchorElement | null;
+        if (routeLink) {
+            event.preventDefault();
+            const rawQuery = routeLink.getAttribute('data-query');
+            const queryParams = rawQuery
+                ? Object.fromEntries(new URLSearchParams(rawQuery))
+                : undefined;
+            this.router.navigate([routeLink.getAttribute('data-route')!], { queryParams });
+            return;
+        }
+
         const link = (event.target as HTMLElement)
             ?.closest('a[data-glossary]') as HTMLAnchorElement | null;
         if (!link) return;
-        
+
         const term = link.getAttribute('data-glossary')!;
         this.glossaryOverlay.open(term);
     }

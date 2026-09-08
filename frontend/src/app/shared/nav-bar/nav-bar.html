@@ -49,9 +49,9 @@
                             (click)="onSegmentClick(seg)">
                             {{ seg.label }}
                         </button>
-                        @if (activeSegment === seg.id) {
+                        @if (activeSegment === seg.id && (devMode.isEnabled || !isOnDecisionPage)) {
                             <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
-                                @for (sub of seg.subpages; track sub.route + (sub.queryParams?.['page'] ?? '')) {
+                                @for (sub of getVisibleSubpages(seg); track sub.route + (sub.queryParams?.['page'] ?? '')) {
                                     <button class="sub-btn"
                                         [class.sub-btn-dev]="devMode.isEnabled"
                                         [class.sub-btn-active]="isSubpageActive(sub)"
@@ -72,9 +72,9 @@
                                 (click)="onSegmentClick(seg)">
                                 {{ seg.label }}
                             </button>
-                            @if (activeSegment === seg.id) {
+                            @if (activeSegment === seg.id && (devMode.isEnabled || !isOnDecisionPage)) {
                                 <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
-                                    @for (sub of seg.subpages; track sub.route + (sub.queryParams?.['page'] ?? '')) {
+                                    @for (sub of getVisibleSubpages(seg); track sub.route + (sub.queryParams?.['page'] ?? '')) {
                                         <button class="sub-btn"
                                             [class.sub-btn-dev]="devMode.isEnabled"
                                             [class.sub-btn-active]="isSubpageActive(sub)"

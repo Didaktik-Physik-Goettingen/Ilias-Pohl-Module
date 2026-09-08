@@ -221,11 +221,16 @@
 /* Click-to-move selection state */
 .draggable-answer.selected-for-move,
 .assigned-answer.selected-for-move {
-    background: var(--uni-blau-4);
+    border: 2px solid transparent;
     border-color: var(--uni-blau-1);
     color: var(--uni-blau-1);
-    /* box-shadow: 0 0 0 3px rgba(13, 71, 161, 0.3); */
     cursor: pointer;
+}
+
+.draggable-answer.selected-for-move:not(.disabled):hover,
+.assigned-answer.selected-for-move:not(.disabled):hover {
+    border: 2px solid transparent;
+    border-color: var(--uni-blau-1);
 }
 
 .drop-zone.click-target-active {
