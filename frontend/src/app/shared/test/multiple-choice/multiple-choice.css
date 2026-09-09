@@ -7,3 +7,8 @@
     accent-color: var(--uni-blau-2);
     flex-shrink: 0;
 }
+
+
+.choice-option.selected {
+    border-color: var(--uni-blau-2);
+}

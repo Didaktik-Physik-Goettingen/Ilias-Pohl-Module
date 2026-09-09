@@ -63,11 +63,10 @@ export const question4 = {
         { id: 'answer1', text: '... größer die Resonanzfrequenz.', isCorrect: false },
         { id: 'answer2', text: '... kleiner ist der Phasenversatz zwischen der Schwingung des Antriebs und der des Schwungrads bei großen Frequenzen ($\\omega > \\omega_0$).', isCorrect: false },
         { id: 'answer3', text: '... breiter der Resonanzpeak der Amplitude.', isCorrect: true },
-        { id: 'answer4', text: '... größer die Resonanzfrequenz.', isCorrect: false },
-        { id: 'answer5', text: '... größer die Amplitude bei der Resonanzfrequenz.', isCorrect: false },
-        { id: 'answer6', text: '... größer die Abweichung der Resonanzfrequenz von der Eigenfrequenz des ungedämpften Systems ($\\omega_0$).', isCorrect: true },
+        { id: 'answer4', text: '... größer die Amplitude bei der Resonanzfrequenz.', isCorrect: false },
+        { id: 'answer5', text: '... größer die Abweichung der Resonanzfrequenz von der Eigenfrequenz des ungedämpften Systems ($\\omega_0$).', isCorrect: true },
     ],
-    maxPoints: 30,
+    maxPoints: 25,
     pointsPerCorrectClick: 5,
     containerId: 'test-question4-container'
 };

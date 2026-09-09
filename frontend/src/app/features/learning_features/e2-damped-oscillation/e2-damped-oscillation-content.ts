@@ -57,7 +57,7 @@ export const dampedOscText2a = `
 		kann der sogenannte
 		<a data-glossary="exponential-ansatz" class="glossary-link">Exponentialansatz</a>
 		verwendet werden.
-		Dieser Ansatz bietet sich bei vielen Bewegungsgleichungen an und die grundsätzliche Idee ist, dass man annimmt die Lösung sei von der Form $\\varphi(t)=exp(\\lambda t)$ und dann durch Einsetzen schaut, für welche $\\lambda$ dieser Ansatz gerechtfertigt ist.
+		Dieser Ansatz bietet sich bei vielen Bewegungsgleichungen an und die grundsätzliche Idee ist, dass man annimmt die Lösung sei von der Form $\\varphi(t)=\\exp(\\lambda t)$ und dann durch Einsetzen schaut, für welche $\\lambda$ dieser Ansatz gerechtfertigt ist.
 `;
 
 export const dampedOscText2b = `

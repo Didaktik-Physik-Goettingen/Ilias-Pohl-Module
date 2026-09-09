@@ -7,7 +7,7 @@
             <label 
                 *ngFor="let option of shuffledOptions"
                 class="choice-option"
-                [class.selected]="isSelected(option.value)"
+                [class.selected]="isSelected(option.value) && !isSubmitted"
                 [class.correct]="isSubmitted && isCorrectAnswer(option.value)"
                 [class.incorrect]="isSubmitted && isSelected(option.value) && !isCorrectAnswer(option.value)"
                 [class.disabled]="isSubmitted">
