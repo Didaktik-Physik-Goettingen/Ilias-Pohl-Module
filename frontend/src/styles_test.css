@@ -106,6 +106,20 @@
     opacity: 0.5;
 }
 
+.testtf-btn.correct:disabled {
+    background: #e8f5e9;
+    border: 2px solid #4caf50;
+    color: #2e7d32;
+    opacity: 1;
+}
+
+.testtf-btn.incorrect:disabled {
+    background: #ffebee;
+    border: 2px solid #f44336;
+    color: #c62828;
+    opacity: 1;
+}
+
 /* Test result feedback */
 .test-result {
     margin-top: 1.5rem;
