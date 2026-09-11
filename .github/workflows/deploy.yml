@@ -1,0 +1,159 @@
+# GitHub Actions workflow — auto-deploy to SFTP server on push to master.
+#
+# HOW IT WORKS (conceptually):
+#   When you push to master, GitHub fires a webhook event internally.
+#   This file tells GitHub: "on that event, spin up an Ubuntu VM, run these steps."
+#   The VM starts completely empty — we install every tool we need explicitly.
+#   After the last step, the VM is thrown away.
+#
+# SECRETS (set in: GitHub repo → Settings → Secrets and variables → Actions):
+#   SFTP_HOST        — hostname, e.g. interapt.uni-goettingen.de
+#   SFTP_PORT        — usually 22
+#   SFTP_USER        — your SFTP username
+#   SFTP_PASS        — your SFTP password
+#   SFTP_REMOTE_DIR  — absolute remote path to the pohl/ directory,
+#                      e.g. /var/www/html/pohl  (ask your server admin)
+
+name: Build & Deploy
+
+# ── TRIGGER ──────────────────────────────────────────────────────────────────
+# 'on' defines which GitHub events start this workflow.
+# push + branches: [master] means: "fire when commits land on master"
+# (a merge from a PR also counts as a push to master)
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:   # also adds a "Run workflow" button in the GitHub Actions UI
+
+# ── JOBS ─────────────────────────────────────────────────────────────────────
+# A workflow can have multiple jobs that run in parallel.
+# Here we only need one: build + deploy (sequentially).
+jobs:
+  deploy:
+    runs-on: ubuntu-latest   # GitHub provides this VM for free
+
+    steps:
+
+      # ── Step 1: Check out your code ────────────────────────────────────────
+      # The VM starts with an empty filesystem. This action (a reusable
+      # community step from GitHub's marketplace) clones your repo into it.
+      # 'uses' pulls from github.com/actions/checkout at tag v4.
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      # ── Step 2: Install Node.js ────────────────────────────────────────────
+      # Angular CLI requires Node. This action installs the specified version
+      # and also caches node_modules between runs so subsequent builds are faster.
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      # ── Step 3: Install npm dependencies ──────────────────────────────────
+      # 'npm ci' (clean install) is preferred over 'npm install' in CI:
+      # it reads package-lock.json exactly and errors if it's out of sync.
+      # 'run' is just a bash command — nothing special.
+      - name: Install dependencies
+        run: npm ci
+        working-directory: frontend
+
+      # ── Step 4: Inject build timestamp ────────────────────────────────────
+      # Before compiling, replace the placeholder string in build-info.ts with
+      # the current UTC time. 'date -u' runs on the GitHub runner VM, so it
+      # reflects when the CI job actually executed.
+      # After this sed, the TypeScript source reads: export const BUILD_TIMESTAMP = '2026-09-11 14:32 UTC';
+      # ng build then compiles that literal value into the JS bundle.
+      - name: Inject build timestamp
+        run: |
+          BUILD_TIME=$(date -u '+%Y-%m-%d %H:%M UTC')
+          sed -i "s|'local'|'$BUILD_TIME'|" frontend/src/build-info.ts
+
+      # ── Step 5 (was 4): Build the Angular app ─────────────────────────────
+      # Same command as the manual step, but run by the VM.
+      # --base-href tells Angular what URL prefix to use for all asset links.
+      # The output lands in frontend/dist/ilias-pohl-module/pohl/
+      - name: Build Angular app
+        run: npx ng build --base-href "https://interapt.uni-goettingen.de/pohl/"
+        working-directory: frontend
+
+      # ── Step 5: Patch .htaccess for production ─────────────────────────────
+      # Locally, RewriteBase is / — on the server it must be /pohl/.
+      # sed -i does an in-place string replacement in the file.
+      # We never commit this change; it only exists in the throwaway VM.
+      - name: Set production RewriteBase in .htaccess
+        run: sed -i 's|RewriteBase /|RewriteBase /pohl/|' .htaccess
+
+      # ── Step 6: Install lftp ───────────────────────────────────────────────
+      # lftp is a command-line FTP/SFTP client available in Ubuntu's package
+      # manager. It supports SFTP natively and has a 'mirror' command that
+      # works like rsync: only uploads files that changed.
+      - name: Install lftp
+        run: sudo apt-get install -y lftp
+
+      # ── Step 7: Upload Angular build ──────────────────────────────────────
+      # lftp connects over SFTP, then runs a script:
+      #   mirror -R   = reverse mirror (local → remote), like rsync push
+      #   --delete    = remove remote files that no longer exist locally
+      #   --verbose   = print what it uploads (visible in the Actions log)
+      #
+      # Angular outputs to browser/ by default. The manual deploy step
+      # renames it to pohl/ — in CI we skip that by mapping browser/ directly
+      # to the remote pohl/ directory.
+      #
+      # ${{ secrets.NAME }} injects the GitHub Secret as an env variable.
+      # The secret value is never printed — GitHub redacts it in logs.
+      - name: Upload Angular dist to server
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+          REMOTE_DIR: ${{ secrets.SFTP_REMOTE_DIR }}
+        run: |
+          lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << 'EOF'
+          set ssl:verify-certificate no
+          mirror -R --delete --verbose \
+            frontend/dist/ilias-pohl-module/browser/ \
+            $REMOTE_DIR/
+          bye
+          EOF
+
+      # ── Step 8: Upload PHP API (excluding config.php) ─────────────────────
+      # api/config.php holds production DB credentials and must already exist
+      # on the server — we must never overwrite it from CI.
+      # --exclude matches a glob pattern relative to the source directory.
+      - name: Upload API files (exclude config.php)
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+          REMOTE_DIR: ${{ secrets.SFTP_REMOTE_DIR }}
+        run: |
+          lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << 'EOF'
+          set ssl:verify-certificate no
+          mirror -R --delete --verbose --exclude config.php \
+            api/ \
+            $REMOTE_DIR/api/
+          bye
+          EOF
+
+      # ── Step 9: Upload root files ──────────────────────────────────────────
+      # ilias_bridge.html and .htaccess (already patched in step 5) go to
+      # the server's base directory individually.
+      - name: Upload ilias_bridge.html and .htaccess
+        env:
+          SFTP_HOST: ${{ secrets.SFTP_HOST }}
+          SFTP_PORT: ${{ secrets.SFTP_PORT }}
+          SFTP_USER: ${{ secrets.SFTP_USER }}
+          SFTP_PASS: ${{ secrets.SFTP_PASS }}
+          REMOTE_DIR: ${{ secrets.SFTP_REMOTE_DIR }}
+        run: |
+          lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << 'EOF'
+          set ssl:verify-certificate no
+          put ilias_bridge.html -o $REMOTE_DIR/ilias_bridge.html
+          put .htaccess -o $REMOTE_DIR/.htaccess
+          bye
+          EOF
