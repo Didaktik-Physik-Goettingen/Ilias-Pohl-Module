@@ -16,7 +16,7 @@
             <div class="header-title">
                 <span [class.header-title--clickable]="devMode.isEnabled" (click)="devMode.isEnabled && router.navigate(['/'])">Pohlscher Resonator
                     @if (devMode.isEnabled) {
-                        (Build: {{ buildTimestamp }})
+                        <i>(Build: {{ buildTimestamp }})</i>
                     }
                 </span>
             </div>

@@ -67,7 +67,7 @@ jobs:
       # ng build then compiles that literal value into the JS bundle.
       - name: Inject build timestamp
         run: |
-          BUILD_TIME=$(date -u '+%Y-%m-%d %H:%M UTC')
+          BUILD_TIME=$(TZ='Europe/Berlin' date '+%Y-%m-%d %H:%M CET')
           sed -i "s|'local'|'$BUILD_TIME'|" frontend/src/build-info.ts
 
       # ── Step 5 (was 4): Build the Angular app ─────────────────────────────
