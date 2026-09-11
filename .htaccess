@@ -1,8 +1,8 @@
 RewriteEngine On
 
 # Set this to the sub-path where the module lives on the server.
-# Example: if the URL is https://example.com/pohl/ use: RewriteBase /pohl/
-# If it lives at the domain root use: RewriteBase /
+# Example: if the URL is https://example.com/pohl/ use: RewriteBase /pohl/ [on the server]
+# If it lives at the domain root (i.e. locally) use: RewriteBase / [local]
 RewriteBase /pohl/
 
 # ── API routes → PHP files ────────────────────────────────────────────────────
@@ -10,6 +10,7 @@ RewriteRule ^api/users/check$       api/users/check.php   [L]
 RewriteRule ^api/users/create$      api/users/create.php  [L]
 RewriteRule ^api/progress/save$     api/progress/save.php [L]
 RewriteRule ^api/progress/([^/]+)$  api/progress/load.php?username=$1 [L,QSA]
+RewriteRule ^api/report$            api/report.php [L]
 
 # ── Angular client-side routing ───────────────────────────────────────────────
 # Serve real files and directories as-is; everything else → index.html
