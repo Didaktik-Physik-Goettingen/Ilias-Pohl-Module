@@ -259,7 +259,7 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 
 ### Shared Components
 
-- **nav-bar:** sticky sidebar navigation rendered on every route inside `.page-body`. Layout uses a two-div pattern — the outer `.nav-bar` shell is `position: sticky; height: 100vh` with no overflow (overflow on a sticky element breaks stickiness in most browsers), and the inner `.nav-bar-container` has `height: 100%; overflow-y: auto` for scrollable content when many sub-pages are expanded. The sidebar is hidden (`visibility: hidden`) on the home route in normal mode, preserving the grid column so content stays centred.
+- **Navigation bar:** sticky sidebar navigation rendered on every route inside `.page-body`. Layout uses a two-div pattern — the outer `.nav-bar` shell is `position: sticky; height: 100vh` with no overflow (overflow on a sticky element breaks stickiness in most browsers), and the inner `.nav-bar-container` has `height: 100%; overflow-y: auto` for scrollable content when many sub-pages are expanded. The sidebar is hidden (`visibility: hidden`) on the home route in normal mode, preserving the grid column so content stays centred.
 
   **Strand switcher:** a segmented tab control showing the two learning strands (Fokus Experiment / Fokus Theorie). The active tab fills the available width and shows the full label; the inactive tab collapses to an abbreviation (EXP / THEO). In dev-mode the inactive tab is clickable and navigates to the first sub-page of the target strand. The chosen strand is persisted in `localStorage` and restored on reload.
 
@@ -269,7 +269,7 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 
   **Startseite / Anleitung endpoints:** always rendered but only clickable (`cursor: pointer`, `goHome()` / `goAnleitung()` guards) in dev-mode, or when the user is already on the Anleitung page.
 
-- **glossary-overlay:** inline glossary panel triggered by `<a data-glossary="{term}" class="glossary-link">` links in content strings and templates; a `@HostListener('click')` on each learning component intercepts these anchors (using `closest('a[data-glossary]')`) and opens the overlay without navigation. The `data-glossary` attribute (rather than `href="#glossary-"`) prevents the browser from offering "Open in new tab" in the context menu.
+- **Glossary overlay:** inline glossary panel triggered by `<a data-glossary="{term}" class="glossary-link">` links in content strings and templates; a `@HostListener('click')` on each learning component intercepts these anchors (using `closest('a[data-glossary]')`) and opens the overlay without navigation. The `data-glossary` attribute (rather than `href="#glossary-"`) prevents the browser from offering "Open in new tab" in the context menu.
 
 
 ### Evaluation Formats (Learning Pages)
@@ -429,19 +429,19 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 Decision pages present the user with a choice between the conventional learning module, an interactive simulation, and a test. Cards are colour-coded by destination type.
 
 **Experimental strand:**
-- **dec-e-damped-oscillations** → `/decision/e-damped-oscillations` — Gedämpfte Schwingungen
-- **dec-e-driven-oscillations** → `/decision/e-driven-oscillations` — Getriebene Schwingungen
+- **dec-e-damped-oscillations** → `/decision/dec-e-damped` — Gedämpfte Schwingungen
+- **dec-e-driven-oscillations** → `/decision/dec-e-driven` — Getriebene Schwingungen
 
 **Theory strand:**
-- **dec-t-damped-oscillations** → `/decision/t-damped-oscillations` — Gedämpfte Schwingungen
-- **dec-t-driven-oscillations** → `/decision/t-driven-oscillations` — Getriebene Schwingungen
+- **dec-t-damped-oscillations** → `/decision/dec-t-damped` — Gedämpfte Schwingungen
+- **dec-t-driven-oscillations** → `/decision/dec-t-driven` — Getriebene Schwingungen
 
 
 ### Test Features
 
 Tests use single-submission question formats. The `e-` prefix denotes the experimental strand, the `t-` prefix the theoretical strand.
 
-- **test-e-damped-oscillations** → `/test/e-damped-osc` — Test: Gedämpfte Schwingungen
+- **test-e-damped-oscillations** → `/test/test-e-damped` — Test: Gedämpfte Schwingungen
 
 <details>
 <summary>Questions (5)</summary>
@@ -454,7 +454,7 @@ Tests use single-submission question formats. The `e-` prefix denotes the experi
 
 </details>
 
-- **test-e-driven-oscillations** → `/test/e-driven-osc` — Test: Getriebene Schwingungen
+- **test-e-driven-oscillations** → `/test/test-e-driven` — Test: Getriebene Schwingungen
 
 <details>
 <summary>Questions (4)</summary>
@@ -466,7 +466,7 @@ Tests use single-submission question formats. The `e-` prefix denotes the experi
 
 </details>
 
-- **test-t-damped-oscillation** → `/test/t-damped-osc` — Test: Gedämpfte Schwingungen — Theorie (URL-restorable via `?page=`)
+- **test-t-damped-oscillation** → `/test/test-t-damped` — Test: Gedämpfte Schwingungen — Theorie (URL-restorable via `?page=`)
 
 <details>
 <summary>Questions (5)</summary>
@@ -479,7 +479,7 @@ Tests use single-submission question formats. The `e-` prefix denotes the experi
 
 </details>
 
-- **test-t-driven-oscillation** → `/test/t-driven-osc` — Test: Getriebene Schwingungen — Theorie (URL-restorable via `?page=`)
+- **test-t-driven-oscillation** → `/test/test-t-driven` — Test: Getriebene Schwingungen — Theorie (URL-restorable via `?page=`)
 
 <details>
 <summary>Questions (4)</summary>
@@ -521,11 +521,11 @@ Target pages are reached at the end of a module strand. They offer downloadable 
 Angular components (interactive, use canvas / MathJax — served client-side):
 
 **Experimental strand:**
-- **sim-e-damped-oscillations** → `/simulation/sim-e-damped-osc` — Simulation: Gedämpfte Schwingungen
-- **sim-e-driven-oscillations** → `/simulation/sim-e-driven-osc` — Simulation: Getriebene Schwingungen
+- **sim-e-damped-oscillations** → `/simulation/sim-e-damped` — Simulation: Gedämpfte Schwingungen
+- **sim-e-driven-oscillations** → `/simulation/sim-e-driven` — Simulation: Getriebene Schwingungen
 
 **Theory strand:**
-- **sim-t-undamped** → `/simulation/sim-t-undamped` — Simulation: Freie (ungedämpfte) Schwingung
+- **sim-t-free** → `/simulation/sim-t-free` — Simulation: Freie (ungedämpfte) Schwingung
 - **sim-t-damped** → `/simulation/sim-t-damped` — Simulation: Gedämpfte Schwingung
 - **sim-t-driven** → `/simulation/sim-t-driven` — Simulation: Gedämpfte getriebene Schwingung
 - **sim-t-driven-advanced** → `/simulation/sim-t-driven-advanced` — Simulation: Gedämpfte getriebene Drehschwingung
