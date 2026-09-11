@@ -78,13 +78,6 @@ jobs:
         run: npx ng build --base-href "https://interapt.uni-goettingen.de/pohl/"
         working-directory: frontend
 
-      # ── Step 5: Patch .htaccess for production ─────────────────────────────
-      # Locally, RewriteBase is / — on the server it must be /pohl/.
-      # sed -i does an in-place string replacement in the file.
-      # We never commit this change; it only exists in the throwaway VM.
-      - name: Set production RewriteBase in .htaccess
-        run: sed -i 's|RewriteBase /|RewriteBase /pohl/|' .htaccess
-
       # ── Step 6: Install lftp ───────────────────────────────────────────────
       # lftp is a command-line FTP/SFTP client available in Ubuntu's package
       # manager. It supports SFTP natively and has a 'mirror' command that
@@ -141,9 +134,9 @@ jobs:
           EOF
 
       # ── Step 9: Upload root files ──────────────────────────────────────────
-      # ilias_bridge.html and .htaccess (already patched in step 5) go to
-      # the server's base directory individually.
-      - name: Upload ilias_bridge.html and .htaccess
+      # .htaccess is managed on the server (like config.php) — never overwritten
+      # by CI, since it carries the production RewriteBase /pohl/ setting.
+      - name: Upload ilias_bridge.html
         env:
           SFTP_HOST: ${{ secrets.SFTP_HOST }}
           SFTP_PORT: ${{ secrets.SFTP_PORT }}
@@ -154,6 +147,5 @@ jobs:
           lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << EOF
           set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
           put ilias_bridge.html -o $REMOTE_DIR/ilias_bridge.html
-          put .htaccess -o $REMOTE_DIR/.htaccess
           bye
           EOF
