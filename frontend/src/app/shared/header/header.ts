@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ThemeService } from '../../core/services/theme';
 import { Session } from '../../core/services/session';
 import { DevModeService } from '../../core/services/dev-mode';
+import { BUILD_TIMESTAMP } from '../../../build-info';
 
 
 
@@ -17,6 +18,7 @@ import { DevModeService } from '../../core/services/dev-mode';
 export class Header implements OnInit {
     isScrolled = false;
     showBridgeConfirm = false;
+    readonly buildTimestamp = BUILD_TIMESTAMP;
 
 
     constructor(

@@ -14,6 +14,10 @@ docker-compose.yml                              // local MySQL container (dev on
 .gitignore
 README.md
 │
+├── .github/
+│   └── workflows/
+│           deploy.yml                          // CI/CD: build + SFTP deploy on push to master
+│
 ├── api/                                        // PHP backend
 │       config.php                              // DB credentials + module config (gitignored)
 │       config.example.php                      // template for config.php
@@ -36,6 +40,10 @@ README.md
 │   │
 │   └── src/
 │       │   index.html                          // main .html
+│       │   main.ts                             // Angular bootstrap entry point
+│       │   main.server.ts                      // SSR bootstrap entry point
+│       │   server.ts                           // Express server for SSR (Node)
+│       │   build-info.ts                       // BUILD_TIMESTAMP constant; injected by CI at build time
 │       │   styles.css                          // main stylesheet (color palette, layout, buttons)
 │       │   styles_glossary.css                 // stylesheet for the glossary
 │       │   styles_evaluation.css               // stylesheet for the evaluation types
@@ -48,11 +56,16 @@ README.md
 │       └── assets/                             // images, icons, downloadable files, etc.
 │       │
 │       └── app/
+│           │   app.ts                          // root component
 │           │   app.html                        // general page structure
+│           │   app.css                         // root-level styles
+│           │   app.config.ts                   // Angular providers (router, HTTP, SSR)
+│           │   app.config.server.ts            // SSR-specific provider overrides
 │           │   app.routes.ts                   // client-side routing (all routes)
 │           │   app.routes.server.ts            // SSR render-mode per route (Prerender / Client)
 │           │
 │           └── core/
+│           │   │   print-mode.ts               // utility: isPrintMode() for print/PDF view gating
 │           │   └── services/                   // project-wide services
 │           │           theme.ts                // light / dark mode toggling
 │           │           session.ts              // session ID management + rogue user detection
@@ -74,6 +87,7 @@ README.md
 │           │   └── glossary-overlay/           // inline glossary panel (triggered by anchor links)
 │           │   │
 │           │   └── evaluation/                 // Q+A types for learning pages (retryable)
+│           │   │   │   question.types.ts       // shared TypeScript interfaces for question data
 │           │   │   └── single-choice/
 │           │   │   └── multiple-choice/
 │           │   │   └── multiple-choice-image/
@@ -103,9 +117,7 @@ README.md
 │               └── test_features/              // single-submission test pages
 │               └── sidepath_features/
 │               └── target_features/            // end-of-module guide download + Lernpfad summary
-│
-└── public/
-    └── simulations/                            // standalone HTML simulation pages (static)
+|
 ```
 
 
@@ -141,20 +153,43 @@ The Angular app is also accessible directly at **`http://localhost:4200`** (rogu
 
 ## Deploying to the Server
 
+### Automatic (CI/CD — primary method)
+
+Pushing to `master` triggers `.github/workflows/deploy.yml` automatically:
+1. GitHub spins up an Ubuntu runner
+2. Installs Node, runs `npm ci`, builds the Angular app
+3. Patches `.htaccess` with the production `RewriteBase`
+4. Uploads via SFTP: Angular dist → `pohl/`, `api/` (excluding `config.php`), `ilias_bridge.html`, `.htaccess`
+
+**One-time setup** — add the following five secrets in GitHub → repo → Settings → Secrets and variables → Actions. Ask a maintainer for the values:
+`SFTP_HOST`, `SFTP_PORT`, `SFTP_USER`, `SFTP_PASS`, `SFTP_REMOTE_DIR`
+
+To skip the pipeline for a specific commit, include `[skip ci]` in the commit message:
+```bash
+git commit -m "Update docs [skip ci]"
+```
+
+You can also trigger a deploy manually via **GitHub → Actions → Build & Deploy → Run workflow**.
+
+### Manual (fallback)
+
 1. Build the Angular app:
    ```bash
    cd frontend && ng build --base-href "https://interapt.uni-goettingen.de/pohl/"
    ```
-2. Upload to the server:
-   - `frontend/dist/.../browser/` → server base path (static files), rename `browser/` to `pohl/` and upload to server
-   - `api/` → server base path `/api/`
-   - `ilias_bridge.html` → server base path
-   - `.htaccess` → server base path
-3. Create `api/config.php` on the server (from `config.example.php`) with production credentials.
-4. Set `RewriteBase` in `.htaccess` to match the server sub-path.
-<!-- 5. Run `api/schema.sql` once in phpMyAdmin to create the tables. -->
+2. In `.htaccess`, change `RewriteBase /` to `RewriteBase /pohl/`
+3. Upload via SFTP:
+   - `frontend/dist/ilias-pohl-module/browser/` → server `pohl/` (the folder contents, not the folder itself)
+   - `api/` (excluding `config.php`) → server `pohl/api/`
+   - `ilias_bridge.html` and `.htaccess` → server `pohl/`
+4. Revert the `.htaccess` change locally after uploading.
 
-The final structure on the server is supposed to look like this:
+### First-time server setup
+
+1. Create `api/config.php` on the server (copy from `config.example.php`) with production credentials.
+<!-- 2. Run `api/schema.sql` once in phpMyAdmin to create the tables. -->
+
+The final structure on the server looks like this:
 
 ```
 pohl/                        ← your base path
