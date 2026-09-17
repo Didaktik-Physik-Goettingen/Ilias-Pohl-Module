@@ -6,8 +6,9 @@
             @for (option of shuffledOptions; track option.value; let i = $index) {
             <div
                 class="image-option"
-                [class.selected]="selectedAnswer === option.value"
-                [class.correct]="isSubmitted && option.value === correctAnswer"
+                [class.selected]="selectedAnswer === option.value && !isSubmitted"
+                [class.correct]="isSubmitted && selectedAnswer === option.value && isCorrect"
+                [class.missed-correct]="isSubmitted && option.value === correctAnswer && selectedAnswer !== option.value"
                 [class.incorrect]="isSubmitted && selectedAnswer === option.value && !isCorrect"
                 [class.disabled]="isSubmitted"
                 (click)="selectOption(option.value)">
@@ -26,6 +27,19 @@
 
                 @if (option.label) {
                     <span class="image-label">{{ option.label }}</span>
+                }
+
+                @if (isSubmitted && selectedAnswer === option.value && isCorrect) {
+                    <span class="indicator correct-indicator">✓</span>
+                }
+                @if (isSubmitted && selectedAnswer === option.value && !isCorrect) {
+                    <span class="indicator incorrect-indicator">✗</span>
+                }
+                @if (isSubmitted && option.value === correctAnswer && selectedAnswer !== option.value) {
+                    <span class="richtige-antwort-badge" style="margin-left: 0; margin-top: 0.4rem;">Richtige Antwort</span>
+                }
+                @if (isSubmitted && option.value !== correctAnswer && selectedAnswer !== option.value) {
+                    <span class="falsche-antwort-badge" style="margin-left: 0; margin-top: 0.4rem;">Falsche Antwort</span>
                 }
             </div>
             }

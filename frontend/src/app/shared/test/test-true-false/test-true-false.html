@@ -11,36 +11,43 @@
 
                 <div class="statement-text" [innerHTML]="statement.text"></div>
 
-                <div class="statement-options">
-                    <button
-                        type="button"
-                        class="testtf-btn"
-                        [class.selected]="getSelectedValue(statement.id) === 'true' && !isSubmitted"
-                        [class.correct]="isSubmitted && statement.isCorrect"
-                        [class.incorrect]="isSubmitted && getSelectedValue(statement.id) === 'true' && !statement.isCorrect"
-                        [disabled]="isSubmitted"
-                        (click)="toggleStatement(statement.id, 'true')">
-                        Wahr
-                    </button>
+                <div class="statement-right">
+                    <div class="statement-options">
+                        <button
+                            type="button"
+                            class="testtf-btn"
+                            [class.selected]="getSelectedValue(statement.id) === 'true' && !isSubmitted"
+                            [class.correct]="isSubmitted && getSelectedValue(statement.id) === 'true' && statement.isCorrect"
+                            [class.incorrect]="isSubmitted && getSelectedValue(statement.id) === 'true' && !statement.isCorrect"
+                            [disabled]="isSubmitted"
+                            (click)="toggleStatement(statement.id, 'true')">
+                            Wahr
+                            @if (isSubmitted && getSelectedValue(statement.id) === 'true') {
+                                <span class="testtf-indicator">{{ statement.isCorrect ? '✓' : '✗' }}</span>
+                            }
+                        </button>
 
-                    <button
-                        type="button"
-                        class="testtf-btn"
-                        [class.selected]="getSelectedValue(statement.id) === 'false' && !isSubmitted"
-                        [class.correct]="isSubmitted && !statement.isCorrect"
-                        [class.incorrect]="isSubmitted && getSelectedValue(statement.id) === 'false' && statement.isCorrect"
-                        [disabled]="isSubmitted"
-                        (click)="toggleStatement(statement.id, 'false')">
-                        Falsch
-                    </button>
-                </div>
+                        <button
+                            type="button"
+                            class="testtf-btn"
+                            [class.selected]="getSelectedValue(statement.id) === 'false' && !isSubmitted"
+                            [class.correct]="isSubmitted && getSelectedValue(statement.id) === 'false' && !statement.isCorrect"
+                            [class.incorrect]="isSubmitted && getSelectedValue(statement.id) === 'false' && statement.isCorrect"
+                            [disabled]="isSubmitted"
+                            (click)="toggleStatement(statement.id, 'false')">
+                            Falsch
+                            @if (isSubmitted && getSelectedValue(statement.id) === 'false') {
+                                <span class="testtf-indicator">{{ !statement.isCorrect ? '✓' : '✗' }}</span>
+                            }
+                        </button>
+                    </div>
 
-                @if (isSubmitted) {
-                <div class="statement-indicator">
-                    <span *ngIf="getSelectedValue(statement.id) === (statement.isCorrect ? 'true' : 'false')" class="indicator correct-indicator">✓</span>
-                    <span *ngIf="getSelectedValue(statement.id) !== null && getSelectedValue(statement.id) !== (statement.isCorrect ? 'true' : 'false')" class="indicator incorrect-indicator">✗</span>
+                    @if (isSubmitted && getSelectedValue(statement.id) === null) {
+                    <span class="richtige-antwort-badge--neutral">
+                        Richtige Antwort: {{ statement.isCorrect ? 'Wahr' : 'Falsch' }}
+                    </span>
+                    }
                 </div>
-                }
             </div>
             }
         </div>

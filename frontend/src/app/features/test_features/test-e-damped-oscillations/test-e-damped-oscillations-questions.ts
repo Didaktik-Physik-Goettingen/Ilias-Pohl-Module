@@ -52,7 +52,7 @@ export const question4 = {
 			$$\\Lambda = \\ln\\left(\\frac{\\varphi(t)}{\\varphi(t+T)}\\right).$$
 			Hierbei beschreibt $\\varphi(t)$ die Auslenkung aus der Ruhelage und $T$ die Periodendauer.
 			Was kann über das logarithmische Dekrement bestimmt werden? Markieren Sie alle physikalischen Größen, die direkt mit dem logarithmischen Dekrement zusammenhängen.`,
-    questionInstruction: 'Frage 4 von 5 (20 Punkte): LogarithmischesDekrement',
+    questionInstruction: 'Frage 4 von 5 (20 Punkte): Logarithmisches Dekrement',
     options: [
         { value: 'eigenfrequency', label: 'Die Eigenfrequenz des schwingenden Systems $\\omega_0$.' },
         { value: 'half_life', label: 'Die Halbwertszeit $t_{1/2}$.' },
