@@ -78,14 +78,34 @@ jobs:
         run: npx ng build --base-href "https://interapt.uni-goettingen.de/pohl/"
         working-directory: frontend
 
-      # ── Step 6: Install lftp ───────────────────────────────────────────────
+      # ── Step 6: Write production .htaccess ────────────────────────────────
+      # The local .htaccess uses RewriteBase / for development.
+      # We generate the production version with RewriteBase /pohl/ and drop it
+      # into the dist folder so the mirror step uploads it automatically —
+      # no sed replacement, no separate upload step, no stale server file.
+      - name: Write production .htaccess
+        run: |
+          cat > frontend/dist/ilias-pohl-module/browser/.htaccess << 'EOF'
+          RewriteEngine On
+          RewriteBase /pohl/
+          RewriteRule ^api/users/check$       api/users/check.php   [L]
+          RewriteRule ^api/users/create$      api/users/create.php  [L]
+          RewriteRule ^api/progress/save$     api/progress/save.php [L]
+          RewriteRule ^api/progress/([^/]+)$  api/progress/load.php?username=$1 [L,QSA]
+          RewriteRule ^api/report$            api/report.php [L]
+          RewriteCond %{REQUEST_FILENAME} !-f
+          RewriteCond %{REQUEST_FILENAME} !-d
+          RewriteRule ^ index.html [L]
+          EOF
+
+      # ── Step 8: Install lftp ───────────────────────────────────────────────
       # lftp is a command-line FTP/SFTP client available in Ubuntu's package
       # manager. It supports SFTP natively and has a 'mirror' command that
       # works like rsync: only uploads files that changed.
       - name: Install lftp
         run: sudo apt-get install -y lftp
 
-      # ── Step 7: Upload Angular build ──────────────────────────────────────
+      # ── Step 9: Upload Angular build (including .htaccess) ────────────────
       # lftp connects over SFTP, then runs a script:
       #   mirror -R   = reverse mirror (local → remote), like rsync push
       #   --delete    = remove remote files that no longer exist locally
