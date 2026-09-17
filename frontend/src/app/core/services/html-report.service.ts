@@ -138,7 +138,7 @@ ${blocksHtml}
 
         const selectedHtml = q.selectedAnswerTexts.length === 0
             ? '<span class="q-empty">Keine Antwort</span>'
-            : q.selectedAnswerTexts.map(a => this.renderAnswerItem(a, imageCache)).join('');
+            : q.selectedAnswerTexts.map(a => this.renderAnswerItem(a, imageCache, q.correctAnswerTexts.includes(a))).join('');
 
         const correctHtml = !q.isCorrect && q.correctAnswerTexts.length > 0
             ? `<div class="q-correct-answer"><span class="q-answer-label q-answer-label--correct">Richtige Antwort:</span>${q.correctAnswerTexts.map(a => this.renderAnswerItem(a, imageCache)).join('')}</div>`
@@ -154,12 +154,13 @@ ${correctHtml}${attemptsHtml}
 </div>`;
     }
 
-    private renderAnswerItem(ans: string, imageCache: Map<string, string>): string {
+    private renderAnswerItem(ans: string, imageCache: Map<string, string>, isCorrect?: boolean): string {
         if (this.isImagePath(ans)) {
             const src = imageCache.get(ans) ?? ans;
             return `<img class="q-answer-img" src="${src}" alt="Auswahlbild">`;
         }
-        return `<span class="q-answer-item">${this.renderLatex(ans)}</span>`;
+        const cls = isCorrect === true ? ' q-answer-item--correct' : isCorrect === false ? ' q-answer-item--incorrect' : '';
+        return `<span class="q-answer-item${cls}">${this.renderLatex(ans)}</span>`;
     }
 
     private renderTest(test: SummaryTestResult, imageCache: Map<string, string>): string {
@@ -168,7 +169,7 @@ ${correctHtml}${attemptsHtml}
         const questionsHtml = test.questions.map(tq => {
             const cls = tq.isCorrect ? 'question-correct' : 'question-incorrect';
             const indicator = tq.isCorrect ? '✓' : '✗';
-            const userHtml = tq.userAnswerTexts.map(a => this.renderAnswerItem(a, imageCache)).join('');
+            const userHtml = tq.userAnswerTexts.map(a => this.renderAnswerItem(a, imageCache, tq.correctAnswerTexts.includes(a))).join('');
             const correctHtml = !tq.isCorrect && tq.correctAnswerTexts.length > 0
                 ? `<div class="q-correct-answer"><span class="q-answer-label q-answer-label--correct">Richtige Antwort:</span>${tq.correctAnswerTexts.map(a => this.renderAnswerItem(a, imageCache)).join('')}</div>`
                 : '';
@@ -409,8 +410,8 @@ main { max-width: 800px; margin: 0 auto; }
 .q-answer-label         { font-weight: 600; color: #333; }
 .q-answer-label--correct{ color: #1e7e4e; }
 .q-answer-item { background: #fff; border: 1px solid #ccc; border-radius: 3px; padding: 0.15rem 0.45rem; }
-.question-correct   .q-answer-item { border-color: #82d4a4; }
-.question-incorrect .q-answer-item { border-color: #e8a3a3; }
+.q-answer-item--correct   { border-color: #82d4a4; color: #15803d; font-weight: 500; }
+.q-answer-item--incorrect { border-color: #e8a3a3; color: #b33030; font-weight: 500; }
 .q-correct-answer .q-answer-item   { border-color: #82d4a4; background: #edfaf2; }
 .q-answer-img { max-width: 200px; max-height: 150px; object-fit: contain; border-radius: 4px; border: 1px solid #ddd; }
 .q-attempts  { font-size: 0.78rem; color: #888; font-style: italic; }

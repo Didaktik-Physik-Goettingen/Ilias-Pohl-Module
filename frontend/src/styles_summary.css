@@ -123,6 +123,8 @@
 
 .summary-q-answer-label  { color: #6b7280; font-weight: 500; }
 .summary-q-answer-item   { color: #1a202c; }
+
+.summary-q-answer-item--incorrect { color: #dc2626; font-weight: 500; }
 .summary-q-answer-empty  { color: #9ca3af; font-style: italic; }
 
 .summary-q-instruction {
@@ -158,7 +160,6 @@
 }
 
 .summary-q-answer-label--correct { color: #16a34a; font-weight: 600; }
-.summary-q-answer-item--correct  { color: #15803d; font-weight: 500; }
 
 .summary-q-meta {
     font-size: 0.8rem;

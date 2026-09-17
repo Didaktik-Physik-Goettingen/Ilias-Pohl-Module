@@ -1,7 +1,7 @@
 export const question1 = {
     questionId: 'test-e-damped-osc-1-daempfungsstaerke',
     question: `Bei dem Versuch können Sie die Dämpfung darüber anpassen, dass Sie den Überlappbereich zwischen einem Magneten (eines Magnetfelds) und der Schwungscheibe variieren.
-			Ziehen Sie die Bilder in die richtige Reihenfolge (stärkste Dämpfung oben, schwächste unten).`,
+			Ziehen Sie die Bilder in die richtige Reihenfolge (stärkste Dämpfung oben [1], schwächste unten [3]).`,
     questionInstruction: 'Frage 1 von 5 (30 Punkte): Sortierung Dämpfungskonstante',
     images: [
         { id: 'weak', imageSrc: 'assets/images/test_e_damped_oscillations/weak_damping_1.png', label: 'Schwingung A' },
@@ -17,7 +17,7 @@ export const question2 = {
     questionId: 'test-e-damped-osc-2-federkonstante',
     question: `Im Versuch ist eine feste Feder eingebaut, die Federkonstante kann also nicht varriert werden. Was würde aber passieren, wenn man die Federkonstante variieren könnte?
 			Sortieren Sie die Graphen nach der Größe der Federkonstante.
-			Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante nach oben einsortieren (andere Variablen sind konstant gehalten).`,
+			Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante [1] nach oben einsortieren (andere Variablen sind konstant gehalten). Die kleinste Federkonstante [3] ist entsprechend unten.`,
     questionInstruction: 'Frage 2 von 5 (30 Punkte): Sortierung Federkonstante',
     images: [
         { id: 'weak', imageSrc: 'assets/images/test_e_damped_oscillations/weak_spring_constant_2.png', label: 'Schwingung A' },

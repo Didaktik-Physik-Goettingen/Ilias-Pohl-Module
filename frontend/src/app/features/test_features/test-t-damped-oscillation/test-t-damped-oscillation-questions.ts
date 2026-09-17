@@ -1,6 +1,6 @@
 export const question1 = {
     questionId: 'test-t-damped-osc-1-daempfungsstaerke',
-    question: `Sortieren Sie die drei Graphen entsprechend der Größe der Dämpfungskonstante. Beginnen Sie oben mit der niedrigsten Dämpfungskonstante.`,
+    question: `Sortieren Sie die drei Graphen entsprechend der Größe der Dämpfungskonstante. Beginnen Sie oben mit der niedrigsten Dämpfungskonstante [1], die niedrigste Dämpfungskonstante ist entsprechend unten [3].`,
     questionInstruction: 'Frage 1 von 5 (30 Punkte): Sortierung Dämpfungskonstante',
     images: [
         { id: 'weak', imageSrc: 'assets/images/test_e_damped_oscillations/weak_damping_1.png', label: 'Schwingung A' },
@@ -16,7 +16,7 @@ export const question2 = {
     questionId: 'test-t-damped-osc-2-federkonstante',
     question: `Welchen Einfluss hat die Federkonstante auf eine Schwingung?<br>
 		  Sortieren Sie die Graphen nach der Größe der Federkonstante.
-		  Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante nach oben einsortieren (andere Variablen sind konstant gehalten).`,
+		  Sortieren Sie die Graphen absteigend, indem Sie den Graphen mit der größten Federkonstante [1] nach oben einsortieren und den mit der kleinsten Federkonstante unten [3] (andere Variablen sind konstant gehalten).`,
     questionInstruction: 'Frage 2 von 5 (30 Punkte): Sortierung Federkonstante',
     images: [
         { id: 'weak', imageSrc: 'assets/images/test_e_damped_oscillations/weak_spring_constant_2.png', label: 'Schwingung A' },

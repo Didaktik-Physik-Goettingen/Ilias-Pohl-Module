@@ -130,7 +130,10 @@
                                     @if (isImagePath(ans)) {
                                         <img class="summary-q-answer-img" [src]="ans" alt="">
                                     } @else {
-                                        <span class="summary-q-answer-item" [innerHTML]="ans"></span>
+                                        <span class="summary-q-answer-item"
+                                              [class.summary-q-answer-item--correct]="q.correctAnswerTexts.includes(ans)"
+                                              [class.summary-q-answer-item--incorrect]="!q.correctAnswerTexts.includes(ans)"
+                                              [innerHTML]="ans"></span>
                                     }
                                 }
                                 @if (q.selectedAnswerTexts.length === 0) {
@@ -144,7 +147,7 @@
                                     @if (isImagePath(ans)) {
                                         <img class="summary-q-answer-img summary-q-answer-img--correct" [src]="ans" alt="">
                                     } @else {
-                                        <span class="summary-q-answer-item summary-q-answer-item--correct" [innerHTML]="ans"></span>
+                                        <span class="summary-q-answer-item" [innerHTML]="ans"></span>
                                     }
                                 }
                             </div>
@@ -210,7 +213,10 @@
                                         @if (isImagePath(ans)) {
                                             <img class="summary-q-answer-img" [src]="ans" alt="">
                                         } @else {
-                                            <span class="summary-q-answer-item" [innerHTML]="ans"></span>
+                                            <span class="summary-q-answer-item"
+                                                  [class.summary-q-answer-item--correct]="tq.correctAnswerTexts.includes(ans)"
+                                                  [class.summary-q-answer-item--incorrect]="!tq.correctAnswerTexts.includes(ans)"
+                                                  [innerHTML]="ans"></span>
                                         }
                                     }
                                 </div>
@@ -222,7 +228,7 @@
                                         @if (isImagePath(ans)) {
                                             <img class="summary-q-answer-img summary-q-answer-img--correct" [src]="ans" alt="">
                                         } @else {
-                                            <span class="summary-q-answer-item summary-q-answer-item--correct" [innerHTML]="ans"></span>
+                                            <span class="summary-q-answer-item" [innerHTML]="ans"></span>
                                         }
                                     }
                                 </div>
