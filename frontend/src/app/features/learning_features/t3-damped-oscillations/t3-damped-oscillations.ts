@@ -78,6 +78,7 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
 
     t3Text3a!: SafeHtml;
     t3Text3b!: SafeHtml;
+    t3Text3c!: SafeHtml;
 
     t3Text4a!: SafeHtml;
     t3Text4b!: SafeHtml;
@@ -151,6 +152,8 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
         this.t3Text3a = this.sanitizer.bypassSecurityTrustHtml(t3Content.t3Text3a);
 
         this.t3Text3b = this.sanitizer.bypassSecurityTrustHtml(t3Content.t3Text3b);
+
+        this.t3Text3c = this.sanitizer.bypassSecurityTrustHtml(t3Content.t3Text3c);
 
         // Page 4 — Aperiodischer Grenzfall
         this.t3Text4a = this.sanitizer.bypassSecurityTrustHtml(t3Content.t3Text4a);

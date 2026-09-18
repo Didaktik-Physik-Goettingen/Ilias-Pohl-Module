@@ -19,9 +19,9 @@
                         <input
                             type="radio"
                             [name]="containerId"
+                            [value]="option.value"
                             [checked]="selectedAnswer === option.value"
-                            [disabled]="isSubmitted"
-                            (click)="$event.stopPropagation()">
+                            [disabled]="isSubmitted" >
                     </div>
                 </div>
 

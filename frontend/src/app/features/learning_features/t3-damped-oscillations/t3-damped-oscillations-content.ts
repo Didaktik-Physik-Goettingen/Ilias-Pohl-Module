@@ -101,6 +101,9 @@ export const t3Text3a = `
 
 export const t3Text3b = `
             $$x(t) = e^{-\\gamma t}\\!\\left(c_1\\,e^{\\alpha t} + c_2\\,e^{-\\alpha t}\\right)$$
+        `;
+
+export const t3Text3c = `
             Der Term $e^{-\\gamma t}$ dominiert für große $t$, da $\\alpha < \\gamma$ gilt. Für die
             Anfangsbedingungen $x(0) = 0$, $\\dot{x}(0) = v_0$ ergibt sich die Speziallösung:
             $$x(t) = \\frac{v_0}{\\alpha}\\,e^{-\\gamma t}\\sinh(\\alpha t)$$
