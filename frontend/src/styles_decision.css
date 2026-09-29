@@ -128,7 +128,7 @@
 }
 
 /* Stack the options on narrow screens */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .decision-options {
         grid-template-columns: 1fr;
     }

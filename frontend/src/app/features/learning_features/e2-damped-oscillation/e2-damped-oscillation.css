@@ -24,7 +24,7 @@
     border-radius: 8px;
 }
 
-@media (max-width: 968px) {
+@media (max-width: 1200px) {
     .text-image-container {
         flex-direction: column;
     }

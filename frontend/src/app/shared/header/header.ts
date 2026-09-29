@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ThemeService } from '../../core/services/theme';
 import { Session } from '../../core/services/session';
 import { DevModeService } from '../../core/services/dev-mode';
+import { NavDrawerService } from '../../core/services/nav-drawer';
 import { BUILD_TIMESTAMP } from '../../../build-info';
 
 
@@ -26,6 +27,7 @@ export class Header implements OnInit {
         public sessionService: Session,
         public devMode: DevModeService,
         public router: Router,
+        public drawer: NavDrawerService,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
@@ -50,6 +52,11 @@ export class Header implements OnInit {
         }
     }
 
+
+    // mirrors the nav-bar, which is hidden on the start page outside dev mode
+    get showMenuButton(): boolean {
+        return this.devMode.isEnabled || this.router.url.split('?')[0] !== '/';
+    }
 
     toggleTheme() {
         this.themeService.toggleTheme();

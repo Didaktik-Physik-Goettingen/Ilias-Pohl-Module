@@ -254,6 +254,19 @@
     color: #1a202c;
 }
 
+/* ── Small screens ───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    /* tables scroll sideways inside their own box instead of widening the page */
+    .summary-table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .summary-question {
+        padding: 0.6rem 0.75rem;
+    }
+}
+
 /* ── Empty state ─────────────────────────────────────────────────────────── */
 .summary-empty {
     padding: 2rem;

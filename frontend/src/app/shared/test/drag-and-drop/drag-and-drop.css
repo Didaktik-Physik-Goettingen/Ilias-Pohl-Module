@@ -243,7 +243,7 @@
 }
 
 /* Responsive */
-@media (max-width: 968px) {
+@media (max-width: 1200px) {
     .drag-drop-layout {
         flex-direction: column;
     }
@@ -254,5 +254,26 @@
 
     .container-image {
         flex: 0 0 80px;
+    }
+}
+/* Phones: image above its drop zone instead of beside it */
+@media (max-width: 600px) {
+    .result-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .container-image {
+        flex: none;
+        text-align: center;
+    }
+
+    .container-image img {
+        width: 100%;
+        max-width: 250px;
+    }
+
+    .drop-zone {
+        flex: none;
     }
 }

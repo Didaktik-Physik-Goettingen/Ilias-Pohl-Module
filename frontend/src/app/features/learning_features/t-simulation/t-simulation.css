@@ -23,7 +23,7 @@
     line-height: 1.6;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 600px) {
     .method-cards {
         flex-direction: column;
     }

@@ -77,14 +77,14 @@
 }
 
 /* Responsive - 2 columns on tablets */
-@media (max-width: 968px) {
+@media (max-width: 1200px) {
     .image-options-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 /* Responsive - single column on mobile */
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .image-options-grid {
         grid-template-columns: 1fr;
     }

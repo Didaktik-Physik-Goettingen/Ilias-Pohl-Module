@@ -105,15 +105,22 @@ body {
     min-height: 104vh; /* Minimum full viewport height */
 }
 
-/* sidebar + main wrapper — 3-column grid so content centers on the full page width */
+/* Breakpoints used across the app: 600px (phone), 900px (tablet / nav drawer), 1200px (side-by-side layouts) */
+
+/* sidebar + main wrapper — 3-column grid.
+   The sidebar scales with the viewport and reaches 500px at ~1920px.
+   The phantom right column only appears above ~1420px and mirrors the sidebar
+   at 1920px, so wide screens keep the content centred while mid-size screens
+   give all spare width to the content. */
 .page-body {
+    --nav-width: clamp(260px, 26vw, 500px);
+    --nav-mirror-width: clamp(0px, 100vw - 1420px, 500px);
     display: grid;
-    grid-template-columns: 500px 1fr 500px;
+    grid-template-columns: var(--nav-width) minmax(0, 1fr) var(--nav-mirror-width);
     flex: 1;                        /* grows inside .app-container flex column */
     align-items: stretch;           /* main + phantom columns fill the page height */
 }
 
-/* phantom right column mirrors the nav width so margin:auto centers correctly */
 .page-body::after {
     content: '';
 }
@@ -124,9 +131,10 @@ body {
     padding-bottom: 2rem;
 }
 
-@media (max-width: 768px) {
+/* sidebar turns into a drawer (see nav-bar.css) — content takes the full width */
+@media (max-width: 900px) {
     .page-body {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
         background: none;
     }
     .page-body::after {
@@ -213,6 +221,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
 
 /* Forward button: anchors to right even when back button is absent. */
@@ -245,6 +254,7 @@ button.btn {
     
     /* Size */
     width: 30rem;
+    max-width: 100%;
     padding: 0.75rem 1.5rem;
     
     /* Typography */
@@ -494,4 +504,66 @@ a.glossary-link:hover {
     line-height: 1.7;
     text-align: center;
     font-style: italic;
+}
+
+
+/* ── Overflow guards ─────────────────────────────────────────────────────── */
+/* wide display formulas scroll inside their own box instead of widening the page */
+mjx-container[display="true"] {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
+/* ── Small screens ───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    body {
+        text-align: left;   /* justified text leaves large gaps on narrow columns */
+        hyphens: auto;      /* long German compounds would otherwise overflow */
+        overflow-wrap: break-word;
+    }
+
+    h1 { font-size: 1.6rem; line-height: 1.35; }
+    h2 { font-size: 1.35rem; line-height: 1.35; }
+
+    .container {
+        padding: 1rem;
+    }
+
+    .card {
+        padding: 1.25rem;
+    }
+
+    /* stack back/forward buttons; forward (primary action) on top */
+    .button-container {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .button-container > button:last-of-type,
+    .button-container > button.btn-back {
+        margin: 0;
+    }
+
+    .btn,
+    a.btn,
+    button.btn {
+        width: 100%;
+    }
+
+    .spoiler-summary {
+        padding: 1rem 1.25rem;
+    }
+
+    .spoiler-content {
+        padding: 1rem 1.25rem 1.25rem;
+    }
+
+    .learning-lamp {
+        padding: 0.9rem 1rem 0.9rem 3rem;
+    }
+
+    .learning-lamp::before {
+        left: 0.6rem;
+    }
 }

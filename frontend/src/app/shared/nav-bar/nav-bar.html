@@ -1,4 +1,7 @@
-<nav class="nav-bar">
+@if (drawer.isOpen()) {
+    <div class="nav-backdrop" (click)="drawer.close()"></div>
+}
+<nav class="nav-bar" id="app-nav" [class.nav-bar--open]="drawer.isOpen()">
     <div class="nav-bar-container">
 
         <!-- Startseite -->

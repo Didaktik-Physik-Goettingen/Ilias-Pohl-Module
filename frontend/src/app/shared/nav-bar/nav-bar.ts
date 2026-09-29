@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, HostBinding } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID, HostBinding, HostListener } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { DevModeService } from '../../core/services/dev-mode';
+import { NavDrawerService } from '../../core/services/nav-drawer';
 
 
 interface SubpageItem {
@@ -145,6 +146,7 @@ export class NavBar implements OnInit, OnDestroy {
     constructor(
         public router: Router,
         public devMode: DevModeService,
+        public drawer: NavDrawerService,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
@@ -163,7 +165,15 @@ export class NavBar implements OnInit, OnDestroy {
 
         this.routerSub = this.router.events
             .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
-            .subscribe(e => this.updateFromUrl(e.urlAfterRedirects));
+            .subscribe(e => {
+                this.updateFromUrl(e.urlAfterRedirects);
+                this.drawer.close();
+            });
+    }
+
+    @HostListener('document:keydown.escape')
+    onEscape() {
+        this.drawer.close();
     }
 
     ngOnDestroy() {
