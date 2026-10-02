@@ -141,9 +141,8 @@
     cursor: default;
     transition: background 0.15s, color 0.15s, border-color 0.15s;
     line-height: 1.2;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    hyphens: auto;
     /* margin-top: 2rem; */
 }
 
@@ -197,9 +196,8 @@
     text-align: left;
     cursor: default;
     transition: background 0.12s, color 0.12s;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 /* hover always visible */
@@ -238,9 +236,49 @@
     }
 }
 
-/* ── Responsive: hide sidebar on small screens ─────────────────────────── */
-@media (max-width: 768px) {
+/* narrower sidebar: let the strand switcher use the full width */
+@media (max-width: 1200px) {
+    .strand-switcher {
+        margin: 1.5rem 0;
+    }
+}
+
+/* ── Responsive: sidebar becomes a slide-in drawer on narrow screens ───── */
+.nav-backdrop {
+    display: none;
+}
+
+@media (max-width: 900px) {
     .nav-bar {
-        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        height: 100dvh;
+        width: min(85vw, 360px);
+        z-index: 1001;
+        transform: translateX(-100%);
+        visibility: hidden;
+        /* delay hiding until the slide-out has finished */
+        transition: transform 0.25s ease, visibility 0s linear 0.25s;
+    }
+
+    .nav-bar--open {
+        transform: none;
+        visibility: visible;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.25);
+        transition: transform 0.25s ease, visibility 0s;
+    }
+
+    .nav-bar-container {
+        padding: 1.25rem;
+    }
+
+    .nav-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        background: rgba(0, 0, 0, 0.45);
     }
 }

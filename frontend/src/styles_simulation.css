@@ -168,14 +168,39 @@
     border: none;
 }
 
-@media (max-width: 768px) {
+/* Phones: canvases stack — the narrow pendulum canvas keeps its 1:2 shape at
+   a moderate width, the square diagrams take the full row. */
+@media (max-width: 600px) {
     .sim-canvas-container {
-        gap: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.75rem;
         padding: 0.75rem;
+    }
+
+    .sim-canvas-narrow {
+        flex: 0 1 40%;
+    }
+
+    .sim-canvas-square {
+        flex: 0 1 100%;
     }
 
     .sim-controls {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
+        gap: 1rem;
+    }
+
+    .sim-controls-group {
+        flex: none;
+        max-width: none;
+    }
+
+    .sim-run-controls .eval-btn {
+        max-width: none;
+    }
+
+    .sim-run-controls {
+        gap: 1rem;
     }
 }

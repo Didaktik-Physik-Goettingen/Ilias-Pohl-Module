@@ -116,6 +116,67 @@ header {
 
 .session-debug {
     color: var(--physik-gelb);
+    overflow-wrap: anywhere;
+}
+
+/* keep header text clear of the absolutely positioned theme toggle */
+.header-content {
+    padding-right: 3.5rem;
+}
+
+/* Hamburger button — only on narrow screens, where the sidebar is a drawer */
+.menu-toggle {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    padding: 9px 8px;
+    flex-direction: column;
+    justify-content: space-between;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.menu-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: white;
+    border-radius: 1px;
+}
+
+@media (max-width: 900px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .header-content--with-menu {
+        padding-left: 3.25rem;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 0.8rem 1rem;
+    }
+
+    .header-title {
+        font-size: 1.1rem;
+    }
+
+    .header-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .theme-toggle img {
+        width: 28px;
+        height: 28px;
+    }
 }
 
 .session-debug--bridge {

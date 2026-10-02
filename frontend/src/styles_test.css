@@ -296,3 +296,29 @@
 .testtf-indicator {
     margin-left: 0.3rem;
 }
+/* ── Small screens ───────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .test-container {
+        padding: 1.25rem 1rem;
+    }
+
+    .test-result {
+        padding: 1rem;
+    }
+
+    /* true-false: Wahr/Falsch buttons share the row below the statement
+       (the row stacking itself lives in test-true-false.css) */
+    .statement-right {
+        align-items: stretch;
+    }
+
+    .statement-options .testtf-btn {
+        flex: 1;
+        width: auto;
+        margin-top: 0;
+    }
+
+    .statement-right .richtige-antwort-badge--neutral {
+        align-self: flex-start;
+    }
+}

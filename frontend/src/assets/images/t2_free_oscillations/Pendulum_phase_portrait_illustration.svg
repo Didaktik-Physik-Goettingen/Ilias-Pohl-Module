@@ -1,52 +1,106 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="590" height="200" viewBox="-180 -65 410 135">
-<title>Pendulum phase portrait</title>
-<desc>
-Illustration of how a phase portrait would be constructed for the motion of a simple pendulum.
-</desc>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="250" viewBox="0 0 600 250">
+<title>Phasenraum eines Pendels</title>
+<desc>Vier Zustände eines schwingenden Pendels (links) und ihre Lage als Punkte im Phasenraum aus Auslenkung x und Geschwindigkeit ẋ (rechts).</desc>
 <defs>
-	<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" orient="auto" markerWidth="8" markerHeight="8">
-		<path d="M0,0L10,5L0,10A2,5 0 0,0 0,0" fill="black"/>
+	<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" orient="auto" markerWidth="7" markerHeight="7">
+		<path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
 	</marker>
-	<clipPath id="window">
-		<rect x="-90" y="-50" width="180" height="100"/>
-	</clipPath>
-	<circle id="rc" r="2" fill="red"/>
-	<circle id="gc" r="2" fill="green"/>
-	<circle id="oc" r="2" fill="orange"/>
-	<circle id="bc" r="2" fill="blue"/>
+	<marker id="arrow-accent" viewBox="0 0 10 10" refX="5" refY="5" orient="auto" markerWidth="7" markerHeight="7">
+		<path d="M0,0 L10,5 L0,10 z" fill="rgb(0, 145, 200)"/>
+	</marker>
 </defs>
-<g fill="none" stroke="black">
-	<g id="pend" transform="rotate(10,-150,-50)">
-		<path d="M-150,-50 v90"/><circle cx="-150" cy="50" r="10" fill="#ccaaff"/>
+
+<!-- Opaque card background: the figure stays legible in light and dark theme -->
+<rect x="0.5" y="0.5" width="599" height="249" rx="10" fill="#ffffff"/>
+
+<g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" fill="#1f2937">
+
+	<!-- ── Titles ───────────────────────────────────────────── -->
+	<g font-size="15" font-weight="600" text-anchor="middle">
+		<text x="150" y="26">Pendel</text>
+		<text x="440" y="26">Phasenraum</text>
 	</g>
-	<use xlink:href="#pend" transform="rotate(-20,-150,-50)"/>
-	<path d="M-150,-50v130 M-45,-50v100 M0,-50v100 M45,-50v100 M90,-50v100" stroke-dasharray="4,2" stroke-width=".5"/>
-	<path d="M-90,50v-100 M-90,0h190 M110,0h95 M155,50v-100" stroke-width=".75"/>
-	<g clip-path="url(#window)">
-		<path d="M-90,0 Q-45,-80 0,0 T90,0" stroke="purple"/>
-		<path d="M-135,0 Q-90,80 -45,0 T45,0 T135,0" stroke="brown"/>
+
+	<!-- ── Left panel: pendulum ─────────────────────────────── -->
+	<!-- ceiling + pivot -->
+	<path d="M120,45 H180" stroke="#1f2937" stroke-width="3" stroke-linecap="round"/>
+	<circle cx="150" cy="45" r="3" fill="#1f2937"/>
+
+	<!-- path travelled by the bob -->
+	<path d="M90.8,171.9 A140,140 0 0,0 209.2,171.9" fill="none" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="3,4"/>
+
+	<!-- turning points (faint rods) -->
+	<g stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="5,4">
+		<path d="M150,45 L209.2,171.9"/>
+		<path d="M150,45 L90.8,171.9"/>
 	</g>
-	<path d="M155,-40 a40,40 0 0,1 28.3,11.7 A40,40 0 0,1 195,0   M195,0 a40,40 0 0,1 -11.7,28.3 A40,40 0 0,1 155,40   M155,40 a40,40 0 0,1 -28.3,-11.7 A40,40 0 0,1 115,0   M115,0 a40,40 0 0,1 11.7,-28.3 A40,40 0 0,1 155,-40" marker-mid="url(#arrow)"/>
-</g>
-<use xlink:href="#rc" x="-150" y="65" transform="rotate(10,-150,-50)"/>
-<use xlink:href="#oc" x="-150" y="65" transform="rotate(-10,-150,-50)"/>
-<use xlink:href="#gc" x="-150" y="61"/><use xlink:href="#bc" x="-150" y="69"/>
-<use xlink:href="#rc" x="-90"/><use xlink:href="#rc" x="-90" y="40"/>
-<use xlink:href="#gc" x="-45" y="-40"/><use xlink:href="#gc" x="-45"/>
-<use xlink:href="#oc" y="-40"/><use xlink:href="#oc"/>
-<use xlink:href="#bc" x="45" y="40"/><use xlink:href="#bc" x="45"/>
-<use xlink:href="#rc" x="90"/><use xlink:href="#rc" x="90" y="40"/>
-<use xlink:href="#rc" x="115"/><use xlink:href="#oc" x="195"/>
-<use xlink:href="#gc" x="155" y="-40"/><use xlink:href="#bc" x="155" y="40"/>
-<g text-anchor="middle" fill="black" font-family="New Century Schoolbook">
-<text font-size="10" y="-55">
-	<tspan>Time series</tspan><tspan x="-150">System</tspan><tspan x="155">Phase portrait</tspan>
-</text>
-<g font-size="8"><text y="-5"><tspan x="75">Time</tspan><tspan x="215" fill="brown">Position</tspan></text>
-<text x="-70" y="48" fill="brown">Position</text>
-<text x="-70" y="-40" fill="purple">Velocity</text>
-<text x="155" y="60" fill="purple">Velocity</text>
-<text x="-95" transform="rotate(-90,-95,-0)">Magnitude</text></g>
+	<!-- rest position (solid rod) -->
+	<path d="M150,45 V173" stroke="#1f2937" stroke-width="1.8"/>
+
+	<!-- bobs: 1 and 3 are numbered badges, rest position is neutral -->
+	<circle cx="209.2" cy="171.9" r="12" fill="rgb(0, 145, 200)"/>
+	<circle cx="90.8"  cy="171.9" r="12" fill="rgb(0, 145, 200)"/>
+	<circle cx="150"   cy="185"   r="12" fill="#d1d5db" stroke="#6b7280"/>
+	<g font-size="13" font-weight="700" fill="#ffffff" text-anchor="middle">
+		<text x="209.2" y="176.5">1</text>
+		<text x="90.8"  y="176.5">3</text>
+	</g>
+	<g font-size="11" fill="#6b7280" text-anchor="middle">
+		<text x="222" y="202">ẋ = 0</text>
+		<text x="78"  y="202">ẋ = 0</text>
+	</g>
+
+	<!-- velocity arrows through rest position: 2 = moving left, 4 = moving right -->
+	<path d="M142,218 H112" stroke="rgb(0, 145, 200)" stroke-width="2" marker-end="url(#arrow-accent)"/>
+	<path d="M158,218 H188" stroke="rgb(0, 145, 200)" stroke-width="2" marker-end="url(#arrow-accent)"/>
+	<circle cx="96"  cy="218" r="10" fill="rgb(0, 145, 200)"/>
+	<circle cx="204" cy="218" r="10" fill="rgb(0, 145, 200)"/>
+	<g font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">
+		<text x="96"  y="222.2">2</text>
+		<text x="204" y="222.2">4</text>
+	</g>
+	<text x="150" y="242" font-size="11" fill="#6b7280" text-anchor="middle">Ruhelage: |ẋ| maximal, x = 0</text>
+
+	<!-- ── Bridge between panels ────────────────────────────── -->
+	<path d="M262,135 H332" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arrow)"/>
+	<g font-size="11" fill="#6b7280" text-anchor="middle">
+		<text x="296" y="102">jeder Zustand</text>
+		<text x="296" y="115">ist ein Punkt</text>
+		<text x="296" y="128">im Phasenraum</text>
+	</g>
+
+	<!-- ── Right panel: phase portrait ──────────────────────── -->
+	<!-- axes -->
+	<g stroke="#1f2937" stroke-width="1.2" fill="none">
+		<path d="M350,135 H553" marker-end="url(#arrow)"/>
+		<path d="M440,225 V45"  marker-end="url(#arrow)"/>
+	</g>
+	<text x="562" y="139" font-size="13">x</text>
+	<text x="588" y="154" font-size="10" fill="#6b7280" text-anchor="end">Auslenkung</text>
+	<text x="448" y="50"  font-size="13">ẋ</text>
+	<text x="459" y="50"  font-size="10" fill="#6b7280">Geschwindigkeit</text>
+
+	<!-- trajectory: ellipse traversed clockwise, one arrow per quarter -->
+	<g fill="none" stroke="rgb(0, 145, 200)" stroke-width="2" marker-mid="url(#arrow-accent)">
+		<path d="M512,135 A72,62 0 0,1 490.9,178.8 A72,62 0 0,1 440,197"/>
+		<path d="M440,197 A72,62 0 0,1 389.1,178.8 A72,62 0 0,1 368,135"/>
+		<path d="M368,135 A72,62 0 0,1 389.1,91.2 A72,62 0 0,1 440,73"/>
+		<path d="M440,73  A72,62 0 0,1 490.9,91.2 A72,62 0 0,1 512,135"/>
+	</g>
+
+	<!-- state markers, identical style to the pendulum badges -->
+	<g fill="rgb(0, 145, 200)" stroke="#ffffff" stroke-width="2">
+		<circle cx="512" cy="135" r="10"/>
+		<circle cx="440" cy="197" r="10"/>
+		<circle cx="368" cy="135" r="10"/>
+		<circle cx="440" cy="73"  r="10"/>
+	</g>
+	<g font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">
+		<text x="512" y="139.2">1</text>
+		<text x="440" y="201.2">2</text>
+		<text x="368" y="139.2">3</text>
+		<text x="440" y="77.2">4</text>
+	</g>
 </g>
 </svg>

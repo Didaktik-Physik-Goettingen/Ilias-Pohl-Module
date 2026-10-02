@@ -77,32 +77,28 @@
 
 /* Responsive - smaller screens */
 @media (max-width: 1600px) {
+    /* square buttons of at most 400px that shrink with the screen */
     .image-button {
-        width: 400px;
-        height: 400px;
+        flex: 0 1 400px;
     }
 }
 
-@media (max-width: 1280px) {
-    .image-button {
-        width: 400px;
-        height: 400px;
-    }
-    
+@media (max-width: 1200px) {
     .image-button-overlay span {
         font-size: 1.5rem;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 600px) {
     .image-button-container {
         flex-direction: column;
         align-items: center;
+        gap: 1.25rem;
     }
-    
+
     .image-button {
+        flex: none;
         width: 100%;
-        max-width: 600px;
-        height: 600px;
+        max-width: 400px;
     }
 }
