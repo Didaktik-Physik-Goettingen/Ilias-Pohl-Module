@@ -319,7 +319,7 @@ export class NavBar implements OnInit, OnDestroy {
 
     @HostBinding('style.visibility')
     get hostVisibility(): string {
-        return (!this.devMode.isEnabled && this.activeSegment === 'home') ? 'hidden' : '';
+        return (this.activeSegment === 'home') ? 'hidden' : '';
     }
 
     get isAnleitungClickable(): boolean {
