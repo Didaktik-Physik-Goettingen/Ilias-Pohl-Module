@@ -1,104 +1,105 @@
-/* h1 {
-    font-size: 2rem;
-    color: var(--uni-blau-1);
-    padding-bottom: 0.25rem;
-    border-bottom: 3px solid var(--uni-blau-4);
-    margin-bottom: 1.5rem;
-    display: block;
-    width: 100%;
-} */
-
-/* container for image buttons */
-.image-button-container {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    margin: 2rem 0;
-    flex-wrap: wrap;  /* Wraps on smaller screens */
+.home-intro {
+    font-size: 1.05rem;
+    /* max-width: 60rem; */
 }
 
-/* individual image button */
-.image-button {
-    position: relative;
-    justify-content: space-between;
-    flex: 1;
-    aspect-ratio: 1 / 1;
-    display: block;
-    overflow: hidden;
-    border-radius: 12px;
-    /* box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2); */
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.image-button img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* hover effect - lift button */
-/* .image-button:hover {
-    /* transform: translateY(-5px); */
-    /* box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
-} */
-
-/* Overlay - hidden by default */
-.image-button-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.home-paths-title {
+    margin-top: 2rem;
     text-align: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
 }
 
-/* Show overlay on hover */
-.image-button:hover .image-button-overlay {
-    opacity: 1;
+/* ── Two path cards ──────────────────────────────────────────────────────── */
+.home-paths {
+    --path-accent: var(--uni-blau-3);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 2rem;
+    margin: 1.5rem 0 1rem;
 }
 
-/* Text styling in overlay */
-.image-button-overlay span {
-    font-size: 1rem;
+.path-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-top: 6px solid var(--path-accent);
+    border-radius: 10px;
+    box-shadow: 0 2px 12px var(--shadow-color);
+    overflow: hidden;
+    text-align: left;
+}
+
+.path-card--exp  { --path-accent: var(--physik-gelb); }
+.path-card--theo { --path-accent: var(--uni-blau-3); }
+
+.path-card-img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center 60%;
+}
+
+.path-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.path-card-title {
+    margin: 0;
+    line-height: 1.3;
+    font-size: 1.35rem;
+    color: var(--text-primary);
+}
+
+.path-card-focus {
+    margin: 0.25rem 0 0.75rem;
+    font-style: italic;
+    color: var(--text-secondary);
+}
+
+.path-card-steps {
+    margin: 0 0 1.25rem;
+    padding-left: 1.4rem;
+    line-height: 1.8;
+}
+
+.path-card-steps li::marker {
+    color: var(--path-accent);
     font-weight: 700;
-    color: var(--uni-blau-2);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
 }
 
-/* Responsive - smaller screens */
-@media (max-width: 1600px) {
-    /* square buttons of at most 400px that shrink with the screen */
-    .image-button {
-        flex: 0 1 400px;
-    }
+/* push the button to the card bottom so both buttons line up */
+.path-card-btn,
+.path-card-btn:hover {
+    margin-top: auto;
+    width: 100%;
+    border: 3px solid var(--path-accent);
 }
 
-@media (max-width: 1200px) {
-    .image-button-overlay span {
-        font-size: 1.5rem;
-    }
+/* ── Shared core + goal ──────────────────────────────────────────────────── */
+.home-shared,
+.home-goal {
+    text-align: center;
+    margin: 0.5rem auto;
+    max-width: 60rem;
 }
 
-@media (max-width: 600px) {
-    .image-button-container {
-        flex-direction: column;
-        align-items: center;
-        gap: 1.25rem;
-    }
+.home-goal {
+    margin-bottom: 2rem;
+    color: var(--text-secondary);
+}
 
-    .image-button {
-        flex: none;
-        width: 100%;
-        max-width: 400px;
+/* .home-goal::before {
+    content: '↓ ';
+} */
+
+@media (max-width: 900px) {
+    .home-paths {
+        grid-template-columns: minmax(0, 1fr);
+        max-width: 480px;
+        margin-inline: auto;
     }
 }

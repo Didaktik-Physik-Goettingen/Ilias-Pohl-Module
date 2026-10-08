@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="340" height="300" viewBox="0 0 340 300">
+<title>Phasenraumtrajektorie des harmonischen Oszillators</title>
+<desc>Kreisförmige Trajektorie im Phasenraum aus Auslenkung x und skalierter Geschwindigkeit ẋ/ω₀ mit Radius R = √(2E/D), im Uhrzeigersinn durchlaufen (nach Demtröder).</desc>
+<defs>
+	<marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" orient="auto" markerWidth="7" markerHeight="7">
+		<path d="M0,0 L10,5 L0,10 z" fill="#1f2937"/>
+	</marker>
+	<marker id="arrow-accent" viewBox="0 0 10 10" refX="5" refY="5" orient="auto" markerWidth="7" markerHeight="7">
+		<path d="M0,0 L10,5 L0,10 z" fill="rgb(0, 145, 200)"/>
+	</marker>
+</defs>
+
+<!-- Opaque card background: the figure stays legible in light and dark theme -->
+<rect x="0.5" y="0.5" width="339" height="299" rx="10" fill="#ffffff"/>
+
+<g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" fill="#1f2937">
+
+	<!-- axes -->
+	<g stroke="#1f2937" stroke-width="1.2" fill="none">
+		<path d="M45,160 H300"  marker-end="url(#arrow)"/>
+		<path d="M165,280 V40" marker-end="url(#arrow)"/>
+	</g>
+	<text x="307" y="164" font-size="13">x</text>
+	<text x="330" y="180" font-size="10" fill="#6b7280" text-anchor="end">Auslenkung</text>
+	<text x="174" y="46"  font-size="13">ẋ / ω₀</text>
+
+	<!-- trajectory: circle of radius R, traversed clockwise -->
+	<circle cx="165" cy="160" r="95" fill="none" stroke="rgb(0, 145, 200)" stroke-width="2"/>
+	<g fill="none" stroke="rgb(0, 145, 200)" stroke-width="2" marker-mid="url(#arrow-accent)">
+		<path d="M260,160 A95,95 0 0,1 232.2,227.2 A95,95 0 0,1 165,255"/>
+		<path d="M70,160  A95,95 0 0,1 97.8,92.8  A95,95 0 0,1 165,65"/>
+	</g>
+
+	<!-- radius -->
+	<path d="M165,160 L232.2,92.8" stroke="#1f2937" stroke-width="1.5"/>
+	<circle cx="165" cy="160" r="2.5" fill="#1f2937"/>
+	<text x="198.6" y="120" font-size="12" text-anchor="middle" transform="rotate(-45 198.6 126.4)">R = √(2E/D)</text>
+
+	<!-- source credit -->
+	<text x="330" y="290" font-size="9" fill="#9ca3af" text-anchor="end">nach Demtröder</text>
+</g>
+</svg>

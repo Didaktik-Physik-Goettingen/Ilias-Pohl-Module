@@ -58,7 +58,7 @@ export const question4 = {
     Überlegen Sie was passiert, wenn man nur die Dämpfung ändert und alle anderen konstant hält.<br><br>
     Welche der folgenden Aussagen sind korrekt?<br><br>
     Je größer die Dämpfung, desto ... `,
-    questionInstruction: 'Frage 4 von 4 (30 Punkte): Einfluss der Dämpfung',
+    questionInstruction: 'Frage 4 von 4 (25 Punkte): Einfluss der Dämpfung',
     statements: [
         { id: 'answer1', text: '... größer die Resonanzfrequenz.', isCorrect: false },
         { id: 'answer2', text: '... kleiner ist der Phasenversatz zwischen der Schwingung des Antriebs und der des Schwungrads bei großen Frequenzen ($\\omega > \\omega_0$).', isCorrect: false },

@@ -223,7 +223,7 @@ export const PAGE_REGISTRY: PageDefinition[] = [
               alt: 'Phasenportrait des Pendels' },
             { type: 'text',  html: t2Content.freeOscText2b, style: 'lamp' },
             { type: 'text',  html: t2Content.freeOscText2c },
-            { type: 'image', src: 'assets/images/t2_free_oscillations/phasenraumtrajektorie_Demtröder_432.png',
+            { type: 'image', src: 'assets/images/t2_free_oscillations/phasenraumtrajektorie.svg',
               alt: 'Phasenraumtrajektorie' },
             { type: 'question', questionId: 't2-free-osc-4-phase' },
             { type: 'spoiler', label: 'EXKURS: Definition des Phasenraums',

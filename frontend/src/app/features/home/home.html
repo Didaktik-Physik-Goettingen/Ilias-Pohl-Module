@@ -1,49 +1,87 @@
 <div class="container">
     <div class="card">
-        <h1>Lernmodul zum Experiment "Pohlscher Resonator"</h1>
-        <p>In diesem Versuch werden Sie sich mit unterschiedlichen Formen von Schwingungen auseinandersetzen. 
-            Sie werden ein klassisches System einer getriebenen, gedämpften Schwingung untersuchen.<br><br>
-
-            Von der Vorbereitung weicht dieser Versuch von den anderen Versuchen ab. 
-            Sie werden in diesem Lernmodul basierend auf Ihren eigenen Entscheidungen und Ihrem Vorwissen zu unterschiedlichen Schwingungsverhalten weitergeleitet. 
-            Klicken Sie sich durch das Lernmodul, beantworten Sie Fragen, spielen Sie mit Simulationen und gelangen Sie auf Ihrem individuellen Weg zu einer von mehreren Versuchsanleitung.<br>
-            Je nachdem, wie Sie sich im Laufe des Lernmoduls entscheiden, erhalten Sie eine Versuchsanleitung mit einem etwas anders gelagerten Schwerpunkt.<br>
-            Beachten Sie: Je nachdem, welchen Weg Sie wählen, kann es sein, dass Ihnen "Tests" zu unterschiedlichen Themen begegnen. 
-            Die Tests öffnen sich jeweils in einem neuen Fenster. Bearbeiten Sie den Test, schließen diesen ab, beachten Sie Ihr Testergebnis und gehen Sie anschließend zurück auf die ursprüngliche Seite.<br><br>
-
-            Periodische Schwingungen bilden die Grundlage vieler physikalischer Phänomene. 
-            Das Schwingen einer Schaukel, das Schwingen von Atomen in einem Festkörper, das Schwingen in einem elektrischen Schwingkreis, das Schwingen der Stimmlippen in Ihrem Kehlkopf. 
-            Diese und auch viele weitere Phänomene lassen sich in guter Näherung unter geeigneten Bedingungen als harmonische Schwingungen fassen und mathematisch mit Hilfe 
-            von ähnlich aussehenden Differentialgleichungen beschreiben.
-            Sie werden in diesem Versuch Prinzipien der Resonanzerscheinungen und Phasenverschiebung untersuchen. 
-            Das Verständnis dieser Prinzipien ist auch für andere Bereiche der Physik, wie die Atom-, Festkörper- und Astrophysik von Bedeutung.
-            Exemplarisch werden Sie Schwingungsphänomene am Beispiel des Pohl'schen Rads untersuchen.<br>
-            Auf den folgenden Seiten können Sie sich vertiefter mit dem physikalischen Prinzip, der Datenaufnahme und ihren Fehlerquellen, und dem Versuchsaufbau beschäftigen.
-            Im Glossar finden Sie Erklärungen zu den wichtigsten Begriffen zum Pohlschen Rad und harmonischen Schwingungen.
+        <h1>Lernmodul „Pohlscher Resonator“</h1>
+        <p class="home-intro">
+            Am Pohlschen Rad untersuchen Sie freie, gedämpfte und angetriebene Schwingungen –
+            bis hin zu Resonanz und Phasenverschiebung.
+            Wählen Sie einen Einstieg; unterwegs entscheiden Sie selbst, wie Sie weiterlernen.
+            Am Ende erhalten Sie eine auf Ihren Weg zugeschnittene Versuchsanleitung.
         </p>
-        
-        
-        <div class="image-button-container">
-            <a routerLink="/learning/e1-intro-experiment" class="image-button">
-                <img src="assets/images/home/module_selector_experiment.png" alt = "Experiment">
-                <div class="image-button-overlay">
-                    <span>Lernsequenz starten:<br>Versuchsaufbau</span>
+
+        <!-- <h2 class="home-paths-title">Zwei Einstiege – dieselben Inhalte</h2> -->
+
+        <div class="home-paths">
+            <section class="path-card path-card--exp">
+                <img class="path-card-img" src="assets/images/home/module_selector_experiment.png" alt="Versuchsaufbau des Pohlschen Rads">
+                <div class="path-card-body">
+                    <h3 class="path-card-title">Experimenteller Einstieg</h3>
+                    <p class="path-card-focus">Vom realen Aufbau zur Formel</p>
+                    <ol class="path-card-steps">
+                        <li>Einstieg Versuchsaufbau</li>
+                        <li>Gedämpfte Schwingungen</li>
+                        <li>Getriebene Schwingungen</li>
+                    </ol>
+                    <a routerLink="/learning/e1-intro-experiment" class="btn path-card-btn">Experiment starten</a>
                 </div>
-            </a>
-            
-            <a routerLink="/learning/t1-intro-theory" class="image-button">
-                <img src="assets/images/home/module_selector_theory.png" alt = "Theory">
-                <div class="image-button-overlay">
-                    <span>Lernsequenz starten:<br>Theory</span>
+            </section>
+
+            <section class="path-card path-card--theo">
+                <img class="path-card-img" src="assets/images/home/module_selector_theory.png" alt="Messrechner am Versuchsplatz">
+                <div class="path-card-body">
+                    <h3 class="path-card-title">Theoretischer Einstieg</h3>
+                    <p class="path-card-focus">Von der Gleichung zum Aufbau</p>
+                    <ol class="path-card-steps">
+                        <li>Einstieg Theorie</li>
+                        <li>Freie Schwingungen</li>
+                        <li>Gedämpfte Schwingungen</li>
+                        <li>Getriebene Schwingungen</li>
+                    </ol>
+                    <a routerLink="/learning/t1-intro-theory" class="btn path-card-btn">Theorie starten</a>
                 </div>
-            </a>
-            
-            <!-- <a routerLink="/glossary" class="image-button">
-                <img src="assets/images/home/module_selector_glossary.png" alt = "Glossary">
-                <div class="image-button-overlay">
-                    <span>wichtige Begriffe</span>
-                </div>
-            </a> -->
+            </section>
         </div>
+
+        <p class="home-shared">
+            <strong>Gemeinsamer Kern:</strong> Differentialgleichung · Eigenfrequenz ω₀ · Dämpfung · Resonanz · Phasenverschiebung
+            – nur aus einem anderen Blickwinkel.
+        </p>
+        <p class="home-goal">
+            Ziel beider Wege: <strong>Ihre Versuchsanleitung</strong> und <strong>Ihre persönliche Zusammenfassung</strong>
+        </p>
+
+        <details class="spoiler">
+            <summary class="spoiler-summary">Worum geht es physikalisch?</summary>
+            <div class="spoiler-content">
+                <p>
+                    Periodische Schwingungen bilden die Grundlage vieler physikalischer Phänomene: die Schaukel,
+                    Atome in einem Festkörper, ein elektrischer Schwingkreis oder die Stimmlippen in Ihrem Kehlkopf.
+                    Unter geeigneten Bedingungen lassen sie sich in guter Näherung als harmonische Schwingungen beschreiben –
+                    mit sehr ähnlich aussehenden Differentialgleichungen.
+                </p>
+                <p>
+                    Am Pohlschen Rad untersuchen Sie exemplarisch ein klassisches System einer getriebenen, gedämpften Schwingung.
+                    Die Prinzipien von Resonanz und Phasenverschiebung begegnen Ihnen später auch in der Atom-, Festkörper- und Astrophysik.
+                </p>
+            </div>
+        </details>
+
+        <details class="spoiler">
+            <summary class="spoiler-summary">Wie funktioniert das Lernmodul?</summary>
+            <div class="spoiler-content">
+                <p>
+                    Dieser Versuch weicht in der Vorbereitung von den anderen Versuchen ab: Sie werden anhand Ihrer eigenen
+                    Entscheidungen und Ihres Vorwissens durch das Lernmodul geleitet. Unterwegs beantworten Sie Fragen,
+                    arbeiten mit Simulationen und bearbeiten Tests.
+                </p>
+                <p>
+                    Je nachdem, wie Sie sich entscheiden, erhalten Sie am Ende eine Versuchsanleitung mit einem etwas anders
+                    gelagerten Schwerpunkt. Auf dem Weg dorthin können Sie optional auch Vertiefungen zu Chaos, numerischer
+                    Simulation und zum Versuchsaufbau öffnen.
+                </p>
+                <p>
+                    Begriffe, die im Text hervorgehoben sind, werden im Glossar erklärt.
+                </p>
+            </div>
+        </details>
     </div>
 </div>

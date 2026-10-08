@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="250" viewBox="0 0 600 250">
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="600" height="390" viewBox="0 0 600 390">
 <title>Phasenraum eines Pendels</title>
 <desc>Vier Zustände eines schwingenden Pendels (links) und ihre Lage als Punkte im Phasenraum aus Auslenkung x und Geschwindigkeit ẋ (rechts).</desc>
 <defs>
@@ -12,7 +12,7 @@
 </defs>
 
 <!-- Opaque card background: the figure stays legible in light and dark theme -->
-<rect x="0.5" y="0.5" width="599" height="249" rx="10" fill="#ffffff"/>
+<rect x="0.5" y="0.5" width="599" height="289" rx="10" fill="#ffffff"/>
 
 <g font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif" fill="#1f2937">
 
@@ -52,15 +52,15 @@
 	</g>
 
 	<!-- velocity arrows through rest position: 2 = moving left, 4 = moving right -->
-	<path d="M142,218 H112" stroke="rgb(0, 145, 200)" stroke-width="2" marker-end="url(#arrow-accent)"/>
-	<path d="M158,218 H188" stroke="rgb(0, 145, 200)" stroke-width="2" marker-end="url(#arrow-accent)"/>
-	<circle cx="96"  cy="218" r="10" fill="rgb(0, 145, 200)"/>
-	<circle cx="204" cy="218" r="10" fill="rgb(0, 145, 200)"/>
+	<path d="M138,216.2 H108" stroke="rgb(0, 145, 200)" stroke-width="2" marker-end="url(#arrow-accent)"/>
+	<path d="M162,242.2 H192" stroke="rgb(0, 145, 200)" stroke-width="2" marker-end="url(#arrow-accent)"/>
+	<circle cx="150"  cy="216.2" r="10" fill="rgb(0, 145, 200)"/>
+	<circle cx="150" cy="242.2" r="10" fill="rgb(0, 145, 200)"/>
 	<g font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">
-		<text x="96"  y="222.2">2</text>
-		<text x="204" y="222.2">4</text>
+		<text x="150" y="220.2">2</text>
+		<text x="150" y="246.2">4</text>
 	</g>
-	<text x="150" y="242" font-size="11" fill="#6b7280" text-anchor="middle">Ruhelage: |ẋ| maximal, x = 0</text>
+	<text x="150" y="270" font-size="11" fill="#6b7280" text-anchor="middle">Ruhelage: |ẋ| maximal, x = 0</text>
 
 	<!-- ── Bridge between panels ────────────────────────────── -->
 	<path d="M262,135 H332" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arrow)"/>
