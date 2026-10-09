@@ -2,51 +2,7 @@
     <div class="card">
         <h1>Lernmodul „Pohlscher Resonator“</h1>
         <p class="home-intro">
-            Am Pohlschen Rad untersuchen Sie freie, gedämpfte und angetriebene Schwingungen –
-            bis hin zu Resonanz und Phasenverschiebung.
-            Wählen Sie einen Einstieg; unterwegs entscheiden Sie selbst, wie Sie weiterlernen.
-            Am Ende erhalten Sie eine auf Ihren Weg zugeschnittene Versuchsanleitung.
-        </p>
-
-        <!-- <h2 class="home-paths-title">Zwei Einstiege – dieselben Inhalte</h2> -->
-
-        <div class="home-paths">
-            <section class="path-card path-card--exp">
-                <img class="path-card-img" src="assets/images/home/module_selector_experiment.png" alt="Versuchsaufbau des Pohlschen Rads">
-                <div class="path-card-body">
-                    <h3 class="path-card-title">Experimenteller Einstieg</h3>
-                    <p class="path-card-focus">Vom realen Aufbau zur Formel</p>
-                    <ol class="path-card-steps">
-                        <li>Einstieg Versuchsaufbau</li>
-                        <li>Gedämpfte Schwingungen</li>
-                        <li>Getriebene Schwingungen</li>
-                    </ol>
-                    <a routerLink="/learning/e1-intro-experiment" class="btn path-card-btn">Experiment starten</a>
-                </div>
-            </section>
-
-            <section class="path-card path-card--theo">
-                <img class="path-card-img" src="assets/images/home/module_selector_theory.png" alt="Messrechner am Versuchsplatz">
-                <div class="path-card-body">
-                    <h3 class="path-card-title">Theoretischer Einstieg</h3>
-                    <p class="path-card-focus">Von der Gleichung zum Aufbau</p>
-                    <ol class="path-card-steps">
-                        <li>Einstieg Theorie</li>
-                        <li>Freie Schwingungen</li>
-                        <li>Gedämpfte Schwingungen</li>
-                        <li>Getriebene Schwingungen</li>
-                    </ol>
-                    <a routerLink="/learning/t1-intro-theory" class="btn path-card-btn">Theorie starten</a>
-                </div>
-            </section>
-        </div>
-
-        <p class="home-shared">
-            <strong>Gemeinsamer Kern:</strong> Differentialgleichung · Eigenfrequenz ω₀ · Dämpfung · Resonanz · Phasenverschiebung
-            – nur aus einem anderen Blickwinkel.
-        </p>
-        <p class="home-goal">
-            Ziel beider Wege: <strong>Ihre Versuchsanleitung</strong> und <strong>Ihre persönliche Zusammenfassung</strong>
+            Am Pohlschen Rad untersuchen Sie freie, gedämpfte und angetriebene Schwingungen - bis hin zu Resonanz und Phasenverschiebung. Wählen Sie einen Einstieg: Soll die Struktur des Lernmoduls eher dem experimentellen Aufbau (Struktur: Experiment) oder der physikalischen Zusammenhängen (Struktur: Theorie) folgen. Unterwegs entscheiden Sie selbst, wie Sie weiterlernen. Am Ende erhalten Sie eine auf Ihren Weg zugeschnittene Versuchsanleitung und eine Zusammenstellung aller besuchten Seiten.
         </p>
 
         <details class="spoiler">
@@ -55,7 +11,7 @@
                 <p>
                     Periodische Schwingungen bilden die Grundlage vieler physikalischer Phänomene: die Schaukel,
                     Atome in einem Festkörper, ein elektrischer Schwingkreis oder die Stimmlippen in Ihrem Kehlkopf.
-                    Unter geeigneten Bedingungen lassen sie sich in guter Näherung als harmonische Schwingungen beschreiben –
+                    Unter geeigneten Bedingungen lassen sie sich in guter Näherung als harmonische Schwingungen beschreiben -
                     mit sehr ähnlich aussehenden Differentialgleichungen.
                 </p>
                 <p>
@@ -83,5 +39,46 @@
                 </p>
             </div>
         </details>
+
+        <!-- <h2 class="home-paths-title">Zwei Einstiege – dieselben Inhalte</h2> -->
+
+        <div class="home-paths">
+            <section class="path-card path-card--exp">
+                <img class="path-card-img" src="assets/images/home/module_selector_experiment.png" alt="Versuchsaufbau des Pohlschen Rads">
+                <div class="path-card-body">
+                    <h3 class="path-card-title">Struktur: Experiment</h3>
+                    <p class="path-card-focus">Vom realen Aufbau zur Formel</p>
+                    <ol class="path-card-steps">
+                        <li>Einstieg Versuchsaufbau</li>
+                        <li>Gedämpfte Schwingungen</li>
+                        <li>Getriebene Schwingungen</li>
+                    </ol>
+                    <a routerLink="/learning/e1-intro-experiment" class="btn path-card-btn">Experiment starten</a>
+                </div>
+            </section>
+
+            <section class="path-card path-card--theo">
+                <img class="path-card-img" src="assets/images/home/module_selector_theory.png" alt="Messrechner am Versuchsplatz">
+                <div class="path-card-body">
+                    <h3 class="path-card-title">Struktur: Theorie</h3>
+                    <p class="path-card-focus">Von der Gleichung zum Aufbau</p>
+                    <ol class="path-card-steps">
+                        <li>Einstieg Theorie</li>
+                        <li>Freie Schwingungen</li>
+                        <li>Gedämpfte Schwingungen</li>
+                        <li>Getriebene Schwingungen</li>
+                    </ol>
+                    <a routerLink="/learning/t1-intro-theory" class="btn path-card-btn">Theorie starten</a>
+                </div>
+            </section>
+        </div>
+
+        <p class="home-shared">
+            <strong>Gemeinsamer Kern - nur aus einem anderen Blickwinkel:</strong><br>
+            Differentialgleichung · Eigenfrequenz ω₀ · Dämpfung · Resonanz · Phasenverschiebung
+        </p>
+        <p class="home-goal">
+            Ziel beider Wege: <strong>Ihre Versuchsanleitung</strong> und <strong>Ihre persönliche Zusammenfassung</strong>
+        </p>
     </div>
 </div>
