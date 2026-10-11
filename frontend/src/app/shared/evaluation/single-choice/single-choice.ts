@@ -33,6 +33,7 @@ export class SingleChoice implements OnInit {
     @Input() successMessage?: string;
     @Input() emptySelectionMessage?: string = '✗ Bitte wählen Sie eine Antwort aus.';
     @Input() incorrectMessage?: string = '✗ Das ist leider nicht richtig.';
+    @Input() answerFeedback?: Record<string, string>;
 
     @Output() onCorrectAnswer = new EventEmitter<void>();
     @Output() onAnswerEvaluated = new EventEmitter<boolean>();
@@ -79,20 +80,19 @@ export class SingleChoice implements OnInit {
     private restorePreviousAnswer() {
         const previousResult = this.trackingService.getQuestionResult(this.questionId);
 
-        if (previousResult && previousResult.isCorrect) {
-            this.isCorrect = true;
+        if (previousResult) {
             this.showResult = true;
             this.selectedValue = previousResult.selectedAnswers[0] ?? '';
-
-            const message = this.successMessage || '✓ Richtig!';
-            this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(message);
+            // Re-evaluate saved selections against the current question's answer key.
+            this.isCorrect = this.selectedValue === this.correctAnswer;
+            this.updateResultMessage(this.selectedValue);
 
             setTimeout(() => {
                 this.restoreSelectedAnswer(this.selectedValue);
                 this.renderMath();
             }, 100);
 
-            this.onAnswerEvaluated.emit(true);
+            this.onAnswerEvaluated.emit(this.isCorrect);
         }
     }
 
@@ -106,6 +106,13 @@ export class SingleChoice implements OnInit {
                 radio.checked = true;
             }
         });
+    }
+
+    selectionChanged(value: string) {
+        if (this.isCorrect) return;
+        this.selectedValue = value;
+        this.showResult = false;
+        this.resultMessage = '';
     }
 
 
@@ -159,7 +166,8 @@ export class SingleChoice implements OnInit {
             if (!selectedAnswer) {
                 this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.emptySelectionMessage!);
             } else {
-                this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.incorrectMessage!);
+                const message = this.answerFeedback?.[selectedAnswer] || this.incorrectMessage!;
+                this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(message);
             }
         }
     }

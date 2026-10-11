@@ -3,9 +3,14 @@ export const introTheoText1a = `
 			$\\vec{F}$, die linear mit dem Abstand von der Ruhelage zunimmt,
 			in Bewegung versetzt wird, dann sprechen wir von einer harmonischen Schwingung.<br><br>
 
+			Für Ableitungen nach der Zeit verwenden wir die
+			<a data-glossary="newton-notation" class="glossary-link"><strong>Newtonsche Notation</strong></a>:
+			Ein Punkt über einer Größe bezeichnet ihre erste, zwei Punkte ihre zweite Zeitableitung,
+			also $\\dot{x}$ beziehungsweise $\\ddot{x}$.<br><br>
+
 			Die Bewegung des Körpers kann mit der
 			<a data-glossary="hom-dgl" class="glossary-link">Differentialgleichung</a>
-			$m\\frac{d^2x}{dt^2} = -Dx$
+			$m\\ddot{x} = -Dx$
 			beschrieben werden. Dabei wird $D$ als
 			<a data-glossary="spring-constant" class="glossary-link">Federkonstante</a>
 			bezeichnet
@@ -17,7 +22,7 @@ export const introTheoText1a = `
         `;
 
 export const introTheoText1b = `
-			$$\\frac{d^2x}{dt^2} + \\omega_0^2 x = 0$$
+			$$\\ddot{x} + \\omega_0^2 x = 0$$
         `;
 
 export const introTheoText1c = `
@@ -31,3 +36,5 @@ export const introTheoText1d = `
 			Der folgende Graph zeigt die Schwingung eines Körpers bei einer Anfangsauslenkung
 			und mit der Anfangsgeschwindigkeit $v_0=0$.
         `;
+
+export const realSolutionPrerequisite = "Für eine reelle physikalische Auslenkung müssen die Koeffizienten der beiden komplex konjugierten Exponentialterme ebenfalls komplex konjugiert sein. Für $c_1=a+ib$ gilt $c_1^*=a-ib$. Dadurch enthält die reelle Lösung zwei frei wählbare reelle Konstanten, mit denen Anfangsauslenkung und Anfangsgeschwindigkeit festgelegt werden können.";

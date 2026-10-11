@@ -9,6 +9,18 @@ export interface ImageOption {
     label?: string;
 }
 
+export interface AdaptiveAnswerHint {
+    message: string;
+    conceptId?: string;
+    order?: number;
+    independent?: boolean;
+    /** Connected concepts sharing one paragraph, in explicit reasoning order. */
+    paragraphId?: string;
+    combinedFeedback?: Record<string, string>;
+}
+
+export type AnswerFeedback = Record<string, string | AdaptiveAnswerHint | AdaptiveAnswerHint[]>;
+
 export interface SingleChoiceQuestion {
     questionId: string;
     question: string;
@@ -18,6 +30,7 @@ export interface SingleChoiceQuestion {
     successMessage?: string;
     emptySelectionMessage?: string;
     incorrectMessage?: string;
+    answerFeedback?: Record<string, string>;
 }
 
 export interface MultipleChoiceQuestion {
@@ -30,6 +43,7 @@ export interface MultipleChoiceQuestion {
     emptySelectionMessage?: string;
     incompleteMessage?: string;
     incorrectMessage?: string;
+    answerFeedback?: AnswerFeedback;
 }
 
 export interface ImageChoiceQuestion {
@@ -42,6 +56,7 @@ export interface ImageChoiceQuestion {
     emptySelectionMessage?: string;
     incompleteMessage?: string;
     incorrectMessage?: string;
+    answerFeedback?: AnswerFeedback;
 }
 
 export interface MultipleChoiceImageQuestion {
@@ -56,6 +71,7 @@ export interface MultipleChoiceImageQuestion {
     emptySelectionMessage?: string;
     incompleteMessage?: string;
     incorrectMessage?: string;
+    answerFeedback?: AnswerFeedback;
 }
 
 export type AnyQuestion =

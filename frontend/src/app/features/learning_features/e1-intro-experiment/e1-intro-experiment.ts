@@ -56,6 +56,8 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
 
 
 	// +++ QA data +++
+    eddyCurrentPrerequisite = e1Content.eddyCurrentPrerequisite;
+    wheelPrerequisite = e1Content.wheelPrerequisite;
     question1 = e1Questions.question1;
     question2 = e1Questions.question2;
     question3 = e1Questions.question3;

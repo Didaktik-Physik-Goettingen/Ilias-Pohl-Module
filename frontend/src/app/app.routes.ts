@@ -18,6 +18,7 @@ import { HomDgl } from './features/glossary_features/hom-dgl/hom-dgl';
 import { InhomDgl } from './features/glossary_features/inhom-dgl/inhom-dgl';
 import { AngularFrequency } from './features/glossary_features/angular-frequency/angular-frequency';
 import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/moment-of-inertia';
+import { NewtonNotation } from './features/glossary_features/newton-notation/newton-notation';
 import { DirectiveMoment } from './features/glossary_features/directive-moment/directive-moment';
 import { ResonanceFrequency } from './features/glossary_features/resonance-frequency/resonance-frequency';
 
@@ -77,6 +78,7 @@ export const routes: Routes = [
     { path: 'glossary/inhom-dgl',           component: InhomDgl,            title: 'Inhomogene DGL' },
     { path: 'glossary/angular-frequency',   component: AngularFrequency,    title: 'Kreisfrequenz' },
     { path: 'glossary/moment-of-inertia',   component: MomentOfInertia,     title: 'Trägheitsmoment' },
+    { path: 'glossary/newton-notation',     component: NewtonNotation,      title: 'Newtonsche Notation' },
     { path: 'glossary/directive-moment',    component: DirectiveMoment,     title: 'Richtmoment' },
     { path: 'glossary/resonance-frequency',    component: ResonanceFrequency,     title: 'Resonanzfrequenz' },
 

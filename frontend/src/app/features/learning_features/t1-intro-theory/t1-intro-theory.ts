@@ -49,6 +49,7 @@ export class T1IntroTheory implements AfterViewInit {
         this.glossaryOverlay.open(term);
     }
 	// +++ QA data +++
+    realSolutionPrerequisite = t1Content.realSolutionPrerequisite;
     question1 = t1Questions.question1;
 
 

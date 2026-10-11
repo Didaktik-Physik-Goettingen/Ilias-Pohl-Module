@@ -66,20 +66,20 @@ export const dampedOscText2b = `
 		Wir verwenden also den Ansatz $\\varphi(t)=\\exp(\\lambda t)$.
 		Wir gehen davon aus, dass die tatsächliche Lösung eine Linearkombination von Funktionen dieser Form ist, dass also gilt $\\varphi(t)=\\sum_{i=1}^n a_i\\exp(\\lambda_i t)$, wobei $n$ den Grad der höchsten Ableitung in der Bewegungsgleichung darstellt.
 		<br><br>
-		Im nächsten Schritt setzen wir diesen Ansatz in unsere Differentialgleichung ein:
+		Die Ableitungen sind $\\dot{\\varphi}=\\lambda e^{\\lambda t}$ und $\\ddot{\\varphi}=\\lambda^2e^{\\lambda t}$. Im nächsten Schritt setzen wir diesen Ansatz in unsere Differentialgleichung ein:
 		$$\\ddot{\\varphi}+2\\beta\\dot{\\varphi}+\\omega_0^2\\varphi=0$$
-		$$-\\lambda^2\\exp(\\lambda t)+2i\\beta\\lambda\\exp(\\lambda t)+\\omega_0^2\\exp(\\lambda t)=0$$
-		$$-\\lambda^2\\varphi(t)+2i\\beta\\lambda\\varphi(t)+\\omega_0^2\\varphi(t)=0$$
-		$$(-\\lambda^2+2i\\beta\\lambda+\\omega_0^2)\\varphi(t)=0$$
+		$$\\lambda^2\\exp(\\lambda t)+2\\beta\\lambda\\exp(\\lambda t)+\\omega_0^2\\exp(\\lambda t)=0$$
+		$$\\lambda^2\\varphi(t)+2\\beta\\lambda\\varphi(t)+\\omega_0^2\\varphi(t)=0$$
+		$$(\\lambda^2+2\\beta\\lambda+\\omega_0^2)\\varphi(t)=0$$
 		<br>
-		Nun müssen wir schauen, für welche Werte $\\lambda$ diese Gleichung gelöst wird, wir setzen also $-\\lambda^2+2i\\beta\\lambda+\\omega_0^2=0$ und finden als Bedingung für $\\lambda$:
-		$$\\lambda_{1,2}=-i\\beta\\pm\\sqrt{-\\beta^2+\\omega_0^2}=-i\\beta\\pm\\sqrt{\\omega_0^2-\\beta^2}$$
+		Nun müssen wir schauen, für welche Werte $\\lambda$ diese Gleichung gelöst wird, wir setzen also $\\lambda^2+2\\beta\\lambda+\\omega_0^2=0$ und finden als Bedingung für $\\lambda$:
+		$$\\lambda_{1,2}=-\\beta\\pm\\sqrt{\\beta^2-\\omega_0^2}$$
 		<br>
-		Der Wurzel-Ausdruck bedingt hierbei, dass es drei unterschiedliche Lösungen der Differentialgleichung gibt, da die Wurzel größer, kleiner oder gleich Null sein kann. Diese Fälle beschreiben den Kriechfall, aperiodischen Grenzfall oder den Schwingfall.
+		Der Wurzel-Ausdruck bedingt hierbei, dass es drei unterschiedliche Lösungen der Differentialgleichung gibt, da der Radikand positiv, negativ oder null sein kann. Diese Fälle beschreiben den Kriechfall, aperiodischen Grenzfall oder den Schwingfall.
 		<br><br>
 		Für den Schwingfall, der bei $\\beta^2<\\omega_0^2$ eintritt, und den Kriechfall, der bei $\\beta^2>\\omega_0^2$ eintritt, ergibt sich als Lösung:
 		$$\\varphi(t)=c_1\\exp(\\lambda_1 t)+c_2\\exp(\\lambda_2 t),$$
-		wobei $c_1$ und $c_2$ komplexe Zahlen sind, deren Größe sich aus den Anfangsbedingungen (Auslenkung und Geschwindigkeit) ergibt.
+		Die Konstanten werden durch Anfangsauslenkung und Anfangswinkelgeschwindigkeit bestimmt. Im Schwingfall müssen $c_1$ und $c_2$ konjugiert zueinander sein, im Kriechfall sind sie reell.
 		<br><br>
 		Einsetzen der $\\lambda$-Werte, Ausklammern des Terms $\\exp(-\\beta t)$ und Umformen der Gleichung ergibt die unten stehende Gleichung.
 		<br><br>
@@ -118,11 +118,11 @@ export const dampedOscText2e = `
 		<br><br>
 		Die
 		<a data-glossary="natural-frequency" class="glossary-link">gedämpfte Eigenfrequenz</a>
-		kann im Experiment aus der Periodenlänge $T=\\frac{1}{\\omega_e}$ bestimmt werden.
+		kann im Experiment aus der Periodenlänge $T=\\frac{2\\pi}{\\omega_e}$ bestimmt werden.
 `;
 
 export const dampedOscText3a = `
-		In der linken Abbildung ist exemplarisch der zeitliche Verlauf der Winkelauslenkung eines gedämpften Systems dargestellt, wobei die Anfangsauslenkung $x_0>0$ und die Anfangsgeschwindigkeit $v_0=0$ sind.<br><br>
+		In der linken Abbildung ist exemplarisch der zeitliche Verlauf der Winkelauslenkung eines gedämpften Systems dargestellt, wobei die Anfangsauslenkung $\\varphi(0)>0$ und die Anfangswinkelgeschwindigkeit $\\dot{\\varphi}(0)=0$ sind.<br><br>
 
 		Die blaue Kurve zeigt jeweils die Winkelauslenkung des Rades über die Zeit, die rote gestrichelte Kurve deutet die abnehmende
 		<a data-glossary="amplitude" class="glossary-link">Amplitude</a>

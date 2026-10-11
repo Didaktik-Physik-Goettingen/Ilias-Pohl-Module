@@ -5,7 +5,7 @@ export const drivenOscText1a = `
 
 			Da der externe Antrieb über ein Rad realisiert wird, kann dieser mathematisch modelliert werden als zusätzlicher Beitrag zur
 			<a data-glossary="inhom-dgl" class="glossary-link">Differentialgleichung</a>
-			mit $F_\\text{ext}=A\\cos(\\omega t)$, wobei $\\omega$ die Frequenz des Antriebs ist und $A$ mit dessen <a data-glossary="amplitude" class="glossary-link">Amplitude</a>
+			mit $M_\\text{ext}=A\\cos(\\omega t)$, wobei $\\omega$ die Kreisfrequenz des Antriebs ist und $A$ mit dessen <a data-glossary="amplitude" class="glossary-link">Amplitude</a>
             in Zusammenhang steht.
 			Während die Frequenz über eine digitale Ansteuerung des Schrittmotors eingestellt wird, kann die Amplitude manuell durch Verschieben an der rechten Scheibe verändert werden.<br><br>
 
@@ -13,12 +13,12 @@ export const drivenOscText1a = `
 			<a data-glossary="inhom-dgl" class="glossary-link">Differentialgleichung</a>
 			zur Beschreibung der Bewegung des Rades mit Dämpfung ($\\Theta$:
 			<a data-glossary="moment-of-inertia" class="glossary-link">Trägheitsmoment</a>,
-			$\\rho$: Reibungskoeffizient, $D^*$:
+			$\\rho$: Reibungskoeffizient, $D$:
 			<a data-glossary="directive-moment" class="glossary-link">Richtmoment</a>
 			der Feder) und externem Antrieb gegeben als:
-			$$\\Theta\\ddot{\\varphi}+\\rho\\dot{\\varphi}+D^*\\varphi=A\\cos(\\omega t)$$
+			$$\\Theta\\ddot{\\varphi}+\\rho\\dot{\\varphi}+D\\varphi=A\\cos(\\omega t)$$
 			In der Regel wird diese Gleichung in normierter Form betrachtet; wie bereits zuvor werden neue Variablen eingeführt:
-			$$2\\beta:=\\frac{\\rho}{\\Theta},\\quad\\omega_0^2:=\\frac{D^*}{\\Theta},\\quad N:=\\frac{A}{\\Theta}.$$
+			$$2\\beta:=\\frac{\\rho}{\\Theta},\\quad\\omega_0^2:=\\frac{D}{\\Theta},\\quad N:=\\frac{A}{\\Theta}.$$
 			Diese Umbenennung vereinfacht die Schreibweise und entspricht der „Standardform" einer
 			<a data-glossary="inhom-dgl" class="glossary-link">inhomogenen linearen Differentialgleichung</a>
 			2. Ordnung:
@@ -29,7 +29,7 @@ export const drivenOscText1b = `
         `;
 
 export const drivenOscText1c = `
-			Beachte, dass hierbei $\\omega_0$ und $\\omega$ unterschiedliche Frequenzen sind, die nicht direkt in Zusammenhang miteinander stehen — während $\\omega_0$ die
+			Beachten Sie, dass hierbei $\\omega_0$ und $\\omega$ unterschiedliche Frequenzen sind, die nicht direkt in Zusammenhang miteinander stehen — während $\\omega_0$ die
 			<a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>
 			des ungedämpften Rades beschreibt, ist $\\omega$ die Frequenz des Antriebs. Zur Erinnerung: $\\beta$ ist der
 			<a data-glossary="damping-coefficient" class="glossary-link">Dämpfungskoeffizient</a>.
@@ -42,7 +42,7 @@ export const drivenOscText2a = `
             ergibt sich aus der Summe von homogener und spezieller Lösung:
             $$\\varphi(t)=\\varphi_\\text{homogen}(t)+\\varphi_\\text{speziell}(t).$$
 
-            Die Lösung der homogenen Gleichung (ohne externen Antrieb) wurde bereits auf den vergangenen Seiten verwendet. Sie kann geschrieben werden als:
+            Die Lösung der homogenen Gleichung (ohne externen Antrieb) wurde bereits auf den vergangenen Seiten verwendet. Im Schwingfall $0<\\beta<\\omega_0$ kann sie geschrieben werden als:
             $$\\varphi_\\text{homogen}=\\varphi_0\\cos(\\omega_e t+\\Phi)\\,e^{-\\beta t},$$
             wobei sich die maximale Auslenkung $\\varphi_0$ und die Phase $\\Phi$ aus den Anfangsbedingungen ergeben und $\\omega_e=\\sqrt{\\omega_0^2-\\beta^2}$ ($\\omega_0$:
             <a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>
@@ -56,7 +56,7 @@ export const drivenOscText2a = `
             <a data-glossary="inhom-dgl" class="glossary-link">Differentialgleichung</a>
             ein und bestimmt hieraus die beiden Variablen $\\varphi_s$ und $\\Phi_s$.<br><br>
 
-            Eine andere Möglichkeit, bei der die Rechnung an einigen Stellen etwas leichter ist, wirkt zunächst wie ein Umweg: Man erweitert die Inhomogenität komplex. Statt $N\\cos(\\omega t)$ betrachtet man $Ne^{i\\omega t}$ — beachte $N\\cos(\\omega t)=\\text{Re}\\{Ne^{i\\omega t}\\}$. Mit dem Ansatz $\\tilde{\\varphi}_\\text{speziell}=Ae^{i\\omega t}$ (A komplexwertig) setzt man diesen in die
+            Eine andere Möglichkeit, bei der die Rechnung an einigen Stellen etwas leichter ist, wirkt zunächst wie ein Umweg: Man erweitert die Inhomogenität komplex. Statt $N\\cos(\\omega t)$ betrachtet man $Ne^{i\\omega t}$ — beachten Sie $N\\cos(\\omega t)=\\text{Re}\\{Ne^{i\\omega t}\\}$. Mit dem Ansatz $\\tilde{\\varphi}_\\text{speziell}=Ae^{i\\omega t}$ (A komplexwertig) setzt man diesen in die
             <a data-glossary="inhom-dgl" class="glossary-link">inhomogene Differentialgleichung</a>
             ein und bestimmt $A$. Die spezielle Lösung ergibt sich dann als $\\text{Re}\\{\\tilde{\\varphi}_\\text{speziell}\\}$.
         `;
@@ -67,7 +67,7 @@ export const drivenOscText2b = `
 
             Anstatt der Inhomogenität $N\\cos(\\omega t)$ betrachten wir die komplexifizierte Gleichung mit der Inhomogenität $Ne^{i\\omega t}$
             und wählen den Ansatz $\\tilde{\\varphi}_\\text{speziell}=Ae^{i\\omega t}$, wobei $A\\in\\mathbb{C}$ komplexwertig ist.
-            Beachte: $N\\cos(\\omega t)=\\text{Re}\\{Ne^{i\\omega t}\\}$, weshalb sich die gesuchte spezielle Lösung am Ende als Realteil ergibt.<br><br>
+            Beachten Sie: $N\\cos(\\omega t)=\\text{Re}\\{Ne^{i\\omega t}\\}$, weshalb sich die gesuchte spezielle Lösung am Ende als Realteil ergibt.<br><br>
 
             Die Ableitungen des Ansatzes sind:
             $$\\dot{\\tilde{\\varphi}}=i\\omega A e^{i\\omega t},\\qquad\\ddot{\\tilde{\\varphi}}=-\\omega^2 A e^{i\\omega t}.$$
@@ -81,15 +81,15 @@ export const drivenOscText2b = `
 
             Wir schreiben $A=|A|\\,e^{-i\\Phi_s}$ in Polarform:
             $$|A|=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}},\\qquad
-            \\Phi_s=\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right).$$
+            \\Phi_s=\\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right).$$
 
             Die spezielle Lösung der ursprünglichen Gleichung ergibt sich schließlich als:
             $$\\varphi_\\text{speziell}=\\text{Re}\\{\\tilde{\\varphi}_\\text{speziell}\\}=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos(\\omega t-\\Phi_s).$$
         `;
 
 export const drivenOscText2c = `
-            Als Gesamtlösung des Systems ergibt sich nach dem vorgestellten Schema:
-            $$\\varphi(t)=\\underbrace{\\varphi_0\\cos(\\omega_e t+\\Phi)\\,e^{-\\beta t}}_{\\text{homogen}}+\\underbrace{\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right)}_{\\text{speziell}}$$
+            Im Schwingfall $0<\\beta<\\omega_0$ ergibt sich als Gesamtlösung nach dem vorgestellten Schema:
+            $$\\varphi(t)=\\underbrace{\\varphi_0\\cos(\\omega_e t+\\Phi)\\,e^{-\\beta t}}_{\\text{homogen}}+\\underbrace{\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right)\\right)}_{\\text{speziell}}$$
 
             Der erste Summand entspricht der homogenen Lösung, der zweite der speziellen Lösung. Der erste Term beschreibt das „freie" Schwingverhalten des Pendels; der zweite Term beinhaltet die Reaktion des Systems auf die externe Anregung.
         `;
@@ -100,7 +100,7 @@ export const drivenOscText3a = `
             Da ein reales System immer gedämpft ist und sich daher nach einer Einschwingphase immer eine stationäre Lösung einstellt,
             ist diese Betrachtung im Realexperiment sinnvoll:
             $$\\varphi(t)=\\underbrace{\\varphi_0\\cos(\\omega_e t+\\Phi)\\,e^{-\\beta t}}_{\\xrightarrow{\\;t\\to\\infty\\;}\\,0}
-            +\\underbrace{\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right)}_{\\text{stationäre Lösung}}$$
+            +\\underbrace{\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right)\\right)}_{\\text{stationäre Lösung}}$$
 
             Wenn die Einschwingphase abgeschlossen ist, spielen die Anfangsbedingungen eine untergeordnete Rolle
             und das System schwingt periodisch mit der Frequenz $\\omega$ des Antriebs.<br><br>
@@ -111,7 +111,7 @@ export const drivenOscText3a = `
 
 export const drivenOscText4 = `
             Im Folgenden betrachten wir nur die stationäre Lösung der Gleichung, also
-            $$\\varphi(t)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right).$$
+            $$\\varphi(t)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right)\\right).$$
 
             Zunächst beschäftigen wir uns mit der
             <a data-glossary="amplitude" class="glossary-link">Amplitude</a>
@@ -157,7 +157,9 @@ export const drivenOscText5b = `
             <a data-glossary="amplitude" class="glossary-link">Amplitude</a>
             des schwingenden Rades maximal wird.
             Mathematisch ergibt sie sich zu:
-            $$\\omega_r=\\sqrt{\\omega_0^2-2\\beta^2}.$$
+            $$\\omega_r=\\sqrt{\\omega_0^2-2\\beta^2},\\qquad 0<\\beta<\\omega_0/\\sqrt{2}.$$
+            Diese Beziehung beschreibt ein Resonanzmaximum bei nicht verschwindender Frequenz.
+            Für $\\beta\\geq\\omega_0/\\sqrt{2}$ liegt das Amplitudenmaximum bei $\\omega=0$.
         `;
 
 export const drivenOscText6 = `
@@ -166,17 +168,17 @@ export const drivenOscText6 = `
             $\\omega_0$ und der Frequenz des Antriebs $\\omega$ ab.<br><br>
 
             Gehen wir zurück auf die stationäre Lösung des gedämpften, getriebenen Systems:
-            $$\\varphi(t)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)\\right).$$
+            $$\\varphi(t)=\\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+4\\beta^2\\omega^2}}\\cos\\!\\left(\\omega t-\\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right)\\right).$$
 
             Vergleichen wir diese Gleichung mit dem Antrieb des Systems,
-            $$\\varphi_\\text{ext}=N\\cos(\\omega t),$$
-            so fällt auf, dass die Argumente der Cosinus-Funktionen sich unterscheiden. Dieser Unterschied entspricht einer Phasenverschiebung $\\Phi$:
-            $$\\Phi(\\omega)=\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right).$$
+            $$M_\\text{ext}/\\Theta=N\\cos(\\omega t),$$
+            so fällt auf, dass die Argumente der Cosinus-Funktionen sich unterscheiden. Dieser Unterschied entspricht einer Phasenverzögerung $\\Phi$. Für $\\beta>0$ und $\\omega\\geq0$ wählt $\\operatorname{atan2}(y,x)$ den Winkel anhand beider Argumente im richtigen Quadranten, hier $0\\leq\\Phi<\\pi$:
+            $$\\Phi(\\omega)=\\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right).$$
         `;
 
 export const drivenOscText7 = `
             In der nebenstehenden Abbildung ist die Phasenverschiebung
-            $$\\Phi(\\omega)=\\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)$$
+            $$\\Phi(\\omega)=\\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right)$$
             für unterschiedliche
             <a data-glossary="damping-coefficient" class="glossary-link">Dämpfungskonstanten</a>
             $\\beta$ dargestellt.<br><br>

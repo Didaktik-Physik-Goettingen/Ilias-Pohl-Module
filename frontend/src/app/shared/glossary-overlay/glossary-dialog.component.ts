@@ -14,6 +14,7 @@ import { HomDgl }              from '../../features/glossary_features/hom-dgl/ho
 import { InhomDgl }            from '../../features/glossary_features/inhom-dgl/inhom-dgl';
 import { MomentOfInertia }     from '../../features/glossary_features/moment-of-inertia/moment-of-inertia';
 import { NaturalFrequency }    from '../../features/glossary_features/natural-frequency/natural-frequency';
+import { NewtonNotation }      from '../../features/glossary_features/newton-notation/newton-notation';
 import { SpringConstant }      from '../../features/glossary_features/spring-constant/spring-constant';
 import { ResonanceFrequency } from '../../features/glossary_features/resonance-frequency/resonance-frequency';
 
@@ -29,6 +30,7 @@ const TERM_MAP: Record<string, Type<any>> = {
     'inhom-dgl':            InhomDgl,
     'moment-of-inertia':    MomentOfInertia,
     'natural-frequency':    NaturalFrequency,
+    'newton-notation':      NewtonNotation,
     'spring-constant':      SpringConstant,
     'resonance-frequency':  ResonanceFrequency,
 };

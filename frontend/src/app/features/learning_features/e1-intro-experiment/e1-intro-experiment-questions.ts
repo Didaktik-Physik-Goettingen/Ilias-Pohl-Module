@@ -1,147 +1,367 @@
 import { MultipleChoiceImageQuestion, MultipleChoiceQuestion, ImageChoiceQuestion } from '../../../shared/evaluation/question.types';
 
 export const question1: MultipleChoiceImageQuestion = {
-    questionId: 'e1-intro-exp-1-schwungrad',
-    imageSrc: 'assets/images/e1_intro_experiment/schwungrad_2.png',
-    imageAlt: 'Schwungrad',
-    question: 'Welche der Aussagen in Bezug auf das Schwungrad sind richtig?',
-    options: [
-        { value: 'answer1', label: 'Das Schwungrad setzt das System in Bewegung.' },
-        { value: 'answer2', label: 'Die Form des Schwungkörpers beeinträchtigt den Versuch. Nur durch die zylinderförmige Form ist eine harmonische Bewegung möglich.' },
-        { value: 'answer3', label: 'Solange der Schwungkörper sich um seinen Schwerpunkt dreht, spielt die exakte Form keine Rolle.' },
-        { value: 'answer4', label: 'Das Schwungrad dient als träger Körper, dessen Bewegung untersucht wird.' }
+    "questionId": "e1-intro-exp-1-schwungrad",
+    "imageSrc": "assets/images/e1_intro_experiment/schwungrad_2.png",
+    "imageAlt": "Schwungrad",
+    "question": "Welche der Aussagen in Bezug auf das Schwungrad sind richtig?",
+    "options": [
+        {
+            "value": "answer1",
+            "label": "Das Schwungrad setzt das System in Bewegung."
+        },
+        {
+            "value": "answer2",
+            "label": "Nur ein zylinderförmiger Schwungkörper ermöglicht eine harmonische Bewegung."
+        },
+        {
+            "value": "answer3",
+            "label": "Die Form beeinflusst das Trägheitsmoment, bestimmt aber nicht allein den harmonischen Charakter der Bewegung."
+        },
+        {
+            "value": "answer4",
+            "label": "Das Schwungrad dient als träger Körper, dessen Bewegung untersucht wird."
+        }
     ],
-    correctAnswers: ['answer3', 'answer4'],
-    containerId: 'question1-container',
-    successMessage: `✓ Völlig richtig.<br><br>
-			Die Bewegung des Schwungrads wird untersucht, wenn es "von außen" angetrieben wird.
-			Der Schwungkörper muss kein Zylinder sein, wenn Sie sich das Bild des Versuchsaufbaus anschauen, dann ist auch dies kein Zylinder.
-			Der Schwungkörper muss nicht einmal rotationssymmetrisch sein. Wichtig ist aber, dass er im Schwerpunkt aufgehängt ist.
-			Wäre er nicht im Schwerpunkt aufgehängt, würde aufgrund der Schwerkraft ein zusätzliches Drehmoment auf den Schwungkörper wirken.
-			Dieses zusätzliche Drehmoment würde die Bewegung beeinflussen.
-			Unter Umständen führt das Hinzufügen zusätzlicher Massestücke an das Schwungrad bei diesem Versuchsaufbau zu chaotischem Verhalten.<br><br>
-
-			Das zusätzliche Hinzufügen einer Masse kann man allerdings auch nutzen, um den Versuchsaufbau näher zu charakterisieren.
-			Hierzu erfahren Sie mehr auf den folgenden Seiten.`,
-    incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.<br><br>
-			Betrachten Sie noch einmal den Versuchsaufbau. Welche Rolle übernimmt das Schwungrad? Wie sieht das Schwungrad aus?
-			Welche Eigenschaften erfüllt das Schwungrad und welche nicht?
-			Überlegen Sie sich, was die physikalischen Begründungen für dieses Aussehen sein könnten.`,
-    incorrectMessage: `✗ Das ist noch nicht ganz richtig - einige Ihrer Antworten sind falsch.<br><br>
-			Betrachten Sie noch einmal den Versuchsaufbau. Welche Rolle übernimmt das Schwungrad? Wie sieht das Schwungrad aus?
-			Welche Eigenschaften erfüllt das Schwungrad und welche nicht?
-			Überlegen Sie sich, was die physikalischen Begründungen für dieses Aussehen sein könnten.`
+    "correctAnswers": [
+        "answer3",
+        "answer4"
+    ],
+    "containerId": "question1-container",
+    "successMessage": "Das Schwungrad liefert die Trägheit; der harmonische Charakter folgt aus der linearen Rückstellung.",
+    "incompleteMessage": "Vergleichen Sie in der Aufbauzeichnung die Aufgaben von Schwungrad, Feder und Antrieb.",
+    "incorrectMessage": "Vergleichen Sie in der Aufbauzeichnung die Aufgaben von Schwungrad, Feder und Antrieb.",
+    "answerFeedback": {
+        "answer1": {
+            "conceptId": "inertia",
+            "order": 1,
+            "message": "Trennen Sie die Trägheit des Rads von der Rückstellung: Die Körperform beeinflusst die Masseverteilung und damit das Trägheitsmoment. Prüfen Sie damit erneut, welche Aufgabe das Schwungrad erfüllt."
+        },
+        "answer4": {
+            "conceptId": "inertia",
+            "order": 1,
+            "message": "Trennen Sie die Trägheit des Rads von der Rückstellung: Die Körperform beeinflusst die Masseverteilung und damit das Trägheitsmoment. Prüfen Sie damit erneut, welche Aufgabe das Schwungrad erfüllt."
+        },
+        "answer2": {
+            "conceptId": "harmonic-restoration",
+            "order": 2,
+            "message": "Der harmonische Charakter entsteht durch ein zur Auslenkung proportionales Rückstellmoment. Prüfen Sie, welche Eigenschaft lediglich durch die Form des Schwungrads beeinflusst wird."
+        },
+        "answer3": {
+            "conceptId": "harmonic-restoration",
+            "order": 2,
+            "message": "Der harmonische Charakter entsteht durch ein zur Auslenkung proportionales Rückstellmoment. Prüfen Sie, welche Eigenschaft lediglich durch die Form des Schwungrads beeinflusst wird."
+        }
+    }
 };
 
 export const question2: MultipleChoiceImageQuestion = {
-    questionId: 'e1-intro-exp-2-feder',
-    imageSrc: 'assets/images/e1_intro_experiment/feder_2.png',
-    imageAlt: 'Feder',
-    question: 'Welche Aussage über die Feder ist korrekt?',
-    options: [
-        { value: 'answer1', label: 'Die Feder ist für den Versuch nur notwendig, wenn man auch den externen Antrieb verwendet.' },
-        { value: 'answer2', label: 'Die Feder sorgt für ein rücktreibendes Drehmoment.' },
-        { value: 'answer3', label: 'Die Feder führt zu kontinuierlichen Dämpfung des Schwungrads.' },
+    "questionId": "e1-intro-exp-2-feder",
+    "imageSrc": "assets/images/e1_intro_experiment/feder_2.png",
+    "imageAlt": "Feder",
+    "question": "Welche Aussage über die Feder ist korrekt?",
+    "options": [
+        {
+            "value": "answer1",
+            "label": "Die Feder ist für den Versuch nur notwendig, wenn man auch den externen Antrieb verwendet."
+        },
+        {
+            "value": "answer2",
+            "label": "Die Feder sorgt für ein rücktreibendes Drehmoment."
+        },
+        {
+            "value": "answer3",
+            "label": "Die Feder führt zur kontinuierlichen Dämpfung des Schwungrads."
+        }
     ],
-    correctAnswers: ['answer2'],
-    containerId: 'question2-container',
-    successMessage: `✓ Korrekt, die Feder bedingt ein rücktreibendes Drehmoment, das von der Auslenkung aus der Ruhelage abhängt.
-			Das rücktreibende Drehmoment $M$ kann mathematisch beschrieben werden als
-			$$M = -D^*\\varphi.$$
-			Hierbei ist $D^*$ das Direktionsmoment (auch als Winkelrichtgröße bezeichnet) und $\\varphi$
-			beschreibt die Auslenkung aus der Ruhelage.`,
-    incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.`,
-    incorrectMessage: `✗ Das ist noch nicht ganz richtig - einige Ihrer Antworten sind falsch.`
+    "correctAnswers": [
+        "answer2"
+    ],
+    "containerId": "question2-container",
+    "successMessage": "Die Feder erzeugt das Rückstellmoment $M=-D\\varphi$, das der Auslenkung entgegenwirkt.",
+    "incompleteMessage": "Vergleichen Sie in der Aufbauzeichnung, welches Bauteil das ausgelenkte Rad zur Ruhelage zurückführt.",
+    "incorrectMessage": "Vergleichen Sie in der Aufbauzeichnung, welches Bauteil das ausgelenkte Rad zur Ruhelage zurückführt.",
+    "answerFeedback": {
+        "answer1": {
+            "conceptId": "spring-restoration",
+            "order": 1,
+            "message": "Auch bei ausgeschaltetem Antrieb bleibt die Feder mit ihrem festen Ankerpunkt verbunden. Wird das Rad verdreht, wirkt sie der Auslenkung entgegen und führt es zur Ruhelage zurück. Prüfen Sie die Verbindung zum Ankerpunkt bei ausgeschaltetem Antrieb."
+        },
+        "answer2": {
+            "conceptId": "spring-restoration",
+            "order": 1,
+            "message": "Auch bei ausgeschaltetem Antrieb bleibt die Feder mit ihrem festen Ankerpunkt verbunden. Wird das Rad verdreht, wirkt sie der Auslenkung entgegen und führt es zur Ruhelage zurück. Prüfen Sie die Verbindung zum Ankerpunkt bei ausgeschaltetem Antrieb."
+        },
+        "answer3": {
+            "conceptId": "restoration-vs-damping",
+            "order": 2,
+            "message": "Eine Dämpfung wirkt dagegen der Bewegung entgegen. Prüfen Sie anhand dieses Unterschieds, welche Aufgabe die Feder erfüllt."
+        }
+    }
 };
 
 export const question3: MultipleChoiceImageQuestion = {
-    questionId: 'e1-intro-exp-3-wirbelstrombremse',
-    imageSrc: 'assets/images/e1_intro_experiment/wirbelstrombremse_2.png',
-    imageAlt: 'Wirbelstrombremse',
-    question: `Zur Dämpfung wird in diesem Versuchsaufbau ein Magnet verwendet,
-			der so verschoben werden kann, dass er das Rad (mit Abstand, also nicht wie eine Scheibenbremse) umschließt.
-			Welche der Aussagen über die Wirbelstrombremse sind korrekt?`,
-    options: [
-        { value: 'answer1', label: 'Ohne die Wirbelstrombremse würde das Schwungrad unendlich lange weiterschwingen.' },
-        { value: 'answer2', label: 'Das Material des Schwungrads bedingt die Wirkung der Wirbelstrombremse.' },
-        { value: 'answer3', label: 'Die Wirbelstrombremse ist direkt von der Auslenkung des Schwungrads abhängig.' },
+    "questionId": "e1-intro-exp-3-wirbelstrombremse",
+    "imageSrc": "assets/images/e1_intro_experiment/wirbelstrombremse_2.png",
+    "imageAlt": "Wirbelstrombremse",
+    "question": "Zur Dämpfung wird in diesem Versuchsaufbau ein Magnet verwendet,\n\t\t\tder so verschoben werden kann, dass er das Rad (mit Abstand, also nicht wie eine Scheibenbremse) umschließt.\n\t\t\tWelche der Aussagen über die Wirbelstrombremse sind korrekt?",
+    "options": [
+        {
+            "value": "answer1",
+            "label": "Ohne die Wirbelstrombremse würde das Schwungrad unendlich lange weiterschwingen."
+        },
+        {
+            "value": "answer2",
+            "label": "Die Wirbelstrombremse benötigt ein elektrisch leitendes Schwungrad."
+        },
+        {
+            "value": "answer3",
+            "label": "Die Wirbelstrombremse ist direkt von der Auslenkung des Schwungrads abhängig."
+        }
     ],
-    correctAnswers: ['answer2'],
-    containerId: 'question3-container',
-    successMessage: `✓ Genau richtig.<br><br>
-			Damit die Wirbelstrombremse zu einer Dämpfung des Systems führen kann, muss das Schwungrad aus einem leitenden Material bestehen.
-			Die Wirbelstrombremse funktioniert über das Prinzip der Induktion --- je nach Stärke des Magnetfeldes der
-			Wirbelstrombremse wird das Schwungrad stärker abgedämpft in seiner Bewegung.
-			Die Dämpfung ist hierbei linear zur Bewegungsgeschwindigkeit des Rads durch das Magnetfeld. Die Wirbelstrombremse bewirkt also ein bremsendes Moment
-			$$M=-\\rho\\dot{\\varphi},$$
-			wobei $\\rho$ der Reibungskoeffizient und $\\dot{\\varphi}$ die Winkelgeschwindigkeit sind.<br><br>
-			Im Versuch ist die Wirbelstrombremse durch einen Magneten realisiert.
-			Sie können die Dämpfung des Rades variieren, indem Sie den Magneten weiter über das Rad schieben.
-			Je größer der Bereich der Rads, den das Magnetfeld beeinträchtigt, desto stärker ist die dämpfende Wirkung.<br><br>
-
-			Wenn Sie mehr über die Funktionsweise der Wirbelstrombremse erfahren möchten, dann können Sie sich hier informieren.`,
-    incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.`,
-    incorrectMessage: `✗ Das ist noch nicht ganz richtig - einige Ihrer Antworten sind falsch.`
+    "correctAnswers": [
+        "answer2"
+    ],
+    "containerId": "question3-container",
+    "successMessage": "Wirbelströme benötigen ein elektrisch leitendes Rad. Bei fester Magnetstellung modellieren wir das Bremsmoment im verwendeten Geschwindigkeitsbereich näherungsweise als $M=-\\rho\\dot{\\varphi}$.",
+    "incompleteMessage": "Prüfen Sie die Materialvoraussetzung für Wirbelströme und unterscheiden Sie Auslenkung von Bewegung.",
+    "incorrectMessage": "Prüfen Sie die Materialvoraussetzung für Wirbelströme und unterscheiden Sie Auslenkung von Bewegung.",
+    "answerFeedback": {
+        "answer2": {
+            "conceptId": "conductivity",
+            "order": 1,
+            "message": "Die Wirbelstrombremse benötigt ein elektrisch leitendes Rad. Prüfen Sie, welche Materialeigenschaft das Entstehen der Ströme ermöglicht."
+        },
+        "answer3": {
+            "conceptId": "motion",
+            "order": 2,
+            "message": "Die Wirbelstrombremse wirkt nur bei einer Bewegung durch das Magnetfeld. Bei einem ruhenden, ausgelenkten Rad entsteht deshalb kein entsprechendes Bremsmoment. Prüfen Sie damit die Abhängigkeit von Auslenkung und Bewegung."
+        },
+        "answer1": {
+            "conceptId": "ordinary-friction",
+            "order": 3,
+            "message": "Berücksichtigen Sie zusätzlich, dass auch ohne Magnetbremse gewöhnliche Reibungsverluste vorhanden sind. Prüfen Sie damit das Verhalten ohne Wirbelstrombremse."
+        }
+    }
 };
 
 export const question4: MultipleChoiceQuestion = {
-    questionId: 'e1-intro-exp-4-direktionsmoment',
-    question: `Welche Informationen über den Versuchsaufbau benötigen Sie bzw. welche Größen müssen Sie messen, um das Direktionsmoment $D$ der Feder zu bestimmen?`,
-    options: [
-        { value: 'answer1', label: 'Frequenz der Schwingung $\\omega$.' },
-        { value: 'answer2', label: 'Radius des Schwungrads $R$.' },
-        { value: 'answer3', label: 'Masse des Schwungrads $m_\\mathrm{Rad}$.' },
-        { value: 'answer4', label: 'Auslenkwinkel $\\varphi$.' },
-        { value: 'answer5', label: 'Abstand zwischen Aufhängung der Masse und Mittelpunkt des Schwungrads $R$.' },
-        { value: 'answer6', label: 'Masse der Zusatzmassen $m_{zm}$.' },
-        { value: 'answer7', label: 'Trägheitsmoment des Schwungrads $\\theta$.' },
+    "questionId": "e1-intro-exp-4-direktionsmoment",
+    "question": "Welche Größen benötigen Sie zur statischen Bestimmung des Direktionsmoments $D$ in der gezeigten Geometrie? Die Erdbeschleunigung $g$ sei bekannt; betrachten Sie eine von null verschiedene Gleichgewichtsauslenkung.",
+    "options": [
+        {
+            "value": "answer1",
+            "label": "Kreisfrequenz der freien Schwingung $\\omega_e$."
+        },
+        {
+            "value": "answer2",
+            "label": "Außenradius des Schwungrads, unabhängig von der Position der Zusatzmasse."
+        },
+        {
+            "value": "answer3",
+            "label": "Masse des Schwungrads $m_\\mathrm{Rad}$."
+        },
+        {
+            "value": "answer4",
+            "label": "Auslenkwinkel $\\varphi$."
+        },
+        {
+            "value": "answer5",
+            "label": "Radialer Abstand des Aufhängepunkts der Zusatzmasse von der Drehachse $R$."
+        },
+        {
+            "value": "answer6",
+            "label": "Masse der Zusatzmassen $m_{zm}$."
+        },
+        {
+            "value": "answer7",
+            "label": "Trägheitsmoment des Schwungrads $\\Theta$."
+        }
     ],
-    correctAnswers: ['answer4', 'answer5', 'answer6'],
-    containerId: 'question4-container',
-    successMessage: `✓ Korrekt.<br><br>
-			indem Sie den Auslenkwinkel für unterschiedliche Massenstücke messen können Sie mit Hilfe der Angabe des Abstands zwischen Aufhängung der
-			Masse und Aufhängung des Schwungrads das wirkende Drehmoment bestimmen.
-			Das Direktionsmoment der Feder können Sie hieraus bestimmen.`,
-    incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.<br><br>Betrachten Sie noch einmal die relevanten Formeln.`,
-    incorrectMessage: `✗ Das ist noch nicht ganz richtig - einige Ihrer Antworten sind falsch.<br><br>Betrachten Sie noch einmal die relevanten Formeln.`
+    "correctAnswers": [
+        "answer4",
+        "answer5",
+        "answer6"
+    ],
+    "containerId": "question4-container",
+    "successMessage": "In der gezeigten Geometrie gilt im Gleichgewicht $D\\varphi=m_{zm}gR\\sin\\varphi$. Dabei ist $R\\sin\\varphi$ der senkrechte Hebelarm der Gewichtskraft.",
+    "incompleteMessage": "Nutzen Sie die Drehmomentbilanz neben der Skizze und unterscheiden Sie radialen Abstand und senkrechten Hebelarm.",
+    "incorrectMessage": "Nutzen Sie die Drehmomentbilanz neben der Skizze und unterscheiden Sie radialen Abstand und senkrechten Hebelarm.",
+    "answerFeedback": {
+        "answer1": {
+            "conceptId": "static",
+            "order": 1,
+            "message": "Im statischen Gleichgewicht bewegt sich das Rad nicht. Größen, die ausschließlich die zeitliche Bewegung beschreiben, werden für diese Bestimmung daher nicht benötigt."
+        },
+        "answer7": {
+            "conceptId": "static",
+            "order": 1,
+            "message": "Im statischen Gleichgewicht bewegt sich das Rad nicht. Größen, die ausschließlich die zeitliche Bewegung beschreiben, werden für diese Bestimmung daher nicht benötigt."
+        },
+        "answer2": {
+            "conceptId": "torque-geometry",
+            "order": 2,
+            "message": "Verwenden Sie die Drehmomentbilanz neben der Skizze. Der wirksame Hebelarm ist der senkrechte Abstand der Wirkungslinie der Gewichtskraft von der Drehachse und ergibt sich hier aus dem radialen Abstand und dem Winkel."
+        },
+        "answer5": {
+            "conceptId": "torque-geometry",
+            "order": 2,
+            "message": "Verwenden Sie die Drehmomentbilanz neben der Skizze. Der wirksame Hebelarm ist der senkrechte Abstand der Wirkungslinie der Gewichtskraft von der Drehachse und ergibt sich hier aus dem radialen Abstand und dem Winkel."
+        },
+        "answer3": {
+            "conceptId": "required-quantities",
+            "order": 3,
+            "message": "Stellen Sie die Gleichung nach $D$ um und prüfen Sie, welche Masse, welcher Abstand und welcher Winkel darin vorkommen."
+        },
+        "answer4": {
+            "conceptId": "required-quantities",
+            "order": 3,
+            "message": "Stellen Sie die Gleichung nach $D$ um und prüfen Sie, welche Masse, welcher Abstand und welcher Winkel darin vorkommen."
+        },
+        "answer6": {
+            "conceptId": "required-quantities",
+            "order": 3,
+            "message": "Stellen Sie die Gleichung nach $D$ um und prüfen Sie, welche Masse, welcher Abstand und welcher Winkel darin vorkommen."
+        }
+    }
 };
 
 export const question5: ImageChoiceQuestion = {
-    questionId: 'e1-intro-exp-5-winkel-drehmoment',
-    question: 'Welchen Zusammenhang zwischen dem Winkel $\\varphi$ und dem Drehmoment $M$ erwarten Sie bei der Messung?',
-    options: [
-        { value: 'answer1', imageSrc: 'assets/images/e1_intro_experiment/angle_over_moment_option1_3.png' },
-        { value: 'answer2', imageSrc: 'assets/images/e1_intro_experiment/angle_over_moment_option2_3.png' },
-        { value: 'answer3', imageSrc: 'assets/images/e1_intro_experiment/angle_over_moment_option3_3.png' },
+    "questionId": "e1-intro-exp-5-winkel-drehmoment",
+    "question": "Welche Graphen können den Zusammenhang zwischen Gleichgewichtsauslenkung $\\varphi$ und Lastdrehmoment $M$ bei konstantem Direktionsmoment $D>0$ darstellen? Ein Zahlenwert für $D$ ist nicht vorgegeben.",
+    "options": [
+        {
+            "value": "answer1",
+            "imageSrc": "assets/images/e1_intro_experiment/angle_over_moment_option1_3.png"
+        },
+        {
+            "value": "answer2",
+            "imageSrc": "assets/images/e1_intro_experiment/angle_over_moment_option2_3.png"
+        },
+        {
+            "value": "answer3",
+            "imageSrc": "assets/images/e1_intro_experiment/angle_over_moment_option3_3.png"
+        }
     ],
-    correctAnswers: ['answer2'],
-    containerId: 'question5-container',
-    successMessage: `✓ Richtig, der Zusammenhang sollte etwa linear sein - je größer das wirkende Drehmoment, desto stärker wird das Rad ausgelenkt.
-			Es gilt der Zusammenhang $M=\\varphi D$.<br><br>
-			Das Drehmoment kann nicht direkt im Versuch gemessen/variiert werden, Sie können aber durch das Anhängen unterschiedlicher Massekörper ein Drehmoment erzeugen.`,
-    incompleteMessage: `✗ Überlegen Sie sich, was passiert, wenn Sie unterschiedliche Massestücke an eine "normale" Feder hängen. Wie reagiert die Feder, wenn Sie die Masse verdoppeln?`,
-    incorrectMessage: `✗ Überlegen Sie sich, was passiert, wenn Sie unterschiedliche Massestücke an eine "normale" Feder hängen. Wie reagiert die Feder, wenn Sie die Masse verdoppeln?`
+    "correctAnswers": [
+        "answer1",
+        "answer2"
+    ],
+    "containerId": "question5-container",
+    "successMessage": "Bei konstantem $D>0$ gilt im Gleichgewicht $\\varphi=M/D$: Die Auslenkung steigt linear mit dem Lastdrehmoment. Ohne Zahlenwert für $D$ ist die Steigung nicht festgelegt.",
+    "incompleteMessage": "Vergleichen Sie Richtung und Linearität der Graphen mit der Drehmomentbilanz der Feder.",
+    "incorrectMessage": "Vergleichen Sie Richtung und Linearität der Graphen mit der Drehmomentbilanz der Feder.",
+    "answerFeedback": {
+        "answer1": {
+            "conceptId": "unspecified-slope",
+            "order": 2,
+            "message": "Prüfen Sie, ob die Aufgabe eine bestimmte positive Steigung vorgibt."
+        },
+        "answer2": {
+            "conceptId": "unspecified-slope",
+            "order": 2,
+            "message": "Prüfen Sie, ob die Aufgabe eine bestimmte positive Steigung vorgibt."
+        },
+        "answer3": {
+            "conceptId": "load-direction",
+            "order": 1,
+            "message": "Auf der waagerechten Achse steht das äußere Lastdrehmoment. Im Gleichgewicht gilt $M-D\\varphi=0$. Stellen Sie diese Beziehung nach $\\varphi$ um und prüfen Sie bei $D>0$, ob eine größere Last zu einer größeren oder kleineren Gleichgewichtsauslenkung führt."
+        }
+    }
 };
 
 export const question6: ImageChoiceQuestion = {
-    questionId: 'e1-intro-exp-6-winkel-zeit',
-    question: `
-		Die unten angezeigten Graphen zeigen zeitliche Entwicklungen der Winkelauslenkung (Winkel $\\varphi$) des Schwungrads.<br><br>
-		Welcher dieser Graphen sind "realistisch"? Welche der folgenden Graphen könnten bei einem realen Versuch enstehen, wenn Sie davon ausgehen,
-		dass das Rad zu Beginn um den Winkel $\\varphi_0=10^\\circ$ ausgelenkt und einfach losgelassen wurde (Anfangsgeschwindigkeit $\\dot{\\varphi_0}=10^\\circ$)?<br>
-		Gehen Sie davon aus, dass das Schwungrad in seinem Schwerpunkt aufgehängt und das Magnetfeld der Wirbelstrombremse jeweils auf einen festen Wert
-		(unterschiedliche Einstellungen bei den unterschiedlichen Antwortmöglichkeiten) eingestellt ist.`,
-    options: [
-        { value: 'answer1', imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option1_4.png' },
-        { value: 'answer2', imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option2_4.png' },
-        { value: 'answer3', imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option3_4.png' },
-        { value: 'answer4', imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option4_4.png' },
-        { value: 'answer5', imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option5_4.png' },
-        { value: 'answer6', imageSrc: 'assets/images/e1_intro_experiment/phi_over_t_option6_4.png' },
+    "questionId": "e1-intro-exp-6-winkel-zeit",
+    "question": "Welche Kurven passen zum linearen Modell eines frei gedämpften Pohlschen Rads, das bei $\\varphi(0)=10^\\circ$ aus der Ruhe losgelassen wird ($\\dot{\\varphi}(0)=0\\,{}^\\circ/\\mathrm{s}$)? Das Rad ist im Schwerpunkt gelagert; Antrieb und Zusatzmasse fehlen. Für jede Kurve sind Feder und Dämpfung zeitlich konstant; die Dämpfungsstärke darf zwischen den Kurven variieren. Im linearen Schwingfall ist die Periodendauer bei diesen Bedingungen zeitlich konstant.",
+    "options": [
+        {
+            "value": "answer1",
+            "imageSrc": "assets/images/e1_intro_experiment/phi_over_t_option1_4.png"
+        },
+        {
+            "value": "answer2",
+            "imageSrc": "assets/images/e1_intro_experiment/phi_over_t_option2_4.png"
+        },
+        {
+            "value": "answer3",
+            "imageSrc": "assets/images/e1_intro_experiment/phi_over_t_option3_4.png"
+        },
+        {
+            "value": "answer4",
+            "imageSrc": "assets/images/e1_intro_experiment/phi_over_t_option4_4.png"
+        },
+        {
+            "value": "answer5",
+            "imageSrc": "assets/images/e1_intro_experiment/phi_over_t_option5_4.png"
+        },
+        {
+            "value": "answer6",
+            "imageSrc": "assets/images/e1_intro_experiment/phi_over_t_option6_4.png"
+        }
     ],
-    correctAnswers: ['answer3', 'answer4', 'answer6'],
-    containerId: 'question6-container',
-    successMessage: `Sehr gut! Das gedämpfte Schwungrad schwingt mit einer festen Frequenz und hat eine abnehmende Amplitude. Das war ein guter Start.`,
-    incompleteMessage: `✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.`,
-    incorrectMessage: `✗ Einige der von die ausgewählten Bewegungsformen entsprechen nicht dem, was man aus einem Experiment erwarten würde.`
+    "correctAnswers": [
+        "answer4"
+    ],
+    "containerId": "question6-container",
+    "successMessage": "Beim Loslassen aus der Ruhe ist die Anfangssteigung null. Im linearen Schwingfall bleibt die Periodendauer bei fester Dämpfung konstant, während die Amplitude abnimmt.",
+    "incompleteMessage": "Vergleichen Sie Anfangswert, Anfangssteigung, Amplitudenentwicklung und Abstände aufeinanderfolgender Maxima.",
+    "incorrectMessage": "Vergleichen Sie Anfangswert, Anfangssteigung, Amplitudenentwicklung und Abstände aufeinanderfolgender Maxima.",
+    "answerFeedback": {
+        "answer1": {
+            "conceptId": "initial-value",
+            "order": 1,
+            "message": "Vergleichen Sie den Wert am linken Rand mit der vorgegebenen Anfangsauslenkung.",
+            "paragraphId": "initial-state"
+        },
+        "answer2": {
+            "conceptId": "constant-period",
+            "order": 3,
+            "message": "Vergleichen Sie die Abstände aufeinanderfolgender Maxima bei zeitlich konstanten Modellparametern.",
+            "paragraphId": "period"
+        },
+        "answer3": {
+            "conceptId": "initial-slope",
+            "order": 2,
+            "message": "Beim Loslassen aus der Ruhe gilt $\\dot{\\varphi}(0)=0$. Die Kurve muss deshalb am linken Rand eine waagerechte Tangente besitzen. Prüfen Sie, ob die dargestellte Auslenkung zunächst waagerecht startet oder bereits mit deutlich negativer Steigung abnimmt.",
+            "paragraphId": "initial-state"
+        },
+        "answer6": {
+            "conceptId": "initial-slope",
+            "order": 2,
+            "message": "Beim Loslassen aus der Ruhe gilt $\\dot{\\varphi}(0)=0$. Die Kurve muss deshalb am linken Rand eine waagerechte Tangente besitzen. Prüfen Sie, ob die dargestellte Auslenkung zunächst waagerecht startet oder bereits mit deutlich negativer Steigung abnimmt.",
+            "paragraphId": "initial-state"
+        },
+        "answer4": [
+            {
+                "conceptId": "initial-value",
+                "order": 1,
+                "message": "Vergleichen Sie den Wert am linken Rand mit der vorgegebenen Anfangsauslenkung.",
+                "paragraphId": "initial-state"
+            },
+            {
+                "conceptId": "initial-slope",
+                "order": 2,
+                "message": "Beim Loslassen aus der Ruhe gilt $\\dot{\\varphi}(0)=0$. Die Kurve muss deshalb am linken Rand eine waagerechte Tangente besitzen. Prüfen Sie, ob die dargestellte Auslenkung zunächst waagerecht startet oder bereits mit deutlich negativer Steigung abnimmt.",
+                "paragraphId": "initial-state"
+            },
+            {
+                "conceptId": "constant-period",
+                "order": 3,
+                "message": "Vergleichen Sie die Abstände aufeinanderfolgender Maxima bei zeitlich konstanten Modellparametern.",
+                "paragraphId": "period"
+            },
+            {
+                "conceptId": "mechanical-energy",
+                "order": 4,
+                "message": "Ohne Antrieb kann die mechanische Energie bei positiver Dämpfung nicht zunehmen. Prüfen Sie damit, ob die Spitzenwerte der Auslenkung wachsen können.",
+                "paragraphId": "energy"
+            }
+        ],
+        "answer5": {
+            "conceptId": "mechanical-energy",
+            "order": 4,
+            "message": "Ohne Antrieb kann die mechanische Energie bei positiver Dämpfung nicht zunehmen. Prüfen Sie damit, ob die Spitzenwerte der Auslenkung wachsen können.",
+            "paragraphId": "energy"
+        }
+    }
 };

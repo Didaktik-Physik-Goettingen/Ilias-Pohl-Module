@@ -26,6 +26,11 @@ export const introExpText2a = `
     Die Feder und das Schwungrad sind im Mittelpunkt des Rades miteinander verbunden.
     Am anderen Ende ist die Feder über den Anreger mit dem Schrittmotor verbunden.
     Ohne externen Antrieb dient der Anreger als fester Ankerpunkt der Feder (vergleichbar zu dem Aufhängungspunkt einer "klassischen" Feder).
+    <br><br>
+    Für Ableitungen nach der Zeit verwenden wir die
+    <a data-glossary="newton-notation" class="glossary-link"><strong>Newtonsche Notation</strong></a>:
+    Ein Punkt über einer Größe bezeichnet ihre erste, zwei Punkte ihre zweite Zeitableitung,
+    zum Beispiel $\\dot{\\varphi}$ für die Winkelgeschwindigkeit und $\\ddot{\\varphi}$ für die Winkelbeschleunigung.
 `;
 
 export const introExpText3a = `
@@ -40,13 +45,13 @@ export const introExpText3a = `
     wodurch auf das Schwungrad das
     <a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>
     $\\vec{M}_{zm} = \\vec{r} \\times \\vec{F}_{zm}$, bzw.
-    $|\\vec{M}_{zm}| = m_{zm}gR\\sin(\\varphi)$ wirkt.
+    $|\\vec{M}_{zm}| = m_{zm}gR|\\sin\\varphi|$ wirkt. Hier bezeichnet $R$ den radialen Abstand des Aufhängepunkts von der Drehachse. In der Skizze ist $\\varphi$ der Winkel dieses Radius zur nach oben gerichteten Vertikalen. Der senkrechte Hebelarm der vertikalen Gewichtskraft ist daher $R_\\perp=R|\\sin\\varphi|$, nicht $R$ selbst.
     <br><br>
     Im stationären Fall gleichen sich das zusätzliche
     <a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>
     und das rücktreibende
     <a data-glossary="angular-momentum" class="glossary-link">Drehmoment</a>  der
-    Feder aus: $(M_{\\text{Feder}} = -D\\varphi)$.
+    Feder aus. Für die Feder gilt $M_{\\text{Feder}}=-D\\varphi$; für die gezeigte positive Gleichgewichtsauslenkung folgt $D\\varphi=m_{zm}gR\\sin\\varphi$. Winkel werden dabei im Bogenmaß eingesetzt.
 `;
 
 export const introExpText3b = `
@@ -58,3 +63,7 @@ export const introExpText3b = `
     Daher setzen Sie sich auf den folgenden Seiten zunächst mit der Dynamik des gedämpften Systems auseinander,
     bevor Sie sich mit der Auswirkung des externen Motors beschäftigen.
 `;
+
+export const wheelPrerequisite = "Das Schwungrad bildet den trägen Teil des Systems. Seine Masseverteilung bestimmt das Trägheitsmoment und beeinflusst damit die Eigenfrequenz. Ob die Bewegung harmonisch ist, hängt dagegen davon ab, ob das rückstellende Drehmoment proportional zur Auslenkung ist.";
+
+export const eddyCurrentPrerequisite = "Bewegt sich ein elektrisch leitender Körper durch ein Magnetfeld, können im Material Wirbelströme entstehen. Ihre magnetische Wirkung bremst die Bewegung. Bei einem ruhenden Rad entstehen durch diese Bewegung keine Wirbelströme.";

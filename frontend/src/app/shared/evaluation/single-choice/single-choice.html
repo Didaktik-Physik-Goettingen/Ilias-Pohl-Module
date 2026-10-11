@@ -9,7 +9,8 @@
                         type="radio"
                         [name]="containerId"
                         [value]="option.value"
-                        [disabled]="isCorrect">
+                        [disabled]="isCorrect"
+                        (change)="selectionChanged(option.value)">
                     <span>{{ option.label }}</span>
                 </label>
             }

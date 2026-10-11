@@ -5,7 +5,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { ShuffleOrder } from '../../../core/services/shuffle-order';
 import { isSolutionsMode } from '../../../core/services/report-mode';
-import { QuestionOption } from '../question.types';
+import { AnswerFeedback, QuestionOption } from '../question.types';
+import { buildSelectionErrorMessage } from '../multiple-choice-feedback';
 
 
 
@@ -38,9 +39,10 @@ export class MultipleChoiceImage implements OnInit {
     
     // Custom messages
     @Input() successMessage?: string;
-    @Input() emptySelectionMessage?: string = '✗ Bitte wählen Sie mindestens eine Antwort aus.';
-    @Input() incompleteMessage?: string = '✗ Das ist noch nicht ganz richtig - einige Elemente fehlen noch.';
-    @Input() incorrectMessage?: string = '✗ Das ist noch nicht ganz richtig - einige Ihrer Antworten sind falsch.';
+    @Input() emptySelectionMessage?: string = 'Bitte wählen Sie mindestens eine Antwort aus.';
+    @Input() incompleteMessage?: string = 'Prüfen Sie Ihre Auswahl anhand der Aufgabenstellung.';
+    @Input() incorrectMessage?: string = 'Prüfen Sie Ihre Auswahl anhand der Aufgabenstellung.';
+    @Input() answerFeedback?: AnswerFeedback;
     
     @Output() onCorrectAnswer = new EventEmitter<void>();
     @Output() onAnswerEvaluated = new EventEmitter<boolean>();
@@ -75,9 +77,8 @@ export class MultipleChoiceImage implements OnInit {
         this.isCorrect = true;
         this.showResult = true;
         this.selectedValues = new Set(this.correctAnswers);
-        this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.successMessage || '✓ Richtig!');
+        this.updateResultMessage(this.correctAnswers, true);
         setTimeout(() => {
-            this.restoreSelectedAnswers(this.correctAnswers);
             this.renderMath();
         }, 100);
         this.onAnswerEvaluated.emit(true);
@@ -86,46 +87,25 @@ export class MultipleChoiceImage implements OnInit {
 
     private restorePreviousAnswer() {
         const previousResult = this.trackingService.getQuestionResult(this.questionId);
-        
-        if (previousResult && previousResult.isCorrect) {
-            // Question was answered correctly before - restore state
-            this.isCorrect = true;
-            this.showResult = true;
-            
-            // Restore selected images
-            this.selectedValues = new Set(previousResult.selectedAnswers);
-            
-            // Restore success message
-            const message = this.successMessage || '✓ Richtig!';
-            this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(message);
-
-            // Restore selected checkboxes after DOM is ready
-            setTimeout(() => {
-                this.restoreSelectedAnswers(previousResult.selectedAnswers);
-                this.renderMath();
-            }, 100);
-            
-            // Notify parent that this question is already complete
-            this.onAnswerEvaluated.emit(true);
-        }
+        if (!previousResult) return;
+        const selected = previousResult.selectedAnswers;
+        this.selectedValues = new Set(selected);
+        const allCorrectSelected = this.correctAnswers.every(answer => this.selectedValues.has(answer));
+        this.isCorrect = selected.length > 0 && allCorrectSelected
+            && selected.every(answer => this.correctAnswers.includes(answer));
+        this.showResult = true;
+        this.updateResultMessage(selected, allCorrectSelected);
+        setTimeout(() => this.renderMath(), 100);
+        this.onAnswerEvaluated.emit(this.isCorrect);
     }
 
-
-    private restoreSelectedAnswers(selectedAnswers: string[]) {
-        const checkboxes = document.querySelectorAll(
-            `.${this.containerId} input[type="checkbox"]`
-        );
-        
-        checkboxes.forEach((checkbox: any) => {
-            if (selectedAnswers.includes(checkbox.value)) {
-                checkbox.checked = true;
-            }
-        });
-    }
 
     toggleSelection(value: string) {
         if (this.isCorrect) return; // Disable if already correct
         
+        this.showResult = false;
+        this.resultMessage = '';
+
         if (this.selectedValues.has(value)) {
             this.selectedValues.delete(value);
         } else {
@@ -140,16 +120,7 @@ export class MultipleChoiceImage implements OnInit {
 
 
     evaluateAnswer() {
-        const checkboxes = document.querySelectorAll(
-            `.${this.containerId} input[type="checkbox"]`
-        );
-        const selectedAnswers: string[] = [];
-
-        checkboxes.forEach((checkbox: any) => {
-            if (checkbox.checked) {
-                selectedAnswers.push(checkbox.value);
-            }
-        });
+        const selectedAnswers = Array.from(this.selectedValues);
 
         const allCorrectSelected = this.correctAnswers.every(answer =>
             selectedAnswers.includes(answer)
@@ -188,16 +159,28 @@ export class MultipleChoiceImage implements OnInit {
 
     updateResultMessage(selectedAnswers: string[], allCorrectSelected: boolean) {
         if (this.isCorrect) {
-            const message = this.successMessage || '✓ Richtig!';
+            const message = buildSelectionErrorMessage(
+                selectedAnswers,
+                this.correctAnswers,
+                this.successMessage || '✓ Richtig!'
+            );
             this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(message);
         } else {
+            let statusMessage: string;
             if (selectedAnswers.length === 0) {
-                this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.emptySelectionMessage!);
+                statusMessage = this.emptySelectionMessage!;
             } else if (!allCorrectSelected) {
-                this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.incompleteMessage!);
+                statusMessage = this.incompleteMessage!;
             } else {
-                this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(this.incorrectMessage!);
+                statusMessage = this.incorrectMessage!;
             }
+            const message = buildSelectionErrorMessage(
+                selectedAnswers,
+                this.correctAnswers,
+                statusMessage,
+                this.answerFeedback
+            );
+            this.resultMessage = this.sanitizer.bypassSecurityTrustHtml(message);
         }
     }
 
