@@ -1,105 +1,193 @@
-.home-intro {
-    font-size: 1.05rem;
-    /* max-width: 60rem; */
-}
-
-.home-paths-title {
-    margin-top: 2rem;
-    text-align: center;
-}
-
-/* ── Two path cards ──────────────────────────────────────────────────────── */
-.home-paths {
-    --path-accent: var(--uni-blau-3);
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 2rem;
-    margin: 3.5rem 0 3rem;
-}
-
-.path-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-top: 6px solid var(--path-accent);
-    border-radius: 10px;
-    box-shadow: 0 2px 12px var(--shadow-color);
-    overflow: hidden;
-    text-align: left;
-}
-
-.path-card--exp  { --path-accent: var(--physik-gelb); }
-.path-card--theo { --path-accent: var(--uni-blau-3); }
-
-.path-card-img {
+/* h1 {
+    font-size: 2rem;
+    color: var(--uni-blau-1);
+    padding-bottom: 0.25rem;
+    border-bottom: 3px solid var(--uni-blau-4);
+    margin-bottom: 1.5rem;
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: center 60%;
-}
-
-.path-card-body {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    padding: 1.25rem 1.5rem 1.5rem;
-}
-
-.path-card-title {
-    margin: 0;
-    line-height: 1.3;
-    font-size: 1.35rem;
-    color: var(--text-primary);
-}
-
-.path-card-focus {
-    margin: 0.25rem 0 0.75rem;
-    font-style: italic;
-    color: var(--text-secondary);
-}
-
-.path-card-steps {
-    margin: 0 0 1.25rem;
-    padding-left: 1.4rem;
-    line-height: 1.8;
-}
-
-.path-card-steps li::marker {
-    color: var(--path-accent);
-    font-weight: 700;
-}
-
-/* push the button to the card bottom so both buttons line up */
-.path-card-btn,
-.path-card-btn:hover {
-    margin-top: auto;
-    width: 100%;
-    border: 3px solid var(--path-accent);
-}
-
-/* ── Shared core + goal ──────────────────────────────────────────────────── */
-.home-shared,
-.home-goal {
-    text-align: center;
-    margin: 0.5rem auto;
-    max-width: 60rem;
-}
-
-.home-goal {
-    margin-bottom: 2rem;
-    color: var(--text-secondary);
-}
-
-/* .home-goal::before {
-    content: '↓ ';
 } */
 
-@media (max-width: 900px) {
-    .home-paths {
-        grid-template-columns: minmax(0, 1fr);
-        max-width: 480px;
-        margin-inline: auto;
+.learning-map {
+    margin: 2.5rem 0;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.learning-map-heading {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: flex-end;
+    column-gap: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.learning-map-heading > div {
+    display: contents;
+}
+
+.learning-map-heading h2 {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0 0 0.35rem;
+}
+
+.learning-map-heading p {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin: 0;
+    text-align: justify;
+}
+
+.learning-map-link {
+    grid-column: 2;
+    grid-row: 1;
+    flex: 0 0 auto;
+    font-weight: 600;
+}
+
+.learning-map-image-link {
+    display: block;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: #fbfbf9;
+    box-shadow: 0 2px 12px var(--shadow-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.learning-map-image-link:hover {
+    border-bottom: 1px solid var(--border-color);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px var(--shadow-color);
+}
+
+.learning-map-image-link:focus-visible {
+    outline: 3px solid var(--sky-blue);
+    outline-offset: 3px;
+}
+
+.learning-map-image {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+/* container for image buttons */
+.image-button-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;  /* Wraps on smaller screens */
+}
+
+/* individual image button */
+.image-button {
+    position: relative;
+    justify-content: space-between;
+    flex: 1;
+    aspect-ratio: 1 / 1;
+    display: block;
+    overflow: hidden;
+    border-radius: 12px;
+    /* box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2); */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.image-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* hover effect - lift button */
+/* .image-button:hover {
+    /* transform: translateY(-5px); */
+    /* box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+} */
+
+/* Overlay - hidden by default */
+.image-button-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+/* Show overlay on hover */
+.image-button:hover .image-button-overlay {
+    opacity: 1;
+}
+
+/* Text styling in overlay */
+.image-button-overlay span {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--uni-blau-2);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* Responsive - smaller screens */
+@media (max-width: 1600px) {
+    .image-button {
+        width: 400px;
+        height: 400px;
+    }
+}
+
+@media (max-width: 1280px) {
+    .image-button {
+        width: 400px;
+        height: 400px;
+    }
+    
+    .image-button-overlay span {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .learning-map-heading {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .learning-map-heading h2 {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .learning-map-heading p {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .learning-map-link {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .image-button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .image-button {
+        width: 100%;
+        max-width: 600px;
+        height: 600px;
     }
 }
