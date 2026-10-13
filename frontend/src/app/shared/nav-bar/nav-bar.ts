@@ -16,15 +16,13 @@ interface SubpageItem {
 interface SegmentDef {
     id: string;
     label: string;
-    strand: 'e' | 't';
     subpages: SubpageItem[];
-    conditional?: boolean;
 }
 
 
 const E_SEGMENTS: SegmentDef[] = [
     {
-        id: 'e1-intro', label: '1. Einstieg Versuchaufbau', strand: 'e',
+        id: 'e1-intro', label: '1. Einstieg Versuchaufbau',
         subpages: [
             { label: '(1/4) - Einführung', route: '/learning/e1-intro-experiment', queryParams: { page: '1', path: 'learn' } },
             { label: '(2/4) - Komponenten', route: '/learning/e1-intro-experiment', queryParams: { page: '2', path: 'learn' } },
@@ -33,7 +31,7 @@ const E_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 'e2-damped', label: '2. Gedämpfte Schwingungen', strand: 'e',
+        id: 'e2-damped', label: '2. Gedämpfte Schwingungen',
         subpages: [
             { label: '(1/3) - Grundlagen', route: '/learning/e2-damped-oscillations', queryParams: { page: '1', path: 'learn' } },
             { label: '(2/3) - Lösung der Differentialgleichung', route: '/learning/e2-damped-oscillations', queryParams: { page: '2', path: 'learn' } },
@@ -43,7 +41,7 @@ const E_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 'e3-driven', label: '3. Getriebene Schwingungen', strand: 'e',
+        id: 'e3-driven', label: '3. Getriebene Schwingungen',
         subpages: [
             { label: '(1/7) - Versuchsaufbau', route: '/learning/e3-driven-oscillations', queryParams: { page: '1', path: 'learn' } },
             { label: '(2/7) - Lösungsansatz', route: '/learning/e3-driven-oscillations', queryParams: { page: '2', path: 'learn' } },
@@ -60,13 +58,13 @@ const E_SEGMENTS: SegmentDef[] = [
 
 const T_SEGMENTS: SegmentDef[] = [
     {
-        id: 't1-intro', label: '1. Einstieg Theorie', strand: 't',
+        id: 't1-intro', label: '1. Einstieg Theorie',
         subpages: [
             { label: '(1/1) - Grundlagen', route: '/learning/t1-intro-theory' },
         ]
     },
     {
-        id: 't2-free', label: '2. Freie Schwingungen', strand: 't',
+        id: 't2-free', label: '2. Freie Schwingungen',
         subpages: [
             { label: '(1/2) - Differentialgleichung und Lösungsansatz', route: '/learning/t2-free-oscillations', queryParams: { page: '1' } },
             { label: '(2/2) - Phasenraum', route: '/learning/t2-free-oscillations', queryParams: { page: '2' } },
@@ -74,7 +72,7 @@ const T_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 't3-damped', label: '3. Gedämpfte Schwingungen', strand: 't',
+        id: 't3-damped', label: '3. Gedämpfte Schwingungen',
         subpages: [
             { label: '(1/5) - Exponentialansatz', route: '/learning/t3-damped-oscillations', queryParams: { page: '1', path: 'learn' } },
             { label: '(2/5) - Schwingfall', route: '/learning/t3-damped-oscillations', queryParams: { page: '2', path: 'learn' } },
@@ -86,7 +84,7 @@ const T_SEGMENTS: SegmentDef[] = [
         ]
     },
     {
-        id: 't4-driven', label: '4. Getriebene Schwingungen', strand: 't',
+        id: 't4-driven', label: '4. Getriebene Schwingungen',
         subpages: [
             { label: '(1/8) - Differentialgleichung', route: '/learning/t4-driven-oscillations', queryParams: { page: '1', path: 'learn' } },
             { label: '(2/8) - Gesamtlösung', route: '/learning/t4-driven-oscillations', queryParams: { page: '2', path: 'learn' } },
@@ -100,23 +98,27 @@ const T_SEGMENTS: SegmentDef[] = [
             { label: 'Test', route: '/test/test-t-driven', queryParams: { path: 'test' } },
         ]
     },
+];
+
+// Optional deep dives — reachable from both strands, shown as their own group.
+const OPTIONAL_SEGMENTS: SegmentDef[] = [
     {
-        id: 't-chaos', label: 'Chaos', strand: 't', conditional: true,
+        id: 'opt-chaos', label: 'Chaos',
         subpages: [
-            { label: '(1/2) - Nichtlineares Pendel', route: '/learning/t-chaos', queryParams: { page: '1', path: 'learn' } },
-            { label: '(2/2) - Bewegungsgleichung', route: '/learning/t-chaos', queryParams: { page: '2', path: 'learn' } },
+            { label: '(1/2) - Nichtlineares Pendel', route: '/learning/opt-chaos', queryParams: { page: '1', path: 'learn' } },
+            { label: '(2/2) - Bewegungsgleichung', route: '/learning/opt-chaos', queryParams: { page: '2', path: 'learn' } },
         ]
     },
     {
-        id: 't-simulation', label: 'Simulation', strand: 't', conditional: true,
+        id: 'opt-simulation', label: 'Simulation',
         subpages: [
-            { label: '(1/1) - Numerische Methoden', route: '/learning/t-simulation' },
+            { label: '(1/1) - Numerische Methoden', route: '/learning/opt-simulation' },
         ]
     },
     {
-        id: 't-setup', label: 'Aufbau', strand: 't', conditional: true,
+        id: 'opt-setup', label: 'Aufbau',
         subpages: [
-            { label: '(1/1) Versuchsaufbau', route: '/learning/t-setup' },
+            { label: '(1/1) Versuchsaufbau', route: '/learning/opt-setup' },
         ]
     },
 ];
@@ -132,16 +134,15 @@ const T_SEGMENTS: SegmentDef[] = [
 export class NavBar implements OnInit, OnDestroy {
     activeSegment: string | null = null;
     chosenStrand: 'e' | 't' | null = null;
-    visitedConditionalT: Set<string> = new Set();
     private segmentFlow: Map<string, 'learn' | 'sim' | 'test'> = new Map();
     private previousUrl: string = '';
 
     readonly eSegments = E_SEGMENTS;
     readonly tSegments = T_SEGMENTS;
+    readonly optionalSegments = OPTIONAL_SEGMENTS;
 
     private routerSub: Subscription | null = null;
     private readonly STRAND_KEY = 'nav-chosen-strand';
-    private readonly VISITED_CONDITIONAL_KEY = 'nav-visited-conditional-t';
 
     constructor(
         public router: Router,
@@ -154,11 +155,6 @@ export class NavBar implements OnInit, OnDestroy {
         if (isPlatformBrowser(this.platformId)) {
             const strand = localStorage.getItem(this.STRAND_KEY);
             if (strand === 'e' || strand === 't') this.chosenStrand = strand;
-
-            try {
-                const visited = localStorage.getItem(this.VISITED_CONDITIONAL_KEY);
-                if (visited) JSON.parse(visited).forEach((id: string) => this.visitedConditionalT.add(id));
-            } catch {}
         }
 
         this.updateFromUrl(this.router.url);
@@ -224,9 +220,9 @@ export class NavBar implements OnInit, OnDestroy {
         if (path.startsWith('/learning/t4') || path === '/decision/dec-t-driven' ||
             path === '/test/test-t-driven' || path === '/simulation/sim-t-driven' ||
             path === '/simulation/sim-t-driven-advanced') return 't4-driven';
-        if (path.startsWith('/learning/t-chaos')) return 't-chaos';
-        if (path.startsWith('/learning/t-simulation')) return 't-simulation';
-        if (path.startsWith('/learning/t-setup')) return 't-setup';
+        if (path.startsWith('/learning/opt-chaos')) return 'opt-chaos';
+        if (path.startsWith('/learning/opt-simulation')) return 'opt-simulation';
+        if (path.startsWith('/learning/opt-setup')) return 'opt-setup';
         if (path.startsWith('/target/')) return 'anleitung';
         return null;
     }
@@ -253,10 +249,13 @@ export class NavBar implements OnInit, OnDestroy {
         return seg.subpages.filter(s => s.queryParams?.['path'] !== 'test');
     }
 
-    isSegmentVisible(seg: SegmentDef): boolean {
-        if (!seg.conditional) return true;
-        if (this.devMode.isEnabled) return true;
-        return this.activeSegment === seg.id;
+    // outside dev mode an optional segment (and its group headline) only shows while it is open
+    isOptionalVisible(seg: SegmentDef): boolean {
+        return this.devMode.isEnabled || this.activeSegment === seg.id;
+    }
+
+    get hasVisibleOptional(): boolean {
+        return this.optionalSegments.some(seg => this.isOptionalVisible(seg));
     }
 
     getSegmentClass(seg: SegmentDef): Record<string, boolean> {
@@ -292,9 +291,7 @@ export class NavBar implements OnInit, OnDestroy {
 
     switchStrand(strand: 'e' | 't') {
         if (!this.devMode.isEnabled) return;
-        const segments = strand === 'e'
-            ? this.eSegments
-            : this.tSegments.filter(s => this.isSegmentVisible(s));
+        const segments = strand === 'e' ? this.eSegments : this.tSegments;
         const firstSub = segments[0]?.subpages[0];
         if (firstSub) this.navigateToSubpage(firstSub);
     }

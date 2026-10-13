@@ -103,6 +103,6 @@ export class TarSimulation implements OnInit {
 
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.router.navigate(['/learning/t-setup'], { queryParams: { next: 'simulation' } });
+        this.router.navigate(['/learning/opt-setup'], { queryParams: { next: 'simulation' } });
     }
 }

@@ -107,6 +107,6 @@ export class TarTheory implements OnInit {
 
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.router.navigate(['/learning/t-setup']);
+        this.router.navigate(['/learning/opt-setup']);
     }
 }

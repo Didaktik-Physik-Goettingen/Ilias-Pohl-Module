@@ -29,9 +29,9 @@ import { T1IntroTheory } from './features/learning_features/t1-intro-theory/t1-i
 import { T2FreeOscillations } from './features/learning_features/t2-free-oscillations/t2-free-oscillations';
 import { T3DampedOscillations } from './features/learning_features/t3-damped-oscillations/t3-damped-oscillations';
 import { T4DrivenOscillations } from './features/learning_features/t4-driven-oscillations/t4-driven-oscillations';
-import { TChaos } from './features/learning_features/t-chaos/t-chaos';
-import { TSimulation } from './features/learning_features/t-simulation/t-simulation';
-import { TSetup } from './features/learning_features/t-setup/t-setup';
+import { OptChaos } from './features/learning_features/opt-chaos/opt-chaos';
+import { OptSimulation } from './features/learning_features/opt-simulation/opt-simulation';
+import { OptSetup } from './features/learning_features/opt-setup/opt-setup';
 
 // decision features
 import { DecEDampedOscillations } from './features/decision_features/dec-e-damped-oscillations/dec-e-damped-oscillations';
@@ -88,9 +88,9 @@ export const routes: Routes = [
     { path: 'learning/t2-free-oscillations',   component: T2FreeOscillations,   title: 'Theorie: Freie Schwingung' },
     { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
     { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },
-    { path: 'learning/t-chaos',               component: TChaos,               title: 'Grundlagen nichtlineare Schwingung und Chaos' },
-    { path: 'learning/t-simulation',           component: TSimulation,               title: 'Grundbausteine Simulation' },
-    { path: 'learning/t-setup',               component: TSetup,               title: 'Versuchsaufbau: Der Pohlsche Resonator' },
+    { path: 'learning/opt-chaos',             component: OptChaos,             title: 'Grundlagen nichtlineare Schwingung und Chaos' },
+    { path: 'learning/opt-simulation',        component: OptSimulation,        title: 'Grundbausteine Simulation' },
+    { path: 'learning/opt-setup',             component: OptSetup,             title: 'Versuchsaufbau: Der Pohlsche Resonator' },
 
 
     // decision pages

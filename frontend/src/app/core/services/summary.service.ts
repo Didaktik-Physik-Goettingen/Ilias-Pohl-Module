@@ -66,9 +66,13 @@ export class SummaryService {
         't3-damped-oscillations-module':        '[T-3] Gedämpfte Schwingungen',
         't4-driven-oscillations-module':        '[T-4] Getriebene Schwingungen',
 
-        't-setup-module':                       '[T] Versuchsaufbau',
-        't-simulation-module':                  '[T] Simulation',
-        't-chaos-module':                       '[T] Chaos',
+        'opt-setup-module':                     '[Opt] Versuchsaufbau',
+        'opt-simulation-module':                '[Opt] Simulation',
+        'opt-chaos-module':                     '[Opt] Chaos',
+        // pre-rename IDs, still present in progress saved before the opt-* rename
+        't-setup-module':                       '[Opt] Versuchsaufbau',
+        't-simulation-module':                  '[Opt] Simulation',
+        't-chaos-module':                       '[Opt] Chaos',
 
     };
 
@@ -103,9 +107,13 @@ export class SummaryService {
         '/learning/t2-free-oscillations':                               '[T-2] Freie Schwingungen',
         '/learning/t3-damped-oscillations':                             '[T-3] Gedämpfte Schwingungen',
         '/learning/t4-driven-oscillations':                             '[T-4] Getriebene Schwingungen',
-        '/learning/t-chaos':                                            '[T] Chaos',
-        '/learning/t-simulation':                                       '[T] Simulation',
-        '/learning/t-setup':                                            '[T] Versuchsaufbau',
+        '/learning/opt-chaos':                                          '[Opt] Chaos',
+        '/learning/opt-simulation':                                     '[Opt] Simulation',
+        '/learning/opt-setup':                                          '[Opt] Versuchsaufbau',
+        // pre-rename routes, still present in page visits saved before the opt-* rename
+        '/learning/t-chaos':                                            '[Opt] Chaos',
+        '/learning/t-simulation':                                       '[Opt] Simulation',
+        '/learning/t-setup':                                            '[Opt] Versuchsaufbau',
 
         '/decision/dec-e-damped':                                       '[E-Dec] Entscheidung: Gedämpfte Schwingungen',
         '/decision/dec-e-driven':                                       '[E-Dec] Entscheidung: Getriebene Schwingungen',

@@ -8,6 +8,7 @@
         <button class="nav-endpoint-btn"
             [class.nav-endpoint-active]="activeSegment === 'home'"
             [class.nav-endpoint-btn-dev]="devMode.isEnabled"
+            [class.nav-endpoint-dev]="isAnleitungClickable"
             (click)="goHome()">
             Startseite
         </button>
@@ -16,6 +17,7 @@
         <button class="nav-endpoint-btn"
             [class.nav-endpoint-active]="activeSegment === 'glossary'"
             [class.nav-endpoint-btn-dev]="devMode.isEnabled"
+            [class.nav-endpoint-dev]="isAnleitungClickable"
             (click)="goGlossary()">
             Glossar
         </button>   
@@ -44,58 +46,28 @@
 
             <!-- Active strand segments only -->
             <div class="strand-col">
-                @if (chosenStrand === 'e') {
-                    @for (seg of eSegments; track seg.id) {
-                        <button class="seg-btn"
-                            [class.seg-btn-dev]="devMode.isEnabled"
-                            [ngClass]="getSegmentClass(seg)"
-                            (click)="onSegmentClick(seg)">
-                            {{ seg.label }}
-                        </button>
-                        @if (activeSegment === seg.id && (devMode.isEnabled || !isOnDecisionPage)) {
-                            <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
-                                @for (sub of getVisibleSubpages(seg); track sub.route + (sub.queryParams?.['page'] ?? '')) {
-                                    <button class="sub-btn"
-                                        [class.sub-btn-dev]="devMode.isEnabled"
-                                        [class.sub-btn-active]="isSubpageActive(sub)"
-                                        (click)="navigateToSubpage(sub)">
-                                        {{ sub.label }}
-                                    </button>
-                                }
-                            </div>
-                        }
-                    }
-                }
-                @if (chosenStrand === 't') {
-                    @for (seg of tSegments; track seg.id) {
-                        @if (isSegmentVisible(seg)) {
-                            <button class="seg-btn"
-                                [class.seg-btn-dev]="devMode.isEnabled"
-                                [ngClass]="getSegmentClass(seg)"
-                                (click)="onSegmentClick(seg)">
-                                {{ seg.label }}
-                            </button>
-                            @if (activeSegment === seg.id && (devMode.isEnabled || !isOnDecisionPage)) {
-                                <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
-                                    @for (sub of getVisibleSubpages(seg); track sub.route + (sub.queryParams?.['page'] ?? '')) {
-                                        <button class="sub-btn"
-                                            [class.sub-btn-dev]="devMode.isEnabled"
-                                            [class.sub-btn-active]="isSubpageActive(sub)"
-                                            (click)="navigateToSubpage(sub)">
-                                            {{ sub.label }}
-                                        </button>
-                                    }
-                                </div>
-                            }
-                        }
-                    }
+                @for (seg of (chosenStrand === 't' ? tSegments : chosenStrand === 'e' ? eSegments : []); track seg.id) {
+                    <ng-container *ngTemplateOutlet="segmentBlock; context: { $implicit: seg }"></ng-container>
                 }
             </div>
+
+            <!-- Optional deep dives: shared by both strands; outside dev mode only while one is open -->
+            @if (hasVisibleOptional) {
+                <div class="seg-group-title">Optionale Vertiefungen</div>
+                <div class="strand-col">
+                    @for (seg of optionalSegments; track seg.id) {
+                        @if (isOptionalVisible(seg)) {
+                            <ng-container *ngTemplateOutlet="segmentBlock; context: { $implicit: seg }"></ng-container>
+                        }
+                    }
+                </div>
+            }
         </div>
 
         <!-- Anleitung -->
         <button class="nav-endpoint-btn"
             [class.nav-endpoint-active]="activeSegment === 'anleitung'"
+            [class.nav-endpoint-btn-dev]="devMode.isEnabled"
             [class.nav-endpoint-dev]="isAnleitungClickable"
             (click)="goAnleitung()">
             Anleitung
@@ -103,3 +75,24 @@
 
     </div>
 </nav>
+
+<ng-template #segmentBlock let-seg>
+    <button class="seg-btn"
+        [class.seg-btn-dev]="devMode.isEnabled"
+        [ngClass]="getSegmentClass(seg)"
+        (click)="onSegmentClick(seg)">
+        {{ seg.label }}
+    </button>
+    @if (activeSegment === seg.id && (devMode.isEnabled || !isOnDecisionPage)) {
+        <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
+            @for (sub of getVisibleSubpages(seg); track sub.route + (sub.queryParams?.['page'] ?? '')) {
+                <button class="sub-btn"
+                    [class.sub-btn-dev]="devMode.isEnabled"
+                    [class.sub-btn-active]="isSubpageActive(sub)"
+                    (click)="navigateToSubpage(sub)">
+                    {{ sub.label }}
+                </button>
+            }
+        </div>
+    }
+</ng-template>

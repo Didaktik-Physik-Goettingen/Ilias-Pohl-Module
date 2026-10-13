@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TSimulation } from './t-simulation';
+import { OptChaos } from './opt-chaos';
 
-describe('TSimulation', () => {
-  let component: TSimulation;
-  let fixture: ComponentFixture<TSimulation>;
+describe('OptChaos', () => {
+  let component: OptChaos;
+  let fixture: ComponentFixture<OptChaos>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TSimulation]
+      imports: [OptChaos]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TSimulation);
+    fixture = TestBed.createComponent(OptChaos);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

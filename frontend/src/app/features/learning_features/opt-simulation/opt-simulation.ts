@@ -5,19 +5,19 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
-import * as simContent from './t-simulation-content';
+import * as simContent from './opt-simulation-content';
 
 declare global {
     interface Window { MathJax: any; }
 }
 
 @Component({
-    selector: 'app-t-simulation',
+    selector: 'app-opt-simulation',
     imports: [CommonModule],
-    templateUrl: './t-simulation.html',
-    styleUrl: './t-simulation.css',
+    templateUrl: './opt-simulation.html',
+    styleUrl: './opt-simulation.css',
 })
-export class TSimulation implements OnInit, OnDestroy {
+export class OptSimulation implements OnInit, OnDestroy {
     simText1a!: SafeHtml;
     simText1b!: SafeHtml;
     simText1c!: SafeHtml;
@@ -34,7 +34,7 @@ export class TSimulation implements OnInit, OnDestroy {
     ) {}
 
     ngOnInit() {
-        this.trackingService.startModule('t-simulation-module');
+        this.trackingService.startModule('opt-simulation-module');
         this.simText1a = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1a);
         this.simText1b = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1b);
         this.simText1c = this.sanitizer.bypassSecurityTrustHtml(simContent.simText1c);
@@ -65,6 +65,6 @@ export class TSimulation implements OnInit, OnDestroy {
 
     goForward(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.router.navigate(['/learning/t-setup'], { queryParams: { next: 'simulation' } });
+        this.router.navigate(['/learning/opt-setup'], { queryParams: { next: 'simulation' } });
     }
 }

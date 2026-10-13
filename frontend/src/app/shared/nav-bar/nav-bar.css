@@ -127,6 +127,18 @@
     gap: 0.2rem;
 }
 
+/* headline separating the optional deep dives from the strand's main path */
+.seg-group-title {
+    margin-top: 1.25rem;
+    padding: 0.75rem 0.25rem 0.35rem;
+    border-top: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+
 /* ── Segment buttons ───────────────────────────────────────────────────── */
 .seg-btn {
     width: 100%;

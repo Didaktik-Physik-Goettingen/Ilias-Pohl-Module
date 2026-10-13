@@ -15,7 +15,7 @@ export class DecTDrivenOscillations implements OnInit {
     learningModuleLink = '/learning/t4-driven-oscillations';
     testLink = '/test/test-t-driven';
     simulationLink = '/simulation/sim-t-driven';
-    nextLink = '/learning/t-setup';
+    nextLink = '/learning/opt-setup';
     testDisabled = false;
     learningCompleted = false;
 
