@@ -9,12 +9,12 @@ declare global {
 }
 
 @Component({
-    selector: 'app-t-setup',
+    selector: 'app-opt-setup',
     imports: [CommonModule],
-    templateUrl: './t-setup.html',
-    styleUrl: './t-setup.css',
+    templateUrl: './opt-setup.html',
+    styleUrl: './opt-setup.css',
 })
-export class TSetup implements OnInit, OnDestroy {
+export class OptSetup implements OnInit, OnDestroy {
     private next = '';
 
     constructor(
@@ -26,7 +26,7 @@ export class TSetup implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.next = this.route.snapshot.queryParamMap.get('next') ?? '';
-        this.trackingService.startModule('t-setup-module');
+        this.trackingService.startModule('opt-setup-module');
     }
 
     ngOnDestroy() {
@@ -36,9 +36,9 @@ export class TSetup implements OnInit, OnDestroy {
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         if (this.next === 'chaos') {
-            this.router.navigate(['/learning/t-chaos'], { queryParams: { page: '2' } });
+            this.router.navigate(['/learning/opt-chaos'], { queryParams: { page: '2' } });
         } else if (this.next === 'simulation') {
-            this.router.navigate(['/learning/t-simulation']);
+            this.router.navigate(['/learning/opt-simulation']);
         } else {
             this.router.navigate(['/learning/t4-driven-oscillations'], { queryParams: { page: '8' } });
         }

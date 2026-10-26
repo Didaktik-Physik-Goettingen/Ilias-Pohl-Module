@@ -103,7 +103,7 @@ export class SimTDrivenPhiOscillations implements OnInit, AfterViewInit, OnDestr
     ngOnDestroy() { if (this.raf) cancelAnimationFrame(this.raf); }
 
     goBack()    { this.location.back(); }
-    goForward() { this.router.navigate(['/learning/t-setup']); }
+    goForward() { this.router.navigate(['/learning/opt-setup']); }
 
     renderMath() {
         if (isPlatformBrowser(this.platformId)) {

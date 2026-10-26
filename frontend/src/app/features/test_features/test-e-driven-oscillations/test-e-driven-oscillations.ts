@@ -56,9 +56,9 @@ export class TestEDrivenOscillations implements OnInit, OnDestroy {
             maxPercentage: 100,
             level: 'high' as const,
             message: `Sie haben ein gutes Grundlagenwissen zu getriebenen, gedämpften Schwingungen und können ihr Wissen nun mit
-            <a class="glossary-link" data-route="/learning/t-chaos"><b>chaotischem Verhalten</b></a> 
+            <a class="glossary-link" data-route="/learning/opt-chaos"><b>chaotischem Verhalten</b></a> 
             oder
-            <a class="glossary-link" data-route="/learning/t-simulation"><b>Python-Simulationen</b></a>
+            <a class="glossary-link" data-route="/learning/opt-simulation"><b>Python-Simulationen</b></a>
             erweitern oder direkt ihre <b>Versuchsanleitung bekommen.</b>.`,
             continueLink: '/target/tar-experiment',
             continueLinkText: 'Weiter zur Anleitung',

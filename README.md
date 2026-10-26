@@ -65,7 +65,6 @@ README.md
 │           │   app.routes.server.ts            // SSR render-mode per route (Prerender / Client)
 │           │
 │           └── core/
-│           │   │   print-mode.ts               // utility: isPrintMode() for print/PDF view gating
 │           │   └── services/                   // project-wide services
 │           │           theme.ts                // light / dark mode toggling
 │           │           session.ts              // session ID management + rogue user detection
@@ -158,8 +157,8 @@ The Angular app is also accessible directly at **`http://localhost:4200`** (rogu
 Pushing to `master` triggers `.github/workflows/deploy.yml` automatically:
 1. GitHub spins up an Ubuntu runner
 2. Installs Node, runs `npm ci`, builds the Angular app
-3. Patches `.htaccess` with the production `RewriteBase`
-4. Uploads via SFTP: Angular dist → `pohl/`, `api/` (excluding `config.php`), `ilias_bridge.html`, `.htaccess`
+3. Writes a production `.htaccess` (`RewriteBase /pohl/`) into the build output
+4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`, `api/` (excluding `config.php`), `ilias_bridge.html`
 
 **One-time setup** — add the following five secrets in GitHub → repo → Settings → Secrets and variables → Actions. Ask a maintainer for the values:
 `SFTP_HOST`, `SFTP_PORT`, `SFTP_USER`, `SFTP_PASS`, `SFTP_REMOTE_DIR`
@@ -265,7 +264,7 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 
   **Segment list:** only the segments of the active strand are rendered. Non-active segments show a hover highlight (visual feedback without navigation); the cursor distinguishes clickability — `cursor: pointer` in dev-mode, `cursor: default` otherwise. Clicking a non-active segment (dev-mode only) navigates to its first sub-page. The active segment expands a sub-page dropdown; sub-page buttons are always visible but only navigable in dev-mode. The active sub-page is highlighted using URL matching (`router.url` with `?page=` query param, defaulting to page 1 when the param is absent).
 
-  **Conditional segments** (`t-chaos`, `t-simulation`, `t-setup`) are hidden on the theory strand until the user has visited them at least once; the set of visited IDs is persisted in `localStorage`.
+  **Optional deep dives** (`opt-chaos`, `opt-simulation`, `opt-setup`) are reachable from both strands and rendered as a separate group under the headline *Optionale Vertiefungen*. Their segment IDs are strand-neutral, so opening one keeps the current strand selected. Outside dev-mode the group (and its headline) only appears while one of these pages is open; in dev-mode all three are always listed.
 
   **Startseite / Anleitung endpoints:** always rendered but only clickable (`cursor: pointer`, `goHome()` / `goAnleitung()` guards) in dev-mode, or when the user is already on the Anleitung page.
 
@@ -417,11 +416,11 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 
 </details>
 
-- **t-chaos** → `/learning/t-chaos` — Nichtlineare Schwingungen und Chaos (2 pages; no questions)
+- **opt-chaos** → `/learning/opt-chaos` — Nichtlineare Schwingungen und Chaos (2 pages; no questions)
 
-- **t-simulation** → `/learning/t-simulation` — Grundbausteine Simulation: DGLs numerisch lösen (single page; Jupyter Notebook download; no questions)
+- **opt-simulation** → `/learning/opt-simulation` — Grundbausteine Simulation: DGLs numerisch lösen (single page; Jupyter Notebook download; no questions)
 
-- **t-setup** → `/learning/t-setup` — Versuchsaufbau: Der Pohlsche Resonator (single page; shared intermediate stop for three paths — routes to `tar-theory`, `tar-chaos`, or `tar-simulation` depending on `?next=` query param)
+- **opt-setup** → `/learning/opt-setup` — Versuchsaufbau: Der Pohlsche Resonator (single page; shared intermediate stop for three paths — routes to `tar-theory`, `tar-chaos`, or `tar-simulation` depending on `?next=` query param)
 
 
 ### Decision Features

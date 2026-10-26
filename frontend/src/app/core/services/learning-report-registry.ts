@@ -5,8 +5,8 @@ import * as t1Content from '../../features/learning_features/t1-intro-theory/t1-
 import * as t2Content from '../../features/learning_features/t2-free-oscillations/t2-free-oscillations-content';
 import * as t3Content from '../../features/learning_features/t3-damped-oscillations/t3-damped-oscillations-content';
 import * as t4Content from '../../features/learning_features/t4-driven-oscillations/t4-driven-oscillations-content';
-import * as chaosContent from '../../features/learning_features/t-chaos/t-chaos-content';
-import * as simContent from '../../features/learning_features/t-simulation/t-simulation-content';
+import * as chaosContent from '../../features/learning_features/opt-chaos/opt-chaos-content';
+import * as simContent from '../../features/learning_features/opt-simulation/opt-simulation-content';
 
 export type TextStyle = 'normal' | 'lamp' | 'glossary';
 
@@ -410,7 +410,7 @@ export const PAGE_REGISTRY: PageDefinition[] = [
 
     // ── T-Chaos ───────────────────────────────────────────────────────────
     {
-        route: '/learning/t-chaos', page: 1,
+        route: '/learning/opt-chaos', page: 1,
         title: '[T] Chaos', subtitle: 'Nichtlineares Pendel',
         blocks: [
             { type: 'text',  html: chaosContent.chaosText1a },
@@ -421,7 +421,7 @@ export const PAGE_REGISTRY: PageDefinition[] = [
         ],
     },
     {
-        route: '/learning/t-chaos', page: 2,
+        route: '/learning/opt-chaos', page: 2,
         title: '[T] Chaos', subtitle: 'Bewegungsgleichung',
         blocks: [
             { type: 'text', html: chaosContent.chaosText2a },
@@ -432,7 +432,7 @@ export const PAGE_REGISTRY: PageDefinition[] = [
 
     // ── T-Simulation ──────────────────────────────────────────────────────
     {
-        route: '/learning/t-simulation', page: 1,
+        route: '/learning/opt-simulation', page: 1,
         title: '[T] Simulation', subtitle: 'Numerische Methoden',
         blocks: [
             { type: 'text', html: simContent.simText1a },

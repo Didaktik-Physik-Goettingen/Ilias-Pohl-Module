@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
-import * as chaosContent from './t-chaos-content';
+import * as chaosContent from './opt-chaos-content';
 
 declare global {
 	interface Window {
@@ -15,13 +15,13 @@ declare global {
 }
 
 @Component({
-  selector: 'app-t-chaos',
+  selector: 'app-opt-chaos',
   imports: [CommonModule],
-  templateUrl: './t-chaos.html',
-  styleUrl: './t-chaos.css',
+  templateUrl: './opt-chaos.html',
+  styleUrl: './opt-chaos.css',
 })
 
-export class TChaos implements OnInit, AfterViewInit, OnDestroy {
+export class OptChaos implements OnInit, AfterViewInit, OnDestroy {
     constructor(
 		private sanitizer: DomSanitizer,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -62,7 +62,7 @@ export class TChaos implements OnInit, AfterViewInit, OnDestroy {
       });
 
       // start tracking this module
-      this.trackingService.startModule('t-chaos-module');
+      this.trackingService.startModule('opt-chaos-module');
 
       // sanitized strings to enable LaTeX rendering
       this.chaosText1a = this.sanitizer.bypassSecurityTrustHtml(chaosContent.chaosText1a);
@@ -158,7 +158,7 @@ export class TChaos implements OnInit, AfterViewInit, OnDestroy {
             if (this.currentView === 'chaos_1') {
                 this.currentView = 'chaos_2';
             } else if (this.currentView === 'chaos_2') {
-                this.router.navigate(['/learning/t-setup'], { queryParams: { next: 'chaos' } });
+                this.router.navigate(['/learning/opt-setup'], { queryParams: { next: 'chaos' } });
                 return;
             }
             this.updateUrl();

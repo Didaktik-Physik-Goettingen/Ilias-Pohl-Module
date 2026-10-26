@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TSetup } from './t-setup';
+import { OptSetup } from './opt-setup';
 
-describe('TSetup', () => {
-  let component: TSetup;
-  let fixture: ComponentFixture<TSetup>;
+describe('OptSetup', () => {
+  let component: OptSetup;
+  let fixture: ComponentFixture<OptSetup>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TSetup]
+      imports: [OptSetup]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TSetup);
+    fixture = TestBed.createComponent(OptSetup);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

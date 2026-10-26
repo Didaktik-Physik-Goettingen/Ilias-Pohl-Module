@@ -1,19 +1,27 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MultipleChoice } from './multiple-choice';
+import { TestMultipleChoice } from './multiple-choice';
 
-describe('MultipleChoice', () => {
-  let component: MultipleChoice;
-  let fixture: ComponentFixture<MultipleChoice>;
+describe('TestMultipleChoice', () => {
+  let component: TestMultipleChoice;
+  let fixture: ComponentFixture<TestMultipleChoice>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MultipleChoice]
+      imports: [TestMultipleChoice]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MultipleChoice);
+    fixture = TestBed.createComponent(TestMultipleChoice);
     component = fixture.componentInstance;
+    // minimal question data — the component reads its inputs in ngOnInit
+    fixture.componentRef.setInput('questionId', "spec-q");
+    fixture.componentRef.setInput('question', "Frage?");
+    fixture.componentRef.setInput('containerId', "spec-c");
+    fixture.componentRef.setInput('questionInstruction', "");
+    fixture.componentRef.setInput('maxPoints', 10);
+    fixture.componentRef.setInput('options', [{"value": "a", "label": "A"}, {"value": "b", "label": "B"}]);
+    fixture.componentRef.setInput('correctAnswers', ["a"]);
     await fixture.whenStable();
   });
 

@@ -92,7 +92,6 @@ jobs:
           RewriteRule ^api/users/create$      api/users/create.php  [L]
           RewriteRule ^api/progress/save$     api/progress/save.php [L]
           RewriteRule ^api/progress/([^/]+)$  api/progress/load.php?username=$1 [L,QSA]
-          RewriteRule ^api/report$            api/report.php [L]
           RewriteCond %{REQUEST_FILENAME} !-f
           RewriteCond %{REQUEST_FILENAME} !-d
           RewriteRule ^ index.html [L]
