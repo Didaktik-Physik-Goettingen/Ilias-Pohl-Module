@@ -126,6 +126,8 @@ jobs:
         run: |
           lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << EOF
           set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+          set net:max-retries 2
+          set net:timeout 20
           mirror -R --delete --verbose \
             frontend/dist/ilias-pohl-module/browser/ \
             $REMOTE_DIR/
@@ -146,6 +148,8 @@ jobs:
         run: |
           lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << EOF
           set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+          set net:max-retries 2
+          set net:timeout 20
           mirror -R --delete --verbose --exclude config.php \
             api/ \
             $REMOTE_DIR/api/
@@ -165,6 +169,8 @@ jobs:
         run: |
           lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << EOF
           set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+          set net:max-retries 2
+          set net:timeout 20
           put ilias_bridge.html -o $REMOTE_DIR/ilias_bridge.html
           bye
           EOF
