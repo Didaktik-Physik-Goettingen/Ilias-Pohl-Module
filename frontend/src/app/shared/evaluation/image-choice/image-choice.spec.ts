@@ -14,6 +14,12 @@ describe('ImageChoice', () => {
 
     fixture = TestBed.createComponent(ImageChoice);
     component = fixture.componentInstance;
+    // minimal question data — the component reads its inputs in ngOnInit
+    fixture.componentRef.setInput('questionId', "spec-q");
+    fixture.componentRef.setInput('question', "Frage?");
+    fixture.componentRef.setInput('containerId', "spec-c");
+    fixture.componentRef.setInput('options', [{"value": "a", "imageSrc": "a.png", "label": "A"}, {"value": "b", "imageSrc": "b.png", "label": "B"}]);
+    fixture.componentRef.setInput('correctAnswers', ["a"]);
     await fixture.whenStable();
   });
 

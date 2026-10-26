@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { stubCanvasContext } from '../../../../testing/canvas-stub';
 
 import { SimEDampedOscillations } from './sim-e-damped-oscillations';
 
@@ -7,6 +8,7 @@ describe('SimEDampedOscillations', () => {
   let fixture: ComponentFixture<SimEDampedOscillations>;
 
   beforeEach(async () => {
+    stubCanvasContext();
     await TestBed.configureTestingModule({
       imports: [SimEDampedOscillations]
     })
