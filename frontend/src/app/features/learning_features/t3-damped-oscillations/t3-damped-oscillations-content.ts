@@ -37,13 +37,13 @@ export const t3Text1e = `
             Mit der gedämpften
 			<a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>
 			$\\omega_e := \\sqrt{\\omega_0^2 - \\gamma^2}$ lautet die
-            allgemeine Lösung:
+            allgemeine Lösung im Schwingfall ($0<\\gamma<\\omega_0$):
             $$x(t) = e^{-\\gamma t}\\!\\left(c_1\\,e^{-i\\omega_e t} + c_2\\,e^{i\\omega_e t}\\right)$$
-            Der Ausdruck unter der Wurzel bestimmt, welcher der drei Dämpfungsfälle vorliegt:
+            Für eine reelle Auslenkung gilt $c_2=c_1^*$. Der Radikand in der Bestimmungsgleichung bestimmt, welcher der drei Dämpfungsfälle vorliegt:
             <ul>
                 <li><strong>Schwingfall</strong> ($\\gamma < \\omega_0$): $\\lambda$ komplex, System schwingt periodisch mit abnehmender Amplitude</li>
-                <li><strong>Kriechfall</strong> ($\\gamma > \\omega_0$): $\\lambda$ reell, System kriecht monoton zur Ruhe</li>
-                <li><strong>Aperiodischer Grenzfall</strong> ($\\gamma = \\omega_0$): entartete Lösung, schnellste Rückkehr ohne Schwingen</li>
+                <li><strong>Kriechfall</strong> ($\\gamma > \\omega_0$): $\\lambda$ reell, System kehrt ohne wiederholtes Schwingen zur Ruhe zurück</li>
+                <li><strong>Aperiodischer Grenzfall</strong> ($\\gamma = \\omega_0$): doppelte Nullstelle; bei Start aus der Ruhe schnellste Rückkehr ohne Nachschwingen</li>
             </ul>
         `;
 
@@ -62,11 +62,11 @@ export const t3Text2a = `
         `;
 
 export const t3Text2b = `
-            $$x(t) = A\\,e^{-\\gamma t}\\cos(\\omega_e t)$$
+            $$x(t)=A e^{-\\gamma t}\\left(\\cos(\\omega_e t)+\\frac{\\gamma}{\\omega_e}\\sin(\\omega_e t)\\right)$$
         `;
 
 export const t3Text2c = `
-            Der Faktor $e^{-\\gamma t}$ beschreibt den exponentiellen Amplitudenabfall, $\\cos(\\omega_e t)$
+            Der Faktor $e^{-\\gamma t}$ beschreibt die exponentiell abklingende Einhüllende; die Sinus-/Cosinuskombination beschreibt
             den periodischen Schwingungsanteil mit der <em>gedämpften</em> Eigenfrequenz $\\omega_e < \\omega_0$.<br><br>
 
             <strong>Phasenraumdarstellung:</strong> Im Phasenraum $(x,\\, \\dot{x}/\\omega_0)$ ergibt sich eine
@@ -75,20 +75,18 @@ export const t3Text2c = `
 
             <strong>Logarithmisches Dekrement:</strong> Das Verhältnis zweier aufeinanderfolgender Maxima
             (zeitlicher Abstand = Periodendauer $T = 2\\pi/\\omega_e$) beträgt:
-            $$\\frac{x(t)}{x(t+T)} = e^{\\gamma T}$$
+            $$\\frac{a_n}{a_{n+1}} = e^{\\gamma T}$$ Dabei sind $a_n,a_{n+1}>0$ die Beträge aufeinanderfolgender positiver Maxima, keine beliebigen Auslenkungen an Nulldurchgängen.
             Daraus definiert man das <strong>logarithmische Dekrement</strong>:
         `;
 
 export const t3Text2d = `
-            $$\\Lambda = \\ln\\frac{x(t)}{x(t+T)} = \\gamma T = \\frac{2\\pi\\gamma}{\\sqrt{\\omega_0^2 - \\gamma^2}}$$
+            $$\\Lambda = \\ln\\frac{a_n}{a_{n+1}} = \\gamma T = \\frac{2\\pi\\gamma}{\\sqrt{\\omega_0^2 - \\gamma^2}}$$
         `;
 
 export const t3Text2spoiler = `
-            Einsetzen der Lösung $x(t) = A\\,e^{-\\gamma t}\\cos(\\omega_e t)$ in den Logarithmus:
-            $$\\Lambda = \\ln\\frac{A\\,e^{-\\gamma t}\\cos(\\omega_e t)}{A\\,e^{-\\gamma(t+T)}\\cos(\\omega_e(t+T))}$$
-            Da $\\cos(\\omega_e(t+T)) = \\cos(\\omega_e t + 2\\pi) = \\cos(\\omega_e t)$ (Periodizität), kürzen
-            sich die Cosinus-Terme heraus. Mit $e^{-\\gamma t}/e^{-\\gamma(t+T)} = e^{\\gamma T}$ folgt:
-            $$\\Lambda = \\ln(e^{\\gamma T}) = \\gamma T$$
+            Schreiben wir die allgemeine Schwingfalllösung als $x(t)=C e^{-\\gamma t}\\cos(\\omega_e t+\\phi)$, wiederholt sich ihr Schwingungsanteil nach $T=2\\pi/\\omega_e$. Für aufeinanderfolgende positive Maxima bei $t_n$ und $t_n+T$ gilt daher:
+            $$\\frac{a_n}{a_{n+1}}=\\frac{C e^{-\\gamma t_n}\\cos(\\omega_e t_n+\\phi)}{C e^{-\\gamma(t_n+T)}\\cos(\\omega_e t_n+\\phi)}=e^{\\gamma T}.$$
+            Die Maxima sind von null verschieden, sodass die Kürzung zulässig ist. Somit folgt $\\Lambda=\\ln(a_n/a_{n+1})=\\gamma T$.
         `;
 
 export const t3Text3a = `
@@ -104,7 +102,7 @@ export const t3Text3b = `
         `;
 
 export const t3Text3c = `
-            Der Term $e^{-\\gamma t}$ dominiert für große $t$, da $\\alpha < \\gamma$ gilt. Für die
+            Für große $t$ dominiert bei nicht verschwindendem Koeffizienten der langsamere Term $e^{(-\\gamma+\\alpha)t}$. Wegen $\\alpha<\\gamma$ klingt auch er ab. Für die
             Anfangsbedingungen $x(0) = 0$, $\\dot{x}(0) = v_0$ ergibt sich die Speziallösung:
             $$x(t) = \\frac{v_0}{\\alpha}\\,e^{-\\gamma t}\\sinh(\\alpha t)$$
             Für $x(0) = A$, $\\dot{x}(0) = 0$:
@@ -126,27 +124,19 @@ export const t3Text4b = `
         `;
 
 export const t3Text4c = `
-            Für $x(0) = A$, $\\dot{x}(0) = 0$ ergibt sich $x(t) = A(1 + \\gamma t)\\,e^{-\\gamma t}$;
-            für $x(0) = 0$, $\\dot{x}(0) = v_0$ folgt $x(t) = v_0 t\\,e^{-\\gamma t}$.<br><br>
-
-            Der aperiodische Grenzfall kehrt <em>schneller zur Ruhe zurück als der Kriechfall</em> — er
-            ist der Übergang zwischen Schwingfall und Kriechfall. Das Maximum bei $t_\\text{max} = 1/\\gamma$
-            ist das einzige und es wird kein weiteres Vorzeichenwechsel beobachtet.<br><br>
-
-            Dieses Verhalten ist technisch besonders interessant: Messgerätezeiger und Gebäudedämpfer
-            werden oft nahe am aperiodischen Grenzfall ausgelegt, um schnell zur Ruhe zu kommen ohne
-            nachzuschwingen.
+            Für $x(0)=A$, $\\dot{x}(0)=0$ ergibt sich $x(t)=A(1+\\gamma t)e^{-\\gamma t}$; für $x(0)=0$, $\\dot{x}(0)=v_0$ folgt $x(t)=v_0t e^{-\\gamma t}$. Nur die zweite dieser Lösungen hat für $v_0>0$ ihr Maximum bei $t=1/\\gamma$.
+            <br><br>Im vereinfachten linearen Modell ist der Grenzfall der Übergang zwischen Schwingfall und Kriechfall. Bei gleichem $\\omega_0$ und gleicher Anfangsauslenkung mit Start aus der Ruhe kehrt er schneller zurück als der Kriechfall, ohne nachzuschwingen. Das unterstützt das technische Modellziel einer schnellen Beruhigung; reale Geräte und Bauwerke erfordern weitere Auslegungskriterien.
         `;
 
 export const t3Text5a = `
             Die drei Dämpfungsfälle lassen sich anhand des Verhältnisses $\\gamma/\\omega_0$ klassifizieren:
             <ul>
                 <li><strong>Schwingfall</strong> ($\\gamma < \\omega_0$): periodische Schwingung mit exponentiell abnehmender Amplitude</li>
-                <li><strong>Kriechfall</strong> ($\\gamma > \\omega_0$): monotones Abklingen, langsamer als der Grenzfall</li>
-                <li><strong>Aperiodischer Grenzfall</strong> ($\\gamma = \\omega_0$): schnellste Rückkehr zur Ruhe ohne Schwingen</li>
+                <li><strong>Kriechfall</strong> ($\\gamma > \\omega_0$): bei gleicher Anfangsauslenkung und Start aus der Ruhe langsamer als der Grenzfall</li>
+                <li><strong>Aperiodischer Grenzfall</strong> ($\\gamma = \\omega_0$): bei Start aus der Ruhe schnellste Rückkehr ohne Nachschwingen</li>
             </ul>
             Im Schwingfall sind viele Schwingungen zu beobachten, Kriechfall und aperiodischer
-            Grenzfall zeigen eine einzelne monotone Auslenkung, die gegen Null geht.
+            Grenzfall klingen ohne wiederholtes Schwingen ab; ein einzelnes Extremum oder ein Vorzeichenwechsel kann von den Anfangsbedingungen abhängen.
         `;
 
 export const t3Text5b = `

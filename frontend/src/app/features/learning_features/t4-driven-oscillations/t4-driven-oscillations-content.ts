@@ -20,8 +20,7 @@ export const t4Text1c = `
                 <li><strong>getrieben</strong>, weil eine äußere, periodische Anregung im System wirkt, und</li>
                 <li><strong>harmonisch</strong>, weil Sinus- und Cosinusfunktionen die Schwingungsform beschreiben.</li>
             </ul>
-            Sie ist <strong>inhomogen</strong>, da der Anregungsterm $K\\cos(\\omega t)$ nicht von
-            der Auslenkung $x$ oder ihrer Ableitung abhängt.
+            Sie ist <strong>inhomogen</strong>, weil der äußere Quellterm $K\\cos(\\omega t)$ nicht identisch null ist. Der hier vorgeschriebene Antrieb ist außerdem unabhängig von $x$ und $\\dot{x}$.
         `;
 
 export const t4Text2a = `
@@ -43,6 +42,17 @@ export const t4Text2a = `
 
 export const t4Text2b = `
             $$\\ddot{\\varphi} + 2\\beta\\dot{\\varphi} + \\omega_0^2\\varphi = N\\cos(\\omega t)$$
+        `;
+
+export const t4Text2spoiler = `
+            Beim Pohlschen Rad findet keine geradlinige Bewegung, sondern eine Drehbewegung statt.
+            Deshalb wird die Auslenkung $x$ durch die Winkelauslenkung $\\varphi$ ersetzt.
+            Entsprechend beschreiben $\\dot{\\varphi}$ die Winkelgeschwindigkeit und
+            $\\ddot{\\varphi}$ die Winkelbeschleunigung. Die Spiralfeder erzeugt im verwendeten
+            Messbereich ein näherungsweise zur Winkelauslenkung proportionales Rückstellmoment.
+            Dadurch besitzt die Bewegungsgleichung dieselbe lineare Form wie die einer getriebenen,
+            gedämpften harmonischen Schwingung. Anders als beim mathematischen Pendel ist dafür
+            keine Kleinwinkelnäherung erforderlich.
         `;
 
 export const t4Text2c = `
@@ -72,7 +82,7 @@ export const t4Text3b = `
 
 export const t4Text3c = `
             Der Vorteil dieser Methode: Die komplexe Exponentialfunktion $e^{i\\omega t}$ verhält sich
-            unter Ableitung besonders einfach ($\\frac{d}{dt}e^{i\\omega t} = i\\omega e^{i\\omega t}$) ---
+            unter Ableitung besonders einfach (für $y(t)=e^{i\\omega t}$ gilt $\\dot{y}(t)=i\\omega y(t)$) ---
             es entstehen nur konstante Vorfaktoren, keine Übergänge zwischen Sinus und Cosinus.
             Das vereinfacht das Einsetzen des Ansatzes erheblich.
         `;
@@ -96,7 +106,7 @@ export const t4Text4c = `
 
 export const t4Text4d = `
             $$\\varphi_p(t) = \\frac{N}{\\sqrt{(\\omega_0^2-\\omega^2)^2+(2\\beta\\omega)^2}}\\cos(\\omega t - \\Phi)$$
-            mit der Phasenverschiebung $\\Phi = \\arctan\\!\\left(\\dfrac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)$.
+            Für $\\beta>0$ und $\\omega\\geq0$ beträgt die Phasenverzögerung $\\Phi = \\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right)$.
         `;
 
 export const t4Text4spoiler = `
@@ -171,10 +181,10 @@ export const t4Text7b = `
 
 export const t4Text7c = `
             Die <strong>Resonanzfrequenz</strong> --- bei der die Amplitude maximal wird --- ist etwas
-            kleiner als die Eigenfrequenz:
+            kleiner als die Eigenfrequenz, sofern $0<\\beta<\\omega_0/\\sqrt{2}$:
             $$\\omega_r = \\sqrt{\\omega_0^2 - 2\\beta^2}$$
             Mit zunehmender Dämpfung $\\beta$ verschiebt sich $\\omega_r$ stärker von $\\omega_0$ weg
-            und die Maximalamplitude nimmt ab. Bei starker Dämpfung ($\\beta > \\omega_0/\\sqrt{2}$)
+            und die Maximalamplitude nimmt ab. Bei starker Dämpfung ($\\beta \\geq \\omega_0/\\sqrt{2}$)
             tritt kein Resonanzpeak mehr auf.
         `;
 
@@ -185,15 +195,15 @@ export const t4Text8a = `
         `;
 
 export const t4Text8b = `
-            $$\\Phi(\\omega) = \\arctan\\!\\left(\\frac{2\\beta\\omega}{\\omega_0^2-\\omega^2}\\right)$$
+            $$\\Phi(\\omega) = \\operatorname{atan2}\\!\\left(2\\beta\\omega,\\omega_0^2-\\omega^2\\right)$$
         `;
 
 export const t4Text8c = `
-            Besonders charakteristisch: Wenn die Anregungsfrequenz genau der
+            $\\operatorname{atan2}(y,x)$ berücksichtigt beide Argumente und wählt den richtigen Quadranten; hier ist $0\\leq\\Phi<\\pi$. Bei positiver Dämpfung gilt: Wenn die Anregungsfrequenz genau der
             <a data-glossary="natural-frequency" class="glossary-link">Eigenfrequenz</a>
             $\\omega_0$ entspricht, gilt stets
             $\\Phi(\\omega_0) = \\pi/2$ - unabhängig von der Dämpfung. Diese Eigenschaft
             lässt sich im Experiment nutzen, um $\\omega_0$ zu bestimmen.<br><br>
-            Für $\\omega < \\omega_0$ gilt $\\Phi < \\pi/2$ (Antrieb und System nahezu in Phase),
+            Für $\\omega < \\omega_0$ gilt $\\Phi < \\pi/2$ (kleiner als eine Viertelperiode),
             für $\\omega > \\omega_0$ gilt $\\Phi > \\pi/2$ (System läuft dem Antrieb stark hinterher).
         `;

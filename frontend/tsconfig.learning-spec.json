@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.spec.json",
+  "include": [
+    "src/**/*.d.ts",
+    "src/test-providers.ts",
+    "src/testing/**/*.ts",
+    "src/app/shared/evaluation/multiple-choice-feedback.spec.ts",
+    "src/app/shared/evaluation/multiple-choice/multiple-choice.spec.ts",
+    "src/app/shared/evaluation/multiple-choice-image/multiple-choice-image.spec.ts",
+    "src/app/shared/evaluation/image-choice/image-choice.spec.ts",
+    "src/app/shared/evaluation/single-choice/single-choice.spec.ts",
+    "src/app/features/learning_features/learning-question-feedback.spec.ts"
+  ]
+}

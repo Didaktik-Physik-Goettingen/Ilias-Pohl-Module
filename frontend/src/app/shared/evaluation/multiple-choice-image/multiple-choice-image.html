@@ -13,6 +13,7 @@
                     type="checkbox" 
                     [name]="'element' + (i+1)" 
                     [value]="option.value"
+                    [checked]="isSelected(option.value)"
                     [disabled]="isCorrect"
                     (change)="toggleSelection(option.value)">
                 <span>{{ option.label }}</span>

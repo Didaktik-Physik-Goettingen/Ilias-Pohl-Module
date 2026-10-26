@@ -68,6 +68,7 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
 
     t4Text2a!: SafeHtml;
     t4Text2b!: SafeHtml;
+    t4Text2spoiler!: SafeHtml;
     t4Text2c!: SafeHtml;
 
     t4Text3a!: SafeHtml;
@@ -147,6 +148,8 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         this.t4Text2a = this.sanitizer.bypassSecurityTrustHtml(t4Content.t4Text2a);
 
         this.t4Text2b = this.sanitizer.bypassSecurityTrustHtml(t4Content.t4Text2b);
+
+        this.t4Text2spoiler = this.sanitizer.bypassSecurityTrustHtml(t4Content.t4Text2spoiler);
 
         this.t4Text2c = this.sanitizer.bypassSecurityTrustHtml(t4Content.t4Text2c);
 

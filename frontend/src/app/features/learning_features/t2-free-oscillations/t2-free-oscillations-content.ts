@@ -5,7 +5,7 @@ export const freeOscText1a = `
 		`;
 
 export const freeOscText1b = `
-			$$\\frac{d^2x}{dt^2} + \\omega_0^2x = 0$$
+			$$\\ddot{x} + \\omega_0^2x = 0$$
 		`;
 
 export const freeOscText1c = `
@@ -21,7 +21,7 @@ export const freeOscText1c = `
 				</li>
 				<li><strong>harmonisch</strong>, weil die akustische Überlagerung von den entstehenden „reinen" Sinustönen als harmonisch empfunden wird.</li>
 			</ul>
-			Die DGL kann auch in der Newtonschen Notation geschrieben werden:
+			Die Punkte kennzeichnen dabei weiterhin die Ableitungen nach der Zeit:
 			$$\\ddot{x} + \\omega_0^2x = 0$$
 		`;
 
@@ -53,7 +53,7 @@ export const freeOscText1e = `
 		`;
 
 export const freeOscText1f = `
-			Aus physikalischen Gründen muss die Lösung reell sein. Daher kann sie auch in folgender Form geschrieben werden:
+			Aus physikalischen Gründen muss die Lösung reell sein. In der komplexen Darstellung ist dafür $c_2=c_1^*$ erforderlich. Mit neuen reellen Koeffizienten kann sie geschrieben werden als:
 			$$x(t) = c_1\\cos(\\omega_0t) + c_2\\sin(\\omega_0t)$$
 		`;
 
@@ -87,13 +87,13 @@ export const freeOscText2a = `
 		`;
 
 export const freeOscText2b = `
-			$$\\frac{d^2x}{dt^2} + \\omega_0^2x = 0$$
+			$$\\ddot{x} + \\omega_0^2x = 0$$
 		`;
 
 export const freeOscText2c = `
 			Für den ungedämpften harmonischen Oszillator mit der Rückstellkraft $F = -Dx$ gilt für die Energie:
 			$$E = \\frac{m}{2}\\dot{x}^2 + \\frac{1}{2}Dx^2$$
-			Mit $\\omega_0 = \\sqrt{\\frac{D}{m}}$ ergibt sich durch Umstellen eine Kreisgleichung:
+			Mit $\\omega_0 = \\sqrt{\\frac{D}{m}}$ ergibt sich durch Umstellen eine Kreisgleichung in den skalierten Koordinaten $(x,\\dot{x}/\\omega_0)$:
 			$$x^2 + \\left(\\frac{\\dot{x}}{\\omega_0}\\right)^2 = \\frac{2E}{D}$$
 		`;
 
@@ -101,9 +101,9 @@ export const freeOscText2d = `
 			Eine besonders anschauliche Darstellung des Schwingungsverhaltens ist im Phasenraum möglich.
 			Für ein punktförmiges Teilchen im dreidimensionalen Ortsraum ist der Phasenraum als Menge aller
 			Sechsertupel aus den drei Orts- und Impulskoordinaten definiert.<br><br>
-			Beim Pohlschen Pendel sind sowohl die Orts- als auch die Impulskoordinate eindimensionale Größen.
+			Beim Pohlschen Rad sind der Drehwinkel und der zugehörige Drehimpuls jeweils eine einzelne Koordinate.
 			Der Phasenraum reduziert sich dadurch auf zwei Dimensionen.<br><br>
-			Für einen ungedämpften Oszillator erhält man als Trajektorie einen Kreis.
+			Für den hier betrachteten konservativen Oszillator mit einem Freiheitsgrad legt die Energie eine Bahn fest. In den skalierten Koordinaten $(x,\\dot{x}/\\omega_0)$ ist sie ein Kreis; in $(x,\\dot{x})$ eine Ellipse.
 			Sein Radius hängt mit der Energie des Systems zusammen: $R = \\sqrt{\\frac{2E}{D}}$.
 			Für einen schwach gedämpften Oszillator erhält man hingegen eine Spirale zum Nullpunkt.
 		`;

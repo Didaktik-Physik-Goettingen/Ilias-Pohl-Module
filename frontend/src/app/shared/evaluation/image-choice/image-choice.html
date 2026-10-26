@@ -16,9 +16,9 @@
                         <input 
                             type="checkbox" 
                             [checked]="isSelected(option.value)"
-                            >
-                            <!-- [disabled]="isCorrect"
-                            (click)="toggleSelection(option.value)" -->
+                            [disabled]="isCorrect"
+                            (click)="$event.stopPropagation(); toggleSelection(option.value)"
+                            (keydown.space)="$event.preventDefault(); $event.stopPropagation(); toggleSelection(option.value)">
                     </div>
                 </div>
                 

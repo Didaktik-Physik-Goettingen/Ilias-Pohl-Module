@@ -32,6 +32,8 @@
                     <p [innerHTML]="introExpText2a"></p>
 
                     <!-- first evaluation container: Schwungrad -->
+                    <p [innerHTML]="wheelPrerequisite"></p>
+
                     <app-multiple-choice-image
                         [questionId]="question1.questionId"
                         [imageSrc]="question1.imageSrc"
@@ -39,6 +41,7 @@
                         [question]="question1.question"
                         [options]="question1.options"
                         [correctAnswers]="question1.correctAnswers"
+                        [answerFeedback]="question1.answerFeedback"
                         [containerId]="question1.containerId"
                         [successMessage]="question1.successMessage"
                         [incompleteMessage]="question1.incompleteMessage"
@@ -54,6 +57,7 @@
                         [question]="question2.question"
                         [options]="question2.options"
                         [correctAnswers]="question2.correctAnswers"
+                        [answerFeedback]="question2.answerFeedback"
                         [containerId]="question2.containerId"
                         [successMessage]="question2.successMessage"
                         [incompleteMessage]="question2.incompleteMessage"
@@ -62,6 +66,8 @@
                     </app-multiple-choice-image>
 
                     <!-- third evaluation container: Wirbelstrombremse -->
+                    <p [innerHTML]="eddyCurrentPrerequisite"></p>
+
                     <app-multiple-choice-image
                         [questionId]="question3.questionId"
                         [imageSrc]="question3.imageSrc"
@@ -69,6 +75,7 @@
                         [question]="question3.question"
                         [options]="question3.options"
                         [correctAnswers]="question3.correctAnswers"
+                        [answerFeedback]="question3.answerFeedback"
                         [containerId]="question3.containerId"
                         [successMessage]="question3.successMessage"
                         [incompleteMessage]="question3.incompleteMessage"
@@ -95,6 +102,7 @@
                         [question]="question4.question"
                         [options]="question4.options"
                         [correctAnswers]="question4.correctAnswers"
+                        [answerFeedback]="question4.answerFeedback"
                         [containerId]="question4.containerId"
                         [successMessage]="question4.successMessage"
                         [incompleteMessage]="question4.incompleteMessage"
@@ -107,6 +115,7 @@
                         [question]="question5.question"
                         [options]="question5.options"
                         [correctAnswers]="question5.correctAnswers"
+                        [answerFeedback]="question5.answerFeedback"
                         [containerId]="question5.containerId"
                         [successMessage]="question5.successMessage"
                         [incompleteMessage]="question5.incompleteMessage"
@@ -125,6 +134,7 @@
                         [question]="question6.question"
                         [options]="question6.options"
                         [correctAnswers]="question6.correctAnswers"
+                        [answerFeedback]="question6.answerFeedback"
                         [containerId]="question6.containerId"
                         [successMessage]="question6.successMessage"
                         [incompleteMessage]="question6.incompleteMessage"

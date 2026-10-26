@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:learning": "ng test --watch=false --ts-config=tsconfig.learning-spec.json --include=src/app/shared/evaluation/multiple-choice-feedback.spec.ts --include=src/app/shared/evaluation/multiple-choice/multiple-choice.spec.ts --include=src/app/shared/evaluation/multiple-choice-image/multiple-choice-image.spec.ts --include=src/app/shared/evaluation/image-choice/image-choice.spec.ts --include=src/app/shared/evaluation/single-choice/single-choice.spec.ts --include=src/app/features/learning_features/learning-question-feedback.spec.ts",
     "serve:ssr:ilias-pohl-module": "node dist/ilias-pohl-module/server/server.mjs"
   },
   "prettier": {

@@ -79,6 +79,11 @@ export class Glossary {
 			link: '/glossary/angular-frequency'
         },
         {
+            title: 'Newtonsche Notation',
+            definition: 'Die Newtonsche Notation kennzeichnet Ableitungen einer Größe nach der Zeit durch Punkte über dem Formelzeichen. Ein Punkt steht für die erste Zeitableitung und zwei Punkte stehen für die zweite Zeitableitung.',
+			link: '/glossary/newton-notation'
+        },
+        {
             title: 'Resonanzfrequenz',
             definition: 'Die Resonanzfrequenz einer erzwungenen Schwingung ist die Frequenz bei der ihre Amplitude maximal wird.',
 				link: '/glossary/resonance-frequency'
