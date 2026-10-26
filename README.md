@@ -65,7 +65,6 @@ README.md
 │           │   app.routes.server.ts            // SSR render-mode per route (Prerender / Client)
 │           │
 │           └── core/
-│           │   │   print-mode.ts               // utility: isPrintMode() for print/PDF view gating
 │           │   └── services/                   // project-wide services
 │           │           theme.ts                // light / dark mode toggling
 │           │           session.ts              // session ID management + rogue user detection
@@ -158,8 +157,8 @@ The Angular app is also accessible directly at **`http://localhost:4200`** (rogu
 Pushing to `master` triggers `.github/workflows/deploy.yml` automatically:
 1. GitHub spins up an Ubuntu runner
 2. Installs Node, runs `npm ci`, builds the Angular app
-3. Patches `.htaccess` with the production `RewriteBase`
-4. Uploads via SFTP: Angular dist → `pohl/`, `api/` (excluding `config.php`), `ilias_bridge.html`, `.htaccess`
+3. Writes a production `.htaccess` (`RewriteBase /pohl/`) into the build output
+4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`, `api/` (excluding `config.php`), `ilias_bridge.html`
 
 **One-time setup** — add the following five secrets in GitHub → repo → Settings → Secrets and variables → Actions. Ask a maintainer for the values:
 `SFTP_HOST`, `SFTP_PORT`, `SFTP_USER`, `SFTP_PASS`, `SFTP_REMOTE_DIR`
