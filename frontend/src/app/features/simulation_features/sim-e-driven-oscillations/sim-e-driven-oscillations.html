@@ -11,7 +11,7 @@
             2. Beobachten Sie im Phasenraum, wann der stationäre Zustand erreicht ist.<br>
             3. Ändern Sie die Treiberfrequenz und beobachten Sie, wie sich die Maximalauslenkung verändert. Bei welcher Treiberfrequenz ist sie am größten?<br>
             4. Beobachten Sie den Phasenversatz zwischen Antrieb (roter Graph) und Gesamtschwingung (schwarzer Graph) bei verschiedenen Treiberfrequenzen.<br><br>
-            Beobachten Sie Veränderungen für mindestens 3 verschiedene Parameter, damit Sie am unteren Ende der Seite einen weiterführenden Link erhalten.
+            Beobachten Sie Veränderungen für mindestens 3 verschiedene Parameter, damit der Weiter-Button am unteren Ende der Seite freigeschaltet wird.
         </p>
 
         <p style="text-align: center;">
@@ -81,11 +81,9 @@
             @if (devMode.isEnabled) {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
-            @if (interactionThresholdReached) {
-                <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter zur Anleitung →' : 'Weiter zum Lernmodul →' }}
-                </button>
-            }
+            <button class="btn" (click)="goForward()" [disabled]="!(interactionThresholdReached || devMode.isEnabled)">
+                {{ navigationFlow === 'learning-first' ? 'Weiter zur Anleitung →' : 'Weiter zum Lernmodul →' }}
+            </button>
         </div>
     </div>
 </div>

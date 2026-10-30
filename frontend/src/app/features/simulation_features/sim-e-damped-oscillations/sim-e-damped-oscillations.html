@@ -11,7 +11,7 @@
             <strong>Beobachtungsvorschläge:</strong><br>
             1. Beobachten Sie, wie sich die Amplitude und die Frequenz ändern, wenn Sie die Anfangsauslenkung &phi;<sub>0</sub> variieren.<br>
             2. Beobachten Sie, wie sich die Amplitude und die Frequenz der Schwingung verändern, wenn Sie die Dämpfungskonstante &beta; verändern.<br><br>
-            Beobachten Sie die Veränderung für mindestens 3 verschiedene Parameter, damit Sie am unteren Ende der Seite einen weiterführenden Link erhalten.
+            Beobachten Sie die Veränderung für mindestens 3 verschiedene Parameter, damit der Weiter-Button am unteren Ende der Seite freigeschaltet wird.
         </p>
 
         <div class="sim-canvas-container">
@@ -64,11 +64,9 @@
             @if (devMode.isEnabled) {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
-            @if (interactionThresholdReached) {
-                <button class="btn" (click)="goForward()">
-                    {{ navigationFlow === 'learning-first' ? 'Weiter zu getriebenen Schwingungen →' : 'Weiter zum Lernmodul →' }}
-                </button>
-            }
+            <button class="btn" (click)="goForward()" [disabled]="!(interactionThresholdReached || devMode.isEnabled)">
+                {{ navigationFlow === 'learning-first' ? 'Weiter zu getriebenen Schwingungen →' : 'Weiter zum Lernmodul →' }}
+            </button>
         </div>
     </div>
 </div>

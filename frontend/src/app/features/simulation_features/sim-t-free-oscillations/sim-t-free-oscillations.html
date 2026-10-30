@@ -10,7 +10,7 @@
             1. Beobachten Sie, wie sich die Frequenz der Schwingung verändert, wenn Sie die Federkonstante $k$ variieren.<br>
             2. Variieren Sie die Anfangsauslenkung $x_0$ und beobachten Sie, wie sich die Amplitude ändert.<br>
             3. Schalten Sie den Phasenraum ein und beobachten Sie die Kurvenform bei verschiedenen Anfangsbedingungen.<br><br>
-            Beobachten Sie Veränderungen für mindestens 3 verschiedene Parameter, damit Sie am unteren Ende der Seite einen weiterführenden Link erhalten.
+            Beobachten Sie Veränderungen für mindestens 3 verschiedene Parameter, damit der Weiter-Button am unteren Ende der Seite freigeschaltet wird.
         </p>
 
         <div class="sim-canvas-container">
@@ -59,9 +59,7 @@
             @if (devMode.isEnabled) {
                 <button class="btn btn-back" (click)="goBack()">← Zurück</button>
             }
-            @if (interactionThresholdReached) {
-                <button class="btn" (click)="goForward()">Weiter zu gedämpften Schwingungen →</button>
-            }
+            <button class="btn" (click)="goForward()" [disabled]="!(interactionThresholdReached || devMode.isEnabled)">Weiter zu gedämpften Schwingungen →</button>
         </div>
     </div>
 </div>
