@@ -295,7 +295,7 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **multiple-choice:** multiple correct answers
 - **image-choice:** single correct answer for images
 - **drag-and-drop:** assign answers to images
-- **test-true-false:** assess individual statements for accuracy
+- **test-true-false:** assess individual statements for accuracy; the buttons use the same hover and selection style as the other test options, and a second click on it takes the answer back
 - **end-page:** aggregates scores, shows performance feedback, triggers progress save
 
 

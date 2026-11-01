@@ -73,52 +73,52 @@
     opacity: 0.5;
 }
 
-/* Test-specific button for true-false-Test - no conflict with .btn */
+/* Test-specific button for true-false-Test - no conflict with .btn; hover and selection like .choice-option */
 .testtf-btn {
     width: 15%;
     min-width: 80px;
-    background: var(--control-fill);
-    color: var(--control-text);
+    background: var(--surface-option);
+    color: var(--text-primary);
     padding: 0.4rem;
-    border: 1px solid var(--physik-gelb);
-    border-radius: 6px;
-    font-weight: 600;
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
     margin-top: 1rem;
 }
 
 .testtf-btn:hover:not(:disabled) {
-    background: var(--card-bg);
-    color: var(--physik-gelb);
-    border: 1px solid var(--physik-gelb);
+    background: var(--surface-option-hover);
+    border-color: var(--uni-blau-4);
 }
 
-.testtf-btn.selected {
-    background: var(--card-bg);
-    border: 1px solid var(--physik-gelb);
-    color: var(--physik-gelb);
-    font-weight: bold;
+.testtf-btn.selected,
+.testtf-btn.selected:hover:not(:disabled) {
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
 }
 
 .testtf-btn:disabled {
-    background: var(--grau-60);
-    border: 2px solid var(--grau-60);
+    background: transparent;
+    color: var(--text-muted);
     cursor: not-allowed;
-    opacity: 0.5;
+    opacity: 0.6;
 }
 
 .testtf-btn.correct:disabled {
     background: var(--result-correct-bg);
-    border: 2px solid var(--result-correct-border);
+    border-color: var(--result-correct-border);
     color: var(--result-correct-text);
+    font-weight: 700;
     opacity: 1;
 }
 
 .testtf-btn.incorrect:disabled {
     background: var(--result-incorrect-bg);
-    border: 2px solid var(--result-incorrect-border);
+    border-color: var(--result-incorrect-border);
     color: var(--result-incorrect-text);
+    font-weight: 700;
     opacity: 1;
 }
 

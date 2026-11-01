@@ -26,11 +26,6 @@
     cursor: not-allowed;
 }
 
-.statement-item.selected,
-.statement-item.selected:hover:not(.disabled) {
-    border-color: var(--uni-blau-4);
-    box-shadow: 0 0 0 1px var(--text-primary);
-}
 
 
 .statement-text {

@@ -70,7 +70,11 @@ export class TestTrueFalse implements OnInit{
 
   toggleStatement(statementId: string, value: 'true' | 'false') {
     if (this.isSubmitted) return;
-    this.selectedAnswers.set(statementId,value);
+    if (this.selectedAnswers.get(statementId) === value) {
+      this.selectedAnswers.delete(statementId);   // a second click takes the answer back
+    } else {
+      this.selectedAnswers.set(statementId, value);
+    }
   }
 
   getSelectedValue(statementId: string): 'true' | 'false' | null {

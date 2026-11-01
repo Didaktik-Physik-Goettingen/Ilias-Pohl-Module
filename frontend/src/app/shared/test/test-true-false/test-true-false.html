@@ -6,7 +6,6 @@
             @for (statement of shuffledStatements; track statement.id; let i = $index) {
             <div
                 class="statement-item"
-                [class.selected]="getSelectedValue(statement.id) !== null && !isSubmitted"
                 [class.disabled]="isSubmitted">
 
                 <div class="statement-text" [innerHTML]="statement.text"></div>
@@ -19,6 +18,7 @@
                             [class.selected]="getSelectedValue(statement.id) === 'true' && !isSubmitted"
                             [class.correct]="isSubmitted && getSelectedValue(statement.id) === 'true' && statement.isCorrect"
                             [class.incorrect]="isSubmitted && getSelectedValue(statement.id) === 'true' && !statement.isCorrect"
+                            [attr.aria-pressed]="getSelectedValue(statement.id) === 'true'"
                             [disabled]="isSubmitted"
                             (click)="toggleStatement(statement.id, 'true')">
                             Wahr
@@ -33,6 +33,7 @@
                             [class.selected]="getSelectedValue(statement.id) === 'false' && !isSubmitted"
                             [class.correct]="isSubmitted && getSelectedValue(statement.id) === 'false' && !statement.isCorrect"
                             [class.incorrect]="isSubmitted && getSelectedValue(statement.id) === 'false' && statement.isCorrect"
+                            [attr.aria-pressed]="getSelectedValue(statement.id) === 'false'"
                             [disabled]="isSubmitted"
                             (click)="toggleStatement(statement.id, 'false')">
                             Falsch

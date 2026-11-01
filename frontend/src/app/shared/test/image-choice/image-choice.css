@@ -31,7 +31,7 @@
 
 .image-option.selected,
 .image-option.selected:hover:not(.disabled) {
-    border-color: var(--uni-blau-4);
+    border-color: var(--text-primary);
     box-shadow: 0 0 0 1px var(--text-primary);
 }
 
