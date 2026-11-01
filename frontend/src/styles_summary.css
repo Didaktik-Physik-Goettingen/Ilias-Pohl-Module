@@ -1,25 +1,48 @@
 /* ── Summary / Lernpfad — global styles ──────────────────────────────────── */
 /* Used by app-tar-experiment.                                                */
-/* Colors are hardcoded so the panel stays light-mode regardless of theme.   */
 /* No !important needed: class selectors (0,1,0) beat element rules (0,0,1). */
+
+:root {
+    --summary-text: #1a202c;
+    --summary-muted: #6b7280;
+    --summary-faint: #9ca3af;
+    --summary-line: #e2e8f0;
+    --summary-q-bg: #f8fafc;
+    --summary-correct-bg: #f0fdf4;
+    --summary-correct-text: #16a34a;
+    --summary-incorrect-bg: #fef2f2;
+    --summary-incorrect-text: #dc2626;
+}
+
+[data-theme="dark"] {
+    --summary-text: rgb(226, 232, 240);
+    --summary-muted: rgb(148, 163, 184);
+    --summary-faint: #8593a8;
+    --summary-line: rgba(148, 163, 184, 0.25);
+    --summary-q-bg: rgba(148, 163, 184, 0.10);
+    --summary-correct-bg: rgba(34, 197, 94, 0.12);
+    --summary-correct-text: #4ade80;
+    --summary-incorrect-bg: rgba(239, 68, 68, 0.12);
+    --summary-incorrect-text: #f87171;
+}
 
 /* ── Header ──────────────────────────────────────────────────────────────── */
 .summary-header {
     margin-bottom: 2rem;
     padding-bottom: 1rem;
-    border-bottom: 2px solid var(--philo-purple);
+    border-bottom: 2px solid var(--target-h1-color);
 }
 
 .summary-title {
     font-size: 1.6rem;
     font-weight: 700;
-    color: var(--philo-purple);
+    color: var(--target-h1-color);
     margin: 0 0 0.4rem;
 }
 
 .summary-meta {
     font-size: 0.9rem;
-    color: #6b7280;
+    color: var(--summary-muted);
     margin: 0;
 }
 
@@ -31,10 +54,10 @@
 .summary-section-title {
     font-size: 1.15rem;
     font-weight: 600;
-    color: var(--philo-purple);
+    color: var(--target-h1-color);
     margin: 0 0 1rem;
     padding-bottom: 0.4rem;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--summary-line);
 }
 
 /* ── Page-visits table ───────────────────────────────────────────────────── */
@@ -48,13 +71,13 @@
 .summary-table td {
     text-align: left;
     padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid #e2e8f0;
-    color: #1a202c;
+    border-bottom: 1px solid var(--summary-line);
+    color: var(--summary-text);
 }
 
 .summary-table th {
     font-weight: 600;
-    color: #6b7280;
+    color: var(--summary-muted);
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 0.04em;
@@ -74,7 +97,7 @@
 .summary-module-title {
     font-size: 1rem;
     font-weight: 600;
-    color: #1a202c;
+    color: var(--summary-text);
     margin: 0 0 0.75rem;
 }
 
@@ -86,11 +109,11 @@
     margin-bottom: 0.6rem;
     border-radius: 6px;
     border-left: 4px solid transparent;
-    background: #f8fafc;
+    background: var(--summary-q-bg);
 }
 
-.summary-question--correct  { border-left-color: #22c55e; background: #f0fdf4; }
-.summary-question--incorrect { border-left-color: #ef4444; background: #fef2f2; }
+.summary-question--correct  { border-left-color: #22c55e; background: var(--summary-correct-bg); }
+.summary-question--incorrect { border-left-color: #ef4444; background: var(--summary-incorrect-bg); }
 
 .summary-q-indicator {
     font-size: 1.1rem;
@@ -99,8 +122,8 @@
     line-height: 1.5;
 }
 
-.summary-question--correct  .summary-q-indicator { color: #16a34a; }
-.summary-question--incorrect .summary-q-indicator { color: #dc2626; }
+.summary-question--correct  .summary-q-indicator { color: var(--summary-correct-text); }
+.summary-question--incorrect .summary-q-indicator { color: var(--summary-incorrect-text); }
 
 .summary-q-body {
     flex: 1;
@@ -110,7 +133,7 @@
 .summary-q-text {
     font-size: 0.95rem;
     margin-bottom: 0.35rem;
-    color: #1a202c;
+    color: var(--summary-text);
 }
 
 .summary-q-answer {
@@ -121,16 +144,16 @@
     font-size: 0.88rem;
 }
 
-.summary-q-answer-label  { color: #6b7280; font-weight: 500; }
-.summary-q-answer-item   { color: #1a202c; }
+.summary-q-answer-label  { color: var(--summary-muted); font-weight: 500; }
+.summary-q-answer-item   { color: var(--summary-text); }
 
-.summary-q-answer-item--incorrect { color: #dc2626; font-weight: 500; }
-.summary-q-answer-empty  { color: #9ca3af; font-style: italic; }
+.summary-q-answer-item--incorrect { color: var(--summary-incorrect-text); font-weight: 500; }
+.summary-q-answer-empty  { color: var(--summary-faint); font-style: italic; }
 
 .summary-q-instruction {
     font-size: 0.78rem;
     font-weight: 600;
-    color: #6b7280;
+    color: var(--summary-muted);
     text-transform: uppercase;
     letter-spacing: 0.04em;
     margin-bottom: 0.25rem;
@@ -142,7 +165,7 @@
     max-height: 120px;
     object-fit: contain;
     border-radius: 4px;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--summary-line);
     margin-top: 0.25rem;
 }
 
@@ -159,17 +182,17 @@
     margin-top: 0.25rem;
 }
 
-.summary-q-answer-label--correct { color: #16a34a; font-weight: 600; }
+.summary-q-answer-label--correct { color: var(--summary-correct-text); font-weight: 600; }
 
 .summary-q-meta {
     font-size: 0.8rem;
-    color: #6b7280;
+    color: var(--summary-muted);
     margin-bottom: 0.3rem;
 }
 
 .summary-q-attempts {
     font-size: 0.8rem;
-    color: #9ca3af;
+    color: var(--summary-faint);
     margin-top: 0.2rem;
 }
 
@@ -181,7 +204,7 @@
     width: 100%;
     background: none;
     border: none;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid var(--summary-line);
     padding: 0 0 0.4rem;
     margin-bottom: 0;
     cursor: pointer;
@@ -201,7 +224,7 @@
 
 .summary-accordion-icon {
     font-size: 0.75rem;
-    color: var(--philo-purple);
+    color: var(--target-h1-color);
     flex-shrink: 0;
 }
 
@@ -219,7 +242,7 @@
 .summary-test-title {
     font-size: 1rem;
     font-weight: 600;
-    color: #1a202c;
+    color: var(--summary-text);
     margin: 0 0 0.5rem;
 }
 
@@ -233,7 +256,7 @@
     flex: 1;
     height: 10px;
     border-radius: 5px;
-    background: #e2e8f0;
+    background: var(--summary-line);
     overflow: hidden;
 }
 
@@ -251,7 +274,7 @@
     white-space: nowrap;
     font-size: 0.9rem;
     font-weight: 500;
-    color: #1a202c;
+    color: var(--summary-text);
 }
 
 /* ── Small screens ───────────────────────────────────────────────────────── */
@@ -271,13 +294,40 @@
 .summary-empty {
     padding: 2rem;
     text-align: center;
-    color: #9ca3af;
+    color: var(--summary-faint);
     font-size: 0.95rem;
 }
 
 /* ── Print styles ────────────────────────────────────────────────────────── */
 @media print {
     .no-print { display: none !important; }
+
+    /* only the Lernpfad goes on paper */
+    app-header,
+    app-nav-bar,
+    app-footer {
+        display: none !important;
+    }
+
+    .page-body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: 1fr;
+    }
+
+    /* paper is white in both themes */
+    :root,
+    [data-theme="dark"] {
+        --bg-main: #fff;
+        --card-bg: #fff;
+        --text-primary: var(--uni-blau-1);
+        --target-h1-color: var(--philo-purple);
+        --summary-text: #1a202c;
+        --summary-muted: #6b7280;
+        --summary-faint: #9ca3af;
+        --summary-line: #e2e8f0;
+        --summary-correct-text: #16a34a;
+        --summary-incorrect-text: #dc2626;
+    }
 
     @page {
         margin: 1.5cm 2cm;

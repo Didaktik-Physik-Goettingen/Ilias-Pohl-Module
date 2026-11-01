@@ -11,16 +11,16 @@
     align-items: center;
     gap: 1rem;
     padding: 1rem;
-    background: linear-gradient(135deg, #f5f9ff 0%, #e3f2fd 100%);
-    /* border: 2px solid var(--uni-blau-4); */
-    border: 2px solid transparent;
+    background: var(--surface-option);
+    /* border: 1px solid var(--border-soft); */
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     cursor: move;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .image-item:hover:not(.disabled) {
-    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    background: var(--surface-option-hover);
     border-color: var(--uni-blau-4);
 }
 
@@ -29,7 +29,7 @@
 }
 
 .image-item.cdk-drag-preview {
-    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    background: var(--surface-option-hover);
     border-color: var(--uni-blau-4);
     opacity: 0.9;
     transition: none;
@@ -37,7 +37,7 @@
 }
 
 .image-item.cdk-drag-animating {
-    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    background: var(--surface-option-hover);
     border-color: var(--uni-blau-4);
     transition: transform 150ms cubic-bezier(0, 0, 0.2, 1);
     will-change: transform;
@@ -50,18 +50,18 @@
     align-items: center;
     gap: 0.25rem;
     padding: 0.5rem;
-    color: var(--uni-blau-2);
+    color: var(--text-secondary);
 }
 
 .position-number {
     font-size: 1.2rem;
     font-weight: 700;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
 }
 
 .drag-icon {
     font-size: 1.5rem;
-    color: var(--grau-60);
+    color: var(--text-muted);
 }
 
 /* Image content */
@@ -73,7 +73,9 @@
     gap: 1rem;
 }
 
+/* figures keep their white plate in dark mode */
 .image-content img {
+    background: white;
     width: 300px;
     max-width: 100%;
     height: auto;
@@ -83,7 +85,7 @@
 
 .image-label {
     font-size: 0.9rem;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     font-weight: 500;
 }
 

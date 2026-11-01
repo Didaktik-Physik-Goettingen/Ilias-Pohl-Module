@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
+import { NAV_STRAND_KEY } from '../../../shared/nav-bar/nav-bar';
 import * as chaosContent from './opt-chaos-content';
 
 declare global {
@@ -143,7 +144,9 @@ export class OptChaos implements OnInit, AfterViewInit, OnDestroy {
     // going back shows the previous subpage / home page
     goBack() {
         if (this.currentView === 'chaos_1') {
-            this.router.navigate(['/test/test-t-driven'], { queryParams: { page: '5' } });
+            // the end page of the strand's test, which links here
+            const test = localStorage.getItem(NAV_STRAND_KEY) === 'e' ? '/test/test-e-driven' : '/test/test-t-driven';
+            this.router.navigate([test], { queryParams: { page: '5' } });
             return;
         } else if (this.currentView === 'chaos_2') {
             this.currentView = 'chaos_1';

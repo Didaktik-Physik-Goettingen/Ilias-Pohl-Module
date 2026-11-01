@@ -12,7 +12,6 @@
     margin: 2rem 0;
 }
 
-/* Card base — always light background regardless of dark-mode */
 .target-option {
     flex: 1;
     min-width: 0;
@@ -20,8 +19,8 @@
     flex-direction: column;
     gap: 1rem;
     padding: 1.75rem;
-    background: linear-gradient(135deg, #f8f4ff 0%, #efe8ff 100%);
-    border: 2px solid transparent;
+    background: var(--surface-target);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     transition: border-color 0.3s ease, background 0.3s ease;
 }
@@ -32,24 +31,23 @@
 }
 
 .target-option:hover {
-    border-color: var(--philo-purple);
-    background: linear-gradient(135deg, #efe8ff 0%, #e3d5ff 100%);
+    border-color: var(--target-h1-color);
+    background: var(--surface-target-hover);
 }
 
-/* Heading inside the card — always dark purple, independent of dark-mode theme variable */
 .target-option > h3 {
-    color: var(--philo-purple);
+    color: var(--target-h1-color);
     font-size: 1rem;
     font-weight: 600;
     margin: 0;
     padding-bottom: 0.6rem;
-    border-bottom: 2px solid var(--philo-purple);
+    border-bottom: 1px solid var(--target-h1-color);
 }
 
 /* Two-column internal layout for E1 + E2 within the wide card */
 .target-variants-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 1.25rem;
     flex: 1;
 }
@@ -63,19 +61,22 @@
 /* Subtle divider between E1 and E2 */
 .target-variant-col + .target-variant-col {
     padding-left: 1.25rem;
-    border-left: 1px solid rgba(69, 25, 92, 0.2);
+    border-left: 1px solid var(--border-soft);
 }
 
 /* Sub-label distinguishing variants */
+/* left-aligned: justified text leaves large gaps in columns this narrow */
 .target-variant {
-    font-size: 0.8rem;
-    color: var(--grau-60);
+    text-align: left;
+    font-size: 0.85rem;
+    color: var(--text-muted);
     font-style: italic;
 }
 
 .target-description {
-    font-size: 0.8rem;
-    color: var(--uni-blau-1);
+    text-align: left;
+    font-size: 0.9rem;
+    color: var(--text-primary);
     font-weight: 500;
     line-height: 1.6;
     flex: 1; /* grows to push code + downloads toward the bottom */
@@ -87,14 +88,14 @@
     align-items: center;
     gap: 0.5rem;
     margin-top: 5rem;
-    font-size: 0.8rem;
-    color: var(--grau-80);
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
 
 .target-code-badge {
     display: inline-block;
     padding: 0.1rem 0.55rem;
-    background: var(--philo-purple);
+    background: var(--target-fill);
     color: white;
     border-radius: 4px;
     font-size: 0.85rem;
@@ -113,44 +114,32 @@
 .target-download-btn {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    padding: 0.55rem 0.8rem;
-    background: var(--philo-purple);
+    gap: 0.4rem;
+    padding: 0.55rem 0.65rem;
+    white-space: nowrap;
+    background: var(--target-fill);
     color: white;
-    border: 2px solid var(--philo-purple);
+    border: 2px solid var(--target-fill);
     border-radius: 6px;
     font-weight: 600;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     text-decoration: none;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .target-download-btn:hover {
-    background: white;
-    color: var(--philo-purple);
-    border-color: var(--philo-purple);
-    border-bottom: 2px solid var(--philo-purple);
+    background: var(--card-bg);
+    color: var(--target-h1-color);
+    border-color: var(--target-h1-color);
+    border-bottom: 2px solid var(--target-h1-color);
 }
 
 .target-file-size {
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     opacity: 0.75;
     margin-left: auto;
     white-space: nowrap;
-}
-
-/* ── Dark mode — card background stays light; only buttons adapt ─────────── */
-[data-theme="dark"] .target-download-btn {
-    background: #7e22ce;
-    border-color: #7e22ce;
-}
-
-[data-theme="dark"] .target-download-btn:hover {
-    background: white;
-    color: var(--philo-purple);
-    border-color: var(--philo-purple);
-    border-bottom: 2px solid var(--philo-purple);
 }
 
 /* ── PDF download status messages ───────────────────────────────────────── */
@@ -162,21 +151,38 @@
 
 /* ── Lernpfad summary block on target page ───────────────────────────────── */
 .summary-container {
-    margin-top: 2rem;
     padding: 1.75rem;
-    background: var(--card-background, #fff);
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
-    box-shadow: 0 1px 4px var(--shadow-color, rgba(0,0,0,0.08));
+}
+
+/* the target page's blocks below its .card: same column as the .card's content */
+.summary-container,
+.container > .button-container {
+    max-width: min(58rem, 100% - 4rem);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container > .button-container {
+    margin-bottom: 3.5rem;
 }
 
 /* ── Responsive ──────────────────────────────────────────────────────────── */
-@media (max-width: 900px) {
+/* next to the nav, the wide card's two columns get too narrow for the download buttons before 900px */
+@media (max-width: 1200px) {
     .target-options {
         flex-direction: column;
     }
 }
 
 @media (max-width: 600px) {
+    .summary-container,
+    .container > .button-container {
+        max-width: calc(100% - 2rem);
+    }
+
     .target-variants-grid {
         grid-template-columns: 1fr;
     }
@@ -185,6 +191,6 @@
         padding-left: 0;
         border-left: none;
         padding-top: 1rem;
-        border-top: 1px solid rgba(69, 25, 92, 0.2);
+        border-top: 1px solid var(--border-soft);
     }
 }

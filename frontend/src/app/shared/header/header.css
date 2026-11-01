@@ -1,6 +1,7 @@
-/* Header wrapper */
+/* Host and wrapper dissolve, so the stripes can stick along the whole page while staying in the flow */
+:host,
 .header-wrapper {
-    position: relative;
+    display: contents;
 }
 
 /* Header */
@@ -8,19 +9,33 @@ header {
     background: var(--uni-blau-1);
     width: 100%;
     color: white;
-    padding: 0.8rem 2rem;
+    padding: 0.8rem 1.5rem;
+    line-height: 1.5;
+    hyphens: manual;
 }
 
+/* one row, aligned with the nav-bar; the padding keeps it clear of the absolutely positioned theme toggle */
 .header-content {
-    max-width: 1200px;
-    margin: 0 auto;
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.6rem;      /* icon above the nav's markers, title above its rows */
+    padding-right: 3rem;
+}
+
+.header-icon {
+    display: block;
+    align-self: center;
+    margin-left: 2px;
+    margin-right: 4px;
+    width: 28px;
+    height: 28px;
 }
 
 .header-title {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 600;
-    margin-bottom: 0.2rem;
 }
 
 .header-title--clickable {
@@ -28,31 +43,25 @@ header {
 }
 
 .header-subtitle {
-    font-size: 1rem;
-    opacity: 0.9;
+    margin-left: 0.25rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
     font-weight: 400;
 }
 
-/* Header lines - become sticky on scroll */
+/* Header lines */
 .header-lines {
+    position: sticky;
+    top: 0;
+    z-index: 999;
     display: flex;
     flex-direction: column;
-    /* gap: 0.25rem; */
-    transition: all 0.3s ease;
-}
-
-.header-lines.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-
+/* the three heights add up to --header-lines-height */
 .line {
-    height: 10px;
+    height: 5px;
     width: 100%;
 }
 
@@ -61,7 +70,7 @@ header {
 }
 
 .line-i {
-    height: 0.25rem;
+    height: 2px;
     background: var(--bg-secondary);
 }
 
@@ -69,34 +78,16 @@ header {
     background: var(--uni-blau-2);
 }
 
-.header-content {
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
-.header-title {
-    font-size: 1.3rem;
-    font-weight: 600;
-    margin-bottom: 0.2rem;
-}
-
-.header-subtitle {
-    /* color: var(--physik-gelb); */
-    font-size: 1rem;
-    opacity: 0.9;
-    font-weight: 400;
-}
-
 /* Theme toggle button */
 .theme-toggle {
     position: absolute;
-    top: 25%;
+    top: 50%;
     right: 0;
-    /* transform: translateY(50%); */
+    transform: translateY(-50%);
     background: transparent;
     border: none;
     cursor: pointer;
-    padding: 0.5rem;
+    padding: 0.25rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -105,23 +96,21 @@ header {
 }
 
 .theme-toggle:hover {
-    transform: scale(1.2);
+    transform: translateY(-50%) scale(1.2);
 }
 
 .theme-toggle img {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
     filter: brightness(0) invert(1);
 }
 
 .session-debug {
+    margin-left: auto;
+    font-size: 0.9rem;
+    opacity: 0.75;
     color: var(--physik-gelb);
     overflow-wrap: anywhere;
-}
-
-/* keep header text clear of the absolutely positioned theme toggle */
-.header-content {
-    padding-right: 3.5rem;
 }
 
 /* Hamburger button — only on narrow screens, where the sidebar is a drawer */
@@ -158,6 +147,15 @@ header {
     .header-content--with-menu {
         padding-left: 3.25rem;
     }
+
+    /* one line: the full id isn't needed here, and the link stays clickable */
+    .session-debug {
+        flex-basis: 100%;
+        margin-left: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 @media (max-width: 600px) {
@@ -165,17 +163,18 @@ header {
         padding: 0.8rem 1rem;
     }
 
+    /* beside the hamburger there is no room for it */
+    .header-icon {
+        display: none;
+    }
+
     .header-title {
-        font-size: 1.1rem;
+        font-size: 1.05rem;
     }
 
     .header-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .theme-toggle img {
-        width: 28px;
-        height: 28px;
+        margin-left: 0;
+        font-size: 0.85rem;
     }
 }
 

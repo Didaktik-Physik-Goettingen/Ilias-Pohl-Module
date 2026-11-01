@@ -38,7 +38,7 @@
     --button-border-color: var(--uni-blau-1);
     --button-text-color: var(--uni-blau-1);
     --button-text-color-hover: var(--uni-blau-1);
-    --bg-footer: var(--uni-blau-2);
+    --bg-footer: var(--bg-primary);
     --glossary-link-color: var(--uni-blau-3);
     --glossary-link-color-hover: var(--uni-blau-3);
     --test-h1-color: var(--physik-gelb);
@@ -47,6 +47,42 @@
     /* formula coloring for MathJax \class{mjx-formula-hom/inhom}{} */
     --formula-hom:   var(--forst-gruen);  /* homogeneous / transient term  */
     --formula-inhom: var(--uni-blau-2);   /* inhomogeneous / stationary term */
+
+    /* surfaces, one step per level: nav (--bg-primary) < main (--bg-main) < boxes (--card-bg) */
+    --bg-main: #f8f9fb;
+    --border-soft: var(--grau-20);
+    --text-muted: var(--grau-80);
+    --surface-option: #f4f7fb;
+    --surface-option-hover: #e9f1fa;
+    --surface-disabled: var(--grau-10);
+    --surface-disabled-option: var(--grau-20);
+    --surface-info: linear-gradient(135deg, #e3f2fd 0%, #f5f9ff 100%);
+    --surface-info-hover: linear-gradient(135deg, #d1e7fd 0%, #e8f4ff 100%);
+    --control-fill: var(--uni-blau-1);    /* Auswerten, slider thumbs */
+    --control-text: white;
+    --switch-on: var(--uni-blau-1);
+    --lamp-bg: linear-gradient(rgba(255, 197, 131, 0.15), rgba(255, 197, 131, 0.15)) #ffffff;
+    --lamp-border: rgb(255, 197, 131);
+    --lamp-text: var(--uni-blau-1);
+    --result-correct-bg: #e8f5e9;
+    --result-correct-border: #4caf50;
+    --result-correct-text: #2e7d32;
+    --result-incorrect-bg: #ffebee;
+    --result-incorrect-border: #f44336;
+    --result-incorrect-text: #c62828;
+
+    /* target pages: purple-tinted boxes (styles_target.css) */
+    --surface-target: #f8f5fd;
+    --surface-target-hover: #f0eafa;
+    --target-fill: var(--philo-purple);
+
+    /* nav-bar: line, markers and rows (nav-bar.css) */
+    --nav-locked: #646b78;
+    --rail-locked: #cdd3dc;
+    --row-edge: rgba(21, 50, 104, 0.28);
+
+    /* height of the stripes below the header: the sticky nav starts below them */
+    --header-lines-height: 12px;
 }
 
 /* global Reset & Base Styles */
@@ -70,7 +106,7 @@
     --button-border-color: white;
     --button-text-color:       white;
     --button-text-color-hover: white;
-    --bg-footer: var(--uni-blau-2);
+    --bg-footer: var(--bg-primary);
     --glossary-link-color:     var(--uni-blau-4);
     --glossary-link-color-hover: var(--uni-blau-4);
     --test-h1-color:           var(--physik-gelb);
@@ -79,11 +115,44 @@
     /* formula coloring — lighter/brighter variants for dark backgrounds */
     --formula-hom:   #34c98a;             /* brightened forst-grün, ~7:1 on dark card */
     --formula-inhom: var(--uni-blau-3);   /* #0091C8, ~5.5:1 on dark card */
+
+    --bg-main: #182234;
+    --border-soft: rgba(148, 163, 184, 0.25);
+    --text-muted: rgb(148, 163, 184);
+    --surface-option: rgba(148, 163, 184, 0.10);
+    --surface-option-hover: rgba(148, 163, 184, 0.18);
+    --surface-disabled: #182234;
+    --surface-disabled-option: rgba(148, 163, 184, 0.06);
+    --surface-info: rgba(80, 165, 210, 0.12);
+    --surface-info-hover: rgba(80, 165, 210, 0.20);
+    --control-fill: rgb(226, 232, 240);
+    --control-text: #111827;
+    --switch-on: var(--uni-blau-3);
+    --lamp-bg: rgba(253, 166, 66, 0.10);
+    --lamp-border: rgba(255, 197, 131, 0.45);
+    --lamp-text: rgb(226, 232, 240);
+    --result-correct-bg: rgba(76, 175, 80, 0.15);
+    --result-correct-text: #86efac;
+    --result-incorrect-bg: rgba(244, 67, 54, 0.15);
+    --result-incorrect-text: #fca5a5;
+
+    --surface-target: rgba(192, 132, 252, 0.10);
+    --surface-target-hover: rgba(192, 132, 252, 0.18);
+    --target-fill: #7e22ce;
+
+    --nav-locked: #8593a8;
+    --rail-locked: rgba(148, 163, 184, 0.28);
+    --row-edge: rgba(226, 232, 240, 0.32);
 }
 
 html, body {
     height: 100%;
     margin: 0;
+}
+
+/* 15px base: every rem scales with it (text, spacing, column); phones keep 16px, see below */
+html {
+    font-size: 93.75%;
 }
 
 
@@ -95,6 +164,7 @@ body {
     display: flex;
     flex-direction: column;
 	text-align: justify;
+	hyphens: auto;     /* justified text needs it: without it, long German compounds leave wide gaps */
 	font-size: 1rem;
 }
 
@@ -102,43 +172,42 @@ body {
 .app-container {
     display: flex;
     flex-direction: column;
-    min-height: 104vh; /* Minimum full viewport height */
+    min-height: 100vh; /* Minimum full viewport height */
 }
 
 /* Breakpoints used across the app: 600px (phone), 900px (tablet / nav drawer), 1200px (side-by-side layouts) */
 
-/* sidebar + main wrapper — 3-column grid.
-   The sidebar scales with the viewport and reaches 500px at ~1920px.
-   The phantom right column only appears above ~1420px and mirrors the sidebar
-   at 1920px, so wide screens keep the content centred while mid-size screens
-   give all spare width to the content. */
+/* sidebar + main wrapper: both fill the page height from header to footer */
 .page-body {
-    --nav-width: clamp(260px, 26vw, 500px);
-    --nav-mirror-width: clamp(0px, 100vw - 1420px, 500px);
+    --nav-width: clamp(280px, 24vw, 380px);
     display: grid;
-    grid-template-columns: var(--nav-width) minmax(0, 1fr) var(--nav-mirror-width);
+    grid-template-columns: var(--nav-width) minmax(0, 1fr);
     flex: 1;                        /* grows inside .app-container flex column */
-    align-items: stretch;           /* main + phantom columns fill the page height */
-}
-
-.page-body::after {
-    content: '';
+    align-items: stretch;
 }
 
 /* main content */
 .main-content {
     min-width: 0;
-    padding-bottom: 2rem;
+}
+
+/* start page: the nav is hidden, so it must not reserve its column either */
+@media (min-width: 901px) {
+    .page-body:has(> app-nav-bar.nav-hidden) {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    app-nav-bar.nav-hidden {
+        display: none;
+    }
 }
 
 /* sidebar turns into a drawer (see nav-bar.css) — content takes the full width */
 @media (max-width: 900px) {
     .page-body {
         grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: 0 1fr;  /* the nav's empty host takes no share of the height */
         background: none;
-    }
-    .page-body::after {
-        display: none;
     }
 }
 
@@ -149,9 +218,15 @@ app-footer {
 
 /* Typography */
 h1, h2, h3, h4, h5, h6 {
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     font-weight: 600;
     margin-bottom: 0.5rem;
+    hyphens: manual;
+}
+
+/* long headings aren't hyphenated, so justifying them would tear the words apart */
+h1, h2 {
+    text-align: left;
 }
 
 h1 {
@@ -163,7 +238,7 @@ h1 {
 
 h2 {
     font-size: 1.8rem;
-    color: var(--uni-blau-2);
+    color: var(--text-secondary);
 }
 
 .page-subheadline {
@@ -192,27 +267,21 @@ a:hover {
 /* Main content area */
 main {
     flex: 1;
-    background: var(--bg-primary);
-	/* background: rgb(44, 44, 44); */
+    background: var(--bg-main);
     display: flex;
     flex-direction: column;
 }
 
 /* Container for page content */
 .container {
-    max-width: 1300px;
-    margin: 0 auto;
-    padding: 2rem;
     width: 100%;
 }
 
-/* panel styling */
+/* the page's centred column; no box of its own, the main area is the surface */
 .card {
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 2px 16px var(--shadow-color);
-    border: 1px solid var(--border-color);
+    max-width: 62rem;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 3.5rem;
 }
 
 /* container for buttons */
@@ -221,7 +290,12 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: 1.5rem;
+}
+
+/* two buttons fill the column together; a lone one keeps its half on its own side */
+.button-container > .btn {
+    flex: 0 1 calc(50% - 0.75rem);
 }
 
 /* Forward button: anchors to right even when back button is absent. */
@@ -253,7 +327,7 @@ button.btn {
     box-sizing: border-box;
     
     /* Size */
-    width: 30rem;
+    width: 24rem;
     max-width: 100%;
     padding: 0.75rem 1.5rem;
     
@@ -268,7 +342,7 @@ button.btn {
     
     /* Appearance */
     background: var(--button-color);
-    border: 3px solid var(--button-border-color);
+    border: 2px solid var(--button-border-color);
     border-radius: 6px;
     box-shadow: 0 2px 8px var(--shadow-color);
 
@@ -309,10 +383,9 @@ button.btn {
 .spoiler {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
-    border: 2px solid var(--grau-80);
+    border: 1px solid var(--border-soft);
     border-radius: 12px;
-    background: var(--altweiss);
-    box-shadow: 0 8px 16px rgba(33, 150, 243, 0.2);
+    background: var(--card-bg);
     overflow: hidden;
 }
 
@@ -321,7 +394,7 @@ button.btn {
     cursor: pointer;
     padding: 1.25rem 2rem;
     font-weight: 600;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -335,13 +408,13 @@ button.btn {
 .spoiler-summary::after {
     content: '▾';
     font-size: 1.2rem;
-    color: var(--uni-blau-2);
+    color: var(--text-secondary);
     margin-left: 1rem;
     transition: transform 0.3s ease;
 }
 
 .spoiler-summary:hover {
-    background: rgba(0, 0, 0, 0.03);
+    background: var(--surface-option);
 }
 
 .spoiler[open] > .spoiler-summary::after {
@@ -349,25 +422,24 @@ button.btn {
 }
 
 .spoiler[open] > .spoiler-summary {
-    border-bottom: 1px solid var(--grau-20);
+    border-bottom: 1px solid var(--border-soft);
 }
 
 .spoiler-content {
     padding: 1.5rem 2rem 2rem;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     line-height: 1.7;
 }
 
-/* learning pages: formula/key-result highlight box — hardcoded yellow, theme-invariant */
+/* learning pages: formula/key-result highlight box */
 .learning-lamp {
     position: relative;
     margin-top: 1.5rem;
     margin-bottom: 2rem;
     padding: 1rem 1.5rem 1rem 3.5rem;
-    background: linear-gradient(rgba(255, 197, 131, 0.15), rgba(255, 197, 131, 0.15)) #ffffff;
-    border: 2px solid rgb(255, 197, 131);
+    background: var(--lamp-bg);
+    border: 1px solid var(--lamp-border);
     border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(255, 197, 131, 0.35);
     transition: all 0.3s ease;
 }
 
@@ -383,7 +455,7 @@ button.btn {
 }
 
 .learning-lamp-text {
-    color: var(--uni-blau-1);
+    color: var(--lamp-text);
     line-height: 1.7;
     margin: 0;
     font-weight: 500;
@@ -425,11 +497,9 @@ button.btn {
 }
 
 .glossary-overlay-panel .card {
-    box-shadow: none;
-    border: none;
-    border-radius: 0;
+    max-width: 100%;
+    margin: 0;
     padding: 1.5rem;
-    background: transparent;
 }
 
 .glossary-overlay-panel .button-container {
@@ -517,22 +587,33 @@ mjx-container[display="true"] {
 
 /* ── Small screens ───────────────────────────────────────────────────────── */
 @media (max-width: 600px) {
+    html {
+        font-size: 100%;
+    }
+
     body {
         text-align: left;   /* justified text leaves large gaps on narrow columns */
-        hyphens: auto;      /* long German compounds would otherwise overflow */
         overflow-wrap: break-word;
     }
 
-    h1, h2, h3 { hyphens: manual; }
+    /* MathJax can't break a long formula: it scrolls inside its block, not the whole page.
+       The padding keeps tall ones (fractions, roots) inside the box, which now clips at its edges. */
+    .card p:has(mjx-container),
+    .evaluation-question:has(mjx-container),
+    .test-question:has(mjx-container),
+    .evaluation-option > span:has(mjx-container),
+    .option-label:has(mjx-container) {
+        min-width: 0;
+        padding-block: 1em;
+        overflow-x: auto;
+        overflow-y: hidden;
+    }
+
     h1 { font-size: 1.6rem; line-height: 1.35; }
     h2 { font-size: 1.35rem; line-height: 1.35; }
 
-    .container {
-        padding: 1rem;
-    }
-
     .card {
-        padding: 1.25rem;
+        padding: 1.5rem 1rem 2.5rem;
     }
 
     /* stack back/forward buttons; forward (primary action) on top */
@@ -544,6 +625,14 @@ mjx-container[display="true"] {
     .button-container > button:last-of-type,
     .button-container > button.btn-back {
         margin: 0;
+    }
+
+    .button-container {
+        gap: 1rem;
+    }
+
+    .button-container > .btn {
+        flex: none;
     }
 
     .btn,

@@ -6,15 +6,15 @@
 
 .method-card {
     flex: 1;
-    border: 2px solid var(--uni-blau-4);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     padding: 1.2rem 1.5rem;
-    background: var(--bg-secondary);
+    background: var(--card-bg);
 }
 
 .method-card h3 {
     margin: 0 0 0.6rem 0;
-    color: var(--uni-blau-3);
+    color: var(--text-secondary);
     font-size: 1rem;
 }
 
@@ -35,5 +35,5 @@
 
 .notebook-download h3 {
     margin-bottom: 0.75rem;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
 }

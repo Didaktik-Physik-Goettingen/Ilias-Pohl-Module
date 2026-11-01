@@ -1,30 +1,27 @@
 .test-results-container {
-    background: white;
+    background: var(--card-bg);
     border-radius: 12px;
     padding: 2rem;
     margin-bottom: 2rem;
-    border: 2px solid var(--physik-gelb);
+    border: 1px solid var(--physik-gelb);
     text-align: center;
 }
 
 .test-results-container.low {
-    /* border-color: #f44336; */
-    background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+    background: var(--result-incorrect-bg);
 }
 
 .test-results-container.medium {
-    /* border-color: #ff9800; */
-    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    background: rgba(255, 152, 0, 0.12);
 }
 
 .test-results-container.high {
-    /* border-color: #4caf50; */
-    background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+    background: var(--result-correct-bg);
 }
 
 /* Title */
 .results-title {
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     font-size: 1.8rem;
     margin-bottom: 2rem;
     font-weight: 700;
@@ -45,23 +42,23 @@
 .points-earned {
     font-size: 4rem;
     font-weight: 700;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     line-height: 1;
 }
 
 .points-separator {
     font-size: 3rem;
-    color: var(--grau-60);
+    color: var(--text-muted);
 }
 
 .points-max {
     font-size: 3rem;
-    color: var(--grau-80);
+    color: var(--text-muted);
 }
 
 .score-label {
     font-size: 1.2rem;
-    color: var(--grau-80);
+    color: var(--text-muted);
     margin-top: 0.5rem;
     font-weight: 600;
 }
@@ -77,9 +74,9 @@
     font-weight: 700;
     padding: 1rem 2rem;
     border-radius: 50px;
-    background: rgba(255, 255, 255, 0.8);
-    color: var(--uni-blau-1);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: var(--card-bg);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px var(--shadow-color);
 }
 
 /* Performance Message */
@@ -89,7 +86,7 @@
 
 .performance-message p {
     font-size: 1.2rem;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     line-height: 1.6;
     max-width: 600px;
     margin: 0 auto;

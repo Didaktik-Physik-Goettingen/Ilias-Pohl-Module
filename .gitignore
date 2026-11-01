@@ -49,3 +49,4 @@ Thumbs.db
 # specifically ignoring the introduction readme
 .learning_module_readme.md
 # learning_module_readme.html
+pohl_design_transfer.md

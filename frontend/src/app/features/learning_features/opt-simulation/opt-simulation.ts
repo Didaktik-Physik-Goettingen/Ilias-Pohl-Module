@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { DevModeService } from '../../../core/services/dev-mode';
+import { NAV_STRAND_KEY } from '../../../shared/nav-bar/nav-bar';
 import * as simContent from './opt-simulation-content';
 
 declare global {
@@ -60,7 +61,9 @@ export class OptSimulation implements OnInit, OnDestroy {
 
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        this.router.navigate(['/test/test-t-driven'], { queryParams: { page: '5' } });
+        // the end page of the strand's test, which links here
+        const test = localStorage.getItem(NAV_STRAND_KEY) === 'e' ? '/test/test-e-driven' : '/test/test-t-driven';
+        this.router.navigate([test], { queryParams: { page: '5' } });
     }
 
     goForward(): void {

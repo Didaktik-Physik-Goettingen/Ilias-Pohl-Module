@@ -7,6 +7,9 @@ The project was generated using [Angular CLI](https://github.com/angular/angular
 
 ## Project Structure Tree
 
+<details>
+<summary>Preject Structure Tree</summary>
+
 ```
 ilias_bridge.html                               // entry point from ILIAS; username + key form
 .htaccess                                       // production routing: /api/* → PHP, rest → index.html
@@ -72,6 +75,7 @@ README.md
 │           │           results-tracking.ts     // learning module answer logging
 │           │           test-tracking.ts        // test answer logging (single-submission)
 │           │           data-export.ts          // aggregates all tracking; saves to / loads from API
+│           │           visited-pages.ts        // sub-pages opened so far, for the nav-bar
 │           │           summary.service.ts      // builds SummaryData for Lernpfad display
 │           │           html-report.service.ts  // generates HTML Lernpfad report (browser download)
 │           │           learning-report-registry.ts  // maps page routes → ordered content blocks
@@ -82,7 +86,7 @@ README.md
 │           └── shared/
 │           │   └── footer/                     // footer component
 │           │   └── header/                     // header component
-│           │   └── nav-bar/                    // sticky sidebar navigation
+│           │   └── nav-bar/                    // sidebar navigation: the chosen strand as a line of stations
 │           │   └── glossary-overlay/           // inline glossary panel (triggered by anchor links)
 │           │   │
 │           │   └── evaluation/                 // Q+A types for learning pages (retryable)
@@ -118,6 +122,8 @@ README.md
 │               └── target_features/            // end-of-module guide download + Lernpfad summary
 |
 ```
+
+</details>
 
 
 ## Running Locally
@@ -246,8 +252,9 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **session.ts:** reads `session_id` from URL (set by bridge page), falls back to generating a `rogue_user_` identifier for direct access; exposes `isRogueUser()`
 - **analytics.ts:** tracks page visit durations on route changes
 - **results-tracking.ts:** logs learning question answers; allows retries, increments `attemptCount`
-- **test-tracking.ts:** logs test question answers; blocks re-submission of the same question
+- **test-tracking.ts:** logs test question answers; blocks re-submission of the same question; `isTestFinished()` tells whether every question of a test was submitted
 - **data-export.ts:** aggregates all three tracking services; calls `saveProgress()` on test completion and on `beforeunload`; calls `loadProgress()` on app startup to restore previous session; silently skips rogue users
+- **visited-pages.ts:** the sub-pages a student has opened, per session id in `localStorage` plus the visits from the saved progress; the nav-bar draws the path reached so far from it and opens the visited sub-pages of the current segment
 - **summary.service.ts:** builds a `SummaryData` object from the in-memory tracking state (page visits with human-readable labels, learning questions grouped by module, test results with per-question breakdown); consumed by all target pages to render the Lernpfad summary
 - **html-report.service.ts:** generates a self-contained HTML Lernpfad report and triggers a browser download; embeds images as base64 data URIs, renders page content in registry order, and inlines question answers with correct/incorrect feedback; MathJax CDN is included for LaTeX rendering
 - **learning-report-registry.ts:** maps every content page route + page number to an ordered list of `ReportBlock[]` entries (text, image, question, spoiler); used by `html-report.service.ts` to produce the report in the correct page-by-page order; also exposes `PAGE_LOOKUP` as a `Map<string, PageDefinition>` for O(1) lookups
@@ -258,15 +265,17 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 
 ### Shared Components
 
-- **Navigation bar:** sticky sidebar navigation rendered on every route inside `.page-body`. Layout uses a two-div pattern — the outer `.nav-bar` shell is `position: sticky; height: 100vh` with no overflow (overflow on a sticky element breaks stickiness in most browsers), and the inner `.nav-bar-container` has `height: 100%; overflow-y: auto` for scrollable content when many sub-pages are expanded. The sidebar is hidden (`visibility: hidden`) on the home route in normal mode, preserving the grid column so content stays centred.
+- **Navigation bar:** the chosen strand as a line of stations, rendered inside `.page-body`: Startseite → the strand's numbered segments → Anleitung. The outer `.nav-bar` fills the grid column from header to footer, and the inner `.nav-bar-container` sticks below the header stripes and scrolls on its own if the viewport is too short. The nav isn't shown on the Startseite: the `nav-hidden` host class makes the page grid drop its column, so the content centres.
 
-  **Strand switcher:** a segmented tab control showing the two learning strands (Fokus Experiment / Fokus Theorie). The active tab fills the available width and shows the full label; the inactive tab collapses to an abbreviation (EXP / THEO). In dev-mode the inactive tab is clickable and navigates to the first sub-page of the target strand. The chosen strand is persisted in `localStorage` and restored on reload.
+  **Reached and clickable** are separate. A row is *reached* (filled marker, dark line, navy text) when it was visited, using `VisitedPages`; a segment also when its decision page was visited, the Anleitung when any target page was. Outside dev-mode only the visited sub-pages of the current segment are *clickable* (`disabled` otherwise, so the tab order skips them). Segments, Startseite and Anleitung aren't, so a box on a row means it can be opened and only appears in dev-mode.
 
-  **Segment list:** only the segments of the active strand are rendered. Non-active segments show a hover highlight (visual feedback without navigation); the cursor distinguishes clickability — `cursor: pointer` in dev-mode, `cursor: default` otherwise. Clicking a non-active segment (dev-mode only) navigates to its first sub-page. The active segment expands a sub-page dropdown; sub-page buttons are always visible but only navigable in dev-mode. The active sub-page is highlighted using URL matching (`router.url` with `?page=` query param, defaulting to page 1 when the param is absent).
+  **Tests:** while an open test is unfinished (`TestTracking.isTestFinished()`), nothing in the nav is clickable, since the learning rows hold the answers. A Test row only opens once its test is finished.
 
-  **Optional deep dives** (`opt-chaos`, `opt-simulation`, `opt-setup`) are reachable from both strands and rendered as a separate group under the headline *Optionale Vertiefungen*. Their segment IDs are strand-neutral, so opening one keeps the current strand selected. Outside dev-mode the group (and its headline) only appears while one of these pages is open; in dev-mode all three are always listed.
+  **Strand:** the chosen strand is shown as plain text above segment 1 and persisted in `localStorage`. In dev-mode a small link beside it switches to the other strand, and Glossar is a plain row below the line.
 
-  **Startseite / Anleitung endpoints:** always rendered but only clickable (`cursor: pointer`, `goHome()` / `goAnleitung()` guards) in dev-mode, or when the user is already on the Anleitung page.
+  **Sub-pages:** the current segment expands its list, except on a decision page. The rows depend on how the student entered the segment (learn / simulation / test flow), and visited rows stay listed. The active sub-page is matched using `router.url` with the `?page=` query param, defaulting to page 1 when the param is absent. Clicking a row within the same page keeps the URL's `flow`; the current row does nothing.
+
+  **Optional deep dives** (`opt-chaos`, `opt-simulation`, and `opt-setup` on the experiment strand) sit below the line under the headline *Optionale Vertiefungen*, without markers. Their segment IDs are strand-neutral, so opening one keeps the current strand. Outside dev-mode the group only appears while one of these pages is open. On the theory strand `opt-setup` is a station of the line, with an icon instead of a number, since every way to the Anleitung leads through it.
 
 - **Glossary overlay:** inline glossary panel triggered by `<a data-glossary="{term}" class="glossary-link">` links in content strings and templates; a `@HostListener('click')` on each learning component intercepts these anchors (using `closest('a[data-glossary]')`) and opens the overlay without navigation. The `data-glossary` attribute (rather than `href="#glossary-"`) prevents the browser from offering "Open in new tab" in the context menu.
 

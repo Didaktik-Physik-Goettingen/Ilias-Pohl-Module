@@ -84,6 +84,11 @@ export class TestTracking {
                 maxPoints,
                 results: []
             });
+        } else {
+            // the test page knows the real totals; an entry restored from the backend only knows the answered questions
+            const existing = this.tests.get(testId)!;
+            existing.totalQuestions = totalQuestions;
+            existing.maxPoints = maxPoints;
         }
 
         console.log(`Started tracking test: ${testId} with ${totalQuestions} questions (${maxPoints} points)`);
@@ -197,6 +202,13 @@ export class TestTracking {
     }
 
 
+    // every question submitted; percentageScore can't tell, endTest() also writes it for a test left half-way
+    isTestFinished(testId: string): boolean {
+        const test = this.tests.get(testId);
+        return !!test && test.questionsAnswered >= test.totalQuestions;
+    }
+
+
     getAllTests(): TestProgress[] {
         return Array.from(this.tests.values());
     }
@@ -285,15 +297,17 @@ export class TestTracking {
                 sessionId:     r.session_id
             }));
 
+            // the page's startTest() may have run already (a cold load onto a test page): keep its real totals
+            const existing     = this.tests.get(testId);
             const pointsEarned = results.reduce((sum, r) => sum + r.pointsAwarded, 0);
-            const maxPoints    = results.reduce((sum, r) => sum + r.maxPoints, 0);
+            const maxPoints    = existing?.maxPoints ?? results.reduce((sum, r) => sum + r.maxPoints, 0);
 
             this.tests.set(testId, {
                 testId,
                 sessionId:         testRows[0].session_id,
                 startTime:         new Date(testRows[0].answered_at).getTime(),
                 questionsAnswered: results.length,
-                totalQuestions:    results.length,
+                totalQuestions:    existing?.totalQuestions ?? results.length,
                 pointsEarned,
                 maxPoints,
                 percentageScore:   maxPoints > 0 ? (pointsEarned / maxPoints) * 100 : 0,

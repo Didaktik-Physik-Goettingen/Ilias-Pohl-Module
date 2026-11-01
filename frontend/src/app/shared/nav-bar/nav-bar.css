@@ -1,258 +1,302 @@
-/* ── Sidebar container ─────────────────────────────────────────────────── */
+/* The chosen strand as a line of stations: a gutter on the left holds the line and the markers, the rows sit beside it.
+   Two separate states: reached (filled marker, dark line) is the path so far; a row with a box can be opened,
+   a locked row has no box. Outside dev mode only sub-pages can be opened, so segments never get a box there. */
 
-/* outer: sticky shell — must NOT have overflow or stickiness breaks */
+/* stretched by the page grid: the nav's background and border reach from header to footer */
+:host {
+    display: block;
+}
+
+/* ── Sidebar container ─────────────────────────────────────────────────── */
 .nav-bar {
-    position: sticky;
-    top: 1.5rem;
-    height: 100vh;
-    align-self: flex-start;
+    --nav-gutter: 38px;
+    --nav-gap: 0.2rem;
+    height: 100%;
     background: var(--bg-primary);
     border-right: 2px solid var(--border-color);
     z-index: 100;
 }
 
-/* inner: handles overflow so nav content can scroll when it exceeds 100vh */
+/* inner: sticks below the header stripes and scrolls on its own if the viewport is too short */
 .nav-bar-container {
-    height: 100%;
+    position: sticky;
+    top: var(--header-lines-height);
+    max-height: calc(100dvh - var(--header-lines-height));
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    padding: 2rem;
+    gap: var(--nav-gap);
+    padding: 1.5rem 1.25rem 1.5rem 1.5rem;
 }
 
-/* ── Startseite / Anleitung endpoints ──────────────────────────────────── */
-.nav-endpoint-btn {
-    width: 100%;
-    padding: 1rem 0.5rem;
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    background: var(--card-bg);
-    color: var(--text-primary);
+.seg-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--nav-gap);
+}
+
+/* ── Rows: Startseite, segments, Anleitung ─────────────────────────────── */
+.nav-row {
+    position: relative;
+    width: calc(100% - var(--nav-gutter));
+    margin-left: var(--nav-gutter);
+    padding: 0.6rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: transparent;
+    color: var(--nav-locked);
     cursor: default;
-    font-size: 1.25rem;
-    font-weight: 600;
-    text-align: center;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.25;
+    text-align: left;
+    overflow-wrap: break-word;
+    hyphens: manual;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
 }
 
-.nav-endpoint-btn-dev:hover {
-    background: var(--card-bg);
+.nav-row--reached {
     color: var(--text-primary);
+    font-weight: 500;
+}
+
+.nav-row--open {
+    border-color: var(--row-edge);
+    background: var(--bg-main);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.nav-row--endpoint.nav-row--reached,
+.nav-row--endpoint.nav-row--open {
+    font-weight: 600;
+}
+
+.nav-row--open:hover {
+    background: var(--card-bg);
     border-color: var(--text-primary);
 }
 
-.nav-endpoint-btn-dev:active {
-    transform: scalex(0.98);
+/* no transform here: it would move the row's marker and its piece of the line too */
+.nav-row--open:active {
+    background: var(--bg-primary);
     transition: none; /* snaps down instantly */
     touch-action: manipulation;
 }
 
-.nav-endpoint-active {
+/* current segment or endpoint: inverted, non-interactive */
+.nav-row--active,
+.nav-row--active:hover {
     background: var(--text-primary);
     border-color: var(--text-primary);
     color: var(--bg-primary);
     font-weight: 700;
-    cursor: default;
     pointer-events: none;
 }
 
-/* cursor: pointer only when the endpoint is actually navigable */
-.nav-endpoint-dev {
-    cursor: pointer;
-}
-
-/* ── Strand section ────────────────────────────────────────────────────── */
-.strand-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-/* ── Strand switcher ───────────────────────────────────────────────────── */
-.strand-switcher {
-    display: flex;
-    gap: 0px;
-    background: var(--card-bg);
-    border: 3px solid var(--button-border-color);
-    border-radius: 5px;
-    /* padding: 1px; */
-    margin: 2rem 3rem 2rem 3rem;
-}
-
-.strand-tab {
-    border: none;
-    border-radius: 5px;
-    padding: 0.45rem 0.5rem;
-    font-family: inherit;
-    font-weight: 700;
-    font-size: 0.9rem;
-    letter-spacing: 0.02em;
-    cursor: default;
-    text-align: center;
-    transition: background 0.2s, color 0.2s;
-}
-
-/* active tab: fills remaining space, inverted colours matching the seg-active palette */
-.strand-tab-active {
-    flex: 1;
-    background: var(--uni-blau-4);
-    color: var(--bg-primary);
-}
-
-/* inactive tab: collapses to a letter, barely there */
-.strand-tab-inactive {
-    width: 4rem;
-    flex-shrink: 0;
-    background: transparent;
-    color: var(--text-secondary);
-    opacity: 0.45;
-}
-
-/* in dev-mode the inactive tab becomes clickable */
-.strand-tab-dev {
-    cursor: pointer;
-    opacity: 1;
-}
-
-.strand-tab.strand-tab-dev:hover {
-    background: var(--border-color);
-    color: var(--text-primary);
-}
-
-/* ── Segment column ────────────────────────────────────────────────────── */
-.strand-col {
-    display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-}
-
-/* headline separating the optional deep dives from the strand's main path */
-.seg-group-title {
+/* optional pages and dev-mode links: not stations, so off the line */
+.nav-row--spaced {
     margin-top: 1.25rem;
-    padding: 0.75rem 0.25rem 0.35rem;
-    border-top: 1px solid var(--border-color);
+}
+
+/* ── Quiet text between the stations ───────────────────────────────────── */
+.nav-strand,
+.nav-group-title {
+    margin-left: var(--nav-gutter);
+    padding: 0.35rem 0.75rem 0.15rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    line-height: 1.25;
+    text-align: left;
+    hyphens: manual;
+}
+
+.nav-strand {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    column-gap: 0.75rem;
+}
+
+/* dev mode only: a quiet link to the other strand, not a station */
+.nav-strand-switch {
+    padding: 0;
+    border: none;
+    background: none;
+    color: var(--text-primary);
+    cursor: pointer;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+}
+
+.nav-strand-switch:hover {
+    color: var(--text-secondary);
+}
+
+.nav-group-title {
+    margin-top: 1.25rem;
+}
+
+/* ── Markers ───────────────────────────────────────────────────────────── */
+.nav-marker {
+    position: absolute;
+    z-index: 1;
+    left: calc(var(--nav-gutter) * -1 + 1px);
+    top: 50%;
+    width: 28px;
+    height: 28px;
+    margin-top: -14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--rail-locked);
+    border-radius: 50%;
+    background: var(--bg-primary);
+    color: var(--nav-locked);
     font-size: 0.8rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
+    line-height: 1;
 }
 
-/* ── Segment buttons ───────────────────────────────────────────────────── */
-.seg-btn {
-    width: 100%;
-    padding: 1rem 0.25rem 1rem 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 5px;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    font-size: 1.25rem;
-    font-weight: 500;
-    text-align: left;
-    cursor: default;
-    transition: background 0.15s, color 0.15s, border-color 0.15s;
-    line-height: 1.2;
-    overflow-wrap: break-word;
-    hyphens: auto;
-    /* margin-top: 2rem; */
+.nav-marker svg {
+    display: block;
+    width: 14px;
+    height: 14px;
+    fill: currentColor;
 }
 
-/* hover always visible — cursor is the signal that the item is/isn't clickable */
-.seg-btn-dev:hover {
-    background: var(--card-bg);
-    color: var(--text-primary);
+.nav-row--reached .nav-marker,
+.nav-row--open .nav-marker,
+.nav-row--active .nav-marker {
     border-color: var(--text-primary);
-}
-
-.seg-btn-dev:active {
-    transform: scalex(0.98);
-    transition: none; /* snaps down instantly */
-    touch-action: manipulation;
-}
-
-/* active segment: inverted, non-interactive */
-.seg-active {
     background: var(--text-primary);
-    border-color: var(--text-primary);
     color: var(--bg-primary);
-    font-weight: 700;
-    cursor: default;
-    pointer-events: none;
 }
 
-/* dev-mode non-active: pointer cursor (hover already applies to all) */
-.seg-dev {
-    cursor: pointer;
+.nav-row--active .nav-marker {
+    box-shadow: 0 0 0 3px var(--row-edge);
 }
 
-/* ── Dropdown ──────────────────────────────────────────────────────────── */
+/* ── The line: every row draws its own piece, dark up to the last row reached and through the open segment ── */
+.nav-row::after,
+.nav-strand::after,
+.sub-btn::after {
+    content: '';
+    position: absolute;
+    left: calc(var(--nav-gutter) * -1 + 14px);
+    top: -0.7rem;   /* bridges the gaps and borders up to the piece above */
+    bottom: 0;
+    width: 2px;
+    background: var(--rail-locked);
+}
+
+.nav-row--reached::after,
+.nav-row--open::after,
+.nav-row--active::after,
+.nav-strand--reached::after,
+.sub-btn::after {
+    background: var(--text-primary);
+}
+
+/* the open segment's line reaches the next station, also a locked one: dark down to its marker, which hides the change */
+.seg-dropdown + .nav-row:not(.nav-row--reached):not(.nav-row--open)::after {
+    background: linear-gradient(var(--text-primary) 50%, var(--rail-locked) 50%);
+}
+
+.seg-list:has(> .seg-dropdown:last-child) + .nav-row::after {
+    background: var(--text-primary);
+}
+
+.nav-row--first::after {
+    top: 50%;
+}
+
+.nav-row--last::after {
+    bottom: 50%;
+}
+
+.nav-row--plain::after,
+.seg-dropdown--plain .sub-btn::after {
+    display: none;
+}
+
+/* no border here, unlike the rows: same place on the line */
+.nav-strand::after {
+    left: calc(var(--nav-gutter) * -1 + 15px);
+}
+
+/* ── Sub-pages of the current segment ──────────────────────────────────── */
 .seg-dropdown {
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
-    padding: 0.2rem 0 0.2rem 0.35rem;
-    border-left: 2px solid var(--text-primary);
-    margin-left: 0.15rem;
-    margin-bottom: 2rem;
+    margin: 0 0 0 var(--nav-gutter);
+    padding: 0.15rem 0 0.35rem;
 }
 
 .sub-btn {
+    position: relative;
     width: 100%;
-    padding: 0.28rem 0.4rem 0.28rem 1.5rem;
-    border: none;
+    padding: 0.3rem 0.5rem 0.3rem 0.75rem;
+    border: 2px solid transparent; /* the active row's outline must not shift the label */
     border-radius: 4px;
     background: transparent;
-    color: var(--text-primary);
-    font-size: 1rem;
-    text-align: left;
+    color: var(--nav-locked);
     cursor: default;
-    transition: background 0.12s, color 0.12s;
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    text-align: left;
+    text-wrap: balance;     /* no single word alone on the second line */
     overflow-wrap: break-word;
-    hyphens: auto;
+    hyphens: manual;
+    transition: background 0.12s, color 0.12s;
 }
 
-/* hover always visible */
-.sub-btn-dev:hover {
+/* the line takes the row's 2px border into account */
+.sub-btn::after {
+    left: calc(var(--nav-gutter) * -1 + 13px);
+    bottom: -0.25rem;
+}
+
+.sub-btn--open {
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.sub-btn--open:hover {
     background: var(--text-primary);
     color: var(--card-bg);
 }
 
-.sub-btn-dev:active {
-    transform: scalex(0.98);
+.sub-btn--open:active {
+    background: var(--row-edge);
+    color: var(--text-primary);
     transition: none; /* snaps down instantly */
     touch-action: manipulation;
 }
 
-.sub-btn-active {
-    border: 2px solid var(--button-border-color);
+.sub-btn--active,
+.sub-btn--active:hover,
+.sub-btn--active:active {
+    border-color: var(--button-border-color);
+    background: transparent;
     color: var(--text-primary);
+    cursor: default;
     font-weight: 600;
 }
 
-/* active sub-btn stays stable on hover */
-.sub-btn-active:hover {
-    background: transparent;
-    color: var(--text-primary);
-}
-
-/* dev-mode: unlocked dropdown gets pointer cursor */
-.seg-dropdown:not(.seg-dropdown-locked) .sub-btn {
-    cursor: pointer;
-}
-
-/* ── Dark mode ─────────────────────────────────────────────────────────── */
-@media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) .seg-btn {
-        border-color: var(--border-color);
-    }
-}
-
-/* narrower sidebar: let the strand switcher use the full width */
-@media (max-width: 1200px) {
-    .strand-switcher {
-        margin: 1.5rem 0;
-    }
+/* ── Keyboard focus ────────────────────────────────────────────────────── */
+.nav-row:focus-visible,
+.nav-strand-switch:focus-visible,
+.sub-btn:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
 }
 
 /* ── Responsive: sidebar becomes a slide-in drawer on narrow screens ───── */
@@ -283,6 +327,9 @@
     }
 
     .nav-bar-container {
+        position: static;
+        height: 100%;
+        max-height: none;
         padding: 1.25rem;
     }
 

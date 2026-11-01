@@ -4,6 +4,7 @@ import { Session } from './session';
 import { Analytics, AnalyticsData } from './analytics';
 import { ResultsTracking, ModuleProgress } from './results-tracking';
 import { TestTracking, TestProgress } from './test-tracking';
+import { VisitedPages } from './visited-pages';
 
 
 
@@ -29,7 +30,8 @@ export class DataExport {
         private sessionService: Session,
         private analyticsService: Analytics,
         private resultsService: ResultsTracking,
-        private testService: TestTracking
+        private testService: TestTracking,
+        private visitedPages: VisitedPages
     ) {
         if (isPlatformBrowser(this.platformId)) {
             window.addEventListener('beforeunload', () => this.saveProgress());
@@ -85,6 +87,7 @@ export class DataExport {
             const lastPage: string | null = meaningful.length
                 ? meaningful[meaningful.length - 1].page
                 : null;
+            this.visitedPages.add(meaningful.map((v: any) => v.page));     // nav-bar: reached pages, also from another device
 
             console.log('Progress loaded from backend. Last page:', lastPage);
             return lastPage;

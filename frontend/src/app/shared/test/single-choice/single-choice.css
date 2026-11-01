@@ -4,7 +4,7 @@
     height: 15px;
     margin-right: 1rem;
     cursor: pointer;
-    accent-color: var(--uni-blau-2);
+    accent-color: var(--text-secondary);
     flex-shrink: 0;
 }
 
@@ -13,5 +13,6 @@
 }
 
 .choice-option.selected {
-    border-color: var(--uni-blau-2);
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
 }

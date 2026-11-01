@@ -124,11 +124,11 @@ export class SimEDampedOscillations implements OnInit, AfterViewInit, OnDestroy 
     renderMath() {
         if (isPlatformBrowser(this.platformId)) {
             setTimeout(() => {
-                if (window.MathJax) {
-                    const elements = document.querySelectorAll('.MathJax');
-                    elements.forEach(el => el.remove());
-                    window.MathJax.typesetPromise();
-                }
+                // not loaded yet: its own first pass will find the page. Loaded: that pass may have rendered this page
+                // already, and a second one would process its output again. Arriving from another page, it hasn't.
+                window.MathJax?.startup?.promise?.then(() => {
+                    if (!document.querySelector('main mjx-container')) window.MathJax.typesetPromise();
+                });
             }, 100);
         }
     }

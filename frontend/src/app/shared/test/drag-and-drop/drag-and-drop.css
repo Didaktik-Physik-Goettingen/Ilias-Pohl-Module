@@ -18,20 +18,20 @@
     align-items: flex-start;
     gap: 1rem;
     padding: 1rem;
-    background: white;
-    border: 2px solid var(--uni-blau-4);
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .result-container.correct {
-    background: #e8f5e9;
-    border-color: #4caf50;
+    background: var(--result-correct-bg);
+    border-color: var(--result-correct-border);
 }
 
 .result-container.incorrect {
-    background: #ffebee;
-    border-color: #f44336;
+    background: var(--result-incorrect-bg);
+    border-color: var(--result-incorrect-border);
 }
 
 /* Container image (left) */
@@ -39,7 +39,9 @@
     flex: 0 0 120px;
 }
 
+/* figures keep their white plate in dark mode */
 .container-image img {
+    background: white;
     width: 250px;
     height: auto;
     border-radius: 6px;
@@ -52,9 +54,9 @@
     height: auto;
     min-height: 80px;
     padding: 0.75rem;
-    color: var(--uni-blau-1);
-    background: linear-gradient(135deg, #f5f9ff 0%, #e3f2fd 100%);
-    border: 2px dashed var(--uni-blau-4);
+    color: var(--text-primary);
+    background: var(--surface-option);
+    border: 1px dashed var(--text-muted);
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -63,13 +65,13 @@
 }
 
 .drop-zone.cdk-drop-list-dragging {
-    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
-    border-color: var(--uni-blau-2);
+    background: var(--surface-option-hover);
+    border-color: var(--text-primary);
     /* border-style: solid; */
 }
 
 .drop-placeholder {
-    color: var(--grau-60);
+    color: var(--text-muted);
     font-style: italic;
     font-size: 0.9rem;
     text-align: center;
@@ -82,18 +84,18 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.5rem 1rem;
-    background: white;
-    border: 2px solid var(--uni-blau-4);
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
     border-radius: 6px;
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     cursor: move;
     transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
     position: relative;
 }
 
 .assigned-answer:not(.disabled):hover {
-    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    background: var(--surface-option-hover);
     border-color: var(--uni-blau-4);
 }
 
@@ -102,7 +104,7 @@
 }
 
 .assigned-answer.cdk-drag-preview {
-    box-shadow: 0 8px 16px rgba(33, 150, 243, 0.4);
+    box-shadow: 0 8px 16px var(--shadow-color);
     transition: none;
     will-change: transform;
 }
@@ -113,13 +115,13 @@
 
 /* Individual answer feedback after submission */
 .assigned-answer.answer-correct {
-    background: #e8f5e9;
-    border-color: #4caf50;
+    background: var(--result-correct-bg);
+    border-color: var(--result-correct-border);
 }
 
 .assigned-answer.answer-incorrect {
-    background: #ffebee;
-    border-color: #f44336;
+    background: var(--result-incorrect-bg);
+    border-color: var(--result-incorrect-border);
 }
 
 .answer-indicator {
@@ -129,9 +131,9 @@
 }
 
 .remove-btn {
-    background: var(--uni-blau-1);
+    background: var(--control-fill);
     border: none;
-    color: white;
+    color: var(--control-text);
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -145,8 +147,8 @@
 }
 
 .remove-btn:hover {
-    background: white;
-    color: var(--uni-blau-1);
+    background: var(--card-bg);
+    color: var(--control-fill);
 }
 
 /* Available answers (right side) */
@@ -158,7 +160,7 @@
 
 .answers-title {
     font-size: 1rem;
-    color: var(--uni-blau-1);
+    color: var(--text-primary);
     margin-bottom: 1rem;
     font-weight: 600;
 }
@@ -168,31 +170,31 @@
     flex-direction: column;
     gap: 0.75rem;
     padding: 1rem;
-    background: var(--grau-10);
-    border: 2px solid var(--grau-40);
+    background: var(--surface-option);
+    border: 1px solid var(--border-soft);
     border-radius: 8px;
     min-height: 300px;
 }
 
 .available-answers.cdk-drop-list-dragging {
-    background: var(--grau-20);
-    border-color: var(--uni-blau-4);
+    background: var(--surface-option-hover);
+    border-color: var(--text-primary);
 }
 
 .draggable-answer {
     padding: 0.75rem 1rem;
-    background: white;
-    border: 2px solid var(--uni-blau-4);
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
     border-radius: 6px;
     cursor: move;
     font-weight: 500;
-    font-size: 0.85rem;
-    color: var(--uni-blau-1);
+    font-size: 0.95rem;
+    color: var(--text-primary);
     transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .draggable-answer:not(.disabled):hover {
-    background: linear-gradient(135deg, #e3f2fd 0%, #d1e7fd 100%);
+    background: var(--surface-option-hover);
     border-color: var(--uni-blau-4);
 }
 
@@ -212,7 +214,7 @@
 }
 
 .no-answers {
-    color: var(--grau-60);
+    color: var(--text-muted);
     font-style: italic;
     text-align: center;
     padding: 2rem 0;
@@ -221,16 +223,15 @@
 /* Click-to-move selection state */
 .draggable-answer.selected-for-move,
 .assigned-answer.selected-for-move {
-    border: 2px solid transparent;
-    border-color: var(--uni-blau-1);
-    color: var(--uni-blau-1);
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
+    color: var(--text-primary);
     cursor: pointer;
 }
 
 .draggable-answer.selected-for-move:not(.disabled):hover,
 .assigned-answer.selected-for-move:not(.disabled):hover {
-    border: 2px solid transparent;
-    border-color: var(--uni-blau-1);
+    border-color: var(--text-primary);
 }
 
 .drop-zone.click-target-active {

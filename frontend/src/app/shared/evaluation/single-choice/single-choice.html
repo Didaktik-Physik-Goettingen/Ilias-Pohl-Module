@@ -4,7 +4,7 @@
 
         <div class="evaluation-options">
             @for (option of shuffledOptions; track option.value) {
-                <label class="evaluation-option">
+                <label class="evaluation-option" [class.selected]="selectedValue === option.value">
                     <input
                         type="radio"
                         [name]="containerId"

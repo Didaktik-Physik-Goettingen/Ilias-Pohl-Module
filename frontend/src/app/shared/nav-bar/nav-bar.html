@@ -5,90 +5,103 @@
     <div class="nav-bar-container">
 
         <!-- Startseite -->
-        <button class="nav-endpoint-btn"
-            [class.nav-endpoint-active]="activeSegment === 'home'"
-            [class.nav-endpoint-btn-dev]="devMode.isEnabled"
-            [class.nav-endpoint-dev]="isAnleitungClickable"
+        <button class="nav-row nav-row--endpoint nav-row--first"
+            [class.nav-row--reached]="isHomeReached"
+            [class.nav-row--open]="devMode.isEnabled"
+            [class.nav-row--active]="activeSegment === 'home'"
+            [attr.aria-current]="activeSegment === 'home' ? 'step' : null"
+            [disabled]="!devMode.isEnabled"
             (click)="goHome()">
+            <span class="nav-marker" aria-hidden="true">
+                <svg viewBox="0 0 16 16"><path d="M8 1.5 1 7.6h2V14h3.6v-4h2.8v4H13V7.6h2z"/></svg>
+            </span>
             Startseite
         </button>
-        @if (devMode.isEnabled) {
-        <!-- Glossary access in dev-mode -->
-        <button class="nav-endpoint-btn"
-            [class.nav-endpoint-active]="activeSegment === 'glossary'"
-            [class.nav-endpoint-btn-dev]="devMode.isEnabled"
-            [class.nav-endpoint-dev]="isAnleitungClickable"
-            (click)="goGlossary()">
-            Glossar
-        </button>   
-        }
 
-        <!-- Strand section -->
-        <div class="strand-section">
-
-            <!-- Strand switcher: always visible; inactive tab clickable only in dev-mode -->
-            <div class="strand-switcher">
-                <button class="strand-tab"
-                    [class.strand-tab-active]="chosenStrand === 'e'"
-                    [class.strand-tab-inactive]="chosenStrand !== 'e'"
-                    [class.strand-tab-dev]="devMode.isEnabled && chosenStrand !== 'e'"
-                    (click)="switchStrand('e')">
-                    {{ chosenStrand === 'e' ? 'Struktur Experiment' : 'EXP' }}
-                </button>
-                <button class="strand-tab"
-                    [class.strand-tab-active]="chosenStrand === 't'"
-                    [class.strand-tab-inactive]="chosenStrand !== 't'"
-                    [class.strand-tab-dev]="devMode.isEnabled && chosenStrand !== 't'"
-                    (click)="switchStrand('t')">
-                    {{ chosenStrand === 't' ? 'Struktur Theorie' : 'THEO' }}
-                </button>
-            </div>
-
-            <!-- Active strand segments only -->
-            <div class="strand-col">
-                @for (seg of (chosenStrand === 't' ? tSegments : chosenStrand === 'e' ? eSegments : []); track seg.id) {
-                    <ng-container *ngTemplateOutlet="segmentBlock; context: { $implicit: seg }"></ng-container>
+        <!-- The chosen strand: information for students, with a way to the other one in dev mode -->
+        @if (chosenStrand) {
+            <div class="nav-strand" [class.nav-strand--reached]="isSegmentReached(strandSegments[0])">
+                Struktur: {{ chosenStrand === 't' ? 'Theorie' : 'Experiment' }}
+                @if (devMode.isEnabled) {
+                    <button class="nav-strand-switch" (click)="switchStrand(chosenStrand === 't' ? 'e' : 't')">
+                        ⇄ {{ chosenStrand === 't' ? 'Experiment' : 'Theorie' }}
+                    </button>
                 }
             </div>
+        }
 
-            <!-- Optional deep dives: shared by both strands; outside dev mode only while one is open -->
-            @if (hasVisibleOptional) {
-                <div class="seg-group-title">Optionale Vertiefungen</div>
-                <div class="strand-col">
-                    @for (seg of optionalSegments; track seg.id) {
-                        @if (isOptionalVisible(seg)) {
-                            <ng-container *ngTemplateOutlet="segmentBlock; context: { $implicit: seg }"></ng-container>
-                        }
-                    }
-                </div>
+        <!-- Learning path of the chosen strand -->
+        <div class="seg-list">
+            @for (seg of strandSegments; track seg.id; let i = $index) {
+                <ng-container *ngTemplateOutlet="segmentBlock; context: { $implicit: seg, number: i + 1 }"></ng-container>
             }
         </div>
 
-        <!-- Anleitung -->
-        <button class="nav-endpoint-btn"
-            [class.nav-endpoint-active]="activeSegment === 'anleitung'"
-            [class.nav-endpoint-btn-dev]="devMode.isEnabled"
-            [class.nav-endpoint-dev]="isAnleitungClickable"
+        <!-- Anleitung (target pages) -->
+        <button class="nav-row nav-row--endpoint nav-row--last"
+            [class.nav-row--reached]="isAnleitungReached"
+            [class.nav-row--open]="devMode.isEnabled"
+            [class.nav-row--active]="activeSegment === 'anleitung'"
+            [attr.aria-current]="activeSegment === 'anleitung' ? 'step' : null"
+            [disabled]="!devMode.isEnabled"
             (click)="goAnleitung()">
+            <span class="nav-marker" aria-hidden="true">
+                <svg viewBox="0 0 16 16"><path d="M3 1.5h1.5V15H3zM5.5 2h8l-2 3 2 3h-8z"/></svg>
+            </span>
             Anleitung
         </button>
+
+        <!-- Optional deep dives: off the line; outside dev mode only while one is open -->
+        @if (hasVisibleOptional) {
+            <div class="nav-group-title">Optionale Vertiefungen</div>
+            @for (seg of optionalSegments; track seg.id) {
+                @if (isOptionalVisible(seg)) {
+                    <ng-container *ngTemplateOutlet="segmentBlock; context: { $implicit: seg, number: null }"></ng-container>
+                }
+            }
+        }
+
+        @if (devMode.isEnabled) {
+            <!-- Dev-mode access: not a station, so off the line -->
+            <button class="nav-row nav-row--plain nav-row--open nav-row--spaced"
+                [class.nav-row--active]="activeSegment === 'glossary'"
+                (click)="goGlossary()">
+                Glossar
+            </button>
+        }
 
     </div>
 </nav>
 
-<ng-template #segmentBlock let-seg>
-    <button class="seg-btn"
-        [class.seg-btn-dev]="devMode.isEnabled"
-        [ngClass]="getSegmentClass(seg)"
+<ng-template #segmentBlock let-seg let-number="number">
+    <button class="nav-row"
+        [class.nav-row--plain]="number === null"
+        [class.nav-row--reached]="isSegmentReached(seg)"
+        [class.nav-row--open]="devMode.isEnabled"
+        [class.nav-row--active]="activeSegment === seg.id"
+        [attr.aria-current]="activeSegment === seg.id ? 'step' : null"
+        [disabled]="!devMode.isEnabled"
         (click)="onSegmentClick(seg)">
+        @if (number !== null) {
+            <span class="nav-marker" aria-hidden="true">
+                @if (seg.icon) {
+                    <svg viewBox="0 0 16 16"><path [attr.d]="seg.icon"/></svg>
+                } @else {
+                    {{ number }}
+                }
+            </span>
+        }
         {{ seg.label }}
     </button>
     @if (activeSegment === seg.id && (devMode.isEnabled || !isOnDecisionPage)) {
-        <div class="seg-dropdown" [class.seg-dropdown-locked]="!devMode.isEnabled">
+        <div class="seg-dropdown" [class.seg-dropdown--plain]="number === null">
             @for (sub of getVisibleSubpages(seg); track sub.route + (sub.queryParams?.['page'] ?? '')) {
                 <button class="sub-btn"
-                    [class.sub-btn-dev]="devMode.isEnabled"
-                    [class.sub-btn-active]="isSubpageActive(sub)"
+                    [class.sub-btn--reached]="isVisited(sub)"
+                    [class.sub-btn--open]="canOpen(sub)"
+                    [class.sub-btn--active]="isSubpageActive(sub)"
+                    [attr.aria-current]="isSubpageActive(sub) ? 'page' : null"
+                    [disabled]="!canOpen(sub)"
                     (click)="navigateToSubpage(sub)">
                     {{ sub.label }}
                 </button>
