@@ -8,7 +8,7 @@ The project was generated using [Angular CLI](https://github.com/angular/angular
 ## Project Structure Tree
 
 <details>
-<summary>Preject Structure Tree</summary>
+<summary>Project Structure Tree</summary>
 
 ```
 ilias_bridge.html                               // entry point from ILIAS; username + key form

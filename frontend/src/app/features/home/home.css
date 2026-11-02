@@ -62,13 +62,34 @@
 
 .path-card-steps {
     margin: 0 0 1.25rem;
-    padding-left: 1.4rem;
+    padding: 0;
+    list-style: none;
+    counter-reset: path-step;
     line-height: 1.8;
 }
 
-.path-card-steps li::marker {
+.path-card-steps li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    counter-increment: path-step;
+}
+
+/* circled numbers, as in the nav bar's markers and the precession module's start page */
+.path-card-steps li::before {
+    content: counter(path-step);
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border: 2px solid var(--path-accent);
+    border-radius: 50%;
     color: var(--path-accent);
+    font-size: 0.8rem;
     font-weight: 700;
+    line-height: 1;
 }
 
 /* push the button to the card bottom so both buttons line up */
