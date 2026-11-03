@@ -307,6 +307,11 @@
                     showCheckResult('error', 'Kursschlüssel ungültig.');
                     return;
                 }
+                if (checkRes.status === 400) {
+                    usernameInput.classList.add('error');
+                    showCheckResult('error', 'Benutzername ungültig: Bitte nur Buchstaben, Ziffern und . _ - @ verwenden.');
+                    return;
+                }
                 if (!checkRes.ok) throw new Error(`check failed: ${checkRes.status}`);
 
                 const data = await checkRes.json();
@@ -334,6 +339,7 @@
         // "Weiter" only runs after the check has already passed.
         async function handleSubmit() {
             const username = usernameInput.value.trim();
+            const key      = keyInput.value.trim();
 
             submitBtn.disabled = true;
             setStatus('info', userExists ? 'Willkommen zurück! Fortschritt wird geladen…' : 'Neuer Benutzer wird angelegt…', true);
@@ -343,7 +349,7 @@
                     const createRes = await fetch(`${API_BASE}/users/create`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ username }),
+                        body: JSON.stringify({ username, key }),
                     });
                     if (!createRes.ok) throw new Error(`create failed: ${createRes.status}`);
                 }

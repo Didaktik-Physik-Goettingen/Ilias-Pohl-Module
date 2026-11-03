@@ -1,13 +1,14 @@
 import { TestBed } from '@angular/core/testing';
 
 import { TestTracking } from './test-tracking';
+import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 
 describe('TestTracking', () => {
   let service: TestTracking;
 
-  const backendRow = (questionId: string) => ({
-    question_id: questionId, test_id: 't', is_correct: 1, user_answer: 'a', correct_answer: 'a',
-    points_awarded: 10, max_points: 10, answered_at: '2026-11-01 10:00:00', session_id: 's'
+  const backendRow = (questionId: string): AttemptRow => ({
+    kind: 'test', unitId: 't', questionId, attemptNo: 1, isCorrect: true, answer: 'a', correctAnswer: 'a',
+    pointsAwarded: 10, maxPoints: 10, texts: { questionText: 'Frage?' }, answeredAt: Date.UTC(2026, 10, 1)
   });
 
   beforeEach(() => {
@@ -57,10 +58,50 @@ describe('TestTracking', () => {
       expect(service.getTestResults('t')?.percentageScore).toBe(50);
     });
 
+    it('keeps an answer only known locally', () => {
+      service.startTest('t', 2, 20);
+      service.trackQuestionResult('q2', false, 'b', 'a', 0, 10);
+      service.restoreFromBackend([backendRow('q1')]);
+      expect(service.getTestResults('t')?.results.map(r => r.questionId)).toEqual(['q2', 'q1']);
+      expect(service.isTestFinished('t')).toBe(true);
+    });
+
+    it('restores the texts for the summary', () => {
+      service.restoreFromBackend([backendRow('q1')]);
+      expect(service.getTestResults('t')?.results[0].questionText).toBe('Frage?');
+    });
+
     it('keeps a completely answered test finished', () => {
       service.restoreFromBackend([backendRow('q1'), backendRow('q2')]);
       service.startTest('t', 2, 20);
       expect(service.isTestFinished('t')).toBe(true);
+    });
+  });
+
+  describe('per student', () => {
+    it('queues each answer for the server, once', () => {
+      localStorage.setItem('framework_session_id', 'student-a');
+      TestBed.resetTestingModule();
+      const tracking = TestBed.inject(TestTracking);
+      tracking.startTest('t', 2, 20);
+      tracking.trackQuestionResult('q1', true, 'a', 'a', 10, 10);
+      tracking.trackQuestionResult('q1', false, 'b', 'a', 0, 10);
+      const rows = TestBed.inject(AttemptOutbox).getAll();
+      expect(rows.map(r => [r.kind, r.unitId, r.questionId, r.attemptNo, r.pointsAwarded]))
+        .toEqual([['test', 't', 'q1', 1, 10]]);
+    });
+
+    it('does not inherit the answers of another student on the same browser', () => {
+      localStorage.setItem('framework_session_id', 'student-a');
+      TestBed.resetTestingModule();
+      const a = TestBed.inject(TestTracking);
+      a.startTest('t', 1, 10);
+      a.trackQuestionResult('q1', true, 'a', 'a', 10, 10);
+
+      localStorage.setItem('framework_session_id', 'student-b');
+      TestBed.resetTestingModule();
+      expect(TestBed.inject(TestTracking).getAllTests()).toEqual([]);
+      expect(TestBed.inject(AttemptOutbox).getAll()).toEqual([]);
     });
   });
 });

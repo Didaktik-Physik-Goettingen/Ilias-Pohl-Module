@@ -1,25 +1,21 @@
 <?php
-header('Content-Type: application/json');
+require_once __DIR__ . '/../lib.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    exit(json_encode(['error' => 'Method not allowed']));
+requireMethod('POST');
+
+$body     = jsonBody();
+$username = validUsername($body['username'] ?? null);
+
+if ($username === null) {
+    respond(400, ['error' => 'invalid username']);
 }
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../module.php';
+requireCourseKey($body['key'] ?? null);
 
-$body    = json_decode(file_get_contents('php://input'), true);
-$username = trim($body['username'] ?? '');
-
-if (!$username) {
-    http_response_code(400);
-    exit(json_encode(['error' => 'username required']));
-}
-
-$pdo  = getDb();
-$stmt = $pdo->prepare('INSERT INTO users (module_id, username) VALUES (?, ?)');
+// A second click or a parallel tab finds the user already there, which is fine.
+$stmt = getDb()->prepare(
+    'INSERT INTO users (module_id, username) VALUES (?, ?) ON DUPLICATE KEY UPDATE id = id'
+);
 $stmt->execute([getModuleId(), $username]);
 
-http_response_code(201);
-exit(json_encode(['id' => (int) $pdo->lastInsertId(), 'username' => $username]));
+respond(201, ['id' => findUserId($username), 'username' => $username]);

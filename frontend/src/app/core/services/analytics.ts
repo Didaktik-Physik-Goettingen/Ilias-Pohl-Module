@@ -14,6 +14,7 @@ export interface PageVisit {
     duration_s?: number;
     sessionId: string;
     timestamp: string;
+    sent?: boolean;     // the server has confirmed it
 }
 
 
@@ -67,7 +68,7 @@ export class Analytics {
 
         // Track when user leaves the page
         if (typeof window !== 'undefined') {
-            window.addEventListener('beforeunload', () => {
+            window.addEventListener('pagehide', () => {
                 this.endCurrentVisit();
                 this.saveToLocalStorage();
             });
@@ -133,6 +134,17 @@ export class Analytics {
             visits: this.visits,
             currentVisit: this.currentVisit
         };
+    }
+
+
+    getUnsentVisits(): PageVisit[] {
+        return this.visits.filter(v => !v.sent);
+    }
+
+
+    markSent(visits: PageVisit[]) {
+        visits.forEach(v => v.sent = true);
+        this.saveToLocalStorage();
     }
 
 

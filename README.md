@@ -24,6 +24,7 @@ README.md
 ├── api/                                        // PHP backend
 │       config.php                              // DB credentials + module config (gitignored)
 │       config.example.php                      // template for config.php
+│       lib.php                                 // shared by all endpoints: responses, input checks, course key, user lookup
 │       db.php                                  // PDO connection (singleton)
 │       module.php                              // resolves MODULE_NAME → modules.id
 │       router.php                              // local dev router (php -S only)
@@ -74,13 +75,15 @@ README.md
 │           │           analytics.ts            // page visit tracking
 │           │           results-tracking.ts     // learning module answer logging
 │           │           test-tracking.ts        // test answer logging (single-submission)
-│           │           data-export.ts          // aggregates all tracking; saves to / loads from API
+│           │           attempt-outbox.ts       // submitted answers waiting for the server's confirmation
+│           │           data-export.ts          // saves to / loads from API
 │           │           visited-pages.ts        // sub-pages opened so far, for the nav-bar
 │           │           summary.service.ts      // builds SummaryData for Lernpfad display
 │           │           html-report.service.ts  // generates HTML Lernpfad report (browser download)
 │           │           learning-report-registry.ts  // maps page routes → ordered content blocks
 │           │           report-mode.ts          // utility: isSolutionsMode() for dev ?solutions=1
 │           │           dev-mode.ts             // developer mode toggle (Shift+Alt+D)
+│           │           nav-drawer.ts           // open / closed state of the mobile navigation drawer
 │           │           shuffle-order.ts        // utility: randomises answer order
 │           │
 │           └── shared/
@@ -95,7 +98,7 @@ README.md
 │           │   │   └── multiple-choice/
 │           │   │   └── multiple-choice-image/
 │           │   │   └── image-choice/
-│           │   │   └── drag-and-drop/
+│           │   │   └── drag-and-drop/            // empty stub, not used by any page
 │           │   │
 │           │   └── test/                       // Q+A types for test pages (single-submission)
 │           │       └── order-images/
@@ -118,7 +121,6 @@ README.md
 │               └── decision_features/          // choice between learning, simulation, or test
 │               └── simulation_features/        // Angular-based interactive simulations
 │               └── test_features/              // single-submission test pages
-│               └── sidepath_features/
 │               └── target_features/            // end-of-module guide download + Lernpfad summary
 |
 ```
@@ -164,7 +166,7 @@ Pushing to `master` triggers `.github/workflows/deploy.yml` automatically:
 1. GitHub spins up an Ubuntu runner
 2. Installs Node, runs `npm ci`, builds the Angular app
 3. Writes a production `.htaccess` (`RewriteBase /pohl/`) into the build output
-4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`, `api/` (excluding `config.php`), `ilias_bridge.html`
+4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`, `api/` (excluding `config.php` and the development files), `ilias_bridge.html`
 
 **One-time setup** — add the following five secrets in GitHub → repo → Settings → Secrets and variables → Actions. Ask a maintainer for the values:
 `SFTP_HOST`, `SFTP_PORT`, `SFTP_USER`, `SFTP_PASS`, `SFTP_REMOTE_DIR`
@@ -185,7 +187,7 @@ You can also trigger a deploy manually via **GitHub → Actions → Build & Depl
 2. In `.htaccess`, change `RewriteBase /` to `RewriteBase /pohl/`
 3. Upload via SFTP:
    - `frontend/dist/ilias-pohl-module/browser/` → server `pohl/` (the folder contents, not the folder itself)
-   - `api/` (excluding `config.php`) → server `pohl/api/`
+   - `api/` (excluding `config.php`, `schema.sql`, `router.php`, `config.example.php`) → server `pohl/api/`
    - `ilias_bridge.html` and `.htaccess` → server `pohl/`
 4. Revert the `.htaccess` change locally after uploading.
 
@@ -203,6 +205,7 @@ pohl/                        ← your base path
 ├── ilias_bridge.html        ← handles login / session management
 ├── .htaccess                ← routes Angular URLs + /api/* calls
 └── api/
+    ├── lib.php
     ├── db.php
     ├── module.php
     ├── users/
@@ -218,10 +221,10 @@ pohl/                        ← your base path
 
 | Method | Endpoint | File | Description |
 |--------|----------|------|-------------|
-| POST | `/api/users/check` | `users/check.php` | Validate course key; check if username exists |
-| POST | `/api/users/create` | `users/create.php` | Register a new user |
-| POST | `/api/progress/save` | `progress/save.php` | Save analytics, module results, and test results |
-| GET | `/api/progress/{username}` | `progress/load.php` | Load all saved progress for a user |
+| POST | `/api/users/check` | `users/check.php` | Validate username and course key; check if the user exists |
+| POST | `/api/users/create` | `users/create.php` | Register a new user (needs the course key) |
+| POST | `/api/progress/save` | `progress/save.php` | Save page visits and question attempts; a row sent twice is stored once |
+| GET | `/api/progress/{username}` | `progress/load.php` | Load page visits and the latest attempt per question |
 
 
 ## Database Schema
@@ -230,9 +233,8 @@ pohl/                        ← your base path
 |-------|---------|
 | `modules` | One row per learning module (e.g. `pohl`) — scopes all user data |
 | `users` | One row per username per module; same username allowed across different modules |
-| `page_visits` | Page visit durations per session |
-| `module_results` | Learning module question answers (retryable) |
-| `test_results` | Test question answers (single-submission) |
+| `page_visits` | One row per page visit: route, sub-page, query string, duration |
+| `question_attempts` | One row per submitted answer, for learning questions (each retry) and tests (single-submission) |
 
 <!-- Run `api/schema.sql` once in phpMyAdmin (select the `interapt` database first, skip the first two lines).
 
@@ -241,7 +243,7 @@ To delete a user and all their data:
 DELETE FROM users WHERE username = 'max.mustermann'
 AND module_id = (SELECT id FROM modules WHERE name = 'pohl');
 ```
-All related rows in `page_visits`, `module_results`, and `test_results` cascade automatically. -->
+All related rows in `page_visits` and `question_attempts` cascade automatically. -->
 
 
 ## Project Services
@@ -251,15 +253,17 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **theme.ts:** toggles light / dark mode
 - **session.ts:** reads `session_id` from URL (set by bridge page), falls back to generating a `rogue_user_` identifier for direct access; exposes `isRogueUser()`
 - **analytics.ts:** tracks page visit durations on route changes
-- **results-tracking.ts:** logs learning question answers; allows retries, increments `attemptCount`
-- **test-tracking.ts:** logs test question answers; blocks re-submission of the same question; `isTestFinished()` tells whether every question of a test was submitted
-- **data-export.ts:** aggregates all three tracking services; calls `saveProgress()` on test completion and on `beforeunload`; calls `loadProgress()` on app startup to restore previous session; silently skips rogue users
+- **results-tracking.ts:** logs learning question answers; allows retries and sends each attempt; per student in `localStorage`
+- **test-tracking.ts:** logs test question answers; blocks re-submission of the same question; per student in `localStorage`; `isTestFinished()` tells whether every question of a test was submitted
+- **attempt-outbox.ts:** holds each submitted answer, also across reloads, until the server has confirmed it
+- **data-export.ts:** sends what the server hasn't confirmed yet, on test completion, when the tab is hidden and on `pagehide`; calls `loadProgress()` on app startup to restore the previous session, and resumes on the last page when entering through the start page; silently skips rogue users
 - **visited-pages.ts:** the sub-pages a student has opened, per session id in `localStorage` plus the visits from the saved progress; the nav-bar draws the path reached so far from it and opens the visited sub-pages of the current segment
 - **summary.service.ts:** builds a `SummaryData` object from the in-memory tracking state (page visits with human-readable labels, learning questions grouped by module, test results with per-question breakdown); consumed by all target pages to render the Lernpfad summary
 - **html-report.service.ts:** generates a self-contained HTML Lernpfad report and triggers a browser download; embeds images as base64 data URIs, renders page content in registry order, and inlines question answers with correct/incorrect feedback; MathJax CDN is included for LaTeX rendering
 - **learning-report-registry.ts:** maps every content page route + page number to an ordered list of `ReportBlock[]` entries (text, image, question, spoiler); used by `html-report.service.ts` to produce the report in the correct page-by-page order; also exposes `PAGE_LOOKUP` as a `Map<string, PageDefinition>` for O(1) lookups
 - **report-mode.ts:** utility function `isSolutionsMode()` — returns `true` when running in Angular dev mode with `?solutions=1` in the URL; used to gate answer reveals during development
 - **shuffle-order.ts:** utility that randomises answer order for evaluation and test components
+- **nav-drawer.ts:** open / closed state of the sidebar drawer below 900 px; the header's menu button toggles it
 - **dev-mode.ts:** developer mode toggle; press `Shift+Alt+D` anywhere to enable/disable; state persists in `sessionStorage` across SPA navigation; when active, shows an amber badge and reveals gated back-navigation buttons on decision, simulation, learning, test, and target pages; SSR-safe
 
 
@@ -286,7 +290,7 @@ All related rows in `page_visits`, `module_results`, and `test_results` cascade 
 - **multiple-choice:** multiple correct answers
 - **multiple-choice-image:** multiple choice with a reference image
 - **image-choice:** choose between images arranged in a grid
-- **drag-and-drop:** match items by dragging
+- ~~drag-and-drop~~ — empty stub (`shared/evaluation/drag-and-drop`), not used by any page
 
 ### Test Formats
 

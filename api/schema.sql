@@ -1,8 +1,8 @@
 CREATE DATABASE IF NOT EXISTS interapt CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE interapt;
 
--- One row per learning module (e.g. 'pohl', 'other-module').
--- The backend's MODULE_NAME env var selects which row is active.
+-- One row per learning module (e.g. 'pohl', 'precession').
+-- module_name in api/config.php selects which row is active.
 CREATE TABLE IF NOT EXISTS modules (
   id         INT AUTO_INCREMENT PRIMARY KEY,
   name       VARCHAR(100) NOT NULL UNIQUE,
@@ -20,43 +20,40 @@ CREATE TABLE IF NOT EXISTS users (
   FOREIGN KEY (module_id) REFERENCES modules(id) ON DELETE CASCADE
 );
 
+-- One row per page visit. The unique key makes saving idempotent: a visit sent twice is stored once.
+-- started_at comes from the browser, in UTC with milliseconds; received_at is the server's clock.
 CREATE TABLE IF NOT EXISTS page_visits (
-  id          INT AUTO_INCREMENT PRIMARY KEY,
+  id          BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_id     INT NOT NULL,
-  session_id  VARCHAR(100) NOT NULL,
-  page        VARCHAR(255) NOT NULL,
+  route       VARCHAR(100) NOT NULL,
+  subpage     VARCHAR(20),
+  query       VARCHAR(255) NOT NULL DEFAULT '',
   duration_s  DECIMAL(10, 2),
-  visited_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  started_at  DATETIME(3) NOT NULL,
+  received_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_visit (user_id, route, started_at),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
--- module_id here is the learning section ID (e.g. 'intro-experiment'),
--- not the global module. The global module context is implicit via user_id → users.module_id.
-CREATE TABLE IF NOT EXISTS module_results (
-  id               INT AUTO_INCREMENT PRIMARY KEY,
-  user_id          INT NOT NULL,
-  session_id       VARCHAR(100) NOT NULL,
-  module_id        VARCHAR(100) NOT NULL,
-  question_id      VARCHAR(100) NOT NULL,
-  is_correct       BOOLEAN,
-  selected_answers JSON,
-  correct_answers  JSON,
-  attempt_count    INT DEFAULT 1,
-  answered_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
-);
-
-CREATE TABLE IF NOT EXISTS test_results (
-  id             INT AUTO_INCREMENT PRIMARY KEY,
+-- One row per submitted answer, for learning questions and tests alike.
+-- unit_id is the learning section or the test (e.g. 'e2-damped-oscillation-module').
+-- The unique key makes saving idempotent, and as tests always use attempt_no 1
+-- it also enforces their single submission.
+CREATE TABLE IF NOT EXISTS question_attempts (
+  id             BIGINT AUTO_INCREMENT PRIMARY KEY,
   user_id        INT NOT NULL,
-  session_id     VARCHAR(100) NOT NULL,
-  test_id        VARCHAR(100) NOT NULL,
+  kind           ENUM('learning', 'test') NOT NULL,
+  unit_id        VARCHAR(100) NOT NULL,
   question_id    VARCHAR(100) NOT NULL,
-  is_correct     BOOLEAN,
-  user_answer    JSON,
-  correct_answer JSON,
+  attempt_no     INT NOT NULL,
+  is_correct     BOOLEAN NOT NULL,
   points_awarded INT,
   max_points     INT,
-  answered_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  answer         JSON,
+  correct_answer JSON,
+  texts          JSON,
+  answered_at    DATETIME(3) NOT NULL,
+  received_at    TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY unique_attempt (user_id, unit_id, question_id, attempt_no),
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );

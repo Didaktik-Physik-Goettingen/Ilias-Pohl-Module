@@ -1,6 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from './session';
+import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 
 
 
@@ -43,18 +44,24 @@ export class ResultsTracking {
     private currentModuleId: string = '';
     private moduleStartTime: number = 0;
     private results: Map<string, ModuleProgress> = new Map();
-    private readonly STORAGE_KEY = 'module-results';
 
 
 
     constructor(
         @Inject(PLATFORM_ID) platformId: Object,
-        private sessionService: Session
+        private sessionService: Session,
+        private outbox: AttemptOutbox
     ) {
         this.isBrowser = isPlatformBrowser(platformId);
         if (this.isBrowser) {
             this.loadFromStorage();
         }
+    }
+
+
+    // per student: on a shared computer the next student must not inherit (and save) these answers
+    private get storageKey(): string {
+        return 'module-results_' + (this.sessionService.sessionId() ?? 'unknown');
     }
 
 
@@ -128,10 +135,12 @@ export class ResultsTracking {
 
         // check if question was already answered
         const existingResult = moduleProgress.results.find(r => r.questionId === questionId);
+        let attemptNo = 1;
         
         if (existingResult) {
             // re-attempt
             existingResult.attemptCount++;
+            attemptNo = existingResult.attemptCount;
             existingResult.isCorrect = isCorrect;
             existingResult.selectedAnswers = selectedAnswers;
             existingResult.timestamp = Date.now();
@@ -169,6 +178,22 @@ export class ResultsTracking {
         if (isCorrect) {
             moduleProgress.questionsCorrect++;
         }
+
+        this.outbox.add({
+            kind: 'learning',
+            unitId: this.currentModuleId,
+            questionId,
+            attemptNo,
+            isCorrect,
+            answer: selectedAnswers,
+            correctAnswer: correctAnswers,
+            texts: {
+                questionText: meta?.questionText,
+                answerTexts: meta?.selectedAnswerTexts,
+                correctAnswerTexts: meta?.correctAnswerTexts
+            },
+            answeredAt: Date.now()
+        });
 
         this.saveToStorage();
     }
@@ -225,14 +250,14 @@ export class ResultsTracking {
     private saveToStorage() {
         if (this.isBrowser) {
             const data = Array.from(this.results.entries());
-            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+            localStorage.setItem(this.storageKey, JSON.stringify(data));
         }
     }
 
 
     private loadFromStorage() {
         if (this.isBrowser) {
-            const stored = localStorage.getItem(this.STORAGE_KEY);
+            const stored = localStorage.getItem(this.storageKey);
             if (stored) {
                 try {
                     const data = JSON.parse(stored);
@@ -268,35 +293,43 @@ export class ResultsTracking {
     }
 
 	
-    // Populate the in-memory map from flat backend rows (grouped by module_id).
-    restoreFromBackend(rows: any[]): void {
-        const grouped = new Map<string, any[]>();
+    // Merges the latest attempt per question from the backend; a newer local attempt not yet saved stays.
+    restoreFromBackend(rows: AttemptRow[]): void {
+        const sessionId = this.sessionService.sessionId() ?? 'unknown';
+
         for (const row of rows) {
-            if (!grouped.has(row.module_id)) grouped.set(row.module_id, []);
-            grouped.get(row.module_id)!.push(row);
-        }
+            const module = this.results.get(row.unitId) ?? {
+                moduleId:          row.unitId,
+                sessionId,
+                startTime:         row.answeredAt,
+                questionsAnswered: 0,
+                questionsCorrect:  0,
+                results:           []
+            };
+            this.results.set(row.unitId, module);
 
-        for (const [moduleId, moduleRows] of grouped) {
-            const results: QuestionResult[] = moduleRows.map(r => ({
-                questionId:      r.question_id,
-                moduleId:        r.module_id,
-                isCorrect:       Boolean(r.is_correct),
-                selectedAnswers: r.selected_answers ?? [],
-                correctAnswers:  r.correct_answers  ?? [],
-                timestamp:       new Date(r.answered_at).getTime(),
-                timestampISO:    r.answered_at,
-                attemptCount:    r.attempt_count,
-                sessionId:       r.session_id
-            }));
+            const index = module.results.findIndex(r => r.questionId === row.questionId);
+            if (index >= 0 && module.results[index].attemptCount >= row.attemptNo) continue;
 
-            this.results.set(moduleId, {
-                moduleId,
-                sessionId:         moduleRows[0].session_id,
-                startTime:         new Date(moduleRows[0].answered_at).getTime(),
-                questionsAnswered: results.length,
-                questionsCorrect:  results.filter(r => r.isCorrect).length,
-                results
-            });
+            const result: QuestionResult = {
+                questionId:          row.questionId,
+                moduleId:            row.unitId,
+                isCorrect:           row.isCorrect,
+                selectedAnswers:     row.answer ?? [],
+                correctAnswers:      row.correctAnswer ?? [],
+                questionText:        row.texts?.questionText,
+                selectedAnswerTexts: row.texts?.answerTexts,
+                correctAnswerTexts:  row.texts?.correctAnswerTexts,
+                timestamp:           row.answeredAt,
+                timestampISO:        new Date(row.answeredAt).toISOString(),
+                attemptCount:        row.attemptNo,
+                sessionId
+            };
+            if (index >= 0) module.results[index] = result;
+            else module.results.push(result);
+
+            module.questionsAnswered = module.results.length;
+            module.questionsCorrect  = module.results.filter(r => r.isCorrect).length;
         }
 
         this.saveToStorage();
@@ -308,7 +341,7 @@ export class ResultsTracking {
     clearResults() {
         this.results.clear();
         if (this.isBrowser) {
-            localStorage.removeItem(this.STORAGE_KEY);
+            localStorage.removeItem(this.storageKey);
         }
         console.log('All results cleared');
     }

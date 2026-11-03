@@ -1,109 +1,116 @@
 <?php
-header('Content-Type: application/json');
+require_once __DIR__ . '/../lib.php';
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    exit(json_encode(['error' => 'Method not allowed']));
+requireMethod('POST');
+
+$body     = jsonBody();
+$username = validUsername($body['username'] ?? null);
+
+if ($username === null) {
+    respond(400, ['error' => 'invalid username']);
 }
 
-require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../module.php';
+$userId = findUserId($username);
 
-$body      = json_decode(file_get_contents('php://input'), true);
-$username  = $body['username']  ?? '';
-$sessionId = $body['sessionId'] ?? '';
-
-if (!$username || !$sessionId) {
-    http_response_code(400);
-    exit(json_encode(['error' => 'username and sessionId required']));
+if ($userId === null) {
+    respond(404, ['error' => 'User not found']);
 }
 
-$pdo  = getDb();
-$stmt = $pdo->prepare('SELECT id FROM users WHERE module_id = ? AND username = ?');
-$stmt->execute([getModuleId(), $username]);
-$userId = $stmt->fetchColumn();
-
-if (!$userId) {
-    http_response_code(404);
-    exit(json_encode(['error' => 'User not found']));
+// JS millisecond timestamp → UTC DATETIME(3); null if it is no plausible time.
+function toDatetime($ms): ?string {
+    if (!is_int($ms) && !is_float($ms)) return null;
+    $ms = (int) $ms;
+    if ($ms < 946684800000 || $ms > 4102444800000) return null;   // 2000 to 2100
+    return gmdate('Y-m-d H:i:s', intdiv($ms, 1000)) . sprintf('.%03d', $ms % 1000);
 }
 
-// Handles both ISO-string timestamps and JS millisecond timestamps.
-function toDatetime($ts): string {
-    if (is_numeric($ts) && $ts > 1e10) {
-        return gmdate('Y-m-d H:i:s', intval($ts / 1000));
-    }
-    return gmdate('Y-m-d H:i:s', strtotime((string) $ts));
+function isId($value, int $maxLength): bool {
+    return is_string($value) && $value !== '' && strlen($value) <= $maxLength;
 }
 
-$analytics     = $body['analytics']     ?? [];
-$moduleResults = $body['moduleResults'] ?? [];
-$testResults   = $body['testResults']   ?? [];
+// '/learning/e1?page=2&path=learn&session_id=max' → route, sub-page and query, without the session_id.
+function splitPage($page): ?array {
+    if (!is_string($page) || $page === '') return null;
+    [$route, $query] = array_pad(explode('?', $page, 2), 2, '');
+    parse_str($query, $params);
+    unset($params['session_id']);
+    $query   = http_build_query($params);
+    $subpage = isset($params['page']) && is_string($params['page']) ? $params['page'] : null;
+    if (strlen($route) > 100 || strlen($query) > 255 || strlen((string) $subpage) > 20) return null;
+    return [$route, $subpage, $query];
+}
+
+$visits   = is_array($body['visits']   ?? null) ? $body['visits']   : [];
+$attempts = is_array($body['attempts'] ?? null) ? $body['attempts'] : [];
+$skipped  = 0;
+
+$pdo = getDb();
+$pdo->beginTransaction();
 
 try {
-    $pdo->beginTransaction();
-
-    if (!empty($analytics['visits'])) {
-        $s = $pdo->prepare(
-            'INSERT INTO page_visits (user_id, session_id, page, duration_s, visited_at)
-             VALUES (?, ?, ?, ?, ?)'
-        );
-        foreach ($analytics['visits'] as $v) {
-            $s->execute([$userId, $sessionId, $v['page'], $v['duration_s'] ?? null,
-                         toDatetime($v['timestamp'])]);
+    // A row that is already stored stays as it is: the first version counts.
+    $s = $pdo->prepare(
+        'INSERT INTO page_visits (user_id, route, subpage, query, duration_s, started_at)
+         VALUES (?, ?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE id = id'
+    );
+    foreach ($visits as $v) {
+        $page      = splitPage($v['page'] ?? null);
+        $startedAt = toDatetime($v['startTime'] ?? null);
+        $duration  = $v['duration_s'] ?? null;
+        if ($page === null || $startedAt === null || ($duration !== null && !is_numeric($duration))) {
+            $skipped++;
+            continue;
         }
+        $s->execute([$userId, $page[0], $page[1], $page[2], $duration, $startedAt]);
     }
 
-    if ($moduleResults) {
-        $s = $pdo->prepare(
-            'INSERT INTO module_results
-               (user_id, session_id, module_id, question_id, is_correct,
-                selected_answers, correct_answers, attempt_count, answered_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        );
-        foreach ($moduleResults as $mod) {
-            foreach ($mod['results'] ?? [] as $q) {
-                $s->execute([
-                    $userId, $sessionId, $mod['moduleId'], $q['questionId'],
-                    $q['isCorrect'] ? 1 : 0,
-                    json_encode($q['selectedAnswers']),
-                    json_encode($q['correctAnswers']),
-                    $q['attemptCount'],
-                    toDatetime($q['timestamp']),
-                ]);
-            }
+    $s = $pdo->prepare(
+        'INSERT INTO question_attempts
+           (user_id, kind, unit_id, question_id, attempt_no, is_correct,
+            points_awarded, max_points, answer, correct_answer, texts, answered_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         ON DUPLICATE KEY UPDATE id = id'
+    );
+    foreach ($attempts as $a) {
+        $answeredAt = toDatetime($a['answeredAt'] ?? null);
+        $attemptNo  = $a['attemptNo'] ?? null;
+        $points     = $a['pointsAwarded'] ?? null;
+        $maxPoints  = $a['maxPoints'] ?? null;
+        if (
+            $answeredAt === null
+            || !in_array($a['kind'] ?? null, ['learning', 'test'], true)
+            || !isId($a['unitId'] ?? null, 100)
+            || !isId($a['questionId'] ?? null, 100)
+            || !is_int($attemptNo) || $attemptNo < 1
+            || !is_bool($a['isCorrect'] ?? null)
+            || ($points !== null && !is_int($points))
+            || ($maxPoints !== null && !is_int($maxPoints))
+        ) {
+            $skipped++;
+            continue;
         }
+        $s->execute([
+            $userId, $a['kind'], $a['unitId'], $a['questionId'], $attemptNo,
+            $a['isCorrect'] ? 1 : 0,
+            $points,
+            $maxPoints,
+            json_encode($a['answer'] ?? null),
+            json_encode($a['correctAnswer'] ?? null),
+            json_encode($a['texts'] ?? null),
+            $answeredAt,
+        ]);
     }
 
-    if ($testResults) {
-        $s = $pdo->prepare(
-            'INSERT INTO test_results
-               (user_id, session_id, test_id, question_id, is_correct,
-                user_answer, correct_answer, points_awarded, max_points, answered_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        );
-        foreach ($testResults as $test) {
-            foreach ($test['results'] ?? [] as $q) {
-                $s->execute([
-                    $userId, $sessionId, $test['testId'], $q['questionId'],
-                    $q['isCorrect'] ? 1 : 0,
-                    json_encode($q['userAnswer']),
-                    json_encode($q['correctAnswer']),
-                    $q['pointsAwarded'],
-                    $q['maxPoints'],
-                    toDatetime($q['timestamp']),
-                ]);
-            }
-        }
-    }
-
-    $pdo->prepare('UPDATE users SET last_active = NOW() WHERE id = ?')->execute([$userId]);
+    $pdo->prepare('UPDATE users SET last_active = CURRENT_TIMESTAMP WHERE id = ?')->execute([$userId]);
     $pdo->commit();
-    echo json_encode(['ok' => true]);
-
-} catch (Exception $e) {
+} catch (Throwable $e) {
     $pdo->rollBack();
-    error_log('Progress save failed: ' . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(['error' => 'Failed to save progress']);
+    throw $e;
 }
+
+if ($skipped > 0) {
+    error_log("Progress save for user $userId: skipped $skipped malformed rows");
+}
+
+respond(200, ['ok' => true, 'skipped' => $skipped]);

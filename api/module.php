@@ -7,9 +7,14 @@ function getModuleId(): int {
 
     $cfg = require __DIR__ . '/config.php';
     $pdo = getDb();
-    $pdo->prepare('INSERT IGNORE INTO modules (name) VALUES (?)')->execute([$cfg['module_name']]);
-    $stmt = $pdo->prepare('SELECT id FROM modules WHERE name = ?');
-    $stmt->execute([$cfg['module_name']]);
-    $moduleId = (int) $stmt->fetchColumn();
+    $select = $pdo->prepare('SELECT id FROM modules WHERE name = ?');
+    $select->execute([$cfg['module_name']]);
+    $id = $select->fetchColumn();
+    if ($id === false) {
+        $pdo->prepare('INSERT IGNORE INTO modules (name) VALUES (?)')->execute([$cfg['module_name']]);
+        $select->execute([$cfg['module_name']]);
+        $id = $select->fetchColumn();
+    }
+    $moduleId = (int) $id;
     return $moduleId;
 }

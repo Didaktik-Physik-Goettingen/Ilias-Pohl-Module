@@ -1,6 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from './session';
+import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 
 
 
@@ -48,17 +49,23 @@ export class TestTracking {
     private currentTestId: string = '';
     private testStartTime: number = 0;
     private tests: Map<string, TestProgress> = new Map();
-    private readonly STORAGE_KEY = 'test-results';
 
 
     constructor(
         @Inject(PLATFORM_ID) platformId: Object,
-        private sessionService: Session
+        private sessionService: Session,
+        private outbox: AttemptOutbox
     ) {
         this.isBrowser = isPlatformBrowser(platformId);
         if (this.isBrowser) {
             this.loadFromStorage();
         }
+    }
+
+
+    // per student: on a shared computer the next student must not inherit (and save) these answers
+    private get storageKey(): string {
+        return 'test-results_' + (this.sessionService.sessionId() ?? 'unknown');
     }
 
 
@@ -152,6 +159,25 @@ export class TestTracking {
         console.log(`Question ${questionId}: ${isCorrect ? 'Correct' : 'Incorrect'} (${pointsAwarded}/${maxPoints} points)`);
         console.log('TESTLOG:', result);
 
+        this.outbox.add({
+            kind: 'test',
+            unitId: this.currentTestId,
+            questionId,
+            attemptNo: 1,
+            isCorrect,
+            pointsAwarded,
+            maxPoints,
+            answer: userAnswer,
+            correctAnswer,
+            texts: {
+                questionText: meta?.questionText,
+                questionInstruction: meta?.questionInstruction,
+                answerTexts: meta?.userAnswerTexts,
+                correctAnswerTexts: meta?.correctAnswerTexts
+            },
+            answeredAt: result.timestamp
+        });
+
         this.saveToStorage();
     }
 
@@ -232,14 +258,14 @@ export class TestTracking {
     private saveToStorage() {
         if (this.isBrowser) {
             const data = Array.from(this.tests.entries());
-            localStorage.setItem(this.STORAGE_KEY, JSON.stringify(data));
+            localStorage.setItem(this.storageKey, JSON.stringify(data));
         }
     }
 
 
     private loadFromStorage() {
         if (this.isBrowser) {
-            const stored = localStorage.getItem(this.STORAGE_KEY);
+            const stored = localStorage.getItem(this.storageKey);
             if (stored) {
                 try {
                     const data = JSON.parse(stored);
@@ -275,37 +301,47 @@ export class TestTracking {
     }
 
 
-    // Populate the in-memory map from flat backend rows (grouped by test_id).
-    restoreFromBackend(rows: any[]): void {
-        const grouped = new Map<string, any[]>();
+    // Merges the answers from the backend; an answer only known locally, not yet saved, stays.
+    restoreFromBackend(rows: AttemptRow[]): void {
+        const sessionId = this.sessionService.sessionId() ?? 'unknown';
+        const grouped = new Map<string, AttemptRow[]>();
         for (const row of rows) {
-            if (!grouped.has(row.test_id)) grouped.set(row.test_id, []);
-            grouped.get(row.test_id)!.push(row);
+            if (!grouped.has(row.unitId)) grouped.set(row.unitId, []);
+            grouped.get(row.unitId)!.push(row);
         }
 
         for (const [testId, testRows] of grouped) {
-            const results: TestQuestionResult[] = testRows.map(r => ({
-                questionId:    r.question_id,
-                testId:        r.test_id,
-                isCorrect:     Boolean(r.is_correct),
-                userAnswer:    r.user_answer,
-                correctAnswer: r.correct_answer,
-                pointsAwarded: r.points_awarded,
-                maxPoints:     r.max_points,
-                timestamp:     new Date(r.answered_at).getTime(),
-                timestampISO:  r.answered_at,
-                sessionId:     r.session_id
-            }));
-
             // the page's startTest() may have run already (a cold load onto a test page): keep its real totals
-            const existing     = this.tests.get(testId);
+            const existing = this.tests.get(testId);
+            const results: TestQuestionResult[] = [...(existing?.results ?? [])];
+
+            for (const r of testRows) {
+                if (results.some(known => known.questionId === r.questionId)) continue;
+                results.push({
+                    questionId:          r.questionId,
+                    testId,
+                    isCorrect:           r.isCorrect,
+                    userAnswer:          r.answer,
+                    correctAnswer:       r.correctAnswer,
+                    pointsAwarded:       r.pointsAwarded ?? 0,
+                    maxPoints:           r.maxPoints ?? 0,
+                    timestamp:           r.answeredAt,
+                    timestampISO:        new Date(r.answeredAt).toISOString(),
+                    sessionId,
+                    questionText:        r.texts?.questionText,
+                    questionInstruction: r.texts?.questionInstruction,
+                    userAnswerTexts:     r.texts?.answerTexts,
+                    correctAnswerTexts:  r.texts?.correctAnswerTexts
+                });
+            }
+
             const pointsEarned = results.reduce((sum, r) => sum + r.pointsAwarded, 0);
             const maxPoints    = existing?.maxPoints ?? results.reduce((sum, r) => sum + r.maxPoints, 0);
 
             this.tests.set(testId, {
                 testId,
-                sessionId:         testRows[0].session_id,
-                startTime:         new Date(testRows[0].answered_at).getTime(),
+                sessionId,
+                startTime:         existing?.startTime ?? testRows[0].answeredAt,
                 questionsAnswered: results.length,
                 totalQuestions:    existing?.totalQuestions ?? results.length,
                 pointsEarned,
@@ -324,7 +360,7 @@ export class TestTracking {
     clearTests() {
         this.tests.clear();
         if (this.isBrowser) {
-            localStorage.removeItem(this.STORAGE_KEY);
+            localStorage.removeItem(this.storageKey);
         }
         console.log('All test results cleared');
     }
