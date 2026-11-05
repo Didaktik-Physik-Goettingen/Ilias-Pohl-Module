@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Session } from './session';
+import { STORAGE_PREFIX } from './storage-prefix';
 
 
 
@@ -50,7 +51,7 @@ export class VisitedPages {
 
 
     private get storageKey(): string {
-        return 'visitedPages_' + (this.session.sessionId() ?? 'unknown');
+        return STORAGE_PREFIX + 'visitedPages_' + (this.session.sessionId() ?? 'unknown');
     }
 
     private load() {

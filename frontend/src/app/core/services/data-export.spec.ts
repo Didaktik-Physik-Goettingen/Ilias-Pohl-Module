@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { STORAGE_PREFIX } from './storage-prefix';
 import { vi } from 'vitest';
 
 import { DataExport } from './data-export';
@@ -17,7 +18,7 @@ describe('DataExport', () => {
 
   beforeEach(() => {
     localStorage.clear();
-    localStorage.setItem('framework_session_id', 'student-a');
+    localStorage.setItem(STORAGE_PREFIX + 'framework_session_id', 'student-a');
     fetchMock = vi.fn().mockResolvedValue({ ok: true, status: 200 });
     vi.stubGlobal('fetch', fetchMock);
     TestBed.configureTestingModule({});

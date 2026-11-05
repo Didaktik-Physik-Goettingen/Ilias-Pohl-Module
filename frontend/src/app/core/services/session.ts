@@ -3,6 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
+import { STORAGE_PREFIX } from './storage-prefix';
 
 
 
@@ -15,7 +16,7 @@ export class Session {
     // _sessionId is the writable signal
     private readonly _sessionId = signal<string | null>(null);
     private isBrowser: boolean;
-    private readonly SESSION_STORAGE_KEY = 'framework_session_id';
+    private readonly SESSION_STORAGE_KEY = STORAGE_PREFIX + 'framework_session_id';
     //  sessionId is the readonly facade returning the _sessionId from above
     readonly sessionId = this._sessionId.asReadonly();
 

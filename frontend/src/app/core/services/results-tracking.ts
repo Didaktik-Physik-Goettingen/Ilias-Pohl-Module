@@ -1,6 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from './session';
+import { STORAGE_PREFIX } from './storage-prefix';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 
 
@@ -61,7 +62,7 @@ export class ResultsTracking {
 
     // per student: on a shared computer the next student must not inherit (and save) these answers
     private get storageKey(): string {
-        return 'module-results_' + (this.sessionService.sessionId() ?? 'unknown');
+        return STORAGE_PREFIX + 'module-results_' + (this.sessionService.sessionId() ?? 'unknown');
     }
 
 

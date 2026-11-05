@@ -1,6 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { Session } from './session';
+import { STORAGE_PREFIX } from './storage-prefix';
 
 
 
@@ -46,7 +47,7 @@ export class AttemptOutbox {
 
 
     private get storageKey(): string {
-        return 'attemptOutbox_' + (this.sessionService.sessionId() ?? 'unknown');
+        return STORAGE_PREFIX + 'attemptOutbox_' + (this.sessionService.sessionId() ?? 'unknown');
     }
 
 

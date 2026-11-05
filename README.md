@@ -85,6 +85,7 @@ README.md
 │           │           dev-mode.ts             // developer mode toggle (Shift+Alt+D)
 │           │           nav-drawer.ts           // open / closed state of the mobile navigation drawer
 │           │           shuffle-order.ts        // utility: randomises answer order
+│           │           storage-prefix.ts       // module prefix for every localStorage key
 │           │
 │           └── shared/
 │           │   └── footer/                     // footer component
@@ -262,6 +263,7 @@ All related rows in `page_visits` and `question_attempts` cascade automatically.
 - **html-report.service.ts:** generates a self-contained HTML Lernpfad report and triggers a browser download; embeds images as base64 data URIs, renders page content in registry order, and inlines question answers with correct/incorrect feedback; MathJax CDN is included for LaTeX rendering
 - **learning-report-registry.ts:** maps every content page route + page number to an ordered list of `ReportBlock[]` entries (text, image, question, spoiler); used by `html-report.service.ts` to produce the report in the correct page-by-page order; also exposes `PAGE_LOOKUP` as a `Map<string, PageDefinition>` for O(1) lookups
 - **report-mode.ts:** utility function `isSolutionsMode()` — returns `true` when running in Angular dev mode with `?solutions=1` in the URL; used to gate answer reveals during development
+- **storage-prefix.ts:** `'pohl:'`, the prefix of every `localStorage` key holding this module's state; the modules share one origin and so one `localStorage`, and must not read each other's data
 - **shuffle-order.ts:** utility that randomises answer order for evaluation and test components
 - **nav-drawer.ts:** open / closed state of the sidebar drawer below 900 px; the header's menu button toggles it
 - **dev-mode.ts:** developer mode toggle; press `Shift+Alt+D` anywhere to enable/disable; state persists in `sessionStorage` across SPA navigation; when active, shows an amber badge and reveals gated back-navigation buttons on decision, simulation, learning, test, and target pages; SSR-safe

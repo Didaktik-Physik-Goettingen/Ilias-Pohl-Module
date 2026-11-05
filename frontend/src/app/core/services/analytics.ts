@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Session } from './session';
+import { STORAGE_PREFIX } from './storage-prefix';
 
 
 
@@ -51,7 +52,7 @@ export class Analytics {
 
 
     private get storageKey(): string {
-        return 'analyticsData_' + (this.sessionService.sessionId() ?? 'unknown');
+        return STORAGE_PREFIX + 'analyticsData_' + (this.sessionService.sessionId() ?? 'unknown');
     }
 
 

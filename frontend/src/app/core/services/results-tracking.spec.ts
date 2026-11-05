@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { STORAGE_PREFIX } from './storage-prefix';
 import { ResultsTracking } from './results-tracking';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 
@@ -13,7 +14,7 @@ describe('ResultsTracking', () => {
   });
 
   const asStudent = (id: string) => {
-    localStorage.setItem('framework_session_id', id);
+    localStorage.setItem(STORAGE_PREFIX + 'framework_session_id', id);
     TestBed.resetTestingModule();
     return TestBed.inject(ResultsTracking);
   };

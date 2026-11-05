@@ -7,6 +7,7 @@ import { DevModeService } from '../../core/services/dev-mode';
 import { NavDrawerService } from '../../core/services/nav-drawer';
 import { TestTracking } from '../../core/services/test-tracking';
 import { VisitedPages } from '../../core/services/visited-pages';
+import { STORAGE_PREFIX } from '../../core/services/storage-prefix';
 
 
 interface SubpageItem {
@@ -36,7 +37,7 @@ const SETUP_SEGMENT: SegmentDef = {
 };
 
 // also read by the optional pages, whose way back depends on the strand
-export const NAV_STRAND_KEY = 'nav-chosen-strand';
+export const NAV_STRAND_KEY = STORAGE_PREFIX + 'nav-chosen-strand';
 
 const E_SEGMENTS: SegmentDef[] = [
     {
