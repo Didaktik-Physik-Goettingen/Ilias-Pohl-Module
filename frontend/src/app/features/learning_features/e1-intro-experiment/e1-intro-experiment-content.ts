@@ -1,18 +1,18 @@
 export const introExpText1a = `
     In diesem Versuch werden Sie Schwingungsphänomene (gedämpfte und getriebene Schwingungen) untersuchen
     und sich die Zusammenhänge zwischen unterschiedlichen experimentellen Parametern anschauen.
-    Diese Phänome werden Sie mit einem sogenannten Pohlschen Rad untersuchen.
+    Diese Phänomene werden Sie mit einem sogenannten Pohlschen Rad untersuchen.
     Machen Sie sich hier zunächst mit dem Versuchsaufbau vertraut.
 `;
 
 export const introExpText1b = `
-    Vergleichendes Bild Aufbau und Skizze des Versuchsaufbaus
+    Der Versuch „Pohlscher Resonator“ im Video (Lehrportal der Universität Göttingen).
 `;
 
 export const introExpText1c = `
     Mit diesem Versuchsaufbau können Sie unterschiedliche Schwingungsverhalten analysieren.
     Sie können den Einfluss der Dämpfung untersuchen, ebenso wie das Verhalten bei einem externen Antrieb.<br><br>
-    Betrachten Sie den Versuchsaufbau und vergleichen Sie ihn mit der Skizze.<br>
+    Betrachten Sie den Versuchsaufbau im Video.<br>
     Überlegen und diskutieren Sie, wofür die unterschiedlichen Elemente des Versuchsaufbaus notwendig sind.
     Auf den nächsten Seiten werden diese Bauteile weiter spezifiziert und Ihnen werden hierzu Fragen gestellt.
 `;

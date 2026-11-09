@@ -64,6 +64,18 @@
     box-shadow: 0 4px 12px rgba(33, 150, 243, 0.2);
 }
 
+.video-container {
+    margin: 2rem 0;
+}
+
+.video-frame {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 8px;
+}
+
 /* Text + Image horizontal layout */
 .text-image-container {
     display: flex;

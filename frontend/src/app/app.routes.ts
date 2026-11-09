@@ -83,10 +83,10 @@ export const routes: Routes = [
     { path: 'glossary/resonance-frequency',    component: ResonanceFrequency,     title: 'Resonanzfrequenz' },
 
     // conventional learning module pages
-    { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg Versuchsaufbau' },
+    { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg: Versuchsaufbau' },
     { path: 'learning/e2-damped-oscillations', component: E2DampedOscillation, title: 'Experiment: Gedämpfte Schwingungen' },
     { path: 'learning/e3-driven-oscillations', component: E3DrivenOscillations, title: 'Experiment: Getriebene Schwingungen' },
-    { path: 'learning/t1-intro-theory',        component: T1IntroTheory,        title: 'Einstieg Theorie' },
+    { path: 'learning/t1-intro-theory',        component: T1IntroTheory,        title: 'Einstieg: Theorie' },
     { path: 'learning/t2-free-oscillations',   component: T2FreeOscillations,   title: 'Theorie: Freie Schwingung' },
     { path: 'learning/t3-damped-oscillations', component: T3DampedOscillations, title: 'Theorie: Gedämpfte Schwingung' },
     { path: 'learning/t4-driven-oscillations', component: T4DrivenOscillations, title: 'Theorie: Angetriebene Schwingung' },

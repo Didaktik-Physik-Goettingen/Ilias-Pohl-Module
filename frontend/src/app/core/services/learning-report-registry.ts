@@ -32,8 +32,9 @@ export const PAGE_REGISTRY: PageDefinition[] = [
         title: '[E-1] Einstieg Experimentalpfad', subtitle: 'Einführung',
         blocks: [
             { type: 'text',  html: e1Content.introExpText1a },
-            { type: 'image', src: 'assets/images/e1_intro_experiment/experiment_schematic_1.png',
-              alt: 'Versuchsaufbau', caption: e1Content.introExpText1b },
+            // the report can't embed the video: the labelled photo and sketch stand in, with the link
+            { type: 'image', src: 'assets/images/e1_intro_experiment/experiment_schematic_2.png', alt: 'Versuchsaufbau',
+              caption: `Der Versuch im Video: <a href="https://www.youtube.com/watch?v=0WBbdhF9-I4">youtube.com/watch?v=0WBbdhF9-I4</a>` },
             { type: 'text',  html: e1Content.introExpText1c },
         ],
     },

@@ -41,7 +41,7 @@ export const NAV_STRAND_KEY = STORAGE_PREFIX + 'nav-chosen-strand';
 
 const E_SEGMENTS: SegmentDef[] = [
     {
-        id: 'e1-intro', label: 'Einstieg Versuchsaufbau',
+        id: 'e1-intro', label: 'Einstieg: Versuchsaufbau',
         subpages: [
             { label: '(1/4) - Einführung', route: '/learning/e1-intro-experiment', queryParams: { page: '1', path: 'learn' } },
             { label: '(2/4) - Komponenten', route: '/learning/e1-intro-experiment', queryParams: { page: '2', path: 'learn' } },
@@ -77,7 +77,7 @@ const E_SEGMENTS: SegmentDef[] = [
 
 const T_SEGMENTS: SegmentDef[] = [
     {
-        id: 't1-intro', label: 'Einstieg Theorie',
+        id: 't1-intro', label: 'Einstieg: Theorie',
         subpages: [
             { label: '(1/1) - Grundlagen', route: '/learning/t1-intro-theory' },
         ]

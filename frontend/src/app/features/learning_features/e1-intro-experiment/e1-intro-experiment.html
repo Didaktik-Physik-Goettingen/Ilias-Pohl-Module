@@ -1,13 +1,13 @@
 <div class="container">
     <div class="card">
         @if (currentView === 'intro_exp1') {
-            <h1>Einstieg Versuchsaufbau (1/4)</h1>
+            <h1>Einstieg: Versuchsaufbau (1/4)</h1>
         } @else if (currentView === 'intro_exp2') {
-            <h1>Einstieg Versuchsaufbau (2/4)</h1>
+            <h1>Einstieg: Versuchsaufbau (2/4)</h1>
         } @else if (currentView === 'intro_exp3') {
-            <h1>Einstieg Versuchsaufbau (3/4)</h1>
+            <h1>Einstieg: Versuchsaufbau (3/4)</h1>
         } @else {
-            <h1>Einstieg Versuchsaufbau (4/4)</h1>
+            <h1>Einstieg: Versuchsaufbau (4/4)</h1>
             <p class="page-subheadline">Eingangsfrage gedämpfter harmonischer Oszillator</p>
         }
 
@@ -16,8 +16,10 @@
             @if (currentView === 'intro_exp1') {
                 <div>
                     <p [innerHTML]="introExpText1a"></p>
-                    <div class="full-width-image-container">
-                        <img src="assets/images/e1_intro_experiment/experiment_schematic_1.png" alt="Versuchsaufbau" class="full-width-image">
+                    <div class="video-container">
+                        <iframe class="video-frame" src="https://www.youtube-nocookie.com/embed/0WBbdhF9-I4"
+                            title="Video zum Versuch Pohlscher Resonator" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                         <p class="image-description" [innerHTML]="introExpText1b"></p>
                     </div>
                     <p [innerHTML]="introExpText1c"></p>

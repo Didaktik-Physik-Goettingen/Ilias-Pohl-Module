@@ -186,14 +186,14 @@ describe('NavBar', () => {
 
         it('shows the experiment strand as numbered stations, with no number in the labels', async () => {
             await openAt('/learning/e2-damped-oscillations?page=2');
-            expect(stations()).toEqual(['1 Einstieg Versuchsaufbau', '2 Gedämpfte Schwingungen', '3 Getriebene Schwingungen']);
+            expect(stations()).toEqual(['1 Einstieg: Versuchsaufbau', '2 Gedämpfte Schwingungen', '3 Getriebene Schwingungen']);
         });
 
         it('makes Aufbau a station of the theory line with an icon, not a number or an optional page', async () => {
             await openAt('/learning/t1-intro-theory');
             await openAt('/learning/opt-setup');
             expect(stations()).toEqual([
-                '1 Einstieg Theorie', '2 Freie Schwingungen', '3 Gedämpfte Schwingungen',
+                '1 Einstieg: Theorie', '2 Freie Schwingungen', '3 Gedämpfte Schwingungen',
                 '4 Getriebene Schwingungen', 'Versuchsaufbau',
             ]);
             expect(row('Versuchsaufbau').querySelector('.nav-marker svg')).not.toBeNull();

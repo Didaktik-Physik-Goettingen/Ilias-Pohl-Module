@@ -8,3 +8,15 @@
     display: block;
     border-radius: 8px;
 }
+
+.video-container {
+    margin: 2rem 0;
+}
+
+.video-frame {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 8px;
+}

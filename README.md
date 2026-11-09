@@ -330,7 +330,7 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 
 **Experimental strand (e-):**
 
-- **e1-intro-experiment** → `/learning/e1-intro-experiment` — Einstieg: Versuchsaufbau
+- **e1-intro-experiment** → `/learning/e1-intro-experiment` — Einstieg: Versuchsaufbau (page 1 embeds the Lehrportal's video from YouTube)
 
 <details>
 <summary>Questions (6)</summary>
@@ -371,7 +371,7 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 
 **Theory strand (t-):**
 
-- **t1-intro-theory** → `/learning/t1-intro-theory` — Einstieg Theoriepfad
+- **t1-intro-theory** → `/learning/t1-intro-theory` — Einstieg: Theorie
 
 <details>
 <summary>Questions (1)</summary>
@@ -435,7 +435,7 @@ Question IDs follow the convention `{module}-{n}-{description}` for learning que
 
 - **opt-simulation** → `/learning/opt-simulation` — Grundbausteine Simulation: DGLs numerisch lösen (single page; Jupyter Notebook download; no questions)
 
-- **opt-setup** → `/learning/opt-setup` — Versuchsaufbau: Der Pohlsche Resonator (single page; shared intermediate stop for three paths — routes to `tar-theory`, `tar-chaos`, or `tar-simulation` depending on `?next=` query param)
+- **opt-setup** → `/learning/opt-setup` — Versuchsaufbau: Der Pohlsche Resonator (single page with the Lehrportal's video; shared intermediate stop for three paths — routes to `tar-theory`, `tar-chaos`, or `tar-simulation` depending on `?next=` query param)
 
 
 ### Decision Features
