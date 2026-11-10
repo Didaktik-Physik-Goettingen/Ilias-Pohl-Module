@@ -43,7 +43,8 @@
         <!-- <h2 class="home-paths-title">Zwei Einstiege – dieselben Inhalte</h2> -->
 
         <div class="home-paths">
-            <section class="path-card path-card--exp">
+            <!-- The whole card is the link. To bring the button back: <section class="path-card…"> instead of <a …>, and uncomment the button below. -->
+            <a class="path-card path-card--exp" routerLink="/learning/e1-intro-experiment">
                 <img class="path-card-img" src="assets/images/home/module_selector_experiment.png" alt="Versuchsaufbau des Pohlschen Rads">
                 <div class="path-card-body">
                     <h3 class="path-card-title">Struktur: Experiment</h3>
@@ -53,11 +54,11 @@
                         <li>Gedämpfte Schwingungen</li>
                         <li>Getriebene Schwingungen</li>
                     </ol>
-                    <a routerLink="/learning/e1-intro-experiment" class="btn path-card-btn">Lernmodul starten</a>
+                    <!-- <a routerLink="/learning/e1-intro-experiment" class="btn path-card-btn">Lernmodul starten</a> -->
                 </div>
-            </section>
+            </a>
 
-            <section class="path-card path-card--theo">
+            <a class="path-card path-card--theo" routerLink="/learning/t1-intro-theory">
                 <img class="path-card-img" src="assets/images/home/module_selector_theory.png" alt="Messrechner am Versuchsplatz">
                 <div class="path-card-body">
                     <h3 class="path-card-title">Struktur: Theorie</h3>
@@ -68,9 +69,9 @@
                         <li>Gedämpfte Schwingungen</li>
                         <li>Getriebene Schwingungen</li>
                     </ol>
-                    <a routerLink="/learning/t1-intro-theory" class="btn path-card-btn">Lernmodul starten</a>
+                    <!-- <a routerLink="/learning/t1-intro-theory" class="btn path-card-btn">Lernmodul starten</a> -->
                 </div>
-            </section>
+            </a>
         </div>
 
         <p class="home-shared">
