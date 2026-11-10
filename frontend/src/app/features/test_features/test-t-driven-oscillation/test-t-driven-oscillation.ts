@@ -128,7 +128,7 @@ export class TestTDrivenOscillation implements OnInit, OnDestroy {
 
     ngOnInit() {
 		// start tracking this test
-        this.testTracking.startTest('t-driven-oscillations-test', 4, 75); // 4 questions, 80 total points
+        this.testTracking.startTest('t-driven-oscillations-test', 4, 75); // 4 questions, 75 total points
 
         // restore completion state from previous session
         this.restoreCompletionState();
@@ -288,7 +288,7 @@ export class TestTDrivenOscillation implements OnInit, OnDestroy {
     goBack() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
 		if (this.currentView === 'driven_osc1') {
-            this.router.navigate(['/learning/e1-intro-experiment'], { queryParams: { page: 4 } });
+            this.router.navigate(['/decision/dec-t-driven'], { queryParams: { page: 4 } });
             return;
         } else if (this.currentView === 'driven_osc2') {
             this.currentView = 'driven_osc1';

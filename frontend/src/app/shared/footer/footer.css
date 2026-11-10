@@ -45,9 +45,12 @@ footer.visible {
     opacity: inherit;
 }
 
-.footer-link:hover {
+/* looks like plain text until hovered or focused */
+.footer-link:hover,
+.footer-link:focus-visible {
     color: inherit;
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
     border-bottom: none;
     transform: none;
 }

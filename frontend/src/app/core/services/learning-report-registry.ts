@@ -26,10 +26,10 @@ export interface PageDefinition {
 
 export const PAGE_REGISTRY: PageDefinition[] = [
 
-    // ── E1: Einstieg Experimentalpfad ─────────────────────────────────────
+    // ── E1: Einstieg: Versuchsaufbau ─────────────────────────────────────
     {
         route: '/learning/e1-intro-experiment', page: 1,
-        title: '[E-1] Einstieg Experimentalpfad', subtitle: 'Einführung',
+        title: '[E-1] Einstieg: Versuchsaufbau', subtitle: 'Einführung',
         blocks: [
             { type: 'text',  html: e1Content.introExpText1a },
             // the report can't embed the video: the labelled photo and sketch stand in, with the link
@@ -40,7 +40,7 @@ export const PAGE_REGISTRY: PageDefinition[] = [
     },
     {
         route: '/learning/e1-intro-experiment', page: 2,
-        title: '[E-1] Einstieg Experimentalpfad', subtitle: 'Komponenten',
+        title: '[E-1] Einstieg: Versuchsaufbau', subtitle: 'Komponenten',
         blocks: [
             { type: 'image', src: 'assets/images/e1_intro_experiment/experiment_schematic_2.png',
               alt: 'Versuchsaufbau' },
@@ -54,7 +54,7 @@ export const PAGE_REGISTRY: PageDefinition[] = [
     },
     {
         route: '/learning/e1-intro-experiment', page: 3,
-        title: '[E-1] Einstieg Experimentalpfad', subtitle: 'Direktionsmoment',
+        title: '[E-1] Einstieg: Versuchsaufbau', subtitle: 'Direktionsmoment',
         blocks: [
             { type: 'image', src: 'assets/images/e1_intro_experiment/schwungrad_3.png',
               alt: 'Schwungrad mit Massestück' },
@@ -66,7 +66,7 @@ export const PAGE_REGISTRY: PageDefinition[] = [
     },
     {
         route: '/learning/e1-intro-experiment', page: 4,
-        title: '[E-1] Einstieg Experimentalpfad', subtitle: 'Winkel-Zeit',
+        title: '[E-1] Einstieg: Versuchsaufbau', subtitle: 'Winkel-Zeit',
         blocks: [
             { type: 'question', questionId: 'e1-intro-exp-6-winkel-zeit' },
         ],
@@ -180,10 +180,10 @@ export const PAGE_REGISTRY: PageDefinition[] = [
         ],
     },
 
-    // ── T1: Einstieg Theoriepfad ──────────────────────────────────────────
+    // ── T1: Einstieg: Theorie ──────────────────────────────────────────
     {
         route: '/learning/t1-intro-theory', page: 1,
-        title: '[T-1] Einstieg Theoriepfad', subtitle: 'Grundlagen',
+        title: '[T-1] Einstieg: Theorie', subtitle: 'Grundlagen',
         blocks: [
             { type: 'text',  html: '<strong>Beachten Sie:</strong> In diesem Versuch beschäftigen Sie sich nur mit eindimensionalen Bewegungen. Auch der theoretische Überblick beschränkt sich daher auf diese Betrachtung. Wenn Sie sich für die Weiterführung in mehreren Dimensionen interessieren, dann folgen Sie an gegebener Stelle den Hinweisen.', style: 'glossary' },
             { type: 'text',  html: t1Content.introTheoText1a },

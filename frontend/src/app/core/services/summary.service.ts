@@ -57,11 +57,11 @@ export interface SummaryData {
 })
 export class SummaryService {
     private readonly MODULE_LABELS: Record<string, string> = {
-        'e1-intro-experiment-module':           '[E-1] Einstieg Experimentalpfad',
+        'e1-intro-experiment-module':           '[E-1] Einstieg: Versuchsaufbau',
         'e2-damped-oscillations-module':        '[E-2] Gedämpfte Schwingungen',
         'e3-driven-oscillations-module':        '[E-3] Getriebene Schwingungen',
 
-        't1-intro-theory-module':               '[T-1] Einstieg Theoriepfad',
+        't1-intro-theory-module':               '[T-1] Einstieg: Theorie',
         't2-free-oscillations-module':          '[T-2] Freie Schwingungen',
         't3-damped-oscillations-module':        '[T-3] Gedämpfte Schwingungen',
         't4-driven-oscillations-module':        '[T-4] Getriebene Schwingungen',
@@ -100,10 +100,10 @@ export class SummaryService {
 
     private readonly PAGE_LABELS: Record<string, string> = {
         '/':                                                            'Startseite: Pohlsches Rad',
-        '/learning/e1-intro-experiment':                                '[E-1] Einstieg Experimentalpfad',
+        '/learning/e1-intro-experiment':                                '[E-1] Einstieg: Versuchsaufbau',
         '/learning/e2-damped-oscillations':                             '[E-2] Gedämpfte Schwingungen',
         '/learning/e3-driven-oscillations':                             '[E-3] Getriebene Schwingungen',
-        '/learning/t1-intro-theory':                                    '[T-1] Einstieg Theoriepfad',
+        '/learning/t1-intro-theory':                                    '[T-1] Einstieg: Theorie',
         '/learning/t2-free-oscillations':                               '[T-2] Freie Schwingungen',
         '/learning/t3-damped-oscillations':                             '[T-3] Gedämpfte Schwingungen',
         '/learning/t4-driven-oscillations':                             '[T-4] Getriebene Schwingungen',

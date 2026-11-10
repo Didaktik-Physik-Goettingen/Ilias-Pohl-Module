@@ -128,7 +128,7 @@ export class TestTDampedOscillation implements OnInit, OnDestroy  {
 
     ngOnInit() {
 		// start tracking this test
-        this.testTracking.startTest('t-damped-oscillations-test', 5, 135); // 5 questions, 150 total points
+        this.testTracking.startTest('t-damped-oscillations-test', 5, 135); // 5 questions, 135 total points
 
         // restore completion state from previous session
         this.restoreCompletionState();
