@@ -12,17 +12,21 @@
             >
         </div>
 
+        <!-- each term is a card, as on the landing page; with a link, the whole card opens the term -->
         <div class="glossary-list">
-            <div class="glossary-item" *ngFor="let term of filteredTerms">
-                <a [routerLink]="term.link" class="term-link" *ngIf="term.link">
-                    <h2 class="term-title">{{ term.title }}</h2>
-                    <p class="term-definition">{{ term.definition }}</p>
-                </a>
-                <div *ngIf="!term.link">
-                    <h2 class="term-title">{{ term.title }}</h2>
-                    <p class="term-definition">{{ term.definition }}</p>
-                </div>
-            </div>
+            @for (term of filteredTerms; track term.title) {
+                @if (term.link) {
+                    <a [routerLink]="term.link" class="glossary-item">
+                        <h2 class="term-title">{{ term.title }}</h2>
+                        <p class="term-definition">{{ term.definition }}</p>
+                    </a>
+                } @else {
+                    <div class="glossary-item">
+                        <h2 class="term-title">{{ term.title }}</h2>
+                        <p class="term-definition">{{ term.definition }}</p>
+                    </div>
+                }
+            }
         </div>
 
         <div class="button-container">

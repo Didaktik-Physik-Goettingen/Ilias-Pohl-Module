@@ -1,6 +1,6 @@
 .glossary-intro {
     font-size: 1.1rem;
-    color: var(--grau-60);
+    color: var(--text-secondary);
     margin-bottom: 2rem;
 }
 
@@ -11,16 +11,19 @@
 .search-box input {
     width: 100%;
     padding: 0.75rem 1rem;
+    font-family: inherit;
     font-size: 1rem;
-    border: 2px solid var(--uni-blau-4);
+    color: var(--text-primary);
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
     border-radius: 6px;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
 .search-box input:focus {
     outline: none;
-    border-color: var(--bright-blue);
-    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    border-color: var(--uni-blau-3);
+    box-shadow: 0 0 0 3px rgba(0, 145, 200, 0.15);
 }
 
 .glossary-list {
@@ -29,47 +32,42 @@
     gap: 1.5rem;
 }
 
+/* a term as a card, like the module cards on the landing page, with the coloured edge on the left;
+   on hover only background and border change */
 .glossary-item {
-    padding: 1.5rem;
-    background: var(--surface-info);
-    border-left: 4px solid var(--bright-blue);
-    border-radius: 6px;
-    transition: all 0.3s ease;
+    display: block;
+    padding: 1.25rem 1.5rem 1.5rem;
+    background: var(--card-bg);
+    color: var(--text-primary);
+    border: 1px solid var(--border-soft);
+    border-left: 4px solid var(--uni-blau-3);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    text-align: left;
+    font-weight: 400;
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-.glossary-item:hover {
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(33, 150, 243, 0.15);
+a.glossary-item:hover,
+a.glossary-item:focus-visible {
+    color: var(--text-primary);
+    background: var(--surface-option-hover);
+    border-color: var(--uni-blau-3);
+}
+
+a.glossary-item:focus-visible {
+    outline: 3px solid var(--uni-blau-3);
+    outline-offset: 3px;
 }
 
 .term-title {
-    font-size: 1.4rem;
+    font-size: 1.35rem;
+    line-height: 1.3;
     color: var(--text-primary);
     margin-bottom: 0.5rem;
-    font-weight: 600;
 }
 
 .term-definition {
-    color: var(--text-primary);
-    line-height: 1.7;
+    line-height: 1.8;
     margin: 0;
-}
-
-/* adds a line which I don't like */
-/* .term-link {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-} */
-
-.term-link:hover {
-    border-bottom: none;
-}
-
-.glossary-item:has(.term-link) {
-    cursor: pointer;
-}
-
-.glossary-item:has(.term-link):hover {
-    background: var(--surface-info-hover);
 }
