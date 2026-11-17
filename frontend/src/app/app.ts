@@ -27,7 +27,7 @@ export class App implements OnInit {
     ) {}
 
     ngOnInit() {
-        // resume only when the student comes in through the start page (the bridge); a reload or a link stays put
+        // resume only when the student comes in through the start page (from the login page); a reload or a link stays put
         this.dataExport.loadProgress().then(lastPage => {
             if (!lastPage) return;      // also on the server, which has no window
             const onStartPage = window.location.pathname === new URL(document.baseURI).pathname;

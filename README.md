@@ -11,7 +11,6 @@ The project was generated using [Angular CLI](https://github.com/angular/angular
 <summary>Project Structure Tree</summary>
 
 ```
-ilias_bridge.html                               // redirect to the portal's login page, for old ILIAS links
 .htaccess                                       // local routing: Angular URLs → index.html
 .gitignore
 README.md
@@ -134,7 +133,7 @@ Pushing to `master` triggers `.github/workflows/deploy.yml` automatically:
 1. GitHub spins up an Ubuntu runner
 2. Installs Node, runs `npm ci`, builds the Angular app
 3. Writes a production `.htaccess` (`RewriteBase /pohl/`) into the build output
-4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`, and `ilias_bridge.html` (the redirect to the login page)
+4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`
 
 The API and the login page are deployed with the portal, not here.
 
@@ -157,7 +156,7 @@ You can also trigger a deploy manually via **GitHub → Actions → Build & Depl
 2. In `.htaccess`, change `RewriteBase /` to `RewriteBase /pohl/`
 3. Upload via SFTP:
    - `frontend/dist/ilias-pohl-module/browser/` → server `pohl/` (the folder contents, not the folder itself)
-   - `ilias_bridge.html` and `.htaccess` → server `pohl/`
+   - `.htaccess` → server `pohl/`
 4. Revert the `.htaccess` change locally after uploading.
 
 ### First-time server setup
@@ -171,7 +170,6 @@ The final structure on the server looks like this:
 └── pohl/                    ← this module
     ├── index.html           ← Angular app entry point
     ├── (Angular static files)
-    ├── ilias_bridge.html    ← redirects to /login/?next=pohl
     └── .htaccess            ← routes Angular URLs to index.html
 ```
 

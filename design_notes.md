@@ -126,7 +126,7 @@ The login, the PHP API and the schema live in the portal (`../interapt-portal/`)
 
 ## 8 Relation to the precession module
 
-- **Shared and to be kept in sync:** the tracking services (`session.ts`, `data-export.ts`, `attempt-outbox.ts`), the header's login state, the bridge redirect, the footer, the global styles and the design rules. A design change in one module goes to the other. The API and the schema are no longer copied: one copy in the portal.
+- **Shared and to be kept in sync:** the tracking services (`session.ts`, `data-export.ts`, `attempt-outbox.ts`), the header's login state, the footer, the global styles and the design rules. A design change in one module goes to the other. The API and the schema are no longer copied: one copy in the portal.
 - **Module-specific:** `STORAGE_PREFIX` and `MODULE_NAME` (`storage-prefix.ts`, both unique per module; the name must also be listed under `modules` in the portal's `api/config.php`), the deploy path, the nav structure, the summary labels and the report registry.
 - **Different by design:** Pohl has strands, decision pages, tests and canvas simulations; precession is one linear path with retryable questions and an embedded Unity simulation. Its nav opens every visited page; Pohl's only the visited sub-pages of the current segment.
 
