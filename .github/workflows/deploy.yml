@@ -103,11 +103,9 @@ jobs:
       # ── Step 9: Upload Angular build (including .htaccess) ────────────────
       # lftp connects over SFTP, then runs a script:
       #   mirror -R   = reverse mirror (local → remote), like rsync push
-      #   --delete    = remove remote files that no longer exist locally
-      #   --exclude   = leave these alone on both sides. The bridge is uploaded
-      #                 below. The API is no longer here: it lives in the portal
-      #                 at the server root (interapt-portal), so --delete also
-      #                 removes the old pohl/api/ from the server.
+      #   --delete    = remove remote files that no longer exist locally (this
+      #                 also removed the old api/ and ilias_bridge.html). The API
+      #                 and the login page live in the portal at the server root.
       #   --verbose   = print what it uploads (visible in the Actions log)
       #
       # Angular outputs to browser/ by default. The manual deploy step
@@ -128,29 +126,8 @@ jobs:
           set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
           set net:max-retries 2
           set net:timeout 20
-          mirror -R --delete --verbose --exclude ^ilias_bridge\.html\$ \
+          mirror -R --delete --verbose \
             frontend/dist/ilias-pohl-module/browser/ \
             $REMOTE_DIR/
-          bye
-          EOF
-
-      # ── Step 9: Upload root files ──────────────────────────────────────────
-      # ilias_bridge.html only redirects old ILIAS links to the portal's login
-      # page (/login/?next=pohl). The production .htaccess (RewriteBase /pohl/)
-      # is not uploaded here: it is generated in step 6 and goes up with the
-      # Angular build. The repository's .htaccess (RewriteBase /) is local only.
-      - name: Upload ilias_bridge.html
-        env:
-          SFTP_HOST: ${{ secrets.SFTP_HOST }}
-          SFTP_PORT: ${{ secrets.SFTP_PORT }}
-          SFTP_USER: ${{ secrets.SFTP_USER }}
-          SFTP_PASS: ${{ secrets.SFTP_PASS }}
-          REMOTE_DIR: ${{ secrets.SFTP_REMOTE_DIR }}
-        run: |
-          lftp -u "$SFTP_USER,$SFTP_PASS" sftp://"$SFTP_HOST":"$SFTP_PORT" << EOF
-          set sftp:connect-program "ssh -a -x -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
-          set net:max-retries 2
-          set net:timeout 20
-          put ilias_bridge.html -o $REMOTE_DIR/ilias_bridge.html
           bye
           EOF
