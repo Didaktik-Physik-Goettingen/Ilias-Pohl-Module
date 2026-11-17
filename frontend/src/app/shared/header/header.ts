@@ -17,7 +17,7 @@ import { BUILD_TIMESTAMP } from '../../../build-info';
     styleUrl: './header.css'
 })
 export class Header {
-    showBridgeConfirm = false;
+    showSessionDialog = false;
     readonly buildTimestamp = BUILD_TIMESTAMP;
 
 
@@ -40,20 +40,21 @@ export class Header {
         this.themeService.toggleTheme();
     }
 
-    goToBridge() {
-        this.showBridgeConfirm = true;
+    openSessionDialog() {
+        this.showSessionDialog = true;
     }
 
-    closeBridgeConfirm() {
-        this.showBridgeConfirm = false;
+    closeSessionDialog() {
+        this.showSessionDialog = false;
     }
 
-    confirmBridge() {
+    goToLogin() {
         if (isPlatformBrowser(this.platformId)) {
-            const bridgeUrl = window.location.port === '4200'
-                ? 'http://localhost:8000/ilias_bridge.html'
-                : new URL('ilias_bridge.html', document.baseURI).href;
-            window.location.href = bridgeUrl;
+            window.location.href = this.sessionService.loginUrl();
         }
+    }
+
+    logout() {
+        this.sessionService.logout();
     }
 }

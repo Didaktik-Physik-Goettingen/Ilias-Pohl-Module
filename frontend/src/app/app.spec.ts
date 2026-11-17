@@ -49,7 +49,7 @@ describe('App', () => {
     });
 
     it('goes to the last page when coming in through the start page', async () => {
-      expect(await open('/?session_id=student-a')).toHaveBeenCalledWith('/learning/last');
+      expect(await open('/')).toHaveBeenCalledWith('/learning/last');
     });
 
     it('stays on a page opened directly or reloaded', async () => {

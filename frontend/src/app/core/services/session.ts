@@ -1,23 +1,29 @@
-import { Injectable, Inject, PLATFORM_ID, signal, computed, effect } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Injectable, Inject, PLATFORM_ID, signal, computed } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
-import { STORAGE_PREFIX } from './storage-prefix';
+import { STORAGE_PREFIX, MODULE_NAME } from './storage-prefix';
 
 
 
+// Who is using the module: a logged-in student (sessionId = their username) or a guest (a generated
+// 'rogue_user_…' id, nothing sent to the server).
+//
+// The login is shared by all modules: the portal's login page (/login/) sets a cookie for the whole site, and
+// resolve() asks the server whose it is (api/auth/me) before the app starts (app.config.ts). The tracking
+// services read this module's stored state once, keyed by sessionId, when they are created; so the identity is
+// settled before them and doesn't change while the app runs. If the login runs out meanwhile, loginExpired is
+// set and the student is asked to log in again.
+//
+// The resolved id is kept in localStorage, which is what the services read at startup and the fallback when
+// the server can't be reached.
 @Injectable({
     providedIn: 'root'
 })
-
-
 export class Session {
-    // _sessionId is the writable signal
     private readonly _sessionId = signal<string | null>(null);
-    private isBrowser: boolean;
+    private readonly isBrowser: boolean;
     private readonly SESSION_STORAGE_KEY = STORAGE_PREFIX + 'framework_session_id';
-    //  sessionId is the readonly facade returning the _sessionId from above
+    private readonly ME_TIMEOUT_MS = 4000;
+
     readonly sessionId = this._sessionId.asReadonly();
 
     readonly hasValidSession = computed(() => {
@@ -29,132 +35,87 @@ export class Session {
         this.sessionId()?.startsWith('rogue_user_') ?? false
     );
 
-    constructor(
-        @Inject(PLATFORM_ID) platformId: Object,
-        private route: ActivatedRoute,
-        private router: Router
-    ) {
+    // the server answered 401 to a save or load: the login cookie ran out or was removed
+    readonly loginExpired = signal(false);
+
+
+    constructor(@Inject(PLATFORM_ID) platformId: Object) {
         this.isBrowser = isPlatformBrowser(platformId);
-        this.initSession();
-    }
-
-
-    private initSession() {
         if (!this.isBrowser) return;
 
-        // priority 1: check if session already exists in storage (from another tab)
-        const storedSessionId = this.loadFromStorage();
-        
-        // priority 2: check URL for session_id parameter
-        const urlSessionId = this.getSessionIdFromUrl();
-        
-        if (urlSessionId) {
-			// URL has session_id - this takes priority (new framework access)
-			if (urlSessionId !== storedSessionId) {
-				// different session from URL - update storage
-                this._sessionId.set(urlSessionId);
-                this.saveToStorage(urlSessionId);
-                console.log('New session from framework:', urlSessionId);
-            } else {
-                // same session - just use it
-                this._sessionId.set(urlSessionId);
-                console.log('Session ID from URL (matches storage):', this.sessionId);
+        const stored = this.loadFromStorage();
+        this.use(stored ?? Session.guestId());
+    }
+
+
+    // Before the app starts: the server's word on who is logged in. Guest on 401; on a network error or
+    // timeout the stored identity stays, so a registered student's answers are still queued and sent later.
+    async resolve(): Promise<void> {
+        if (!this.isBrowser) return;
+        try {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), this.ME_TIMEOUT_MS);
+            const response = await fetch(`${Session.API_BASE}/auth/me`, { cache: 'no-store', signal: controller.signal })
+                .finally(() => clearTimeout(timer));
+
+            if (response.ok) {
+                const user = await response.json();
+                if (typeof user?.username === 'string' && user.username) this.use(user.username);
+            } else if (response.status === 401 && !this.isRogueUser()) {
+                this.use(Session.guestId());
             }
-        } else if (storedSessionId) {
-            // no URL param, but we have stored session - use it (new tab scenario)
-            this._sessionId.set(storedSessionId);
-            console.log('Session ID from storage (new tab):', this.sessionId);
-        } else {
-            // no URL param AND no storage - generate new (standalone access)
-            console.warn('No session ID found in URL or storage.');
-            const generatedSessionId = this.generateSessionId();
-            this._sessionId.set(generatedSessionId);
-            this.saveToStorage(generatedSessionId);
-            console.log('Session ID generated and stored:', generatedSessionId);
-        }
-
-
-        // resolved session_id query param, refreshed after every completed navigation
-        const urlSessionIdSignal = toSignal(
-            this.router.events.pipe(
-                filter(event => event instanceof NavigationEnd),
-                map(() => this.getSessionIdFromUrl())
-            ),
-            { initialValue: this.getSessionIdFromUrl() }
-        );
-
-
-        // react whenever a new navigation carries a (different) session_id
-        effect(() => {
-            const newSessionId = urlSessionIdSignal();
-            if (newSessionId && newSessionId !== this._sessionId()) {
-                // new session from URL
-                this._sessionId.set(newSessionId);
-                this.saveToStorage(newSessionId);
-                console.log('Session ID updated from navigation:', newSessionId);
-            }
-        });
-
-
-        // listen for storage changes from other tabs
-        if (typeof window !== 'undefined') {
-            window.addEventListener('storage', (event) => {
-                if (event.key === this.SESSION_STORAGE_KEY && event.newValue) {
-                    // another tab updated the session
-                    const newSessionId = event.newValue;
-                    if (newSessionId !== this._sessionId()) {
-                        console.log('Session ID updated from another tab:', newSessionId);
-                        this._sessionId.set(newSessionId);
-                    }
-                }
-            });
+        } catch (err) {
+            console.warn('Login state unknown, keeping the stored identity:', err);
         }
     }
 
 
-    private getSessionIdFromUrl(): string | null {
-        // check route params
-        const sessionFromRoute = this.route.snapshot.queryParamMap.get('session_id');
-        if (sessionFromRoute) return sessionFromRoute;
-
-        // also check if it's in the URL directly (fallback)
-        if (this.isBrowser) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('session_id');
-        }
-
-        return null;
+    // The portal's login page, coming back to this module afterwards. Locally the portal runs on :8000.
+    loginUrl(): string {
+        const path = `login/?next=${MODULE_NAME}`;
+        if (!this.isBrowser) return `../${path}`;
+        return window.location.port === '4200' ? `http://localhost:8000/${path}` : new URL(`../${path}`, document.baseURI).href;
     }
 
 
-	// save session ID in storage
+    // Ends the login for all modules and restarts this one as a guest.
+    async logout(): Promise<void> {
+        if (!this.isBrowser) return;
+        try {
+            await fetch(`${Session.API_BASE}/auth/logout`, { method: 'POST' });
+        } catch (err) {
+            console.error('Logout failed:', err);
+        }
+        this.saveToStorage(Session.guestId());
+        window.location.href = document.baseURI;
+    }
+
+
+    // The portal's API at the server root: relative to <base href> (/pohl/ → /api/), locally proxied to :8000.
+    static readonly API_BASE = '../api';
+
+    static guestId(): string {
+        return 'rogue_user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
+    }
+
+
+    private use(id: string) {
+        if (id === this._sessionId()) return;
+        this._sessionId.set(id);
+        this.saveToStorage(id);
+    }
+
     private saveToStorage(sessionId: string) {
-        if (this.isBrowser) {
+        try {
             localStorage.setItem(this.SESSION_STORAGE_KEY, sessionId);
-        }
+        } catch { /* storage blocked: the id lives until the tab closes */ }
     }
-
 
     private loadFromStorage(): string | null {
-        if (this.isBrowser) {
+        try {
             return localStorage.getItem(this.SESSION_STORAGE_KEY);
+        } catch {
+            return null;
         }
-        return null;
-    }
-	
-	
-	// generate a session if no session detected
-	private generateSessionId(): string {
-		return 'rogue_user_' + Date.now() + '_' + Math.random().toString(36).substring(2, 11);
-	}
-
-
-    clearSession() {
-        this._sessionId.set(null);
-        if (this.isBrowser) {
-            localStorage.removeItem(this.SESSION_STORAGE_KEY);
-            sessionStorage.removeItem(this.SESSION_STORAGE_KEY);
-        }
-        console.log('Session cleared');
     }
 }

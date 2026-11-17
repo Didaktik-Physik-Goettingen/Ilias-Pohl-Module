@@ -6,6 +6,7 @@ import { ResultsTracking, ModuleProgress } from './results-tracking';
 import { TestTracking, TestProgress } from './test-tracking';
 import { VisitedPages } from './visited-pages';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
+import { MODULE_NAME } from './storage-prefix';
 
 
 
@@ -24,7 +25,7 @@ export interface CombinedData {
     providedIn: 'root'
 })
 export class DataExport {
-    private readonly API_BASE = 'api';              // relative: resolves against <base href>, also below /pohl/
+    private readonly API_BASE = Session.API_BASE;   // the portal's API at the server root, shared by all modules
     private readonly MAX_BODY_BYTES = 60000;        // browsers refuse keepalive requests above 64 KiB
     private saving = false;
 
@@ -65,18 +66,18 @@ export class DataExport {
     }
 
 
-    // Fetches saved progress from the backend and hydrates the tracking services.
-    // Returns the last visited page for resuming, or null for new/rogue users.
+    // Fetches this module's saved progress from the backend and hydrates the tracking services.
+    // Returns the last visited page for resuming, or null for guests and students without progress here.
     async loadProgress(): Promise<string | null> {
         if (!isPlatformBrowser(this.platformId)) return null;
         if (this.sessionService.isRogueUser()) return null;
 
-        const username = this.sessionService.sessionId();
-        if (!username) return null;
-
         try {
-            const response = await fetch(`${this.API_BASE}/progress/${encodeURIComponent(username)}`);
-            if (response.status === 404) return null;  // new user, no progress yet
+            const response = await fetch(`${this.API_BASE}/progress?module=${MODULE_NAME}`, { cache: 'no-store' });
+            if (response.status === 401) {
+                this.sessionService.loginExpired.set(true);
+                return null;
+            }
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
             const data = await response.json();
@@ -104,7 +105,8 @@ export class DataExport {
 
 
     // Sends what the server hasn't confirmed yet, at most one keepalive request's worth; the rest follows with
-    // the next save. Silently skips rogue users.
+    // the next save. Silently skips guests. The login cookie says whose it is; without it (401) the rows stay
+    // queued until the student has logged in again.
     async saveProgress(): Promise<void> {
         if (!isPlatformBrowser(this.platformId)) return;
         if (this.sessionService.isRogueUser()) {
@@ -123,12 +125,16 @@ export class DataExport {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    username,
+                    module: MODULE_NAME,
                     visits: batch.visits.map(v => ({ page: v.page, startTime: v.startTime, duration_s: v.duration_s })),
                     attempts: batch.attempts
                 }),
                 keepalive: true   // survives page unload
             });
+            if (response.status === 401) {
+                this.sessionService.loginExpired.set(true);
+                return;
+            }
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             this.analyticsService.markSent(batch.visits);
             this.outbox.remove(batch.attempts);

@@ -11,9 +11,8 @@ The project was generated using [Angular CLI](https://github.com/angular/angular
 <summary>Project Structure Tree</summary>
 
 ```
-ilias_bridge.html                               // entry point from ILIAS; username + key form
-.htaccess                                       // production routing: /api/* → PHP, rest → index.html
-docker-compose.yml                              // local MySQL container (dev only)
+ilias_bridge.html                               // redirect to the portal's login page, for old ILIAS links
+.htaccess                                       // local routing: Angular URLs → index.html
 .gitignore
 README.md
 │
@@ -21,26 +20,9 @@ README.md
 │   └── workflows/
 │           deploy.yml                          // CI/CD: build + SFTP deploy on push to master
 │
-├── api/                                        // PHP backend
-│       config.php                              // DB credentials + module config (gitignored)
-│       config.example.php                      // template for config.php
-│       lib.php                                 // shared by all endpoints: responses, input checks, course key, user lookup
-│       db.php                                  // PDO connection (singleton)
-│       module.php                              // resolves MODULE_NAME → modules.id
-│       router.php                              // local dev router (php -S only)
-│       schema.sql                              // database schema (run once to initialise)
-│       │
-│       ├── users/
-│       │       check.php                       // POST /api/users/check
-│       │       create.php                      // POST /api/users/create
-│       │
-│       └── progress/
-│               save.php                        // POST /api/progress/save
-│               load.php                        // GET  /api/progress/{username}
-│
 ├── frontend/                                   // Angular application
 │   │   angular.json                            // defines location of stylesheets, icons, etc.
-│   │   proxy.conf.json                         // dev proxy: /api → localhost:8000
+│   │   proxy.conf.json                         // dev proxy: /api → the portal on localhost:8000
 │   │
 │   └── src/
 │       │   index.html                          // main .html
@@ -131,32 +113,17 @@ README.md
 
 ## Running Locally
 
-**First-time setup** — copy and fill in the API config:
-```bash
-cp api/config.example.php api/config.php
-# edit api/config.php with your local DB credentials
-```
+The login, the PHP API and the database belong to the portal repository `interapt-portal`
+(`../interapt-portal/`), shared by all modules.
+Start it as its README says (Docker MySQL and `php -S localhost:8000`), then this module:
 
-Three processes must be running simultaneously, each in its own terminal:
-
-**1. Database (Docker):**
-```bash
-sudo docker compose up
-```
-
-**2. PHP API** (run from project root):
-```bash
-php -S localhost:8000 api/router.php
-```
-
-**3. Angular dev server:**
 ```bash
 cd frontend && ng serve
 ```
 
-Then open **`http://localhost:8000/bridge`** — serve `ilias_bridge.html` from the PHP server
-so the bridge and API share the same origin.  
-The Angular app is also accessible directly at **`http://localhost:4200`** (rogue user session, no DB writes).
+Open **`http://localhost:8000/login/?next=pohl`**: after the login it leads to `http://localhost:4200`, and the
+module's `/api` calls go through `proxy.conf.json` to the portal. Opened directly without a login, the module
+runs as a guest (nothing saved). The precession module runs on port 4201 next to it (`ng serve --port 4201`).
 
 
 ## Deploying to the Server
@@ -167,7 +134,9 @@ Pushing to `master` triggers `.github/workflows/deploy.yml` automatically:
 1. GitHub spins up an Ubuntu runner
 2. Installs Node, runs `npm ci`, builds the Angular app
 3. Writes a production `.htaccess` (`RewriteBase /pohl/`) into the build output
-4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`, `api/` (excluding `config.php` and the development files), `ilias_bridge.html`
+4. Uploads via SFTP: Angular dist incl. that `.htaccess` → `pohl/`, and `ilias_bridge.html` (the redirect to the login page)
+
+The API and the login page are deployed with the portal, not here.
 
 **One-time setup** — add the following five secrets in GitHub → repo → Settings → Secrets and variables → Actions. Ask a maintainer for the values:
 `SFTP_HOST`, `SFTP_PORT`, `SFTP_USER`, `SFTP_PASS`, `SFTP_REMOTE_DIR`
@@ -188,63 +157,37 @@ You can also trigger a deploy manually via **GitHub → Actions → Build & Depl
 2. In `.htaccess`, change `RewriteBase /` to `RewriteBase /pohl/`
 3. Upload via SFTP:
    - `frontend/dist/ilias-pohl-module/browser/` → server `pohl/` (the folder contents, not the folder itself)
-   - `api/` (excluding `config.php`, `schema.sql`, `router.php`, `config.example.php`) → server `pohl/api/`
    - `ilias_bridge.html` and `.htaccess` → server `pohl/`
 4. Revert the `.htaccess` change locally after uploading.
 
 ### First-time server setup
 
-1. Create `api/config.php` on the server (copy from `config.example.php`) with production credentials.
-<!-- 2. Run `api/schema.sql` once in phpMyAdmin to create the tables. -->
+Nothing beyond the GitHub secrets: the database, its credentials and the course keys are set up with the portal.
 
 The final structure on the server looks like this:
 
 ```
-pohl/                        ← your base path
-├── index.html               ← Angular app entry point
-├── (Angular static files)
-├── ilias_bridge.html        ← handles login / session management
-├── .htaccess                ← routes Angular URLs + /api/* calls
-└── api/
-    ├── lib.php
-    ├── db.php
-    ├── module.php
-    ├── users/
-    │   ├── check.php
-    │   └── create.php
-    └── progress/
-        ├── save.php
-        └── load.php
+/                            ← the portal: landing page, login/, api/ (interapt-portal)
+└── pohl/                    ← this module
+    ├── index.html           ← Angular app entry point
+    ├── (Angular static files)
+    ├── ilias_bridge.html    ← redirects to /login/?next=pohl
+    └── .htaccess            ← routes Angular URLs to index.html
 ```
 
 
 ## API
 
-| Method | Endpoint | File | Description |
-|--------|----------|------|-------------|
-| POST | `/api/users/check` | `users/check.php` | Validate username and course key; check if the user exists |
-| POST | `/api/users/create` | `users/create.php` | Register a new user (needs the course key) |
-| POST | `/api/progress/save` | `progress/save.php` | Save page visits and question attempts; a row sent twice is stored once |
-| GET | `/api/progress/{username}` | `progress/load.php` | Load page visits and the latest attempt per question |
+The module calls the portal's API at the server root, relative to its `<base href>` (`../api/…`), with the
+module's name `MODULE_NAME` (`storage-prefix.ts`); the login cookie says whose data it is:
 
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/auth/me` | Who is logged in (on startup); 401 = guest |
+| GET | `/api/progress?module=pohl` | Page visits and the latest attempt per question in this module |
+| POST | `/api/progress/save` | `{module, visits, attempts}`; a row sent twice is stored once |
 
-## Database Schema
-
-| Table | Purpose |
-|-------|---------|
-| `modules` | One row per learning module (e.g. `pohl`) — scopes all user data |
-| `users` | One row per username per module; same username allowed across different modules |
-| `page_visits` | One row per page visit: route, sub-page, query string, duration |
-| `question_attempts` | One row per submitted answer, for learning questions (each retry) and tests (single-submission) |
-
-<!-- Run `api/schema.sql` once in phpMyAdmin (select the `interapt` database first, skip the first two lines).
-
-To delete a user and all their data:
-```sql
-DELETE FROM users WHERE username = 'max.mustermann'
-AND module_id = (SELECT id FROM modules WHERE name = 'pohl');
-```
-All related rows in `page_visits` and `question_attempts` cascade automatically. -->
+Endpoints, schema and the login model: the portal's README and `design_notes.md`.
 
 
 ## Project Services
@@ -252,12 +195,12 @@ All related rows in `page_visits` and `question_attempts` cascade automatically.
 ### Frontend Services
 
 - **theme.ts:** toggles light / dark mode
-- **session.ts:** reads `session_id` from URL (set by bridge page), falls back to generating a `rogue_user_` identifier for direct access; exposes `isRogueUser()`
+- **session.ts:** who is using the module: the logged-in student (asked from the portal's `api/auth/me` by an app initializer, before the tracking services read their stored state) or a guest with a generated `rogue_user_` id; exposes `isRogueUser()`, `loginExpired`, `loginUrl()` and `logout()`
 - **analytics.ts:** tracks page visit durations on route changes
 - **results-tracking.ts:** logs learning question answers; allows retries and sends each attempt; per student in `localStorage`
 - **test-tracking.ts:** logs test question answers; blocks re-submission of the same question; per student in `localStorage`; `isTestFinished()` tells whether every question of a test was submitted
 - **attempt-outbox.ts:** holds each submitted answer, also across reloads, until the server has confirmed it
-- **data-export.ts:** sends what the server hasn't confirmed yet, on test completion, when the tab is hidden and on `pagehide`; calls `loadProgress()` on app startup to restore the previous session, and resumes on the last page when entering through the start page; silently skips rogue users
+- **data-export.ts:** sends what the server hasn't confirmed yet, on test completion, when the tab is hidden and on `pagehide`; calls `loadProgress()` on app startup to restore the previous session, and resumes on the last page when entering through the start page; silently skips guests; on a 401 the rows stay queued and the header asks to log in again
 - **visited-pages.ts:** the sub-pages a student has opened, per session id in `localStorage` plus the visits from the saved progress; the nav-bar draws the path reached so far from it and opens the visited sub-pages of the current segment
 - **summary.service.ts:** builds a `SummaryData` object from the in-memory tracking state (page visits with human-readable labels, learning questions grouped by module, test results with per-question breakdown); consumed by all target pages to render the Lernpfad summary
 - **html-report.service.ts:** generates a self-contained HTML Lernpfad report and triggers a browser download; embeds images as base64 data URIs, renders page content in registry order, and inlines question answers with correct/incorrect feedback; MathJax CDN is included for LaTeX rendering

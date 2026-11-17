@@ -4,7 +4,7 @@ What was built and why: the decisions behind the module, for anyone (or any Clau
 
 Built by Carlo (physics education group, Göttingen) with Claude, 2026-02-13 to 2026-11-10. Test questions and formats and the chaos pages by Josefine Neuhaus (2026-06), the revision of the test selection and of the learning questions and feedback by Melissa Atik (2026-08 to 2026-10).
 
-Related: the sister module [Ilias-Precession-Module](https://github.com/CVC97/Ilias-Precession-Module) (`../ilias-precession-module/`) took its infrastructure from here and has its own `design_notes.md`; the design of both modules was redone there first (section 2). The landing page at the server root, `../index.html`, links to both modules and is uploaded by hand.
+Related: the sister module [Ilias-Precession-Module](https://github.com/CVC97/Ilias-Precession-Module) (`../ilias-precession-module/`) took its infrastructure from here and has its own `design_notes.md`; the design of both modules was redone there first (section 2). The portal `../interapt-portal/` holds the landing page at the server root, the login shared by all modules, the PHP API and the schema (section 6); its own `design_notes.md` has the login model.
 
 
 ## 1 Status (2026-11-10)
@@ -28,7 +28,7 @@ Versuch 3 *Der Pohlsche Resonator* (Grundpraktikum Experimentalphysik I, script 
 | **Yellow means test** | `--physik-gelb` marks tests everywhere: headings, test buttons, the test card on decision pages, the box borders in tests. It is a meaning, not decoration. |
 | **Optional deep dives**: chaos, numerical simulation, Versuchsaufbau | Offered after a passed driven test (links in the end page's message), and Versuchsaufbau is the theory strand's last station before its guide. Chaos and simulation lead to guides of their own (A, P). |
 | **A guide tailored to the way taken** | Target pages offer guides by focus and openness: experiment strand E1 (setup, more concrete), E2 (setup, more open), E3 (analysis); theory strand T1 (concrete), T2 (free design); A (chaos) and P (simulation); each with the analysis notebook. Below: the student's Lernpfad and the HTML report. |
-| **Infrastructure shared with the precession module** | Bridge, PHP API, MySQL tracking, summary and report are identical there; the database `interapt` is shared (section 6). |
+| **Infrastructure shared with the precession module** | Tracking services, summary and report are identical there. The login, the PHP API and the database `interapt` are one copy for both, in the portal (section 6). |
 | **The nav is a line of stations, but only visited sub-pages of the current segment open** (Carlo, 2026-11-01) | Taken over from the precession design. Unlike there, segments, Startseite and Anleitung never open outside dev mode, so students can't jump between chapters past the decision pages. A row is *reached* (filled navy marker) when visited, a segment also when its decision page was, the Anleitung when any target page was. |
 | **Tests lock the nav** | A test can be reopened and has no route guard. While it is unfinished, no row opens, since the learning rows of the same chapter hold the answers; a test row only opens once that test is finished (`isTestFinished()`, not `percentageScore`, which `endTest()` also writes for a test left half-way). |
 | **Only the chosen strand on the line** (2026-11-01) | The old strand switcher looked like tabs but couldn't be clicked outside dev mode. The strand's name is plain text above segment 1; dev mode offers the other strand as a small link. On the theory strand Versuchsaufbau (`opt-setup`) is a station with a wrench instead of a number, since every way to its guide leads through it; on the experiment strand it is an optional page. |
@@ -95,21 +95,20 @@ Six Angular components drawing on `<canvas>`, each with a „statisch“ / „dy
 - **HTML report** (`html-report.service.ts`, replaced the earlier PDF service, 2026-08): a self-contained file generated in the browser, images embedded, page content in `learning-report-registry.ts` order with the answers at the question blocks. Simulations and target pages are left out of the report.
 
 
-## 6 Data and backend (decided 2026-11-03 to 2026-11-05)
+## 6 Data and backend (decided 2026-11-03 to 2026-11-05; login and backend moved to the portal 2026-11-17)
 
-The PHP and the schema are **identical in both modules** and the database `interapt` is shared: change them together.
+The login, the PHP API and the schema live in the portal (`../interapt-portal/`), one copy for all modules; its `design_notes.md` has the login model (cohort keys, codename, consent, cookie). What the module does:
 
+- **One login for all modules.** The portal's login page (`/login/?next=pohl`) sets an HttpOnly cookie for the whole site. On startup an app initializer asks `api/auth/me` who is logged in (`Session.resolve()`), before the tracking services read their stored state, which is keyed by that id. 401: guest (`rogue_user_…`), nothing sent. Server unreachable: the stored identity stays, so answers keep being queued. The old `?session_id=` in the URL is ignored.
+- **The API is called as `../api/…`**, relative to `<base href>` (`/pohl/` → `/api/`), with `MODULE_NAME` (`storage-prefix.ts`, `'pohl'`) in every call. The cookie says whose data it is; the username is no longer in URLs or request bodies. Locally `proxy.conf.json` forwards `/api` to the portal on :8000.
+- **Login run out** (401 on save or load): the rows stay queued, `loginExpired` is set, and the header asks to log in again.
 - **Events, not snapshots.** `question_attempts` holds one row per submitted answer, every retry included, for learning questions and tests; `page_visits` one row per visit (route, sub-page, query, duration). The data is used for research, so the first attempt must survive; the app resumes from the latest attempt per question.
-- **Saving is idempotent.** Unique keys plus `ON DUPLICATE KEY UPDATE id = id`: a row sent twice is stored once, the first version counts. With `attempt_no` 1 for tests the same key enforces single submission. Not `INSERT IGNORE`, which also turns real errors into warnings.
+- **Saving is idempotent.** Unique keys plus `ON DUPLICATE KEY UPDATE id = id`: a row sent twice is stored once, the first version counts. With `attempt_no` 1 for tests the same key enforces single submission.
 - **The app sends only unconfirmed rows** (`attempt-outbox.ts`), on `pagehide`, when the tab is hidden and on the test end page, at most 60 kB per request (browsers refuse `keepalive` requests above 64 KiB).
-- **Times in UTC with milliseconds** (`DATETIME(3)`), the session in UTC, ISO strings ending in `Z` to the browser.
+- **Times in UTC with milliseconds** (`DATETIME(3)`), ISO strings ending in `Z` to the browser.
 - **Every `localStorage` key carries the module prefix** (`storage-prefix.ts`, `'pohl:'`). Both modules run on one origin and so share one `localStorage`; without the prefix each read, showed and saved the other's data (found 2026-11-05). Only the theme is shared on purpose.
-- **Resume only through the start page.** Coming in via the bridge, the app goes to the last saved page; a reload or a direct link stays put.
-- **The API is called as `api/…`, relative** to `<base href>`. A leading `/` went to the domain root, where no API exists: until 2026-11-03 the deployed app never saved anything.
-- **The deploy must not wipe `api/`**: the first upload mirrors with `--delete` and therefore excludes `api/` and the bridge; development files (`schema.sql`, `router.php`, `config.example.php`) are not uploaded.
-- **Course key on `check` and `create`**, usernames limited to letters, digits and `. _ - @`.
-
-Known weaknesses of the login model and data protection are documented in *Open Issues* of the developer guide, deliberately not here.
+- **Resume only through the start page.** Coming in from the login page, the app goes to the last saved page; a reload or a direct link stays put.
+- **The header shows the login state:** „Gast · Anmelden“, the username, or „Anmeldung abgelaufen“; a click opens one dialog (to the login page, or Abmelden for all modules). The dialog follows the theme.
 
 
 ## 7 Pitfalls and lessons
@@ -120,14 +119,15 @@ Known weaknesses of the login model and data protection are documented in *Open 
 - **Tests:** jsdom has no `<base>` and no canvas: add a `<base>` in specs that compare against `document.baseURI`, and call `stubCanvasContext()` for canvas components.
 - **`percentageScore` is not "finished":** `endTest()` writes it for a test left half-way; use `isTestFinished()`.
 - **Dark mode controls:** navy „Auswerten“ on a dark card is 1.18:1, so `--control-fill` is inverted in dark mode; check new buttons for the same problem.
-- **Local DB:** `db_host` must be `127.0.0.1`; with `localhost` PHP looks for a Unix socket instead of the Docker port.
+- **Local API:** the portal's `php -S` needs `PHP_CLI_SERVER_WORKERS=4`: single-threaded, it hangs on an idle connection Chrome keeps open, and the login page's requests never return. `db_host` must be `127.0.0.1` (with `localhost` PHP looks for a Unix socket instead of the Docker port).
+- **Puppeteer and 401:** `waitUntil: 'networkidle0'` never fires on a page whose request got a 401 (a guest's `api/auth/me`); wait for `load` and the element instead.
 - **Screenshots** from a fresh load of a real build in headless Chrome (Puppeteer is a devDependency); wait for MathJax; theme via `localStorage.theme`, dev mode via `sessionStorage.devMode` before load.
 
 
 ## 8 Relation to the precession module
 
-- **Shared and to be kept in sync:** `api/` and `schema.sql` (byte-identical), the tracking services, `attempt-outbox.ts`, the bridge's script, the footer, the global styles and the design rules. A design change in one module goes to the other.
-- **Module-specific:** `STORAGE_PREFIX` (must be unique per module), `module_name` and `module_key` in the server's `api/config.php`, the deploy path, the nav structure, the summary labels and the report registry.
+- **Shared and to be kept in sync:** the tracking services (`session.ts`, `data-export.ts`, `attempt-outbox.ts`), the header's login state, the bridge redirect, the footer, the global styles and the design rules. A design change in one module goes to the other. The API and the schema are no longer copied: one copy in the portal.
+- **Module-specific:** `STORAGE_PREFIX` and `MODULE_NAME` (`storage-prefix.ts`, both unique per module; the name must also be listed under `modules` in the portal's `api/config.php`), the deploy path, the nav structure, the summary labels and the report registry.
 - **Different by design:** Pohl has strands, decision pages, tests and canvas simulations; precession is one linear path with retryable questions and an embedded Unity simulation. Its nav opens every visited page; Pohl's only the visited sub-pages of the current segment.
 
 
@@ -146,9 +146,8 @@ Registering pages, glossary terms and test question types: developer guide, *Com
 ## 10 Open items
 
 - **Test button contrast:** white text on `--physik-gelb` (`.test-btn`) is about 2:1.
-- **Untested in production:** the `[B]` flag of the load rewrite on the real Apache (usernames with `+`, `&` or umlauts).
-- **Landing page** `../index.html` is not uploaded yet (the server root answers 403) and is not under version control.
-- **Backend:** login model, data protection, repeating students, scores computed in the browser, durations including idle time: *Open Issues* in the developer guide.
+- **Portal not deployed yet** (2026-11-17): the landing page, the login page and the shared API are in `../interapt-portal/`; deploy it before this module's next deploy, which removes `pohl/api/` from the server (order and steps: the portal's README).
+- **Backend:** consent wording and data protection, the survey's codename scheme, scores computed in the browser, durations including idle time: the portal's `design_notes.md` and *Open Issues* in the developer guide.
 - **Inherited:** a cold load straight onto a learning page can log `MathJax.typesetPromise is not a function` (later renders work).
 
 

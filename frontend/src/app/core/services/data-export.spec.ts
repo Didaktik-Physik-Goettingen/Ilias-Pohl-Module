@@ -5,6 +5,7 @@ import { vi } from 'vitest';
 import { DataExport } from './data-export';
 import { Analytics } from './analytics';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
+import { Session } from './session';
 
 describe('DataExport', () => {
   let service: DataExport;
@@ -34,10 +35,27 @@ describe('DataExport', () => {
     expect(service).toBeTruthy();
   });
 
-  it('calls the API relative to the base href, so it works below /pohl/', async () => {
+  it('calls the shared API at the server root, relative to the base href (/pohl/ → /api/)', async () => {
     outbox.add(attempt('q1'));
     await service.saveProgress();
-    expect(fetchMock.mock.calls[0][0]).toBe('api/progress/save');
+    expect(fetchMock.mock.calls[0][0]).toBe('../api/progress/save');
+    expect(sentBody().module).toBe('pohl');
+    expect(sentBody().username).toBeUndefined();     // the login cookie says whose it is
+  });
+
+  it('loads only this module\'s progress', async () => {
+    fetchMock.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ pageVisits: [], attempts: [] }) });
+    await service.loadProgress();
+    expect(fetchMock.mock.calls[0][0]).toBe('../api/progress?module=pohl');
+  });
+
+  it('keeps the rows and asks for a new login when the login has run out', async () => {
+    const session = TestBed.inject(Session);
+    outbox.add(attempt('q1'));
+    fetchMock.mockResolvedValueOnce({ ok: false, status: 401 });
+    await service.saveProgress();
+    expect(outbox.getAll().length).toBe(1);
+    expect(session.loginExpired()).toBe(true);
   });
 
   it('sends a row until the server has confirmed it, and only then forgets it', async () => {

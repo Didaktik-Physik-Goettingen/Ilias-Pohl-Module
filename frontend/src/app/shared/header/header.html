@@ -1,11 +1,32 @@
-@if (showBridgeConfirm) {
-    <div class="bridge-overlay" (click)="closeBridgeConfirm()">
-        <div class="bridge-dialog" (click)="$event.stopPropagation()">
-            <button class="bridge-dialog-close" (click)="closeBridgeConfirm()">✕</button>
-            <p class="bridge-dialog-text">Sie werden zur Verifikation nun Ihre jetzige Session verlassen.</p>
-            <div class="bridge-dialog-actions">
-                <button class="bridge-dialog-confirm" (click)="confirmBridge()">Weiter zur Verifikation</button>
-            </div>
+@if (showSessionDialog) {
+    <div class="session-overlay" (click)="closeSessionDialog()">
+        <div class="session-dialog" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+            <button class="session-dialog-close" (click)="closeSessionDialog()" aria-label="Schließen">✕</button>
+            @if (sessionService.isRogueUser()) {
+                <p class="session-dialog-text">
+                    Sie nutzen das Lernmodul als Gast. Mit der Anmeldung wird Ihr Fortschritt gespeichert, für alle
+                    Lernmodule gemeinsam. Was Sie als Gast bearbeitet haben, wird nicht übernommen.
+                </p>
+                <div class="session-dialog-actions">
+                    <button class="session-dialog-confirm" (click)="goToLogin()">Zur Anmeldung</button>
+                </div>
+            } @else if (sessionService.loginExpired()) {
+                <p class="session-dialog-text">
+                    Ihre Anmeldung ist abgelaufen. Bitte melden Sie sich erneut an; noch nicht gespeicherte
+                    Antworten werden danach gespeichert.
+                </p>
+                <div class="session-dialog-actions">
+                    <button class="session-dialog-confirm" (click)="goToLogin()">Zur Anmeldung</button>
+                </div>
+            } @else {
+                <p class="session-dialog-text">
+                    Sie sind angemeldet als <strong>{{ sessionService.sessionId() }}</strong>. Die Anmeldung gilt
+                    für alle Lernmodule.
+                </p>
+                <div class="session-dialog-actions">
+                    <button class="session-dialog-confirm" (click)="logout()">Abmelden</button>
+                </div>
+            }
         </div>
     </div>
 }
@@ -31,17 +52,19 @@
                 </span>
             </div>
             <div class="header-subtitle">Praktikum zu Experimentalphysik I</div>
-            <!-- Debug: Show session ID -->
+            <!-- login state, shared by all modules: opens the dialog above -->
             @if (sessionService.hasValidSession()) {
-                @if (sessionService.isRogueUser()) {
-                    <div class="session-debug">
-                        <span class="session-debug--bridge" (click)="goToBridge()">Session: {{ sessionService.sessionId() }}</span>
-                    </div>
-                } @else {
-                    <div class="session-debug">
-                        Session: {{ sessionService.sessionId() }}
-                    </div>
-                }
+                <div class="session-state">
+                    <button class="session-link" (click)="openSessionDialog()">
+                        @if (sessionService.isRogueUser()) {
+                            Gast · Anmelden
+                        } @else if (sessionService.loginExpired()) {
+                            Anmeldung abgelaufen · Erneut anmelden
+                        } @else {
+                            {{ sessionService.sessionId() }}
+                        }
+                    </button>
+                </div>
             }
             <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="themeService.isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
                 <img [src]="themeService.themeIconPath()" [alt]="themeService.isDarkMode() ? 'Dark mode' : 'Light mode'">
