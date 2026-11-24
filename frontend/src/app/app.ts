@@ -3,6 +3,7 @@ import { Router, RouterOutlet } from '@angular/router';
 import { Header } from './shared/header/header';
 import { Footer } from './shared/footer/footer';
 import { NavBar } from './shared/nav-bar/nav-bar';
+import { EffortRatingDialog } from './shared/effort-rating-dialog/effort-rating-dialog';
 import { Analytics } from './core/services/analytics';
 import { DataExport } from './core/services/data-export';
 
@@ -10,7 +11,7 @@ import { DataExport } from './core/services/data-export';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, Header, Footer, NavBar],
+    imports: [RouterOutlet, Header, Footer, NavBar, EffortRatingDialog],
     templateUrl: './app.html',
     styleUrl: './app.css'
 })

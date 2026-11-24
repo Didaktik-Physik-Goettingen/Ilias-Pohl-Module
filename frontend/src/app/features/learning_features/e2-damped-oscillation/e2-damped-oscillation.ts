@@ -8,6 +8,7 @@ import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multi
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
+import { EffortRating } from '../../../core/services/effort-rating';
 import * as e2Questions from './e2-damped-oscillation-questions';
 import * as e2Content from './e2-damped-oscillation-content';
 
@@ -27,7 +28,8 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
         private router: Router,
 		private trackingService: ResultsTracking,
         public glossaryOverlay: GlossaryOverlay,
-        public devMode: DevModeService
+        public devMode: DevModeService,
+        private effortRating: EffortRating
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -211,12 +213,14 @@ export class E2DampedOscillation implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'damped_osc2') {
             this.currentView = 'damped_osc3';
         } else if (this.currentView === 'damped_osc3') {
-            if (this.navigationFlow === 'learning-first') {
-                sessionStorage.setItem('learning-done-e-damped', 'true');
-                this.router.navigate(['/decision/dec-e-damped']);
-            } else {
-                this.router.navigate(['/decision/dec-e-driven']);
-            }
+            this.effortRating.rateThen('e2-damped-oscillations', () => {
+                if (this.navigationFlow === 'learning-first') {
+                    sessionStorage.setItem('learning-done-e-damped', 'true');
+                    this.router.navigate(['/decision/dec-e-damped']);
+                } else {
+                    this.router.navigate(['/decision/dec-e-driven']);
+                }
+            });
             return;
         }
         this.updateUrl();

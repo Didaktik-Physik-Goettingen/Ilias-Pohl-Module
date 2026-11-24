@@ -9,6 +9,7 @@ import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choic
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
+import { EffortRating } from '../../../core/services/effort-rating';
 import * as t4Questions from './t4-driven-oscillations-questions';
 import * as t4Content from './t4-driven-oscillations-content';
 
@@ -26,7 +27,8 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         private router: Router,
         private trackingService: ResultsTracking,
         public glossaryOverlay: GlossaryOverlay,
-        public devMode: DevModeService
+        public devMode: DevModeService,
+        private effortRating: EffortRating
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -275,12 +277,14 @@ export class T4DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'driven_osc7') { 
             this.currentView = 'driven_osc8';
         } else if (this.currentView === 'driven_osc8') {
-            if (this.navigationFlow === 'learning-first') {
-                sessionStorage.setItem('learning-done-t-driven', 'true');
-                this.router.navigate(['/decision/dec-t-driven']);
-            } else {
-                this.router.navigate(['/learning/opt-setup']);
-            }
+            this.effortRating.rateThen('t4-driven-oscillations', () => {
+                if (this.navigationFlow === 'learning-first') {
+                    sessionStorage.setItem('learning-done-t-driven', 'true');
+                    this.router.navigate(['/decision/dec-t-driven']);
+                } else {
+                    this.router.navigate(['/learning/opt-setup']);
+                }
+            });
             return;
         }
         this.updateUrl(); this.renderMath();

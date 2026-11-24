@@ -6,6 +6,7 @@ import { DataExport } from './data-export';
 import { Analytics } from './analytics';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 import { Session } from './session';
+import { EffortRating } from './effort-rating';
 
 describe('DataExport', () => {
   let service: DataExport;
@@ -90,5 +91,21 @@ describe('DataExport', () => {
     expect(new Blob([body]).size).toBeLessThan(64 * 1024);
     expect(sentBody().attempts.length).toBe(2);
     expect(outbox.getAll().length).toBe(2);
+  });
+
+  it('sends mental-effort ratings with the batch and forgets them once confirmed', async () => {
+    const effort = TestBed.inject(EffortRating);
+    effort.rateThen('e2-damped-oscillations', () => {});
+    effort.submit(4);
+    await service.saveProgress();
+    expect(sentBody().ratings).toEqual([expect.objectContaining({ unitId: 'e2-damped-oscillations', rating: 4 })]);
+    expect(effort.getUnsent()).toEqual([]);
+    expect(effort.isRated('e2-damped-oscillations')).toBe(true);
+  });
+
+  it('takes the units already rated from the saved progress', async () => {
+    fetchMock.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ pageVisits: [], attempts: [], ratedUnits: ['e3-driven-oscillations'] }) });
+    await service.loadProgress();
+    expect(TestBed.inject(EffortRating).isRated('e3-driven-oscillations')).toBe(true);
   });
 });

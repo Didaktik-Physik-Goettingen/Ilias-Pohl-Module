@@ -10,6 +10,7 @@ import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multi
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
+import { EffortRating } from '../../../core/services/effort-rating';
 import * as e3Questions from './e3-driven-oscillations-questions';
 import * as e3Content from './e3-driven-oscillations-content';
 
@@ -29,7 +30,8 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         private router: Router,
 		private trackingService: ResultsTracking,
         public glossaryOverlay: GlossaryOverlay,
-        public devMode: DevModeService
+        public devMode: DevModeService,
+        private effortRating: EffortRating
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -278,12 +280,14 @@ export class E3DrivenOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'driven_osc6') {
             this.currentView = 'driven_osc7';
         } else if (this.currentView === 'driven_osc7') {
-            if (this.navigationFlow === 'learning-first') {
-                sessionStorage.setItem('learning-done-e-driven', 'true');
-                this.router.navigate(['/decision/dec-e-driven']);
-            } else {
-                this.router.navigate(['/target/tar-experiment']);
-            }
+            this.effortRating.rateThen('e3-driven-oscillations', () => {
+                if (this.navigationFlow === 'learning-first') {
+                    sessionStorage.setItem('learning-done-e-driven', 'true');
+                    this.router.navigate(['/decision/dec-e-driven']);
+                } else {
+                    this.router.navigate(['/target/tar-experiment']);
+                }
+            });
             return;
         }
         this.updateUrl();

@@ -8,6 +8,7 @@ import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multi
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
+import { EffortRating } from '../../../core/services/effort-rating';
 import * as t3Questions from './t3-damped-oscillations-questions';
 import * as t3Content from './t3-damped-oscillations-content';
 
@@ -27,7 +28,8 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
         private router: Router,
         private trackingService: ResultsTracking,
         public glossaryOverlay: GlossaryOverlay,
-        public devMode: DevModeService
+        public devMode: DevModeService,
+        private effortRating: EffortRating
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -228,12 +230,14 @@ export class T3DampedOscillations implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'damped_osc4') {
             this.currentView = 'damped_osc5';
         } else if (this.currentView === 'damped_osc5') {
-            if (this.navigationFlow === 'learning-first') {
-                sessionStorage.setItem('learning-done-t-damped', 'true');
-                this.router.navigate(['/decision/dec-t-damped']);
-            } else {
-                this.router.navigate(['/decision/dec-t-damped']);
-            }
+            this.effortRating.rateThen('t3-damped-oscillations', () => {
+                if (this.navigationFlow === 'learning-first') {
+                    sessionStorage.setItem('learning-done-t-damped', 'true');
+                    this.router.navigate(['/decision/dec-t-damped']);
+                } else {
+                    this.router.navigate(['/decision/dec-t-damped']);
+                }
+            });
             return;
         }
         this.updateUrl(); this.renderMath();

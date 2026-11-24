@@ -8,6 +8,7 @@ import { MultipleChoice } from '../../../shared/evaluation/multiple-choice/multi
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
+import { EffortRating } from '../../../core/services/effort-rating';
 import * as t2Questions from './t2-free-oscillations-questions';
 import * as t2Content from './t2-free-oscillations-content';
 
@@ -29,6 +30,7 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 		private trackingService: ResultsTracking,
 		public glossaryOverlay: GlossaryOverlay,
 		public devMode: DevModeService,
+		private effortRating: EffortRating
 	) {}
 
 	private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -215,7 +217,9 @@ export class T2FreeOscillations implements OnInit, AfterViewInit, OnDestroy {
 		if (this.currentView === 'free_osc1') {
 			this.currentView = 'free_osc2';
 		} else if (this.currentView === 'free_osc2') {
-			this.router.navigate(['/decision/dec-t-damped']);
+			this.effortRating.rateThen('t2-free-oscillations', () => {
+				this.router.navigate(['/decision/dec-t-damped']);
+			});
 			return;
 		}
 		this.updateUrl();

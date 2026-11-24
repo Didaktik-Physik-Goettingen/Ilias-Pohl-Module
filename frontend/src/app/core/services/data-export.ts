@@ -7,6 +7,7 @@ import { TestTracking, TestProgress } from './test-tracking';
 import { VisitedPages } from './visited-pages';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 import { MODULE_NAME } from './storage-prefix';
+import { EffortRating, EffortRatingRow } from './effort-rating';
 
 
 
@@ -36,7 +37,8 @@ export class DataExport {
         private resultsService: ResultsTracking,
         private testService: TestTracking,
         private visitedPages: VisitedPages,
-        private outbox: AttemptOutbox
+        private outbox: AttemptOutbox,
+        private effortRating: EffortRating
     ) {
         if (isPlatformBrowser(this.platformId)) {
             // beforeunload doesn't fire reliably on phones; a tab sent to the background may never come back
@@ -85,6 +87,7 @@ export class DataExport {
             const attempts: any[] = (data.attempts ?? []).map((a: any) => ({ ...a, answeredAt: Date.parse(a.answeredAt) }));
             this.resultsService.restoreFromBackend(attempts.filter(a => a.kind === 'learning'));
             this.testService.restoreFromBackend(attempts.filter(a => a.kind === 'test'));
+            this.effortRating.markRated(Array.isArray(data.ratedUnits) ? data.ratedUnits : []);
 
             // Find the last meaningful page (ignore root and session-redirect URLs).
             const meaningful = (data.pageVisits ?? []).filter(
@@ -117,7 +120,7 @@ export class DataExport {
 
         const username = this.sessionService.sessionId();
         const batch = this.nextBatch();
-        if (!username || (!batch.visits.length && !batch.attempts.length)) return;
+        if (!username || (!batch.visits.length && !batch.attempts.length && !batch.ratings.length)) return;
 
         this.saving = true;
         try {
@@ -127,7 +130,8 @@ export class DataExport {
                 body: JSON.stringify({
                     module: MODULE_NAME,
                     visits: batch.visits.map(v => ({ page: v.page, startTime: v.startTime, duration_s: v.duration_s })),
-                    attempts: batch.attempts
+                    attempts: batch.attempts,
+                    ratings: batch.ratings
                 }),
                 keepalive: true   // survives page unload
             });
@@ -138,6 +142,7 @@ export class DataExport {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             this.analyticsService.markSent(batch.visits);
             this.outbox.remove(batch.attempts);
+            this.effortRating.markSent(batch.ratings);
             console.log('Progress saved to backend.');
         } catch (err) {
             console.error('Failed to save progress:', err);
@@ -147,7 +152,7 @@ export class DataExport {
     }
 
 
-    private nextBatch(): { visits: PageVisit[]; attempts: AttemptRow[] } {
+    private nextBatch(): { visits: PageVisit[]; attempts: AttemptRow[]; ratings: EffortRatingRow[] } {
         let budget = this.MAX_BODY_BYTES;
         const fits = (row: unknown) => {
             const size = new Blob([JSON.stringify(row)]).size;
@@ -155,10 +160,11 @@ export class DataExport {
             budget -= size;
             return true;
         };
-        // answers first: they are the harder data to lose
+        // answers and ratings first: they are the harder data to lose
         const attempts = this.outbox.getAll().filter(fits);
+        const ratings = this.effortRating.getUnsent().filter(fits);
         const visits = this.analyticsService.getUnsentVisits().filter(fits);
-        return { visits, attempts };
+        return { visits, attempts, ratings };
     }
 
 

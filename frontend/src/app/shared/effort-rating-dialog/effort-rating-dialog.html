@@ -1,0 +1,33 @@
+@if (effort.pending(); as open) {
+    <div class="effort-overlay">
+        <div #dialog class="effort-dialog" role="dialog" aria-modal="true" aria-labelledby="effort-question"
+             aria-describedby="effort-note" tabindex="-1" (keydown)="onKeydown($event)">
+            <p class="effort-kicker">Begleitforschung</p>
+            <p id="effort-question" class="effort-question">
+                Wie viel geistige Anstrengung haben Sie in den gerade bearbeiteten Abschnitt
+                <span class="effort-unit">„{{ open.title }}“</span> investiert?
+            </p>
+            <p id="effort-note" class="effort-note">
+                Diese Frage gehört nicht zum Lernmodul und wird nicht bewertet.
+            </p>
+
+            <div class="effort-scale" role="radiogroup" aria-labelledby="effort-question">
+                @for (label of labels; track $index) {
+                    <label class="effort-option" [class.selected]="selected() === $index + 1">
+                        <input type="radio" name="effort-rating" [value]="$index + 1"
+                               [checked]="selected() === $index + 1" (change)="choose($index + 1)">
+                        <span class="effort-number">{{ $index + 1 }}</span>
+                        <span class="effort-label">{{ label }}</span>
+                    </label>
+                }
+            </div>
+
+            <div class="effort-actions">
+                <button type="button" class="effort-skip" (click)="skip()">Keine Angabe</button>
+                <button type="button" class="effort-confirm" [disabled]="selected() === null" (click)="confirm()">
+                    Weiter
+                </button>
+            </div>
+        </div>
+    </div>
+}
