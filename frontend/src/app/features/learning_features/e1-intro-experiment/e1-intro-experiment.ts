@@ -10,7 +10,6 @@ import { ImageChoice } from '../../../shared/evaluation/image-choice/image-choic
 import { ResultsTracking } from '../../../core/services/results-tracking';
 import { GlossaryOverlay } from '../../../shared/glossary-overlay/glossary-overlay.service';
 import { DevModeService } from '../../../core/services/dev-mode';
-import { EffortRating } from '../../../core/services/effort-rating';
 import * as e1Questions from './e1-intro-experiment-questions';
 import * as e1Content from './e1-intro-experiment-content';
 
@@ -39,8 +38,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
         private router: Router,
 		private trackingService: ResultsTracking,
         public glossaryOverlay: GlossaryOverlay,
-        public devMode: DevModeService,
-        private effortRating: EffortRating
+        public devMode: DevModeService
     ) {}
 
     private mathJaxTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -233,9 +231,7 @@ export class E1IntroExperiment implements OnInit, AfterViewInit, OnDestroy {
         } else if (this.currentView === 'intro_exp3') {
             this.currentView = 'intro_exp4';
         } else if (this.currentView === 'intro_exp4') {
-            this.effortRating.rateThen('e1-intro-experiment', () => {
-                this.router.navigate(['/decision/dec-e-damped']);
-            });
+            this.router.navigate(['/decision/dec-e-damped']);
             return;
         }
         this.updateUrl();
