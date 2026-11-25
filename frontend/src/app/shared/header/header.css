@@ -264,8 +264,7 @@ header {
     color: var(--button-text-color);
     border: 2px solid var(--button-border-color);
     border-radius: 6px;
-    box-shadow: 0 2px 8px var(--shadow-color);
-    transition: background 0.3s ease;
+    transition: background 0.3s ease;   /* no shadow: inside a box, the box lifts it */
 }
 
 .session-dialog-confirm:hover {

@@ -118,53 +118,37 @@
 }
 
 
+/* the module's .btn (styles.css) in a box: no shadow, the dialog lifts them; sized by their labels.
+   Weiter: white with a navy edge, navy tint on hover, greyed out until a choice (.btn:disabled).
+   Keine Angabe: the quiet way aside, grey, so it ranks below Weiter (as the portal's guest button). */
 .effort-actions {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 1.25rem;
+    gap: 1rem;
     margin-top: 1.5rem;
 }
 
-.effort-skip {
-    background: none;
-    border: none;
-    padding: 0.5rem 0.25rem;
-    font: inherit;
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    cursor: pointer;
-}
-
-.effort-skip:hover {
-    color: var(--text-primary);
-}
-
-.effort-confirm {
-    padding: 0.75rem 1.75rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    background: var(--button-color);
-    color: var(--button-text-color);
-    border: 2px solid var(--button-border-color);
-    border-radius: 6px;
-    box-shadow: 0 2px 8px var(--shadow-color);
-    transition: background 0.3s ease;
-}
-
-.effort-confirm:hover:not(:disabled) {
-    background: var(--button-color-hover);
-}
-
-/* greyed out, never hidden (the module's rule for gated buttons) */
-.effort-confirm:disabled {
-    cursor: not-allowed;
-    opacity: 0.45;
+.effort-actions .btn {
+    width: auto;
+    min-width: 11rem;
     box-shadow: none;
+}
+
+.effort-actions .btn:hover:not(:disabled) {
+    box-shadow: none;
+}
+
+.effort-actions .effort-skip {
+    color: var(--text-muted);
+    background: transparent;
+    border-color: var(--border-soft);
+}
+
+.effort-actions .effort-skip:hover:not(:disabled) {
+    color: var(--text-muted);
+    background: var(--quiet-fill-hover);
+    border-color: var(--border-soft);
 }
 
 
@@ -193,8 +177,17 @@
         margin-bottom: 1rem;
     }
 
+    /* stacked, full width, Weiter on top (as the learning pages' .button-container) */
     .effort-actions {
+        flex-direction: column-reverse;
+        align-items: stretch;
+        gap: 0.75rem;
         margin-top: 1rem;
+    }
+
+    .effort-actions .btn {
+        width: 100%;
+        min-width: 0;
     }
 
     .effort-number {

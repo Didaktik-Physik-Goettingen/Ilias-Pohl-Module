@@ -33,8 +33,8 @@
     --card-bg: #ffffff;
     --border-color: rgba(21, 50, 104, 0.08);
     --shadow-color: rgba(21, 50, 104, 0.12);
-    --button-color: var(--bg-primary);
-    --button-color-hover: var(--card-bg);
+    --button-color: var(--card-bg);       /* Weiter/Zurück: white with a navy edge */
+    --button-color-hover: #dee2ea;        /* 14 % navy in white: 1.3:1 against the rest state */
     --button-border-color: var(--uni-blau-1);
     --button-text-color: var(--uni-blau-1);
     --button-text-color-hover: var(--uni-blau-1);
@@ -60,6 +60,7 @@
     --surface-info-hover: linear-gradient(135deg, #d1e7fd 0%, #e8f4ff 100%);
     --control-fill: var(--uni-blau-1);    /* Auswerten, slider thumbs */
     --control-text: white;
+    --quiet-fill-hover: #eceef1;          /* quiet buttons (Keine Angabe): grey, as the portal's guest button */
     --switch-on: var(--uni-blau-1);
     --lamp-bg: linear-gradient(rgba(255, 197, 131, 0.15), rgba(255, 197, 131, 0.15)) #ffffff;
     --lamp-border: rgb(255, 197, 131);
@@ -101,8 +102,8 @@
     --card-bg:                 #1e293b;   /* elevated surface — clearly above bg        */
     --border-color:            rgba(148, 163, 184, 0.12);
     --shadow-color:            rgba(0, 0, 0, 0.4);
-    --button-color: var(--bg-primary);
-    --button-color-hover: var(--card-bg);
+    --button-color: var(--card-bg);
+    --button-color-hover: #394454;        /* 14 % off-white in --card-bg: 1.5:1 against the rest state */
     --button-border-color: white;
     --button-text-color:       white;
     --button-text-color-hover: white;
@@ -127,6 +128,7 @@
     --surface-info-hover: rgba(80, 165, 210, 0.20);
     --control-fill: rgb(226, 232, 240);
     --control-text: #111827;
+    --quiet-fill-hover: var(--surface-option);
     --switch-on: var(--uni-blau-3);
     --lamp-bg: rgba(253, 166, 66, 0.10);
     --lamp-border: rgba(255, 197, 131, 0.45);
@@ -351,14 +353,21 @@ button.btn {
     transition: all 0.3s ease;
 }
 
-.btn:hover {
+/* hover: a navy tint, edge and text stay; the edge also keeps a.btn from taking a link's blue underline */
+.btn:hover:not(:disabled) {
     background: var(--button-color-hover);
     color: var(--button-text-color-hover);
+    border-color: var(--button-border-color);
     box-shadow: 0 2px 8px var(--shadow-color);
 }
 
-.btn:active {
-    transform: scalex(0.98);
+.btn:focus-visible {
+    outline: 3px solid var(--uni-blau-3);
+    outline-offset: 2px;
+}
+
+.btn:active:not(:disabled) {
+    transform: scale(0.98);
     transition: none; /* snaps down instantly */
     touch-action: manipulation;
 }
