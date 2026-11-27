@@ -1,0 +1,58 @@
+<div class="overlay-header">
+    <span class="overlay-title">Meine Markierungen</span>
+    <button class="overlay-close" (click)="close()" aria-label="Schließen">✕</button>
+</div>
+
+<div class="marks-tabs" role="tablist" aria-label="Markierungen anzeigen">
+    @for (t of tabs; track t.id) {
+        <button type="button" class="marks-tab mark-option" role="tab" [attr.data-tab]="t.id" id="marks-tab-{{ t.id }}"
+            [class.mark-option--active]="tab() === t.id"
+            [attr.aria-selected]="tab() === t.id" [attr.tabindex]="tab() === t.id ? 0 : -1"
+            aria-controls="marks-panel"
+            (click)="tab.set(t.id)" (keydown)="onTabKey($event)">
+            @if (t.id !== 'all') {
+                <span class="mark-swatch mark-swatch--{{ t.id }}" aria-hidden="true"></span>
+            }
+            {{ t.label }} ({{ counts()[t.id] }})
+        </button>
+    }
+</div>
+
+<div class="overlay-body" id="marks-panel" role="tabpanel" [attr.aria-labelledby]="'marks-tab-' + tab()">
+    @for (group of groups(); track group.label) {
+        <section class="mark-group">
+            <h2 class="mark-group-title">{{ group.label }}</h2>
+            @for (mark of group.marks; track mark.id) {
+                <div class="mark-item mark-edge mark-edge--{{ toneOf(mark) }}">
+                    <app-mark-quote class="mark-text" [text]="mark.anchor.exact" />
+                    <div class="mark-actions">
+                        @if (mark.kind === 'unclear') {
+                            <label class="mark-check">
+                                <input type="checkbox" [checked]="mark.resolvedAt !== null" (change)="toggleResolved(mark)">
+                                Geklärt
+                            </label>
+                        }
+                        <button type="button" class="btn btn-small btn-quiet" (click)="remove(mark)">Entfernen</button>
+                    </div>
+                </div>
+            }
+        </section>
+    } @empty {
+        <p class="marks-empty">
+            @switch (tab()) {
+                @case ('important') {
+                    Noch keine wichtigen Stellen. Wählen Sie auf einer Lernseite eine Textstelle aus und wählen Sie
+                    „Wichtig“: Sie wird grün markiert und erscheint hier und in Ihrem Lernpfad.
+                }
+                @case ('unclear') {
+                    Noch keine unklaren Stellen. Wählen Sie auf einer Lernseite eine Textstelle aus und wählen Sie
+                    „Unklar“: Sie wird orange markiert, und vor dem Abschluss können Sie sie noch einmal durchgehen.
+                }
+                @default {
+                    Noch keine Markierungen. Wählen Sie auf einer Lernseite eine Textstelle aus und wählen Sie
+                    „Wichtig“ (grün) oder „Unklar“ (orange). Ihre Markierungen erscheinen hier und in Ihrem Lernpfad.
+                }
+            }
+        </p>
+    }
+</div>

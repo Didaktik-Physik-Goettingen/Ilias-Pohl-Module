@@ -65,6 +65,14 @@
     --lamp-bg: linear-gradient(rgba(255, 197, 131, 0.15), rgba(255, 197, 131, 0.15)) #ffffff;
     --lamp-border: rgb(255, 197, 131);
     --lamp-text: var(--uni-blau-1);
+    /* marking (shared/mark-toolbar): the passage while the bar asks (blue), „Wichtig“ (green) and „Unklar“
+       (orange); not yellow (tests). An unclear mark set to „Geklärt“ keeps a fainter orange. */
+    --mark-pending-bg: rgba(0, 145, 200, 0.24);
+    --mark-important-rgb: 37 105 81;
+    --mark-unclear-rgb: 240 128 20;
+    --mark-important-bg: rgb(var(--mark-important-rgb) / 0.2);
+    --mark-unclear-bg: rgb(var(--mark-unclear-rgb) / 0.3);
+    --mark-resolved-bg: rgb(var(--mark-unclear-rgb) / 0.12);
     --result-correct-bg: #e8f5e9;
     --result-correct-border: #4caf50;
     --result-correct-text: #2e7d32;
@@ -133,6 +141,12 @@
     --lamp-bg: rgba(253, 166, 66, 0.10);
     --lamp-border: rgba(255, 197, 131, 0.45);
     --lamp-text: rgb(226, 232, 240);
+    --mark-pending-bg: rgba(80, 165, 210, 0.34);
+    --mark-important-rgb: 52 201 138;
+    --mark-unclear-rgb: 253 150 50;
+    --mark-important-bg: rgb(var(--mark-important-rgb) / 0.26);
+    --mark-unclear-bg: rgb(var(--mark-unclear-rgb) / 0.3);
+    --mark-resolved-bg: rgb(var(--mark-unclear-rgb) / 0.13);
     --result-correct-bg: rgba(76, 175, 80, 0.15);
     --result-correct-text: #86efac;
     --result-incorrect-bg: rgba(244, 67, 54, 0.15);
@@ -511,8 +525,152 @@ button.btn {
     padding: 1.5rem;
 }
 
-.glossary-overlay-panel .button-container {
-    display: none;
+/* ── Marking a passage (shared/mark-toolbar) ───────────────────────────────── */
+/* The marks of the page (MarkPainter) and the passage while the bar asks. MathJax draws its glyphs as CSS content,
+   which ::highlight() doesn't paint, so formulas get the same colour as a background, in the text band of their line
+   (--mark-band-*, set by fitFormulaBands). The browser's own selection colour is hidden while the bar asks. */
+::highlight(mark-important) { background-color: var(--mark-important-bg); }
+::highlight(mark-unclear)   { background-color: var(--mark-unclear-bg); }
+::highlight(mark-resolved)  { background-color: var(--mark-resolved-bg); }
+::highlight(mark-pending)   { background-color: var(--mark-pending-bg); }
+
+.marking-pending ::selection {
+    background: transparent;
+}
+
+mjx-container.mark-important > mjx-math,
+mjx-container.mark-unclear > mjx-math,
+mjx-container.mark-resolved > mjx-math,
+mjx-container.mark-pending > mjx-math {
+    background: linear-gradient(var(--mark-band-color), var(--mark-band-color))
+        0 var(--mark-band-top, 0px) / 100% var(--mark-band-height, 100%) no-repeat;
+}
+
+mjx-container.mark-important > mjx-math { --mark-band-color: var(--mark-important-bg); }
+mjx-container.mark-unclear > mjx-math   { --mark-band-color: var(--mark-unclear-bg); }
+mjx-container.mark-resolved > mjx-math  { --mark-band-color: var(--mark-resolved-bg); }
+mjx-container.mark-pending > mjx-math   { --mark-band-color: var(--mark-pending-bg); }
+
+/* a marked passage shown on its own (overlay, Offene Stellen, Lernpfad): a marker stroke line by line */
+.mark-hl {
+    color: inherit;     /* <mark>'s own black text, in the dark theme too */
+    padding: 0.05em 0;  /* none to the sides: a passage split at a link meets without a seam */
+    border-radius: 2px;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+}
+.mark-hl--important { background: var(--mark-important-bg); }
+.mark-hl--unclear   { background: var(--mark-unclear-bg); }
+.mark-hl--resolved  { background: var(--mark-resolved-bg); }
+
+/* a marked passage in a list (overlay, Offene Stellen, Lernpfad): plain text, its kind as a bar on the left */
+.mark-edge {
+    padding-left: 0.9rem;
+    border-left: 4px solid transparent;
+}
+.mark-edge--important { border-left-color: rgb(var(--mark-important-rgb) / 0.7); }
+.mark-edge--unclear   { border-left-color: rgb(var(--mark-unclear-rgb) / 0.85); }
+.mark-edge--resolved  { border-left-color: rgb(var(--mark-unclear-rgb) / 0.35); }
+
+/* Marking's controls, in the module's own forms (no new ones):
+   - .mark-option: choosing a kind or a view (the bar's Wichtig/Unklar, the overlay's tabs), like the answer options
+     of the questions (styles_evaluation.css): a soft box, a blue edge on hover, outlined when chosen;
+   - .mark-swatch: the colour a kind gets on the page, beside its name;
+   - .mark-check: „Geklärt“, a checkbox as quiet as „Entfernen“ (.btn-small.btn-quiet) and as tall. */
+.mark-option {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: calc(0.35rem + 1px) 0.85rem;    /* as tall as a .btn-small (2px border there, 1px here) */
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: var(--surface-option);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.mark-option:hover {
+    background: var(--surface-option-hover);
+    border-color: var(--uni-blau-4);
+}
+.mark-option:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+}
+.mark-option--active,
+.mark-option--active:hover {
+    font-weight: 600;
+    border-color: var(--text-primary);
+    box-shadow: 0 0 0 1px var(--text-primary);
+}
+
+.mark-swatch {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex-shrink: 0;
+    border-radius: 3px;
+}
+.mark-swatch--important { background: rgb(var(--mark-important-rgb) / 0.75); }
+.mark-swatch--unclear   { background: rgb(var(--mark-unclear-rgb) / 0.85); }
+
+.mark-check {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--text-muted);
+    background: transparent;
+    border: 2px solid var(--border-soft);
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.mark-check:hover {
+    background: var(--quiet-fill-hover);
+}
+.mark-check:has(input:checked) {
+    color: var(--text-primary);
+}
+.mark-check input {
+    width: 14px;
+    height: 14px;
+    margin: 0;
+    accent-color: var(--uni-blau-2);
+    cursor: pointer;
+}
+.mark-check:has(input:focus-visible) {
+    outline: 3px solid var(--uni-blau-3);
+    outline-offset: 2px;
+}
+
+button.btn.btn-small {
+    width: auto;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9rem;
+    box-shadow: none;
+}
+button.btn.btn-small:hover:not(:disabled) {
+    box-shadow: none;
+}
+button.btn.btn-quiet {
+    color: var(--text-muted);
+    background: transparent;
+    border-color: var(--border-soft);
+}
+button.btn.btn-quiet:hover:not(:disabled) {
+    color: var(--text-muted);
+    background: var(--quiet-fill-hover);
+    border-color: var(--border-soft);
 }
 
 /* MathJax \class{mjx-formula-hom/inhom}{} — theme-aware formula term coloring */

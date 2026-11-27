@@ -8,6 +8,8 @@ import { NavDrawerService } from '../../core/services/nav-drawer';
 import { TestTracking } from '../../core/services/test-tracking';
 import { VisitedPages } from '../../core/services/visited-pages';
 import { STORAGE_PREFIX } from '../../core/services/storage-prefix';
+import { StudyAidsLock } from '../../core/services/study-aids-lock';
+import { SideDock } from '../side-dock/side-dock';
 
 
 interface SubpageItem {
@@ -140,13 +142,20 @@ const OPTIONAL_SEGMENTS: SegmentDef[] = [
 
 const TARGET_ROUTES = ['/target/tar-experiment', '/target/tar-theory', '/target/tar-chaos', '/target/tar-simulation'];
 
-const TEST_ROWS = [...E_SEGMENTS, ...T_SEGMENTS].flatMap(seg => seg.subpages).filter(sub => sub.testId);
+// each guide has two sub-pages: the unclear marks first, then the Anleitung (tar-*.ts)
+function anleitungSubpages(route: string): SubpageItem[] {
+    return [
+        { label: '(1/2) - Offene Stellen', route, queryParams: { page: '1' } },
+        { label: '(2/2) - Anleitung', route, queryParams: { page: '2' } },
+    ];
+}
+
 
 
 @Component({
     selector: 'app-nav-bar',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, SideDock],
     templateUrl: './nav-bar.html',
     styleUrl: './nav-bar.css'
 })
@@ -171,6 +180,7 @@ export class NavBar implements OnInit, OnDestroy {
         public drawer: NavDrawerService,
         private visited: VisitedPages,
         private testTracking: TestTracking,
+        private aidsLock: StudyAidsLock,
         @Inject(PLATFORM_ID) private platformId: Object
     ) {}
 
@@ -228,7 +238,6 @@ export class NavBar implements OnInit, OnDestroy {
     segmentFromUrl(url: string): string | null {
         const path = url.split('?')[0];
         if (path === '/' || path === '') return 'home';
-        if (path.includes('/glossary')) return 'glossary';
         // Experimental strand
         if (path.startsWith('/learning/e1')) return 'e1-intro';
         if (path.startsWith('/learning/e2') || path === '/decision/dec-e-damped' ||
@@ -308,11 +317,9 @@ export class NavBar implements OnInit, OnDestroy {
     }
 
     // A test can be reopened and has no route guard: while it is unfinished, no row may lead to a page with the answers.
+    // The same rule greys out glossary and marks (StudyAidsLock).
     get isTestLocked(): boolean {
-        if (this.devMode.isEnabled) return false;
-        const path = this.router.url.split('?')[0];
-        const test = TEST_ROWS.find(sub => sub.route === path);
-        return !!test && !this.testTracking.isTestFinished(test.testId!);
+        return this.aidsLock.isLocked();
     }
 
     // Clickable: outside dev mode only the sub-pages of the current chapter (the only ones listed) that were visited.
@@ -360,11 +367,6 @@ export class NavBar implements OnInit, OnDestroy {
         this.router.navigate(['/']);
     }
 
-    goGlossary() {
-        if (!this.devMode.isEnabled) return;
-        this.router.navigate(['/glossary']);
-    }
-
     get isOnDecisionPage(): boolean {
         return this.router.url.split('?')[0].startsWith('/decision/');
     }
@@ -382,6 +384,12 @@ export class NavBar implements OnInit, OnDestroy {
     @HostBinding('class.nav-hidden')
     get isHidden(): boolean {
         return this.activeSegment === 'home';
+    }
+
+    // the sub-pages of the guide that is open
+    get anleitungSubpages(): SubpageItem[] {
+        const path = this.router.url.split('?')[0];
+        return anleitungSubpages(TARGET_ROUTES.includes(path) ? path : this.anleitungRoute);
     }
 
     goAnleitung() {

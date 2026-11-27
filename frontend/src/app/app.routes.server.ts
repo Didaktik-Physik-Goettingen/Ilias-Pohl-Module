@@ -3,7 +3,6 @@ import { RenderMode, ServerRoute } from '@angular/ssr';
 export const serverRoutes: ServerRoute[] = [
   // These routes are SSR-safe and prerendered at build time
   { path: '',                    renderMode: RenderMode.Prerender },
-  { path: 'glossary',            renderMode: RenderMode.Prerender },
   { path: 'glossary/**',         renderMode: RenderMode.Prerender },
   { path: 'target/tar-experiment', renderMode: RenderMode.Prerender },
 

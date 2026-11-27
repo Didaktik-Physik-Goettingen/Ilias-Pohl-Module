@@ -1,0 +1,118 @@
+/* the same frame as the glossary overlay */
+:host {
+    display: flex;
+    flex-direction: column;
+    background: var(--card-bg);
+    border-radius: 12px;
+    max-height: 82vh;
+    overflow: hidden;
+}
+
+.overlay-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 3.4rem;
+    padding: 0.6rem 1rem 0.6rem 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.overlay-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.6;
+}
+
+.overlay-close {
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    cursor: pointer;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    line-height: 1;
+    transition: background 0.15s;
+}
+
+.overlay-close:hover {
+    background: var(--border-color);
+}
+
+.overlay-body {
+    overflow-y: auto;
+    flex: 1;
+    padding: 1rem 1.5rem 1.5rem;
+    color: var(--text-primary);
+}
+
+/* the page's text, as on the page. It is built in code (no Angular attributes), so the rules for it reach into it
+   with ::ng-deep, from the host element, which keeps them inside this overlay. */
+.context-text-host {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    line-height: 1.7;
+    text-align: justify;
+    hyphens: auto;
+    overflow-wrap: break-word;
+}
+
+.context-text-host ::ng-deep :is(p, ul, ol) {
+    margin: 0 0 0.6rem;
+}
+
+.context-text-host ::ng-deep .context-spoiler {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+}
+
+.context-text-host ::ng-deep .context-spoiler-label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+}
+
+.context-text-host ::ng-deep > * {
+    min-width: 0;       /* a wide figure shrinks to the overlay instead of widening it */
+}
+
+.context-text-host ::ng-deep .context-image {
+    margin: 0;
+    text-align: center;
+}
+
+.context-text-host ::ng-deep .context-image img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 300px;
+    margin: 0 auto;
+    border-radius: 6px;
+}
+
+.context-text-host ::ng-deep .context-image figcaption {
+    margin-top: 0.4rem;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.context-missing {
+    margin: 0.25rem 0 0.75rem;
+    opacity: 0.75;
+}
+
+.context-quote {
+    line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+    .overlay-body {
+        padding: 0.75rem 1rem 1rem;
+    }
+}

@@ -232,6 +232,15 @@
     padding-top: 1rem;
 }
 
+/* ── Marked passages: in their colour, like a marker (.mark-hl in styles.css) ─ */
+.summary-mark {
+    margin: 0 0 0.75rem;
+    color: var(--summary-text);
+    line-height: 1.7;
+    text-align: justify;
+    hyphens: auto;
+}
+
 /* ── Test scores ─────────────────────────────────────────────────────────── */
 .summary-test { margin-bottom: 1.75rem; }
 

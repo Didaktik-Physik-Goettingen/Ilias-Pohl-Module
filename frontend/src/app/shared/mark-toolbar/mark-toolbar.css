@@ -1,0 +1,85 @@
+/* One bar, like the overlay's tab row in one piece: card colour, the soft edge of the answer options, the shadow
+   of the module's buttons outside a box. Its options are segments without edges of their own, divided by a thin
+   line; hover and the chosen kind fill a segment to the bar's edge. Fixed to the viewport, moved on scroll. */
+.mark-bar {
+    position: fixed;
+    z-index: 900;       /* below the header stripes (999) and dialogs */
+    display: flex;
+    align-items: stretch;
+    overflow: hidden;
+    transform: translateY(-50%);
+    background: var(--card-bg);
+    border: 1px solid var(--border-soft);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    white-space: nowrap;
+}
+
+.mark-bar--below {
+    transform: none;
+}
+
+.mark-bar--align-right {
+    transform: translateX(-100%);
+}
+
+.mark-bar-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.85rem;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.mark-bar-btn + .mark-bar-btn {
+    border-left: 1px solid var(--border-soft);
+}
+
+.mark-bar-btn:hover {
+    background: var(--surface-option-hover);
+}
+
+.mark-bar-btn:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: -3px;
+}
+
+/* the mark's current kind, when the bar is opened on a mark */
+.mark-bar-btn--active,
+.mark-bar-btn--active:hover {
+    font-weight: 600;
+    background: var(--surface-option-hover);
+}
+
+/* „Entfernen“: muted, like the quiet button of „Keine Angabe“ */
+.mark-bar-remove {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.mark-bar-remove:hover {
+    background: var(--quiet-fill-hover);
+}
+
+.mark-bar-note {
+    padding: 0.4rem 0.85rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+}
+
+/* phones: a full-size touch target */
+@media (pointer: coarse) {
+    .mark-bar-btn {
+        min-height: 40px;
+    }
+}

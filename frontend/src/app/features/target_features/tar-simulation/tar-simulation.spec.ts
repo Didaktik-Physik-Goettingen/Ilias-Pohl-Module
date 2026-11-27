@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { TarSimulation } from './tar-simulation';
 
@@ -8,7 +9,8 @@ describe('TarSimulation', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TarSimulation]
+      imports: [TarSimulation],
+      providers: [provideRouter([])]
     })
     .compileComponents();
 

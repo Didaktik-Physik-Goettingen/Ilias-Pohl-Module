@@ -7,6 +7,7 @@ import { Analytics } from './analytics';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 import { Session } from './session';
 import { EffortRating } from './effort-rating';
+import { Marks } from './marks';
 
 describe('DataExport', () => {
   let service: DataExport;
@@ -107,5 +108,39 @@ describe('DataExport', () => {
     fetchMock.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ pageVisits: [], attempts: [], ratedUnits: ['e3-driven-oscillations'] }) });
     await service.loadProgress();
     expect(TestBed.inject(EffortRating).isRated('e3-driven-oscillations')).toBe(true);
+  });
+
+  const anchor = { exact: 'Der Drehimpuls $\\vec{L}$', prefix: '', suffix: '', pos: 0 };
+
+  it('sends mark events and forgets them once the portal says it stores marks', async () => {
+    const marks = TestBed.inject(Marks);
+    const mark = marks.add('unclear', '/learning/p5-precession', '1', anchor);
+    fetchMock.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ ok: true, accepted: ['visits', 'attempts', 'ratings', 'marks'] }) });
+    await service.saveProgress();
+    expect(sentBody().marks).toEqual([expect.objectContaining({ markId: mark.id, action: 'create', kind: 'unclear', anchor, eventId: expect.any(String) })]);
+    expect(marks.getUnsent()).toEqual([]);
+  });
+
+  it('keeps mark events for an older portal that ignores them', async () => {
+    const marks = TestBed.inject(Marks);
+    marks.add('important', '/learning/p5-precession', '1', anchor);
+    fetchMock.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ ok: true, skipped: 0 }) });
+    await service.saveProgress();
+    expect(marks.getUnsent().length).toBe(1);
+  });
+
+  it('takes the marks from the saved progress, and keeps them when the portal sends none', async () => {
+    const marks = TestBed.inject(Marks);
+    const server = {
+      id: 'm-1', kind: 'unclear', route: '/learning/p2-rotation', page: '2', anchor,
+      createdAt: '2026-11-27T10:00:00.000Z', resolvedAt: '2026-11-27T11:00:00.000Z',
+    };
+    fetchMock.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ pageVisits: [], attempts: [], marks: [server] }) });
+    await service.loadProgress();
+    expect(marks.list()).toEqual([{ ...server, createdAt: Date.parse(server.createdAt), resolvedAt: Date.parse(server.resolvedAt) }]);
+
+    fetchMock.mockResolvedValueOnce({ ok: true, status: 200, json: async () => ({ pageVisits: [], attempts: [] }) });
+    await service.loadProgress();
+    expect(marks.list().length).toBe(1);
   });
 });

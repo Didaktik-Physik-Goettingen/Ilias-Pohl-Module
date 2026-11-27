@@ -1,6 +1,5 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GlossaryBase } from '../glossary-base';
@@ -18,7 +17,7 @@ declare global {
 @Component({
     selector: 'app-hom-dgl',
     standalone: true,
-    imports: [RouterLink, CommonModule],
+    imports: [CommonModule],
 	templateUrl: './hom-dgl.html',
 	styleUrl: './hom-dgl.css',
 })

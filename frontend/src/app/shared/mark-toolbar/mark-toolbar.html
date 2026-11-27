@@ -1,0 +1,33 @@
+@if (bar(); as b) {
+    <!-- pointerdown kept from the page, so the selection stays while a button is pressed. Closed by Esc or a click
+         elsewhere, so no ✕ (Carlo, 2026-11-27). One bar, its options as segments (Carlo). -->
+    <div class="mark-bar" role="toolbar"
+        [attr.aria-label]="b.state === 'existing' ? 'Markierung ändern' : 'Textstelle markieren'"
+        [class.mark-bar--below]="b.below" [class.mark-bar--align-right]="b.alignRight"
+        [style.top.px]="b.top" [style.left.px]="b.left"
+        (pointerdown)="$event.preventDefault()">
+        @switch (b.state) {
+            @case ('overlap') {
+                <span class="mark-bar-note">Überschneidet eine Markierung</span>
+            }
+            @case ('too-long') {
+                <span class="mark-bar-note">Zu lang zum Markieren</span>
+            }
+            @default {
+                <button type="button" class="mark-bar-btn mark-bar-kind" [class.mark-bar-btn--active]="b.kind === 'important'"
+                    [attr.aria-pressed]="b.state === 'existing' ? b.kind === 'important' : null"
+                    (click)="choose('important')">
+                    <span class="mark-swatch mark-swatch--important" aria-hidden="true"></span>Wichtig
+                </button>
+                <button type="button" class="mark-bar-btn mark-bar-kind" [class.mark-bar-btn--active]="b.kind === 'unclear'"
+                    [attr.aria-pressed]="b.state === 'existing' ? b.kind === 'unclear' : null"
+                    (click)="choose('unclear')">
+                    <span class="mark-swatch mark-swatch--unclear" aria-hidden="true"></span>Unklar
+                </button>
+                @if (b.state === 'existing') {
+                    <button type="button" class="mark-bar-btn mark-bar-remove" (click)="remove()">Entfernen</button>
+                }
+            }
+        }
+    </div>
+}

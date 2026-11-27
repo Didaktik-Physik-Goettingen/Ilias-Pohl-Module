@@ -1,0 +1,68 @@
+.review-intro {
+    padding-bottom: 1.5rem;
+}
+
+.review-title {
+    margin: 0.25rem 0 1rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--target-h1-color);
+}
+
+.review-progress {
+    margin: 0.75rem 0 0;
+    font-weight: 600;
+    color: var(--target-h1-color);
+}
+
+.review-group + .review-group {
+    margin-top: 1.75rem;
+}
+
+.review-group-title {
+    margin: 0 0 0.6rem;
+    padding-bottom: 0.4rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--target-h1-color);
+    border-bottom: 1px solid var(--border-soft);
+}
+
+/* a passage with its kind as a bar on the left (.mark-edge in styles.css), the two actions beside it;
+   a resolved one fainter. The actions are the module's own: a small .btn and the option-style checkbox. */
+.review-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin: 0.6rem 0;
+    padding-top: 0.15rem;
+    padding-bottom: 0.15rem;
+}
+
+.review-quote {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.7;
+    text-align: justify;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    transition: opacity 0.2s;
+}
+
+.review-item--resolved .review-quote {
+    opacity: 0.65;
+}
+
+.review-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .review-item {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}

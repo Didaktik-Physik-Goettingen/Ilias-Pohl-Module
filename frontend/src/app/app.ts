@@ -4,6 +4,7 @@ import { Header } from './shared/header/header';
 import { Footer } from './shared/footer/footer';
 import { NavBar } from './shared/nav-bar/nav-bar';
 import { EffortRatingDialog } from './shared/effort-rating-dialog/effort-rating-dialog';
+import { MarkToolbar } from './shared/mark-toolbar/mark-toolbar';
 import { Analytics } from './core/services/analytics';
 import { DataExport } from './core/services/data-export';
 
@@ -11,7 +12,7 @@ import { DataExport } from './core/services/data-export';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, Header, Footer, NavBar, EffortRatingDialog],
+    imports: [RouterOutlet, Header, Footer, NavBar, EffortRatingDialog, MarkToolbar],
     templateUrl: './app.html',
     styleUrl: './app.css'
 })

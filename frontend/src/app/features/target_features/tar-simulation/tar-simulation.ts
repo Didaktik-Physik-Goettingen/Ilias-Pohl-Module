@@ -1,6 +1,9 @@
-import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnDestroy, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { MarkQuote, toneOf } from '../../../shared/marks-overlay/mark-quote';
+import { UnclearReview } from '../../../shared/unclear-review/unclear-review';
 import { DevModeService } from '../../../core/services/dev-mode';
 import { SummaryService, SummaryData, SummaryQuestion } from '../../../core/services/summary.service';
 import { HtmlReportService } from '../../../core/services/html-report.service';
@@ -17,29 +20,37 @@ export interface ModuleGroup {
 
 @Component({
     selector: 'app-tar-simulation',
-    imports: [],
+    imports: [MarkQuote, UnclearReview],
     templateUrl: './tar-simulation.html',
     styleUrl: './tar-simulation.css',
 })
-export class TarSimulation implements OnInit {
+// Two sub-pages (Carlo, 2026-11-27): ?page=1 (also without the parameter, as every link here has it)
+// „Offene Stellen“, the marks the student found unclear; ?page=2 the Anleitung with the Lernpfad.
+export class TarSimulation implements OnInit, OnDestroy {
+    readonly toneOf = toneOf;
+    isReview = true;
+    private querySub: Subscription | null = null;
+
     summary: SummaryData = {
         sessionId:         '',
         generatedAt:       new Date().toISOString(),
         pageVisits:        [],
         learningQuestions: [],
         tests:             [],
+        marks:             [],
     };
 
     moduleGroups: ModuleGroup[] = [];
     generatedAtLabel = '';
 
-    openSections: Record<'pages' | 'questions' | 'tests', boolean> = {
+    openSections: Record<'pages' | 'questions' | 'marks' | 'tests', boolean> = {
         pages:     false,
         questions: false,
+        marks:     false,
         tests:     false,
     };
 
-    toggleSection(section: 'pages' | 'questions' | 'tests') {
+    toggleSection(section: 'pages' | 'questions' | 'marks' | 'tests') {
         this.openSections[section] = !this.openSections[section];
         if (this.openSections[section]) {
             setTimeout(() => this.renderMath(), 150);
@@ -53,6 +64,7 @@ export class TarSimulation implements OnInit {
     constructor(
         public devMode: DevModeService,
         private router: Router,
+        private route: ActivatedRoute,
         private summaryService: SummaryService,
         private htmlReportService: HtmlReportService,
         @Inject(PLATFORM_ID) private platformId: Object,
@@ -63,12 +75,20 @@ export class TarSimulation implements OnInit {
     }
 
     ngOnInit() {
-        if (isPlatformBrowser(this.platformId)) {
-            this.summary = this.summaryService.getSummaryData();
-            this.generatedAtLabel = new Date(this.summary.generatedAt).toLocaleString('de-DE');
-            this.buildModuleGroups();
-            setTimeout(() => this.renderMath(), 400);
-        }
+        this.querySub = this.route.queryParamMap.subscribe(params => {
+            this.isReview = params.get('page') !== '2';
+            // the Lernpfad is read when it is shown, with the marks as they were left on the Offene Stellen
+            if (!this.isReview && isPlatformBrowser(this.platformId)) {
+                this.summary = this.summaryService.getSummaryData();
+                this.generatedAtLabel = new Date(this.summary.generatedAt).toLocaleString('de-DE');
+                this.buildModuleGroups();
+                setTimeout(() => this.renderMath(), 400);
+            }
+        });
+    }
+
+    ngOnDestroy() {
+        this.querySub?.unsubscribe();
     }
 
     private buildModuleGroups() {
@@ -91,6 +111,7 @@ export class TarSimulation implements OnInit {
     get hasData(): boolean {
         return this.summary.pageVisits.length > 0
             || this.moduleGroups.length > 0
+            || this.summary.marks.length > 0
             || this.summary.tests.length > 0;
     }
 
@@ -101,8 +122,19 @@ export class TarSimulation implements OnInit {
         return secs > 0 ? `${mins} min ${secs} s` : `${mins} min`;
     }
 
+    // from the Offene Stellen: back to where the guide was reached from
     goBack(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         this.router.navigate(['/learning/opt-setup'], { queryParams: { next: 'simulation' } });
+    }
+
+    goReview(): void {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.router.navigate([], { relativeTo: this.route, queryParams: { page: '1' }, queryParamsHandling: 'merge' });
+    }
+
+    goGuide(): void {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        this.router.navigate([], { relativeTo: this.route, queryParams: { page: '2' }, queryParamsHandling: 'merge' });
     }
 }

@@ -1,6 +1,6 @@
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { GlossaryBase } from '../glossary-base';
 
@@ -17,7 +17,7 @@ declare global {
 @Component({
     selector: 'app-newton-notation',
     standalone: true,
-    imports: [RouterLink, CommonModule],
+    imports: [CommonModule],
     templateUrl: './newton-notation.html',
     styleUrl: './newton-notation.css',
 })

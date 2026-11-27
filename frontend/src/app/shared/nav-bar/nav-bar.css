@@ -9,6 +9,9 @@
 
 /* ── Sidebar container ─────────────────────────────────────────────────── */
 .nav-bar {
+    --nav-dock-height: 7rem;  /* the side dock at the bottom (shared/side-dock) */
+    display: flex;
+    flex-direction: column;
     --nav-gutter: 38px;
     --nav-gap: 0.2rem;
     height: 100%;
@@ -21,7 +24,7 @@
 .nav-bar-container {
     position: sticky;
     top: var(--header-lines-height);
-    max-height: calc(100dvh - var(--header-lines-height));
+    max-height: calc(100dvh - var(--header-lines-height) - var(--nav-dock-height));
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -94,11 +97,6 @@
     color: var(--bg-primary);
     font-weight: 700;
     pointer-events: none;
-}
-
-/* optional pages and dev-mode links: not stations, so off the line */
-.nav-row--spaced {
-    margin-top: 1.25rem;
 }
 
 /* ── Quiet text between the stations ───────────────────────────────────── */

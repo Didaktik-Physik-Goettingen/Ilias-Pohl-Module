@@ -50,6 +50,21 @@
             </span>
             Anleitung
         </button>
+        @if (activeSegment === 'anleitung') {
+            <div class="seg-dropdown">
+                @for (sub of anleitungSubpages; track sub.queryParams?.['page']) {
+                    <button class="sub-btn"
+                        [class.sub-btn--reached]="isVisited(sub)"
+                        [class.sub-btn--open]="canOpen(sub)"
+                        [class.sub-btn--active]="isSubpageActive(sub)"
+                        [attr.aria-current]="isSubpageActive(sub) ? 'page' : null"
+                        [disabled]="!canOpen(sub)"
+                        (click)="navigateToSubpage(sub)">
+                        {{ sub.label }}
+                    </button>
+                }
+            </div>
+        }
 
         <!-- Optional deep dives: off the line; outside dev mode only while one is open -->
         @if (hasVisibleOptional) {
@@ -61,16 +76,10 @@
             }
         }
 
-        @if (devMode.isEnabled) {
-            <!-- Dev-mode access: not a station, so off the line -->
-            <button class="nav-row nav-row--plain nav-row--open nav-row--spaced"
-                [class.nav-row--active]="activeSegment === 'glossary'"
-                (click)="goGlossary()">
-                Glossar
-            </button>
-        }
-
     </div>
+
+    <!-- Glossar and Markierungen: pinned to the bottom of the column -->
+    <app-side-dock placement="nav"></app-side-dock>
 </nav>
 
 <ng-template #segmentBlock let-seg let-number="number">

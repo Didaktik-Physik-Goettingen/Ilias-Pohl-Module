@@ -1,0 +1,144 @@
+:host {
+    display: contents;
+}
+
+.dock-icon {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.3;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+.dock-btn {
+    display: flex;
+    align-items: center;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.dock-btn:disabled {
+    cursor: default;
+}
+
+/* ── Desktop: the bottom of the nav column ─────────────────────────────── */
+/* not stations: no line, no markers; the icons sit where the markers are, the labels where the rows' text is.
+   The nav column is a page-tall flex column: the dock goes to its end and is held at the viewport's bottom. */
+.dock--nav {
+    margin-top: auto;
+    position: sticky;
+    bottom: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 0.75rem 1.25rem 1rem 1.5rem;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--border-soft);
+}
+
+.dock--nav .dock-btn {
+    gap: 0;
+    width: 100%;
+    padding: 0.5rem 0.75rem 0.5rem 0;
+    font-size: 1rem;
+    color: var(--text-primary);
+    text-align: left;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.dock--nav .dock-icon {
+    width: 38px;    /* the nav's gutter */
+    padding: 0 10px;
+}
+
+.dock--nav .dock-btn:hover:not(:disabled),
+.dock--nav .dock-btn:focus-visible {
+    background: var(--surface-option-hover);
+    border-color: var(--border-soft);
+}
+
+.dock--nav .dock-btn:focus-visible {
+    outline: 2px solid var(--text-primary);
+    outline-offset: 2px;
+}
+
+.dock--nav .dock-btn:disabled {
+    color: var(--nav-locked);
+}
+
+/* the number of marks: a quiet pill after the label */
+.dock--nav .dock-count {
+    margin-left: auto;
+    min-width: 1.5rem;
+    padding: 0.05rem 0.45rem;
+    font-size: 0.8rem;
+    text-align: center;
+    border-radius: 999px;
+    background: var(--surface-option-hover);
+}
+
+/* phones: the nav is a drawer, the buttons are in the header */
+@media (max-width: 900px) {
+    .dock--nav {
+        display: none;
+    }
+}
+
+/* ── Phones: icons in the header ───────────────────────────────────────── */
+.dock--header {
+    display: flex;
+    gap: 0.25rem;
+}
+
+.dock--header .dock-btn {
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    color: white;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 6px;
+    transition: background 0.15s;
+}
+
+.dock--header .dock-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.dock--header .dock-btn:hover:not(:disabled),
+.dock--header .dock-btn:focus-visible {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.dock--header .dock-btn:disabled {
+    opacity: 0.4;
+}
+
+/* the number of marks: a small badge on the icon's corner */
+.dock--header .dock-btn {
+    position: relative;
+}
+
+.dock--header .dock-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    line-height: 16px;
+    color: var(--uni-blau-1);
+    background: white;
+    border-radius: 8px;
+}

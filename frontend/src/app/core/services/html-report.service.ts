@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import katex from 'katex';
 import { SummaryData, SummaryQuestion, SummaryTestResult } from './summary.service';
 import { PAGE_LOOKUP, PageDefinition, ReportBlock } from './learning-report-registry';
+import { Mark } from './marks';
+import { markBlocks } from './mark-context';
 
 @Injectable({ providedIn: 'root' })
 export class HtmlReportService {
@@ -27,6 +29,8 @@ export class HtmlReportService {
     ): string {
         const date = new Date(data.generatedAt).toLocaleString('de-DE');
         const seen = new Set<string>();
+        const marks = data.marks.flatMap(g => g.marks);
+        const placed = new Set<string>();
         const pageSections = data.pageVisits
             .filter(v => {
                 if (v.page.startsWith('/test/')) return false;
@@ -36,8 +40,23 @@ export class HtmlReportService {
                 seen.add(key);
                 return true;
             })
-            .map(v => this.renderPageVisit(v.page, v.label, v.durationSeconds, questionMap, imageCache))
+            .map(v => this.renderPageVisit(v.page, v.label, v.durationSeconds, questionMap, imageCache, marks, placed))
             .join('\n');
+
+        // the marks are highlighted in the page texts above; the few whose text is no longer there are listed
+        const unplaced = data.marks
+            .map(g => ({ label: g.label, marks: g.marks.filter(m => !placed.has(m.id)) }))
+            .filter(g => g.marks.length > 0);
+        const marksSection = unplaced.length > 0
+            ? `<section class="report-section"><h2 class="section-title">Weitere Markierungen</h2>
+<p class="marks-note">Diese Textstellen sind in der aktuellen Fassung der Seiten nicht mehr zu finden.</p>${unplaced.map(g =>
+                `<h3 class="marks-page">${this.esc(g.label)}</h3>${g.marks.map(m =>
+                    `<p class="mark-quote"><mark class="${this.markClass(m)}">${this.renderQuote(m.anchor.exact)}</mark></p>`).join('')}`).join('\n')}</section>`
+            : '';
+        const legend = marks.length > 0
+            ? `<p class="report-legend">Ihre Markierungen: <mark class="mark-important">wichtig</mark> <mark class="mark-unclear">unklar</mark>${
+                marks.some(m => m.resolvedAt !== null) ? ' <mark class="mark-resolved">unklar, inzwischen geklärt</mark>' : ''}</p>`
+            : '';
 
         const testSection = data.tests.length > 0
             ? `<section class="report-section"><h2 class="section-title">Testergebnisse</h2>${data.tests.map(t => this.renderTest(t, imageCache)).join('\n')}</section>`
@@ -57,6 +76,7 @@ export class HtmlReportService {
         <div>
             <h1 class="report-title">Persönlicher Lernpfad</h1>
             <p class="report-meta">Erstellt am ${this.esc(date)}</p>
+            ${legend}
         </div>
         <button class="print-btn" onclick="window.print()">
             Als PDF speichern
@@ -66,6 +86,7 @@ export class HtmlReportService {
 </header>
 <main>
 ${pageSections}
+${marksSection}
 ${testSection}
 </main>
 </body>
@@ -78,6 +99,8 @@ ${testSection}
         durationSeconds: number,
         questionMap: Map<string, SummaryQuestion>,
         imageCache: Map<string, string>,
+        marks: Mark[],
+        placed: Set<string>,
     ): string {
         const { basePath, pageNum } = this.parsePage(pageUrl);
         const key = `${basePath}:${pageNum}`;
@@ -86,7 +109,11 @@ ${testSection}
         const durationStr = this.formatDuration(durationSeconds);
         if (!def) return '';
         const subtitle = def.subtitle ? ` – ${this.esc(def.subtitle)}` : '';
-        const blocksHtml = def.blocks.map(b => this.renderBlock(b, questionMap, imageCache)).join('\n');
+        // the page's marks, in place: the blocks' HTML with <mark> around each passage
+        const own = marks.filter(m => m.route === basePath && Number(m.page ?? '1') === pageNum);
+        const marked = own.length ? markBlocks(def, own, m => this.markClass(m)) : null;
+        for (const m of own) if (!marked?.missing.includes(m)) placed.add(m.id);
+        const blocksHtml = def.blocks.map((b, i) => this.renderBlock(b, questionMap, imageCache, marked?.html.get(i))).join('\n');
         return `<section class="report-section page-section">
 <div class="page-header">
     <span class="page-title">${this.esc(def.title)}${subtitle}</span>
@@ -98,23 +125,26 @@ ${blocksHtml}
 </section>`;
     }
 
+    // marked: the block's markable HTML with the marks wrapped in (mark-context.ts), if it has any
     private renderBlock(
         block: ReportBlock,
         questionMap: Map<string, SummaryQuestion>,
         imageCache: Map<string, string>,
+        marked?: string,
     ): string {
         switch (block.type) {
             case 'text': {
                 const cls = block.style === 'lamp' ? 'block-lamp' : block.style === 'glossary' ? 'block-glossary' : 'block-text';
-                return `<div class="${cls}">${this.renderLatex(block.html)}</div>`;
+                return `<div class="${cls}">${this.renderLatex(marked ?? block.html)}</div>`;
             }
             case 'image': {
                 const src = imageCache.get(block.src) ?? block.src;
-                const captionHtml = block.caption ? `<figcaption class="img-caption">${block.caption}</figcaption>` : '';
+                const caption = marked ?? block.caption;
+                const captionHtml = caption ? `<figcaption class="img-caption">${caption}</figcaption>` : '';
                 return `<figure class="block-image"><img src="${src}" alt="${this.esc(block.alt)}">${captionHtml}</figure>`;
             }
             case 'spoiler': {
-                return `<div class="block-spoiler"><div class="spoiler-label">Exkurs: ${this.esc(block.label.replace(/^EXKURS:\s*/i, ''))}</div><div class="spoiler-body">${this.renderLatex(block.html)}</div></div>`;
+                return `<div class="block-spoiler"><div class="spoiler-label">Exkurs: ${this.esc(block.label.replace(/^EXKURS:\s*/i, ''))}</div><div class="spoiler-body">${this.renderLatex(marked ?? block.html)}</div></div>`;
             }
             case 'question': {
                 const q = questionMap.get(block.questionId);
@@ -276,19 +306,34 @@ ${questionsHtml}
         return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    private markClass(mark: Mark): string {
+        return mark.kind === 'important' ? 'mark-important' : mark.resolvedAt !== null ? 'mark-resolved' : 'mark-unclear';
+    }
+
+    // A marked passage is plain text with its formulas as TeX: escape the text, typeset the formulas.
+    private renderQuote(text: string): string {
+        return text
+            .split(/(\$\$[\s\S]+?\$\$|\$[^$\n]+?\$)/g)
+            .map((part, i) => i % 2 === 1 ? this.renderLatex(part) : this.esc(part))
+            .join('');
+    }
+
     private renderLatex(text: string): string {
+        // a block with marks was serialized again (innerHTML), which writes <, > and & in formulas as entities
+        const tex = (formula: string) => formula
+            .replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&nbsp;/g, ' ').replace(/&amp;/g, '&').trim();
         let result = text;
         // Display math first so inline regex does not match inside $$...$$
         result = result.replace(/\$\$([\s\S]+?)\$\$/g, (_, formula) => {
             try {
-                return katex.renderToString(formula.trim(), { output: 'mathml', displayMode: true, throwOnError: false });
+                return katex.renderToString(tex(formula), { output: 'mathml', displayMode: true, throwOnError: false });
             } catch {
                 return `$$${formula}$$`;
             }
         });
         result = result.replace(/\$([^$\n]+?)\$/g, (_, formula) => {
             try {
-                return katex.renderToString(formula.trim(), { output: 'mathml', displayMode: false, throwOnError: false });
+                return katex.renderToString(tex(formula), { output: 'mathml', displayMode: false, throwOnError: false });
             } catch {
                 return `$${formula}$`;
             }
@@ -416,6 +461,17 @@ main { max-width: 800px; margin: 0 auto; }
 .q-answer-img { max-width: 200px; max-height: 150px; object-fit: contain; border-radius: 4px; border: 1px solid #ddd; }
 .q-attempts  { font-size: 0.78rem; color: #888; font-style: italic; }
 .q-empty     { color: #999; font-style: italic; }
+
+/* Marked passages: in place, like a marker */
+mark { color: inherit; padding: 0.05em 0; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+       -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+mark.mark-important { background: rgba(37, 105, 81, 0.2); }
+mark.mark-unclear   { background: rgba(240, 128, 20, 0.3); }
+mark.mark-resolved  { background: rgba(240, 128, 20, 0.12); }
+.report-legend { margin: 0.4rem 0 0; font-size: 0.9rem; opacity: 0.85; }
+.marks-page { font-size: 1rem; color: #15326a; margin: 1.1rem 0 0.5rem; }
+.marks-note { margin: 0 0 0.5rem; opacity: 0.75; }
+.mark-quote { margin: 0 0 0.6rem; line-height: 1.7; }
 
 /* Test section */
 .section-title { font-size: 1.25rem; color: #15326a; margin-bottom: 1rem; border-bottom: 2px solid #c5cde0; padding-bottom: 0.4rem; }

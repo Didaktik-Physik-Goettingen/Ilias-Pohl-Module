@@ -1,0 +1,13 @@
+<div class="overlay-header">
+    <span class="overlay-title">{{ label }}</span>
+    <button class="overlay-close" (click)="close()" aria-label="Schließen">✕</button>
+</div>
+
+<div class="overlay-body">
+    @if (found) {
+        <div class="context-text-host" #text (click)="onTextClick($event)"></div>
+    } @else {
+        <p class="context-missing">Die Textstelle ist in dieser Fassung der Seite nicht mehr zu finden. Ihre Markierung:</p>
+        <app-mark-quote class="context-quote" [text]="mark.anchor.exact" [tone]="tone" />
+    }
+</div>

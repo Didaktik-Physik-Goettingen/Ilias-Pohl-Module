@@ -16,6 +16,7 @@ header {
 
 /* one row, aligned with the nav-bar; the padding keeps it clear of the absolutely positioned theme toggle */
 .header-content {
+    --header-dock-width: 5rem;      /* .header-dock: glossary and marks icons */
     position: relative;
     display: flex;
     flex-wrap: wrap;
@@ -137,6 +138,15 @@ header {
     border-radius: 1px;
 }
 
+/* the dock's icons, left of the theme toggle; phones only */
+.header-dock {
+    display: none;
+    position: absolute;
+    top: 50%;
+    right: 2.6rem;
+    transform: translateY(-50%);
+}
+
 @media (max-width: 900px) {
     .menu-toggle {
         display: flex;
@@ -144,6 +154,11 @@ header {
 
     .header-content--with-menu {
         padding-left: 3.25rem;
+        padding-right: calc(3rem + var(--header-dock-width));
+    }
+
+    .header-dock {
+        display: block;
     }
 
     /* one line: the full name isn't needed here, and the link stays clickable */

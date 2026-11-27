@@ -66,6 +66,12 @@
                     </button>
                 </div>
             }
+            <!-- phones: Glossar and Markierungen as icons; on wider screens they are at the bottom of the nav -->
+            @if (showMenuButton) {
+                <div class="header-dock">
+                    <app-side-dock placement="header"></app-side-dock>
+                </div>
+            }
             <button class="theme-toggle" (click)="toggleTheme()" [attr.aria-label]="themeService.isDarkMode() ? 'Switch to light mode' : 'Switch to dark mode'">
                 <img [src]="themeService.themeIconPath()" [alt]="themeService.isDarkMode() ? 'Dark mode' : 'Light mode'">
             </button>

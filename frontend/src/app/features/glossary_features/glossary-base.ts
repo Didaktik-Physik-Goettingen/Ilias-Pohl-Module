@@ -1,7 +1,6 @@
-import { Directive, OnInit, AfterViewInit, Inject, PLATFORM_ID, inject } from '@angular/core';
+import { Directive, OnInit, AfterViewInit, Inject, PLATFORM_ID } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
-import { GLOSSARY_IS_OVERLAY } from '../../shared/glossary-overlay/glossary-is-overlay.token';
 
 
 
@@ -15,7 +14,6 @@ declare global {
 
 @Directive()
 export abstract class GlossaryBase implements OnInit, AfterViewInit {
-    showBackButton = true;
     protected isBrowser: boolean;
     private mathRendered = false;
 
@@ -25,20 +23,11 @@ export abstract class GlossaryBase implements OnInit, AfterViewInit {
         protected route: ActivatedRoute
     ) {
         this.isBrowser = isPlatformBrowser(platformId);
-        // When rendered inside a CDK Dialog the token is provided as true.
-        if (inject(GLOSSARY_IS_OVERLAY, { optional: true })) {
-            this.showBackButton = false;
-        }
     }
 
 
+    // Shown in the glossary overlay (shared/glossary-overlay) and, for direct links, on its own route.
     ngOnInit() {
-        // Check if accessed from learning module via URL param (non-overlay path).
-        if (this.showBackButton) {
-            const fromParam = this.route.snapshot.queryParamMap.get('from');
-            this.showBackButton = fromParam !== 'module';
-        }
-        
         // Call child's content initialization
         this.initContent();
     }

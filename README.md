@@ -93,7 +93,7 @@ README.md
 │           │
 │           └── features/                       // individual pages
 │               └── home/
-│               └── glossary/
+│               └── glossary/                   // glossary-terms.ts: the registry of all terms
 │               └── glossary_features/          // individual glossary entries
 │               │   │   glossary-base.ts
 │               │   └── amplitude/
@@ -218,13 +218,16 @@ Endpoints, schema and the login model: the portal's README and `design_notes.md`
 
   **Tests:** while an open test is unfinished (`TestTracking.isTestFinished()`), nothing in the nav is clickable, since the learning rows hold the answers. A Test row only opens once its test is finished.
 
-  **Strand:** the chosen strand is shown as plain text above segment 1 and persisted in `localStorage`. In dev-mode a small link beside it switches to the other strand, and Glossar is a plain row below the line.
+  **Strand:** the chosen strand is shown as plain text above segment 1 and persisted in `localStorage`. In dev-mode a small link beside it switches to the other strand.
 
   **Sub-pages:** the current segment expands its list, except on a decision page. The rows depend on how the student entered the segment (learn / simulation / test flow), and visited rows stay listed. The active sub-page is matched using `router.url` with the `?page=` query param, defaulting to page 1 when the param is absent. Clicking a row within the same page keeps the URL's `flow`; the current row does nothing.
 
   **Optional deep dives** (`opt-chaos`, `opt-simulation`, and `opt-setup` on the experiment strand) sit below the line under the headline *Optionale Vertiefungen*, without markers. Their segment IDs are strand-neutral, so opening one keeps the current strand. Outside dev-mode the group only appears while one of these pages is open. On the theory strand `opt-setup` is a station of the line, with an icon instead of a number, since every way to the Anleitung leads through it.
 
-- **Glossary overlay:** inline glossary panel triggered by `<a data-glossary="{term}" class="glossary-link">` links in content strings and templates; a `@HostListener('click')` on each learning component intercepts these anchors (using `closest('a[data-glossary]')`) and opens the overlay without navigation. The `data-glossary` attribute (rather than `href="#glossary-"`) prevents the browser from offering "Open in new tab" in the context menu.
+- **Side dock:** „Glossar“ and „Markierungen“ at the bottom of the nav (phones: icons in the header), not on the Startseite, greyed out during an unfinished test.
+- **Markierungen:** select text on a learning page, choose „Wichtig“ (green) or „Unklar“ (orange) in the bar beside the selection; the passage stays highlighted (a click on it: switch or remove), is saved as text (formulas as TeX) and listed in the overlay „Meine Markierungen“ (tabs Alle, Wichtig, Unklar), the Lernpfad, and highlighted in place in the HTML report (`shared/mark-toolbar/`, `shared/marks-overlay/`, `core/services/marks.ts`, `mark-anchor.ts`, `mark-context.ts`).
+- **Offene Stellen:** the first sub-page of each Anleitung (`?page=1`; the guide is `?page=2`): the unclear marks, each with „Im Text ansehen“ (an overlay with the page's text, `shared/mark-context/`) and „Geklärt“ (`shared/unclear-review/`).
+- **Glossary overlay:** the list of all terms with search and each term, in one dialog (from the dock or from links); inline glossary panel triggered by `<a data-glossary="{term}" class="glossary-link">` links in content strings and templates; a `@HostListener('click')` on each learning component intercepts these anchors (using `closest('a[data-glossary]')`) and opens the overlay without navigation. The `data-glossary` attribute (rather than `href="#glossary-"`) prevents the browser from offering "Open in new tab" in the context menu.
 
 
 ### Evaluation Formats (Learning Pages)

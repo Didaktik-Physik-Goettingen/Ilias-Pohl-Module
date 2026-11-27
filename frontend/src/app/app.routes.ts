@@ -4,23 +4,8 @@ import { DOCUMENT } from '@angular/common';
 import { inject } from '@angular/core';
 
 import { Home } from './features/home/home';
-import { Glossary } from './features/glossary/glossary';
+import { GLOSSARY_TERMS } from './features/glossary/glossary-terms';
 
-// glossary features
-import { Amplitude } from './features/glossary_features/amplitude/amplitude';
-import { CriticalDamping } from './features/glossary_features/critical-damping/critical-damping';
-import { DampingCoefficient } from './features/glossary_features/damping-coefficient/damping-coefficient';
-import { AngularMomentum } from './features/glossary_features/angular-momentum/angular-momentum';
-import { NaturalFrequency } from './features/glossary_features/natural-frequency/natural-frequency';
-import { ExponentialAnsatz } from './features/glossary_features/exponential-ansatz/exponential-ansatz';
-import { SpringConstant } from './features/glossary_features/spring-constant/spring-constant';
-import { HomDgl } from './features/glossary_features/hom-dgl/hom-dgl';
-import { InhomDgl } from './features/glossary_features/inhom-dgl/inhom-dgl';
-import { AngularFrequency } from './features/glossary_features/angular-frequency/angular-frequency';
-import { MomentOfInertia } from './features/glossary_features/moment-of-inertia/moment-of-inertia';
-import { NewtonNotation } from './features/glossary_features/newton-notation/newton-notation';
-import { DirectiveMoment } from './features/glossary_features/directive-moment/directive-moment';
-import { ResonanceFrequency } from './features/glossary_features/resonance-frequency/resonance-frequency';
 
 // learning features
 import { E1IntroExperiment } from './features/learning_features/e1-intro-experiment/e1-intro-experiment';
@@ -64,23 +49,9 @@ import { TarSimulation } from './features/target_features/tar-simulation/tar-sim
 
 export const routes: Routes = [
     { path: '', component: Home, title: 'Pohlsches Rad' },
-    { path: 'glossary', component: Glossary, title: 'Pohlsches Rad - Begriffe' },
 
-    // glossary pages
-    { path: 'glossary/amplitude',           component: Amplitude,           title: 'Amplitude' },
-    { path: 'glossary/critical-damping',    component: CriticalDamping,     title: 'Aperiodischer Grenzfall' },
-    { path: 'glossary/damping-coefficient', component: DampingCoefficient,  title: 'Dämpungskoeffizient' },
-    { path: 'glossary/angular-momentum',    component: AngularMomentum,     title: 'Drehmoment' },
-    { path: 'glossary/natural-frequency',   component: NaturalFrequency,    title: 'Eigenschwingfrequenz' },
-    { path: 'glossary/exponential-ansatz',  component: ExponentialAnsatz,   title: 'Exponentialansatz' },
-    { path: 'glossary/spring-constant',     component: SpringConstant,      title: 'Federkonstante' },
-    { path: 'glossary/hom-dgl',             component: HomDgl,              title: 'Homogene DGL' },
-    { path: 'glossary/inhom-dgl',           component: InhomDgl,            title: 'Inhomogene DGL' },
-    { path: 'glossary/angular-frequency',   component: AngularFrequency,    title: 'Kreisfrequenz' },
-    { path: 'glossary/moment-of-inertia',   component: MomentOfInertia,     title: 'Trägheitsmoment' },
-    { path: 'glossary/newton-notation',     component: NewtonNotation,      title: 'Newtonsche Notation' },
-    { path: 'glossary/directive-moment',    component: DirectiveMoment,     title: 'Richtmoment' },
-    { path: 'glossary/resonance-frequency',    component: ResonanceFrequency,     title: 'Resonanzfrequenz' },
+    // glossary terms, for direct links; students open them in the overlay (shared/glossary-overlay)
+    ...GLOSSARY_TERMS.map(t => ({ path: 'glossary/' + t.slug, component: t.component, title: t.title })),
 
     // conventional learning module pages
     { path: 'learning/e1-intro-experiment', component: E1IntroExperiment, title: 'Einstieg: Versuchsaufbau' },

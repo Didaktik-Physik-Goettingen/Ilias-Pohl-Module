@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ResultsTracking } from './results-tracking';
 import { TestTracking } from './test-tracking';
 import { Analytics } from './analytics';
+import { Mark, Marks } from './marks';
 
 
 
@@ -42,12 +43,19 @@ export interface SummaryTestResult {
     questions: SummaryTestQuestion[];
 }
 
+// the student's marks of one (sub-)page, in the order of the text
+export interface SummaryMarkGroup {
+    label: string;
+    marks: Mark[];
+}
+
 export interface SummaryData {
     sessionId: string;
     generatedAt: string;
     pageVisits: SummaryPageVisit[];
     learningQuestions: SummaryQuestion[];
     tests: SummaryTestResult[];
+    marks: SummaryMarkGroup[];
 }
 
 
@@ -142,7 +150,39 @@ export class SummaryService {
         private resultsTracking: ResultsTracking,
         private testTracking: TestTracking,
         private analytics: Analytics,
+        private marksService: Marks,
     ) {}
+
+
+    // 'Gedämpfte Schwingungen (2/3)'; the page number as the nav counts it
+    pageLabel(route: string, page: string | null): string {
+        const pageNum = page ?? (this.PAGE_TOTALS[route] !== undefined ? '1' : null);
+        const baseLabel = this.PAGE_LABELS[route] ?? route;
+        const total = pageNum ? (this.PAGE_TOTALS[route] ?? null) : null;
+        return pageNum && total ? `${baseLabel} (${pageNum}/${total})` : baseLabel;
+    }
+
+
+    // The marks by page, in the module's order (PAGE_LABELS), and on a page in the order of the text.
+    markGroups(marks: Mark[] = this.marksService.list()): SummaryMarkGroup[] {
+        const routes = Object.keys(this.PAGE_LABELS);
+        const order = (m: Mark) => {
+            const r = routes.indexOf(m.route);
+            return [r < 0 ? routes.length : r, Number(m.page ?? '1'), m.anchor.pos];
+        };
+        const sorted = [...marks].sort((a, b) => {
+            const oa = order(a), ob = order(b);
+            return oa[0] - ob[0] || oa[1] - ob[1] || oa[2] - ob[2] || a.route.localeCompare(b.route);
+        });
+        const groups: SummaryMarkGroup[] = [];
+        for (const mark of sorted) {
+            const label = this.pageLabel(mark.route, mark.page);
+            const last = groups[groups.length - 1];
+            if (last?.label === label) last.marks.push(mark);
+            else groups.push({ label, marks: [mark] });
+        }
+        return groups;
+    }
 
     getSummaryData(): SummaryData {
         const sessionData = this.analytics.getSessionData();
@@ -153,10 +193,7 @@ export class SummaryService {
                 const qIdx = v.page.indexOf('?');
                 const basePath = qIdx >= 0 ? v.page.slice(0, qIdx) : v.page;
                 const params = qIdx >= 0 ? new URLSearchParams(v.page.slice(qIdx + 1)) : null;
-                const pageNum = params?.get('page') ?? (this.PAGE_TOTALS[basePath] !== undefined ? '1' : null);
-                const baseLabel = this.PAGE_LABELS[basePath] ?? basePath;
-                const total = pageNum ? (this.PAGE_TOTALS[basePath] ?? null) : null;
-                const label = pageNum && total ? `${baseLabel} (${pageNum}/${total})` : baseLabel;
+                const label = this.pageLabel(basePath, params?.get('page') ?? null);
                 return { page: v.page, label, durationSeconds: Math.round(v.duration_s!) };
             });
 
@@ -201,6 +238,7 @@ export class SummaryService {
             pageVisits,
             learningQuestions,
             tests,
+            marks:             this.markGroups(),
         };
     }
 }

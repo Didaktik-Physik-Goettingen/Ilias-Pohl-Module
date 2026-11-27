@@ -1,12 +1,33 @@
 <div class="overlay-header">
-    <span class="overlay-title">Begriffserklärung</span>
+    @if (term || missingSlug) {
+        <button class="overlay-back" (click)="showList()">← Alle Begriffe</button>
+    } @else {
+        <span class="overlay-title">Glossar</span>
+    }
     <button class="overlay-close" (click)="close()" aria-label="Schließen">✕</button>
 </div>
 
-<div class="overlay-body">
-    @if (component) {
-        <ng-container [ngComponentOutlet]="component" [ngComponentOutletInjector]="overlayInjector" />
+<div class="overlay-body" #body>
+    @if (term) {
+        <ng-container [ngComponentOutlet]="term.component" />
+    } @else if (missingSlug) {
+        <p class="overlay-missing">Begriff nicht gefunden: {{ missingSlug }}</p>
     } @else {
-        <p class="overlay-missing">Begriff nicht gefunden: {{ data.term }}</p>
+        <div class="list-view">
+            <input class="search-input" type="search" placeholder="Begriff suchen …" aria-label="Begriff suchen"
+                [value]="search" (input)="onSearch($event)">
+
+            <!-- each term a card, as on the former glossary page; a click opens it in this overlay -->
+            <div class="glossary-list">
+                @for (t of filteredTerms; track t.slug) {
+                    <button type="button" class="glossary-item" (click)="showTerm(t.slug)">
+                        <span class="term-title">{{ t.title }}</span>
+                        <span class="term-definition">{{ t.definition }}</span>
+                    </button>
+                } @empty {
+                    <p class="overlay-missing">Kein Begriff gefunden.</p>
+                }
+            </div>
+        </div>
     }
 </div>

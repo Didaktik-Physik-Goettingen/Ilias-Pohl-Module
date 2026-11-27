@@ -1,40 +1,12 @@
-import { Component, Inject, Injector, Type } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { NgComponentOutlet } from '@angular/common';
 import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
-import { GLOSSARY_IS_OVERLAY } from './glossary-is-overlay.token';
+import { GLOSSARY_TERMS, GlossaryTerm, glossaryTerm } from '../../features/glossary/glossary-terms';
 
-import { Amplitude }           from '../../features/glossary_features/amplitude/amplitude';
-import { AngularFrequency }    from '../../features/glossary_features/angular-frequency/angular-frequency';
-import { AngularMomentum }     from '../../features/glossary_features/angular-momentum/angular-momentum';
-import { CriticalDamping }     from '../../features/glossary_features/critical-damping/critical-damping';
-import { DampingCoefficient }  from '../../features/glossary_features/damping-coefficient/damping-coefficient';
-import { DirectiveMoment }     from '../../features/glossary_features/directive-moment/directive-moment';
-import { ExponentialAnsatz }   from '../../features/glossary_features/exponential-ansatz/exponential-ansatz';
-import { HomDgl }              from '../../features/glossary_features/hom-dgl/hom-dgl';
-import { InhomDgl }            from '../../features/glossary_features/inhom-dgl/inhom-dgl';
-import { MomentOfInertia }     from '../../features/glossary_features/moment-of-inertia/moment-of-inertia';
-import { NaturalFrequency }    from '../../features/glossary_features/natural-frequency/natural-frequency';
-import { NewtonNotation }      from '../../features/glossary_features/newton-notation/newton-notation';
-import { SpringConstant }      from '../../features/glossary_features/spring-constant/spring-constant';
-import { ResonanceFrequency } from '../../features/glossary_features/resonance-frequency/resonance-frequency';
 
-const TERM_MAP: Record<string, Type<any>> = {
-    'amplitude':            Amplitude,
-    'angular-frequency':    AngularFrequency,
-    'angular-momentum':     AngularMomentum,
-    'critical-damping':     CriticalDamping,
-    'damping-coefficient':  DampingCoefficient,
-    'directive-moment':     DirectiveMoment,
-    'exponential-ansatz':   ExponentialAnsatz,
-    'hom-dgl':              HomDgl,
-    'inhom-dgl':            InhomDgl,
-    'moment-of-inertia':    MomentOfInertia,
-    'natural-frequency':    NaturalFrequency,
-    'newton-notation':      NewtonNotation,
-    'spring-constant':      SpringConstant,
-    'resonance-frequency':  ResonanceFrequency,
-};
 
+// The glossary as an overlay, with two views: the list of all terms (with search) and one term.
+// Opened with a term from a link in the text, or with the list from the "Glossar" button; no routing either way.
 @Component({
     selector: 'app-glossary-dialog',
     standalone: true,
@@ -43,24 +15,54 @@ const TERM_MAP: Record<string, Type<any>> = {
     styleUrl: './glossary-dialog.component.css',
 })
 export class GlossaryDialogComponent {
-    component: Type<any> | null;
-    overlayInjector: Injector;
+    readonly terms = GLOSSARY_TERMS;
+    term: GlossaryTerm | null = null;
+    missingSlug: string | null = null;
+    search = '';
+
+    @ViewChild('body') private body?: ElementRef<HTMLElement>;
+
 
     constructor(
-        @Inject(DIALOG_DATA) public data: { term: string },
-        private dialogRef: DialogRef,
-        private injector: Injector
+        @Inject(DIALOG_DATA) data: { term: string | null },
+        private dialogRef: DialogRef
     ) {
-        this.component = TERM_MAP[data.term] ?? null;
-
-        // Provide GLOSSARY_IS_OVERLAY=true so the glossary component hides its back button.
-        this.overlayInjector = Injector.create({
-            providers: [{ provide: GLOSSARY_IS_OVERLAY, useValue: true }],
-            parent: this.injector,
-        });
+        if (data.term) this.showTerm(data.term);
     }
+
+
+    get filteredTerms(): readonly GlossaryTerm[] {
+        const q = this.search.trim().toLowerCase();
+        if (!q) return this.terms;
+        return this.terms.filter(t => t.title.toLowerCase().includes(q) || t.definition.toLowerCase().includes(q));
+    }
+
+
+    showTerm(slug: string): void {
+        this.term = glossaryTerm(slug) ?? null;
+        this.missingSlug = this.term ? null : slug;
+        this.scrollToTop();
+    }
+
+
+    showList(): void {
+        this.term = null;
+        this.missingSlug = null;
+        this.scrollToTop();
+    }
+
+
+    onSearch(event: Event): void {
+        this.search = (event.target as HTMLInputElement).value;
+    }
+
 
     close(): void {
         this.dialogRef.close();
+    }
+
+
+    private scrollToTop(): void {
+        if (this.body) this.body.nativeElement.scrollTop = 0;
     }
 }

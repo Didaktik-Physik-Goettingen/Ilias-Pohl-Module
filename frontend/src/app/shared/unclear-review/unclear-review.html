@@ -1,0 +1,48 @@
+<div class="container">
+
+    <div class="card review-intro">
+        <h1 class="h1-target">{{ heading }}</h1>
+        <h2 class="review-title">Offene Stellen</h2>
+        @if (total() > 0) {
+            <p>
+                Diese Stellen haben Sie beim Lernen als unklar markiert. Sehen Sie sie sich im Text noch einmal an und
+                haken Sie ab, was inzwischen geklärt ist. Was offen bleibt, können Sie am Versuchstag ansprechen; es
+                steht auch in Ihrem Lernpfad-Export.
+            </p>
+            <p class="review-progress" aria-live="polite">{{ resolved() }} von {{ total() }} geklärt</p>
+        } @else {
+            <p>
+                Sie haben keine Stellen als unklar markiert. Falls Ihnen beim Lernen etwas unklar war, können Sie die
+                Stelle auf der Lernseite markieren und „Unklar“ wählen; sie erscheint dann hier.
+            </p>
+        }
+    </div>
+
+    @if (total() > 0) {
+        <div class="summary-container review-list">
+            @for (group of groups(); track group.label) {
+                <section class="review-group">
+                    <h3 class="review-group-title">{{ group.label }}</h3>
+                    @for (mark of group.marks; track mark.id) {
+                        <div class="review-item mark-edge mark-edge--{{ toneOf(mark) }}" [class.review-item--resolved]="mark.resolvedAt !== null">
+                            <app-mark-quote class="review-quote" [text]="mark.anchor.exact" />
+                            <div class="review-actions">
+                                <button type="button" class="btn btn-small" (click)="show(mark, group.label)">Im Text ansehen</button>
+                                <label class="mark-check">
+                                    <input type="checkbox" [checked]="mark.resolvedAt !== null" (change)="toggleResolved(mark)">
+                                    Geklärt
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </section>
+            }
+        </div>
+    }
+
+    <div class="button-container no-print">
+        <button class="btn btn-back" (click)="back.emit()">{{ backLabel }}</button>
+        <button class="btn" (click)="next.emit()">Weiter →</button>
+    </div>
+
+</div>

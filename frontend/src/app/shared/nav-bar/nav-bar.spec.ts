@@ -240,7 +240,6 @@ describe('NavBar', () => {
         await openAt('/test/test-e-damped?path=test');
         for (const button of rows()) expect(button.disabled).toBe(false);
         expect(row('Getriebene').classList).toContain('nav-row--open');
-        expect(row('Glossar').disabled).toBe(false);
     });
 
     it('offers the other strand beside the heading in dev mode', async () => {
@@ -263,5 +262,20 @@ describe('NavBar', () => {
     it('keeps the column on the other pages', async () => {
         await openAt('/learning/e1-intro-experiment');
         expect(fixture.nativeElement.querySelector('app-nav-bar').classList).not.toContain('nav-hidden');
+    });
+
+    it('shows the open guide\'s two sub-pages under the Anleitung, the second once visited', async () => {
+        visited.add('/target/tar-chaos|1');
+        await openAt('/target/tar-chaos');
+        expect(row('(1/2) - Offene Stellen').getAttribute('aria-current')).toBe('page');
+        expect(row('(2/2) - Anleitung').disabled).toBe(true);
+    });
+
+    it('opens the guide\'s Offene Stellen again from its second sub-page', async () => {
+        visited.add('/target/tar-theory|1');
+        visited.add('/target/tar-theory|2');
+        await openAt('/target/tar-theory?page=2');
+        expect(row('(2/2) - Anleitung').getAttribute('aria-current')).toBe('page');
+        expect(row('(1/2) - Offene Stellen').disabled).toBe(false);
     });
 });

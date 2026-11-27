@@ -1,3 +1,6 @@
+@if (isReview) {
+<app-unclear-review heading="Anleitung" (back)="goBack()" (next)="goGuide()" />
+} @else {
 <div class="container">
 
     <!-- Guide card — hidden in print -->
@@ -129,6 +132,28 @@
         </section>
         }
 
+        <!-- Marked passages, by page -->
+        @if (summary.marks.length > 0) {
+        <section class="summary-section">
+            <button class="summary-accordion-btn" (click)="toggleSection('marks')" [attr.aria-expanded]="openSections.marks">
+                <h3 class="summary-section-title">Meine Markierungen</h3>
+                <span class="summary-accordion-icon">{{ openSections.marks ? '▲' : '▼' }}</span>
+            </button>
+            @if (openSections.marks) {
+            <div class="summary-accordion-body">
+                @for (group of summary.marks; track group.label) {
+                <div class="summary-module">
+                    <h4 class="summary-module-title">{{ group.label }}</h4>
+                    @for (mark of group.marks; track mark.id) {
+                        <app-mark-quote class="summary-mark mark-edge mark-edge--{{ toneOf(mark) }}" [text]="mark.anchor.exact" />
+                    }
+                </div>
+                }
+            </div>
+            }
+        </section>
+        }
+
         @if (summary.tests.length > 0) {
         <section class="summary-section">
             <button class="summary-accordion-btn" (click)="toggleSection('tests')" [attr.aria-expanded]="openSections.tests">
@@ -221,7 +246,8 @@
     </div><!-- /summary-container -->
 
     <div class="button-container no-print">
-        <button class="btn btn-back" (click)="goBack()">← Zurück</button>
+        <button class="btn btn-back" (click)="goReview()">← Zurück</button>
     </div>
 
 </div>
+}

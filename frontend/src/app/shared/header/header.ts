@@ -6,13 +6,14 @@ import { Session } from '../../core/services/session';
 import { DevModeService } from '../../core/services/dev-mode';
 import { NavDrawerService } from '../../core/services/nav-drawer';
 import { BUILD_TIMESTAMP } from '../../../build-info';
+import { SideDock } from '../side-dock/side-dock';
 
 
 
 @Component({
     selector: 'app-header',
     standalone: true,
-    imports: [CommonModule],
+    imports: [CommonModule, SideDock],
     templateUrl: './header.html',
     styleUrl: './header.css'
 })

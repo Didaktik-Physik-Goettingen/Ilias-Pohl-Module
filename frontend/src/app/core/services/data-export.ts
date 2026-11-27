@@ -8,6 +8,7 @@ import { VisitedPages } from './visited-pages';
 import { AttemptOutbox, AttemptRow } from './attempt-outbox';
 import { MODULE_NAME } from './storage-prefix';
 import { EffortRating, EffortRatingRow } from './effort-rating';
+import { Mark, MarkEvent, Marks } from './marks';
 
 
 
@@ -38,7 +39,8 @@ export class DataExport {
         private testService: TestTracking,
         private visitedPages: VisitedPages,
         private outbox: AttemptOutbox,
-        private effortRating: EffortRating
+        private effortRating: EffortRating,
+        private marks: Marks
     ) {
         if (isPlatformBrowser(this.platformId)) {
             // beforeunload doesn't fire reliably on phones; a tab sent to the background may never come back
@@ -88,6 +90,15 @@ export class DataExport {
             this.resultsService.restoreFromBackend(attempts.filter(a => a.kind === 'learning'));
             this.testService.restoreFromBackend(attempts.filter(a => a.kind === 'test'));
             this.effortRating.markRated(Array.isArray(data.ratedUnits) ? data.ratedUnits : []);
+            // an older portal sends no marks: keep the local ones as they are
+            if (Array.isArray(data.marks)) {
+                this.marks.restore(data.marks.map((m: any): Mark => ({
+                    ...m,
+                    kind: m.kind === 'unclear' ? 'unclear' : 'important',
+                    createdAt: Date.parse(m.createdAt),
+                    resolvedAt: m.resolvedAt ? Date.parse(m.resolvedAt) : null,
+                })));
+            }
 
             // Find the last meaningful page (ignore root and session-redirect URLs).
             const meaningful = (data.pageVisits ?? []).filter(
@@ -120,7 +131,7 @@ export class DataExport {
 
         const username = this.sessionService.sessionId();
         const batch = this.nextBatch();
-        if (!username || (!batch.visits.length && !batch.attempts.length && !batch.ratings.length)) return;
+        if (!username || (!batch.visits.length && !batch.attempts.length && !batch.ratings.length && !batch.marks.length)) return;
 
         this.saving = true;
         try {
@@ -131,7 +142,8 @@ export class DataExport {
                     module: MODULE_NAME,
                     visits: batch.visits.map(v => ({ page: v.page, startTime: v.startTime, duration_s: v.duration_s })),
                     attempts: batch.attempts,
-                    ratings: batch.ratings
+                    ratings: batch.ratings,
+                    marks: batch.marks
                 }),
                 keepalive: true   // survives page unload
             });
@@ -143,6 +155,9 @@ export class DataExport {
             this.analyticsService.markSent(batch.visits);
             this.outbox.remove(batch.attempts);
             this.effortRating.markSent(batch.ratings);
+            // only a portal that knows marks stores them; an older one answers 200 and ignores them
+            const accepted = await Promise.resolve().then(() => response.json()).then(r => r?.accepted, () => null);
+            if (Array.isArray(accepted) && accepted.includes('marks')) this.marks.markSent(batch.marks);
             console.log('Progress saved to backend.');
         } catch (err) {
             console.error('Failed to save progress:', err);
@@ -152,7 +167,7 @@ export class DataExport {
     }
 
 
-    private nextBatch(): { visits: PageVisit[]; attempts: AttemptRow[]; ratings: EffortRatingRow[] } {
+    private nextBatch(): { visits: PageVisit[]; attempts: AttemptRow[]; ratings: EffortRatingRow[]; marks: MarkEvent[] } {
         let budget = this.MAX_BODY_BYTES;
         const fits = (row: unknown) => {
             const size = new Blob([JSON.stringify(row)]).size;
@@ -163,8 +178,9 @@ export class DataExport {
         // answers and ratings first: they are the harder data to lose
         const attempts = this.outbox.getAll().filter(fits);
         const ratings = this.effortRating.getUnsent().filter(fits);
+        const marks = this.marks.getUnsent().filter(fits);
         const visits = this.analyticsService.getUnsentVisits().filter(fits);
-        return { visits, attempts, ratings };
+        return { visits, attempts, ratings, marks };
     }
 
 
